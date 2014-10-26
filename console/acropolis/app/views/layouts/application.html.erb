@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Acropolis</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<section class="wrapper">
+
+<header class="block">
+  <div id="global-header">
+    <div id="logo" class="pull-left">
+      <h1>Acropolis</h1>
+    </div>
+
+    <div id="user" class="pull-right">Signed in as Stanley</div>
+  </div>
+
+  <div id="global-navigation">
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#fakelink"><%= fa_icon("desktop") %> 实时监测</a></li>
+            <li><a href="#fakelink"><%= fa_icon("life-ring") %> 风控方案</a></li>
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= fa_icon("pie-chart") %> 数据报表 <%= fa_icon("caret-down") %></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+                <li class="divider"></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+           </ul>
+         </div>
+       </div>
+    </nav>
+  </div>
+</header>
+
+<div class="block push">
+  <div class="wrapper">
+    <div class="block push">
+
+      <div id="sidebar" class="cell">
+
+        <div id="sidebar-searchform">
+          <div class="form-group">
+            <div class="input-group input-group-sm input-group-rounded">
+              <input type="search" class="form-control" placeholder="搜索产品" id="search-query-4">
+              <span class="input-group-btn">
+                <button type="submit" class="btn"><span class="fui-search"></span></button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <ul class="nav nav-list nav-list-vivid">
+          <li class="nav-header">志投科技</li>
+          <li>
+            <a href="#fakelink">
+              白糖套利2014
+              <span class="badge pull-right">19</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="#fakelink">
+              豆粕套利2014
+              <span class="badge pull-right">130</span>
+            </a>
+          </li>
+          <li>
+            <a href="#fakelink">
+              Madrid, Spain
+              <span class="badge pull-right">9</span>
+            </a>
+          </li>
+          <li class="divider"></li>
+          <li class="nav-header">Asia</li>
+          <li>
+            <a href="#fakelink">
+              Shanghai, China
+              <span class="badge pull-right">69</span>
+            </a>
+          </li>
+          <li>
+            <a href="#fakelink">
+              Bombay, India
+              <span class="badge pull-right">21</span>
+            </a>
+          </li>
+          <li>
+            <a href="#fakelink">
+              Karachi, Pakistan
+              <span class="badge pull-right">40</span>
+            </a>
+          </li>
+        </ul>
+      </div><!-- #sidebar -->
+
+      <div id="main" class="cell">
+        <div class="breadcrumb">
+          <a href="#fakelink">风控方案</a> <%= fa_icon('angle-right')%> <a href="#fakelink">产品风控列表</a> <%= fa_icon('angle-right')%> 志投科技-豆粕套利2014
+        </div>
+
+        <div class="page-header">
+          <h2>志投科技-豆粕套利2014</h2>
+        </div>
+
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <a class="btn btn-default btn-sm" href="#fakelink">净值</a>
+            <a class="btn btn-default btn-sm" href="#fakelink">保证金</a>
+            <a class="btn btn-default btn-sm active" href="#fakelink">市值</a>
+            <a class="btn btn-default btn-sm" href="#fakelink">敞口</a>
+          </div>
+
+          <div class="btn-group pull-right">
+            <a class="btn btn-primary btn-sm" href="#fakelink">净值</a>
+          </div>
+        </div>
+
+        <p></p>
+
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th class="text-center" width="20px">
+                <label class="checkbox no-label toggle-all" for="checkbox-table-1">
+                  <input type="checkbox" value="" id="checkbox-table-1" data-toggle="checkbox">
+                </label>
+              </th>
+              <th>#</th>
+              <th>类型</th>
+              <th>阈值</th>
+              <th>操作</th>
+              <th>优先级</th>
+              <th>启用</th>
+              <th class="btn-cell"> </th>
+              <th class="btn-cell"> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center">
+                <label class="checkbox no-label" for="checkbox-table-2">
+                  <input type="checkbox" value="" id="checkbox-table-2" data-toggle="checkbox" class="custom-checkbox">
+                </label>
+              </td>
+              <td>1</td>
+              <td>内盘净值</td>
+              <td>大于0.82，小于0.92</td>
+              <td><span class="label label-warning label-sm">预警</span></td>
+              <td>5</td>
+              <td><input type="checkbox" checked data-toggle="switch" data-size="mini" name="default-switch" id="switch-01" /></td>
+              <td class="btn-cell"><%= fa_icon("pencil")%></td>
+              <td class="btn-cell"><%= fa_icon("trash")%></td>
+            </tr>
+            <tr>
+              <td class="text-center">
+                <label class="checkbox no-label" for="checkbox-table-3">
+                  <input type="checkbox" value="" id="checkbox-table-3" data-toggle="checkbox" class="custom-checkbox">
+                </label>
+              </td>
+              <td>2</td>
+              <td>外盘净值</td>
+              <td>小于0.82</td>
+              <td><span class="label label-danger label-sm">停止开仓</span></td>
+              <td>5</td>
+              <td><input type="checkbox" checked data-toggle="switch" data-size="mini" name="default-switch" id="switch-01" /></td>
+              <td class="btn-cell"><%= fa_icon("pencil")%></td>
+              <td class="btn-cell"><%= fa_icon("trash")%></td>
+            </tr>
+            <tr>
+              <td class="text-center">
+                <label class="checkbox no-label" for="checkbox-table-4">
+                  <input type="checkbox" value="" id="checkbox-table-4" data-toggle="checkbox" class="custom-checkbox">
+                </label>
+              </td>
+              <td>3</td>
+              <td>The Godfather: Part II</td>
+              <td>1974</td>
+              <td>9.0</td>
+              <td>427,132</td>
+              <td><input type="checkbox" checked data-toggle="switch" data-size="mini" name="default-switch" id="switch-01" /></td>
+              <td class="btn-cell"><%= fa_icon("pencil")%></td>
+              <td class="btn-cell"><%= fa_icon("trash")%></td>
+            </tr>
+            <tr>
+              <td class="text-center">
+                <label class="checkbox no-label" for="checkbox-table-5">
+                  <input type="checkbox" value="" id="checkbox-table-5" data-toggle="checkbox" class="custom-checkbox">
+                </label>
+              </td>
+              <td>4</td>
+              <td>Pulp Fiction</td>
+              <td>1994</td>
+              <td>8.9</td>
+              <td>719,280</td>
+              <td class="btn-cell"><%= fa_icon("pencil")%></td>
+              <td class="btn-cell"><%= fa_icon("trash")%></td>
+            </tr>
+            <tr>
+              <td class="text-center">
+                <label class="checkbox no-label" for="checkbox-table-6">
+                  <input type="checkbox" value="" id="checkbox-table-6" data-toggle="checkbox" class="custom-checkbox">
+                </label>
+              </td>
+              <td>5</td>
+              <td>The Good, the Bad and the Ugly</td>
+              <td>1966</td>
+              <td>8.9</td>
+              <td>218,887</td>
+              <td class="btn-cell"><%= fa_icon("pencil")%></td>
+              <td class="btn-cell"><%= fa_icon("trash")%></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="9">
+
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+
+      </div> <!-- #main -->
+
+
+
+    </div>
+  </div>
+</div>
+
+<footer class="block">
+  <div class="bottom-menu">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2 col-sm-2">
+          <a href="#fakelink" class="bottom-menu-brand">Flat UI</a>
+        </div>
+        <div class="col-md-8 col-sm-8">
+          <ul class="bottom-menu-list">
+            <li><a href="#fakelink">About Us</a></li>
+            <li><a href="#fakelink">Store</a></li>
+            <li class="active"><a href="#fakelink">Jobs</a></li>
+            <li><a href="#fakelink">Privacy</a></li>
+            <li><a href="#fakelink">Terms</a></li>
+            <li><a href="#fakelink">Follow Us</a></li>
+            <li><a href="#fakelink">Support</a></li>
+            <li><a href="#fakelink">Links</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2 col-sm-2">
+          <ul class="bottom-menu-iconic-list">
+            <li><a href="#fakelink" class="fui-pinterest"></a></li>
+            <li><a href="#fakelink" class="fui-facebook"></a></li>
+            <li><a href="#fakelink" class="fui-twitter"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div> <!-- /bottom-menu -->
+</footer>
+
+</section>
+
+<%= yield %>
+
+</body>
+</html>
