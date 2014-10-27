@@ -27,5 +27,3 @@
 
 //= require turbolinks
 //= require_tree .
-
-// Turbolinks.enableProgressBar();
