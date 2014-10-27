@@ -2,3 +2,5 @@ zh-CN:
   buttons:
     save_changes: 保存
     cancel: 取消
+    edit: 编辑
+    delete: 删除

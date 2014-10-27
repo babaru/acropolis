@@ -6,7 +6,7 @@ class RiskPlansController < ApplicationController
   def index
     @current_product = Product.find params[:product_id]
     @current_product = Product.first if @current_product.nil?
-    @risk_plans = @current_product.risk_plans
+    @risk_plans_grid = initialize_grid(RiskPlan.where(product_id: @current_product.id))
   end
 
   # GET /risk_plans/1
@@ -28,16 +28,35 @@ class RiskPlansController < ApplicationController
   # POST /risk_plans
   # POST /risk_plans.json
   def create
-    @risk_plan = RiskPlan.new(risk_plan_params.permit[:risk_plan_attribute])
-    @risk_plan
+    @risk_plan = RiskPlan.new(risk_plan_params)
+    @current_product = @risk_plan.product
+
+    threshold_ids = risk_plan_params[:threshold_ids]
+    unless threshold_ids.nil?
+      threshold_ids.each_with_index do |item, index|
+        unless item.nil? || item.blank?
+          @risk_plan.thresholds.find(item).relation_symbol_id = risk_plan_params[:threshold_relation_symbols][index]
+          @risk_plan.thresholds.find(item).value = risk_plan_params[:threshold_values][index]
+        else
+          @risk_plan.thresholds << Threshold.new(
+            {
+              relation_symbol_id: risk_plan_params[:threshold_relation_symbols][index],
+              value: risk_plan_params[:threshold_values][index]
+            }
+          )
+
+          logger.debug("relation_symbol_id: #{@risk_plan.thresholds[index].relation_symbol_id}")
+        end
+      end
+    end
 
     respond_to do |format|
       if @risk_plan.save
         format.html { redirect_to @risk_plan, notice: 'Risk plan was successfully created.' }
-        format.json { render :show, status: :created, location: @risk_plan }
+        format.js
       else
         format.html { render :new }
-        format.json { render json: @risk_plan.errors, status: :unprocessable_entity }
+        format.js { render :new }
       end
     end
   end
@@ -74,6 +93,14 @@ class RiskPlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def risk_plan_params
-      params[:risk_plan]
+      params.require(:risk_plan).permit(
+        :parameter_id,
+        :operation_id,
+        :is_enabled,
+        :product_id,
+        :threshold_ids => [],
+        :threshold_relation_symbols => [],
+        :threshold_values => []
+      )
     end
 end

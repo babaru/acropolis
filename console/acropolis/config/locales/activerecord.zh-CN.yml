@@ -6,9 +6,11 @@ zh-CN:
       risk_plan:
         parameter: 参数
         parameter_id: 参数
+        thresholds: 阈值
         priority: 优先级
         operation: 操作
         operation_id: 操作
+        is_enabled: 启用
   models:
     list: "%{model}列表"
     new: "新建%{model}"

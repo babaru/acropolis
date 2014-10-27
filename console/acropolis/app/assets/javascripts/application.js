@@ -20,9 +20,11 @@
 //= require jquery-ui/spinner
 //= require jquery-ui/tooltip
 //= require jquery-ui/effect
+//= require wice_grid
 
 //= require twitter/bootstrap
 //= require flatuipro
+
 //= require retina.min
 
 //= require turbolinks

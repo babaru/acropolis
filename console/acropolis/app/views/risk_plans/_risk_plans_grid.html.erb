@@ -1,0 +1,29 @@
+<%= grid(@risk_plans_grid, allow_showing_all_records: false) do |g|
+
+  g.column :name => '#' do |risk_plan|
+    risk_plan.id
+  end
+  g.column :name => t('activerecord.attributes.risk_plan.parameter') do |risk_plan|
+    risk_plan.parameter.name
+  end
+  g.column :name => t('activerecord.attributes.risk_plan.thresholds') do |risk_plan|
+
+  end
+  g.column :name => t('activerecord.attributes.risk_plan.operation') do |risk_plan|
+
+  end
+  g.column name: t('activerecord.attributes.risk_plan.priority') do |risk_plan|
+    risk_plan.priority
+  end
+  g.column name: t('activerecord.attributes.risk_plan.is_enabled') do |risk_plan|
+    check_box_tag("checkbox-#{risk_plan.id}", nil, risk_plan.is_enabled, data: {toggle: 'switch'})
+  end
+
+  g.column html: {class: 'btn-cell'} do |risk_plan|
+    link_to fa_icon("pencil"), edit_risk_plan_path(risk_plan), class: 'btn btn-default btn-xs', data: {toggle: 'tooltip'}, title: t('buttons.edit')
+  end
+
+  g.column html: {class: 'btn-cell'} do |risk_plan|
+    link_to fa_icon("trash"), risk_plan_path(risk_plan), method: :delete, class: 'btn btn-danger btn-xs', data: {toggle: 'tooltip'}, title: t('buttons.delete')
+  end
+end -%>

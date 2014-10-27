@@ -1,0 +1,9 @@
+$("ul.errors").html("")
+<% if @risk_plan.errors.any? %>
+  <% @risk_plan.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  $("#risk-plan-modal").modal("hide")
+<% end %>

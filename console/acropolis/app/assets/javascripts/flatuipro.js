@@ -39,7 +39,7 @@ function trim_ui() {
   });
 
   // Tooltips
-  $('[data-toggle="tooltip"]').tooltip('show');
+  $('[data-toggle="tooltip"]').tooltip();
 
   // Popovers
   $('[data-toggle="popover"]').popover();
