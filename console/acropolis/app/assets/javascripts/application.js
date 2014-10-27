@@ -11,15 +11,21 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
+//= require jquery_ujs
+
 //= require jquery-ui/button
 //= require jquery-ui/datepicker
 //= require jquery-ui/slider
 //= require jquery-ui/spinner
 //= require jquery-ui/tooltip
 //= require jquery-ui/effect
-//= require flatuipro
+
 //= require twitter/bootstrap
-//= require jquery_ujs
-//= require turbolinks
+//= require flatuipro
 //= require retina.min
+
+//= require turbolinks
 //= require_tree .
+
+// Turbolinks.enableProgressBar();
