@@ -16,7 +16,9 @@ class RiskPlansController < ApplicationController
 
   # GET /risk_plans/new
   def new
+    @current_product = Product.find params[:product_id]
     @risk_plan = RiskPlan.new
+    @risk_plan.product = @current_product
   end
 
   # GET /risk_plans/1/edit

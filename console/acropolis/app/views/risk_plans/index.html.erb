@@ -40,7 +40,7 @@
     </div>
 
     <div class="btn-group pull-right">
-      <%= link_to fa_icon('plus', text: t('models.new', model: RiskPlan.model_name.human)), new_risk_plan_path, class: 'btn btn-primary btn-sm' %>
+      <%= link_to(fa_icon('plus', text: t('models.new', model: RiskPlan.model_name.human)), new_risk_plan_path(product_id: @current_product.id), remote: true, class: 'btn btn-primary btn-sm') %>
     </div>
   </div>
 
@@ -149,3 +149,8 @@
   </table>
 
 </div> <!-- #main -->
+
+<!-- Modal -->
+
+<div class="modal fade" id="risk-plan-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div><!-- /.modal -->

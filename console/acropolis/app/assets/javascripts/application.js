@@ -26,4 +26,3 @@
 //= require retina.min
 
 //= require turbolinks
-//= require_tree .
