@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141026133616) do
+ActiveRecord::Schema.define(version: 20141027054412) do
 
   create_table "risk_plans", force: true do |t|
     t.integer  "parameter_id"
     t.integer  "operation_id"
-    t.integer  "priority"
-    t.boolean  "is_enabled"
+    t.integer  "priority",     default: 5
+    t.boolean  "is_enabled",   default: false
     t.integer  "user_id"
     t.integer  "product_id"
     t.datetime "created_at"
@@ -28,5 +28,16 @@ ActiveRecord::Schema.define(version: 20141026133616) do
   add_index "risk_plans", ["parameter_id"], name: "index_risk_plans_on_parameter_id", using: :btree
   add_index "risk_plans", ["product_id"], name: "index_risk_plans_on_product_id", using: :btree
   add_index "risk_plans", ["user_id"], name: "index_risk_plans_on_user_id", using: :btree
+
+  create_table "thresholds", force: true do |t|
+    t.integer  "risk_plan_id"
+    t.integer  "relation_symbol_id"
+    t.decimal  "value",              precision: 20, scale: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "thresholds", ["relation_symbol_id"], name: "index_thresholds_on_relation_symbol_id", using: :btree
+  add_index "thresholds", ["risk_plan_id"], name: "index_thresholds_on_risk_plan_id", using: :btree
 
 end

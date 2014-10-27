@@ -3,8 +3,8 @@ class CreateRiskPlans < ActiveRecord::Migration
     create_table :risk_plans do |t|
       t.references :parameter, index: true
       t.references :operation, index: true
-      t.integer :priority
-      t.boolean :is_enabled
+      t.integer :priority, default: 5
+      t.boolean :is_enabled, default: false
       t.references :user, index: true
       t.references :product, index: true
 

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  risk_plan_id: 
+  relation_symbol_id: 
+  value: 9.99
+
+two:
+  risk_plan_id: 
+  relation_symbol_id: 
+  value: 9.99
