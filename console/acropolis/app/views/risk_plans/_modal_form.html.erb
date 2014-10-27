@@ -6,6 +6,21 @@
 
   <%= f.input :parameter_id, collection: Parameter.all.collect {|p| [p.name, p.id]} %>
 
+  <div class="form-group required risk_plan_parameter_id">
+    <label class="required col-sm-2 control-label label-sm" for="risk_plan_thresholds">
+    <abbr title="required">*</abbr> 参数</label>
+
+    <div id="threshold-btn" class="col-sm-10">
+    <div class="btn-toolbar">
+        <%= content_tag :span, fa_icon('plus'), class: 'threshold-item-add-btn btn btn-primary btn-sm ' %>
+    </div>
+    </div>
+
+    <div id="threshold-panel" class="col-sm-offset-2 col-sm-10">
+
+    </div>
+  </div>
+
   <%= f.input :operation_id, collection: Operation.all.collect {|o| [o.name, o.id]} %>
 
   <%= f.input :is_enabled, as: :fui_boolean, wrapper: :fui_boolean %>
@@ -29,6 +44,17 @@
   $(function () {
 
     trim_ui();
+
+    $('.threshold-item-delete-btn').unbind('click').bind('click', function() {
+      $(this).closest('.form-group').remove();
+    });
+
+    $('.threshold-item-add-btn').click(function() {
+      $('#threshold-panel').append("<%= escape_javascript("#{render(partial: 'threshold_form_field', locals: {threshold_id: nil, threshold_relation_symbol: nil, threshold_value: nil})}").html_safe %>");
+      $('.threshold-item-delete-btn').unbind('click').bind('click', function() {
+        $(this).closest('.form-group').remove();
+      })
+    });
 
   });
 
