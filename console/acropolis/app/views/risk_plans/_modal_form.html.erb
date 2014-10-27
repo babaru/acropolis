@@ -18,6 +18,12 @@
 
     <div id="threshold-panel" class="col-sm-offset-2 col-sm-10">
 
+      <% @risk_plan.thresholds.each do |threshold| %>
+
+      <%= render(partial: 'threshold_form_field', locals: {threshold_id: threshold.id, threshold_relation_symbol: threshold.relation_symbol.id, threshold_value: threshold.value}) %>
+
+      <% end %>
+
     </div>
   </div>
 

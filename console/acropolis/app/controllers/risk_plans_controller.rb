@@ -23,6 +23,7 @@ class RiskPlansController < ApplicationController
 
   # GET /risk_plans/1/edit
   def edit
+    @current_product = @risk_plan.product
   end
 
   # POST /risk_plans
@@ -32,24 +33,7 @@ class RiskPlansController < ApplicationController
     @current_product = @risk_plan.product
     set_risk_plans_grid(@current_product.id)
 
-    threshold_ids = risk_plan_params[:threshold_ids]
-    unless threshold_ids.nil?
-      threshold_ids.each_with_index do |item, index|
-        unless item.nil? || item.blank?
-          @risk_plan.thresholds.find(item).relation_symbol_id = risk_plan_params[:threshold_relation_symbols][index]
-          @risk_plan.thresholds.find(item).value = risk_plan_params[:threshold_values][index]
-        else
-          @risk_plan.thresholds << Threshold.new(
-            {
-              relation_symbol_id: risk_plan_params[:threshold_relation_symbols][index],
-              value: risk_plan_params[:threshold_values][index]
-            }
-          )
-
-          logger.debug("relation_symbol_id: #{@risk_plan.thresholds[index].relation_symbol_id}")
-        end
-      end
-    end
+    update_thresholds
 
     respond_to do |format|
       if @risk_plan.save
@@ -65,13 +49,18 @@ class RiskPlansController < ApplicationController
   # PATCH/PUT /risk_plans/1
   # PATCH/PUT /risk_plans/1.json
   def update
+    @current_product = @risk_plan.product
+    set_risk_plans_grid(@current_product.id)
+
+    update_thresholds
+
     respond_to do |format|
       if @risk_plan.update(risk_plan_params)
         format.html { redirect_to @risk_plan, notice: 'Risk plan was successfully updated.' }
-        format.json { render :show, status: :ok, location: @risk_plan }
+        format.js
       else
         format.html { render :edit }
-        format.json { render json: @risk_plan.errors, status: :unprocessable_entity }
+        format.js { render :edit }
       end
     end
   end
@@ -107,5 +96,28 @@ class RiskPlansController < ApplicationController
 
     def set_risk_plans_grid(product_id)
       @risk_plans_grid = initialize_grid(RiskPlan.where(product_id: product_id))
+    end
+
+    def update_thresholds
+      @risk_plan.thresholds.clear
+      threshold_ids = risk_plan_params[:threshold_ids]
+      unless threshold_ids.nil?
+        threshold_ids.each_with_index do |item, index|
+          threshold = nil
+          unless item.nil? || item.blank?
+            threshold = Threshold.find(item)
+            threshold.relation_symbol_id = risk_plan_params[:threshold_relation_symbols][index]
+            threshold.value = risk_plan_params[:threshold_values][index]
+          else
+            threshold = Threshold.new(
+              {
+                relation_symbol_id: risk_plan_params[:threshold_relation_symbols][index],
+                value: risk_plan_params[:threshold_values][index]
+              }
+            )
+          end
+          @risk_plan.thresholds << threshold
+        end
+      end
     end
 end

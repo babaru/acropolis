@@ -20,7 +20,7 @@
   end
 
   g.column html: {class: 'btn-cell'} do |risk_plan|
-    link_to fa_icon("pencil"), edit_risk_plan_path(risk_plan), class: 'btn btn-default btn-xs', data: {toggle: 'tooltip'}, title: t('buttons.edit')
+    link_to fa_icon("pencil"), edit_risk_plan_path(risk_plan), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
   end
 
   g.column html: {class: 'btn-cell'} do |risk_plan|
