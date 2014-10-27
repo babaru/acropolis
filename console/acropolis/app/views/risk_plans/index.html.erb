@@ -15,7 +15,7 @@
   </div>
 
   <div class="btn-group pull-right">
-    <a class="btn btn-primary btn-sm" href="#fakelink">净值</a>
+    <%= link_to fa_icon('plus', text: t('models.new', model: RiskPlan.model_name.human)), new_risk_plan_path, class: 'btn btn-primary btn-sm' %>
   </div>
 </div>
 
