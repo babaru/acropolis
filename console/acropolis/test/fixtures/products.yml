@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  bank: MyString
+  broker: MyString
+  long_name: MyString
+
+two:
+  name: MyString
+  bank: MyString
+  broker: MyString
+  long_name: MyString
