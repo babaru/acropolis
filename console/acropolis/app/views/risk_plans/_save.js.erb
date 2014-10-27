@@ -4,6 +4,7 @@ $("ul.errors").html("")
     $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
   <% end %>
 <% else %>
-
+  $('#risk-plan-list').html("<%= escape_javascript(render 'risk_plans_grid') %>")
   $("#risk-plan-modal").modal("hide")
+  trim_ui();
 <% end %>

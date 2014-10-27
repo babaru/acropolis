@@ -6,7 +6,7 @@ class RiskPlansController < ApplicationController
   def index
     @current_product = Product.find params[:product_id]
     @current_product = Product.first if @current_product.nil?
-    @risk_plans_grid = initialize_grid(RiskPlan.where(product_id: @current_product.id))
+    set_risk_plans_grid(@current_product.id)
   end
 
   # GET /risk_plans/1
@@ -30,6 +30,7 @@ class RiskPlansController < ApplicationController
   def create
     @risk_plan = RiskPlan.new(risk_plan_params)
     @current_product = @risk_plan.product
+    set_risk_plans_grid(@current_product.id)
 
     threshold_ids = risk_plan_params[:threshold_ids]
     unless threshold_ids.nil?
@@ -102,5 +103,9 @@ class RiskPlansController < ApplicationController
         :threshold_relation_symbols => [],
         :threshold_values => []
       )
+    end
+
+    def set_risk_plans_grid(product_id)
+      @risk_plans_grid = initialize_grid(RiskPlan.where(product_id: product_id))
     end
 end
