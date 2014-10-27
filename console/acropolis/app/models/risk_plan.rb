@@ -8,4 +8,8 @@ class RiskPlan < ActiveRecord::Base
   # validates :parameter_id, :presence => true
 
   attr_accessor :threshold_ids, :threshold_relation_symbols, :threshold_values
+
+  def threshold_value
+    thresholds.inject([]) { |list, item| list << [item.relation_symbol.math, item.value].join(' ')}.join(' | ')
+  end
 end

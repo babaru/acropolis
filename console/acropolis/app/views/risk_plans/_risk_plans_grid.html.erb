@@ -7,10 +7,10 @@
     risk_plan.parameter.name
   end
   g.column :name => t('activerecord.attributes.risk_plan.thresholds') do |risk_plan|
-
+    risk_plan.threshold_value
   end
   g.column :name => t('activerecord.attributes.risk_plan.operation') do |risk_plan|
-
+    content_tag(:span, risk_plan.operation.name, class: risk_plan.operation.level == 1 ? 'label label-warning label-sm' : risk_plan.operation.level == 5 ? 'label label-danger label-sm' : 'label label-inverse label-sm')
   end
   g.column name: t('activerecord.attributes.risk_plan.priority') do |risk_plan|
     risk_plan.priority
