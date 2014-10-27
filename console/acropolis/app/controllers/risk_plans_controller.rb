@@ -65,13 +65,30 @@ class RiskPlansController < ApplicationController
     end
   end
 
+  # GET /risk_plans/1
+  def delete
+    @risk_plan = RiskPlan.find(params[:risk_plan_id])
+  end
+
+  def enable
+    @risk_plan = RiskPlan.find(params[:risk_plan_id])
+    @current_product = @risk_plan.product
+    set_risk_plans_grid(@current_product.id)
+
+    @risk_plan.is_enabled = !@risk_plan.is_enabled
+    @risk_plan.save
+  end
+
   # DELETE /risk_plans/1
   # DELETE /risk_plans/1.json
   def destroy
+    @current_product = @risk_plan.product
+    set_risk_plans_grid(@current_product.id)
     @risk_plan.destroy
+
     respond_to do |format|
       format.html { redirect_to risk_plans_url, notice: 'Risk plan was successfully destroyed.' }
-      format.json { head :no_content }
+      format.js
     end
   end
 

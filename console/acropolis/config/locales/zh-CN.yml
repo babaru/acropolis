@@ -4,3 +4,8 @@ zh-CN:
     cancel: 取消
     edit: 编辑
     delete: 删除
+    confirm_delete: 是的，删除这条记录
+    cancel_delete: 不，请不要删除
+  messages:
+    confirmation:
+      delete: "删除这条%{model}记录？"
