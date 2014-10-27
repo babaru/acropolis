@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027054412) do
+ActiveRecord::Schema.define(version: 20141027054840) do
+
+  create_table "relation_symbols", force: true do |t|
+    t.string   "name"
+    t.string   "math"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "risk_plans", force: true do |t|
     t.integer  "parameter_id"
