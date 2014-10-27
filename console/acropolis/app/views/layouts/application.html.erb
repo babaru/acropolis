@@ -22,25 +22,10 @@
   <div id="global-navigation">
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#fakelink"><%= fa_icon("desktop") %> 实时监测</a></li>
-            <li><a href="#fakelink"><%= fa_icon("life-ring") %> 风控方案</a></li>
-            <li>
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= fa_icon("pie-chart") %> 数据报表 <%= fa_icon("caret-down") %></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-           </ul>
-         </div>
-       </div>
+        <div class="collapse navbar-collapse">
+          <%= render_navigation(level: 1..2, renderer: :bootstrap_topbar_list, expand_all: true) %>
+        </div>
+      </div>
     </nav>
   </div>
 </header>

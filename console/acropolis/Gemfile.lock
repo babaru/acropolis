@@ -101,6 +101,8 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    simple-navigation (3.13.0)
+      activesupport (>= 2.3.2)
     simple_form (3.1.0.rc2)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -143,6 +145,7 @@ DEPENDENCIES
   rails (= 4.1.6)
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
+  simple-navigation
   simple_form (~> 3.1.0.rc1)
   spring
   therubyracer
