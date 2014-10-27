@@ -1,2 +1,0 @@
-class InBoundNetWorthParameter < NetWorthParameter
-end

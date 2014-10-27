@@ -1,2 +1,0 @@
-class MarginParameter < Parameter
-end

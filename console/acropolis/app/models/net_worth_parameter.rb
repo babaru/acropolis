@@ -1,2 +1,0 @@
-class NetWorthParameter < Parameter
-end
