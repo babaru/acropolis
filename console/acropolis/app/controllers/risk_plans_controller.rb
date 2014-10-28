@@ -1,4 +1,6 @@
 class RiskPlansController < ApplicationController
+  before_filter :authenticate_user!
+
   before_action :set_risk_plan, only: [:show, :edit, :update, :destroy]
   before_action :set_parameter, only: [:index, :new, :create, :edit, :update, :destroy]
 

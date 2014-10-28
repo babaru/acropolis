@@ -9,6 +9,8 @@
 
       <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
+        <%= f.error_notification %>
+
         <div class="form-group">
           <div class="input-group">
             <%= f.input :login, wrapper: false, label: false, placeholder: 'Email or user name' %>

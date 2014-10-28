@@ -8,9 +8,11 @@ zh-CN:
     cancel_delete: 不，请不要删除
     sign_in: 登录
     sign_up: 注册
+    sign_out: 注销
   messages:
     confirmation:
       delete: "删除这条%{model}记录？"
+    welcome: 欢迎
   navigation:
     page:
       risk_plan: 风控方案

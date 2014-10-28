@@ -219,6 +219,52 @@ footer {
   font-size: 14px;
 }
 
+#user {
+  div.avatar {
+    display: block;
+    width: 40px; height: 40px;
+    border-radius: 20px;
+    background-color: #eee;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+
+    img.avatar {
+      width: 40px;
+      .border-top-radius(20px);
+      .border-bottom-radius(20px);
+      border: 1px solid @silver;
+    }
+  }
+
+  #user-menu {
+    position: absolute;
+    right: 60px; top: 5px;
+
+    > button {
+        color: @asbestos;
+        background-color: white;
+
+        &:hover {
+          color: @midnight-blue;
+          background-color: white;
+        }
+    }
+
+    > .dropdown-menu {
+      background-color: white;
+      .border-top-radius(0);
+      .border-bottom-radius(0);
+      border: 1px solid @clouds;
+
+      a {
+        .border-top-radius(0);
+        .border-bottom-radius(0);
+      }
+    }
+  }
+}
+
 body.session {
   background-color: #282828;
   padding-top: 200px;
