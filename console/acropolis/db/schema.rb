@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027154900) do
+ActiveRecord::Schema.define(version: 20141028011040) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -77,5 +77,15 @@ ActiveRecord::Schema.define(version: 20141027154900) do
 
   add_index "thresholds", ["relation_symbol_id"], name: "index_thresholds_on_relation_symbol_id", using: :btree
   add_index "thresholds", ["risk_plan_id"], name: "index_thresholds_on_risk_plan_id", using: :btree
+
+  create_table "translations", force: true do |t|
+    t.string   "locale"
+    t.string   "key"
+    t.text     "value"
+    t.text     "interpolations"
+    t.boolean  "is_proc",        default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
