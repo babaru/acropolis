@@ -2,6 +2,7 @@ zh-CN:
   activerecord:
     models:
       risk_plan: 风控方案
+      user: 用户
     attributes:
       risk_plan:
         parameter: 参数
@@ -11,6 +12,12 @@ zh-CN:
         operation: 操作
         operation_id: 操作
         is_enabled: 启用
+      user:
+        name: 帐号
+        email: 邮箱
+        password: 密码
+        password_confirmation: 确认密码
+        avatar: 头像
   models:
     list: "%{model}列表"
     new: "新建%{model}"

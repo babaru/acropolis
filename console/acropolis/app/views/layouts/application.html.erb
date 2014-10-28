@@ -16,7 +16,7 @@
       <h1>Acropolis</h1>
     </div>
 
-    <div id="user" class="pull-right">Signed in as Stanley</div>
+    <div id="user" class="pull-right"><%= link_to( fa_icon('signout', text: t("buttons.sign_out")), destroy_user_session_path, :method=>'delete') %></div>
   </div>
 
   <div id="global-navigation">

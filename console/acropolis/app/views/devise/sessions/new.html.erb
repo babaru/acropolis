@@ -1,38 +1,44 @@
-<div class="login-screen">
-<h2></h2>
-  <div class="login-form">
+<div class="login-box">
+  <ul class="nav nav-tabs">
+    <li class="active"><%= link_to t('navigation.tab.sign_in'), '#' %></li>
+    <li><%= link_to t('navigation.tab.sign_up'), new_user_registration_path %></li>
+  </ul> <!-- /tabs -->
+  <div class='content'>
 
+    <div class="login-form">
 
-    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
-      <div class="form-group">
-        <div class="input-group">
-          <%= f.input :email, wrapper: false, label: false %>
+        <div class="form-group">
+          <div class="input-group">
+            <%= f.input :login, wrapper: false, label: false, placeholder: 'Email or user name' %>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <div class="input-group">
-          <%= f.input :password, wrapper: false, label: false %>
+        <div class="form-group">
+          <div class="input-group">
+            <%= f.input :password, wrapper: false, label: false, placeholder: 'Password' %>
+          </div>
         </div>
-      </div>
 
-      <%= f.submit t('buttons.sign_in'), class: 'btn btn-primary btn-lg btn-block' %>
+        <%= f.submit t('buttons.sign_in'), class: 'btn btn-inverse btn-lg btn-block' %>
 
-    <% end %>
+      <% end %>
+
+    </div>
   </div>
-
-</div>
+</div> <!-- /login-box -->
 
 <script type="text/javascript">
 
 (function ($) {
+  'use strict'
 
   $(function () {
 
-    $('input[type=email]').removeClass('input-sm');
-    $('input[type=email]').closest('.input-group').append($('input[type=email]'));
-    $('input[type=email]').closest('.input-group').append($('<span class="input-group-addon"><i class="fui-user"></i></span>'));
+    $('input[type=text]').removeClass('input-sm');
+    $('input[type=text]').closest('.input-group').append($('input[type=text]'));
+    $('input[type=text]').closest('.input-group').append($('<span class="input-group-addon"><i class="fui-user"></i></span>'));
     $('input[type=password]').removeClass('input-sm');
     $('input[type=password]').closest('.input-group').append($('input[type=password]'));
     $('input[type=password]').closest('.input-group').append($('<span class="input-group-addon"><i class="fui-lock"></i></span>'));

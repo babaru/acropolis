@@ -33,10 +33,10 @@ function trim_ui() {
   $('[data-toggle="radio"]').radiocheck();
 
   // Tabs
-  $('.nav-tabs a').on('click', function (e) {
-    e.preventDefault();
-    $(this).tab('show');
-  });
+  // $('.nav-tabs a').on('click', function (e) {
+  //   e.preventDefault();
+  //   $(this).tab('show');
+  // });
 
   // Tooltips
   $('[data-toggle="tooltip"]').tooltip();

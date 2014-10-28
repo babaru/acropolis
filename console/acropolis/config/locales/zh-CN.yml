@@ -7,9 +7,13 @@ zh-CN:
     confirm_delete: 是的，删除这条记录
     cancel_delete: 不，请不要删除
     sign_in: 登录
+    sign_up: 注册
   messages:
     confirmation:
       delete: "删除这条%{model}记录？"
   navigation:
     page:
-      risk_plan: '风控方案'
+      risk_plan: 风控方案
+    tab:
+      sign_up: 注册新用户
+      sign_in: 登录
