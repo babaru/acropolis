@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get 'flatuipro_demo/index'
 
   get 'dashboard/index'
