@@ -1,5 +1,6 @@
 class RiskPlansController < ApplicationController
   before_action :set_risk_plan, only: [:show, :edit, :update, :destroy]
+  before_action :set_parameter, only: [:index, :new, :create, :edit, :update, :destroy]
 
   # GET /risk_plans
   # GET /risk_plans.json
@@ -7,7 +8,7 @@ class RiskPlansController < ApplicationController
     unless params[:product_id].nil?
       @current_product = Product.find params[:product_id]
       @current_product = Product.first if @current_product.nil?
-      set_risk_plans_grid(@current_product.id)
+      set_risk_plans_grid
     end
   end
 
@@ -33,7 +34,7 @@ class RiskPlansController < ApplicationController
   def create
     @risk_plan = RiskPlan.new(risk_plan_params)
     @current_product = @risk_plan.product
-    set_risk_plans_grid(@current_product.id)
+    set_risk_plans_grid
 
     update_thresholds
 
@@ -52,7 +53,7 @@ class RiskPlansController < ApplicationController
   # PATCH/PUT /risk_plans/1.json
   def update
     @current_product = @risk_plan.product
-    set_risk_plans_grid(@current_product.id)
+    set_risk_plans_grid
 
     update_thresholds
 
@@ -75,7 +76,7 @@ class RiskPlansController < ApplicationController
   def enable
     @risk_plan = RiskPlan.find(params[:risk_plan_id])
     @current_product = @risk_plan.product
-    set_risk_plans_grid(@current_product.id)
+    set_risk_plans_grid
 
     @risk_plan.is_enabled = !@risk_plan.is_enabled
     @risk_plan.save
@@ -85,7 +86,7 @@ class RiskPlansController < ApplicationController
   # DELETE /risk_plans/1.json
   def destroy
     @current_product = @risk_plan.product
-    set_risk_plans_grid(@current_product.id)
+    set_risk_plans_grid
     @risk_plan.destroy
 
     respond_to do |format|
@@ -98,6 +99,16 @@ class RiskPlansController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_risk_plan
       @risk_plan = RiskPlan.find(params[:id])
+    end
+
+    def set_parameter
+      @parameter = params[:p]
+      unless @parameter.nil?
+        @parameter.downcase!
+        unless %w(in_bound_net_worth out_bound_net_worth net_worth margin exposure).include?(@parameter)
+          @parameter = 'unknown'
+        end
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -113,8 +124,12 @@ class RiskPlansController < ApplicationController
       )
     end
 
-    def set_risk_plans_grid(product_id)
-      @risk_plans_grid = initialize_grid(RiskPlan.where(product_id: product_id))
+    def set_risk_plans_grid
+      unless @parameter.nil?
+        @risk_plans_grid = initialize_grid(RiskPlan.joins(:parameter).where("product_id=? AND parameters.name LIKE ?", @current_product.id, "%#{@parameter}%"))
+      else
+        @risk_plans_grid = initialize_grid(RiskPlan.where(product_id: @current_product.id))
+      end
     end
 
     def update_thresholds
