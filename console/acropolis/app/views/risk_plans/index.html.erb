@@ -15,13 +15,21 @@
     <% Client.all.each do |client| %>
     <li class="nav-header"><%= client.name %></li>
       <% client.products.each do |product| %>
-      <%= content_tag(:li, link_to([product.name, (content_tag(:span, product.risk_plans.count, class: 'badge pull-right') if product.risk_plans.count > 0)].join.html_safe, risk_plans_path(product_id: product.id)), class: product.id == @current_product.id ? 'active' : '') %>
+      <%= content_tag(:li, link_to([product.name, (content_tag(:span, product.risk_plans.count, class: 'badge pull-right') if product.risk_plans.count > 0)].join.html_safe, risk_plans_path(product_id: product.id)), class: @current_product && product.id == @current_product.id ? 'active' : '') %>
       <% end %>
     <% end %>
   </ul>
 </div><!-- #sidebar -->
 
 <div id="main" class="cell">
+
+  <% if @risk_plans_grid.nil? %>
+
+  <div class="well" style="margin: auto; clear: both; width: 600px; top: 200px; position: relative; text-align: center; font-size: 24px; font-weight: bold; color: #ccc;">
+    请在左边栏中选择产品查看对应风控方案
+  </div>
+
+  <% else %>
 
   <div class="breadcrumb">
     <a href="#fakelink">风控方案</a> <%= fa_icon('angle-right')%> <a href="#fakelink">产品风控列表</a> <%= fa_icon('angle-right')%> 志投科技-豆粕套利2014
@@ -51,6 +59,8 @@
     <%= render 'risk_plans_grid' %>
 
   </div>
+
+  <% end %>
 
 </div> <!-- #main -->
 

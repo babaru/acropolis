@@ -4,9 +4,11 @@ class RiskPlansController < ApplicationController
   # GET /risk_plans
   # GET /risk_plans.json
   def index
-    @current_product = Product.find params[:product_id]
-    @current_product = Product.first if @current_product.nil?
-    set_risk_plans_grid(@current_product.id)
+    unless params[:product_id].nil?
+      @current_product = Product.find params[:product_id]
+      @current_product = Product.first if @current_product.nil?
+      set_risk_plans_grid(@current_product.id)
+    end
   end
 
   # GET /risk_plans/1
