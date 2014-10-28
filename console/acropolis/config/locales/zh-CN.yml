@@ -9,3 +9,6 @@ zh-CN:
   messages:
     confirmation:
       delete: "删除这条%{model}记录？"
+  navigation:
+    page:
+      risk_plan: '风控方案'

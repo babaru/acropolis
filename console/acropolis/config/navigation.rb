@@ -54,7 +54,7 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            when the item should be highlighted, you can set a regexp which is matched
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
-    primary.item :page_risk_plan, "#{fa_icon('life-ring')} #{RiskPlan.model_name.human}".html_safe, risk_plans_path, {highlights_on: /risk_plans/}
+    primary.item :page_risk_plan, fa_icon('life-ring', text: t('navigation.page.risk_plan')), risk_plans_path, {highlights_on: /risk_plans/}
 
   end
 end

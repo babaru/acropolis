@@ -2,12 +2,16 @@ class RiskPlansController < ApplicationController
   before_action :set_risk_plan, only: [:show, :edit, :update, :destroy]
   before_action :set_parameter, only: [:index, :new, :create, :edit, :update, :destroy]
 
+  add_breadcrumb 'Acropolis', :root_path
+
   # GET /risk_plans
   # GET /risk_plans.json
   def index
     unless params[:product_id].nil?
-      @current_product = Product.find params[:product_id]
-      @current_product = Product.first if @current_product.nil?
+
+      @current_product = Product.find(params[:product_id])
+      add_breadcrumb "#{@current_product.name} #{RiskPlan.model_name.human}", Rails.application.routes.url_helpers.risk_plans_path(product_id: @current_product.id)
+
       set_risk_plans_grid
     end
   end
