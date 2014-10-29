@@ -12,53 +12,56 @@
 
 <header class="block">
   <div id="global-header">
-    <div id="logo" class="pull-left">
-      <h1>Acropolis</h1>
-    </div>
-
-    <div id="user" class="pull-right">
-
-      <div class="avatar">
-        <%= image_tag current_user.avatar.url(:thumb), class: 'avatar' %>
-      </div>
-
-      <div id="user-menu" class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-          <%= t("messages.welcome")%>, <strong><%= current_user.name %></strong> <%= fa_icon('caret-down') %>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><%= link_to( fa_icon('pencil', text: t("buttons.edit")), nil) %></li>
-          <li class="divider"></li>
-          <li><%= link_to( fa_icon('sign-out', text: t("buttons.sign_out")), destroy_user_session_path, :method=>'delete') %></li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-
-  <div id="global-navigation">
     <nav class="navbar navbar-inverse" role="navigation">
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse">
-          <%= render_navigation(level: 1..2, renderer: :bootstrap_topbar_list, expand_all: true) %>
-        </div>
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Flat UI</a>
       </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="navbar-collapse-5">
+        <%= render_navigation(level: 1..2, renderer: :bootstrap_topbar_list, expand_all: true) %>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown" id="user-nav">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t("messages.welcome")%>, <strong><%= current_user.full_name %></strong> <%= fa_icon('caret-down') %></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to( fa_icon('pencil', text: t("buttons.edit")), nil) %></li>
+              <li class="divider"></li>
+              <li><%= link_to( fa_icon('sign-out', text: t("buttons.sign_out")), destroy_user_session_path, :method=>'delete') %></li>
+            </ul>
+          </li>
+          <li>
+            <%= image_tag current_user.avatar.url(:thumb), class: 'avatar' %>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
     </nav>
   </div>
+
+  <div id="plate-title-panel">
+    <%= yield :plate_title_panel %>
+  </div>
+
 </header>
 
 <div class="block push">
   <div class="wrapper">
     <div class="block push">
 
-      <% if notice %>
-        <p class="alert alert-success"><%= notice %></p>
-      <% end %>
-      <% if alert %>
-        <p class="alert alert-danger"><%= alert %></p>
-      <% end %>
+      <div id="sidebar" class="cell">
+        <%= yield :sidebar %>
+      </div><!-- #sidebar -->
 
-      <%= yield %>
+      <div id="main" class="cell">
+
+        <div class="breadcrumb">
+        <%= render_breadcrumbs :separator => " #{fa_icon('angle-right')} " %>
+        </div>
+
+        <%= yield %>
+
+      </div> <!-- #main -->
 
     </div>
   </div>
@@ -96,6 +99,8 @@
 </footer>
 
 </section>
+
+<%= yield :anything_else %>
 
 </body>
 </html>

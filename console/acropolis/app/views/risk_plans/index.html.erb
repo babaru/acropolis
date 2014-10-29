@@ -1,70 +1,55 @@
-<div id="sidebar" class="cell">
+<% content_for :plate_title_panel do %>
 
-  <div id="sidebar-searchform">
-    <div class="form-group">
-      <div class="input-group input-group-sm input-group-rounded">
-        <input type="search" class="form-control" placeholder="搜索产品" id="search-query-4">
-        <span class="input-group-btn">
-          <button type="submit" class="btn"><span class="fui-search"></span></button>
-        </span>
-      </div>
-    </div>
-  </div>
+<%= render partial: 'products/product_panel' %>
 
-  <ul class="nav nav-list nav-list-vivid">
-    <% Client.all.each do |client| %>
-    <li class="nav-header"><%= client.name %></li>
-      <% client.products.each do |product| %>
-      <%= content_tag(:li, link_to([product.name, (content_tag(:span, product.risk_plans.count, class: 'badge pull-right') if product.risk_plans.count > 0)].join.html_safe, risk_plans_path(product_id: product.id)), class: @current_product && product.id == @current_product.id ? 'active' : '') %>
-      <% end %>
-    <% end %>
+<% end %>
+
+<% content_for :sidebar do %>
+
+  <ul class="nav nav-list">
+
+    <li class="nav-header"><%= t('navigation.page.risk_plan') %></li>
+    <li class="active"><%= link_to t('navigation.page.risk_plan_list'), risk_plans_path(product_id: @current_product.id) %></li>
+
+    <li class="divider"></li>
+
+    <li class="nav-header"><%= t('navigation.page.monitoring') %></li>
+    <li><%= link_to t('navigation.page.monitoring'), risk_plans_path(product_id: @current_product.id) %></li>
+    <li><%= link_to t('navigation.page.monitoring_settings'), risk_plans_path(product_id: @current_product.id) %></li>
   </ul>
-</div><!-- #sidebar -->
 
-<div id="main" class="cell">
+<% end %>
 
-  <% if @risk_plans_grid.nil? %>
-
-  <div class="well" style="margin: auto; clear: both; width: 600px; top: 200px; position: relative; text-align: center; font-size: 24px; font-weight: bold; color: #ccc;">
-    请在左边栏中选择产品查看对应风控方案
-  </div>
-
-  <% else %>
-
-  <div class="breadcrumb">
-  <%= render_breadcrumbs :separator => " #{fa_icon('angle-right')} " %>
-  </div>
-
-  <div class="page-header">
-    <h2><%= @current_product.name %></h2>
-  </div>
-
-  <div class="btn-toolbar">
-    <div class="btn-group">
-      <%= link_to t('activerecord.properties.parameter.name.net_worth'), risk_plans_path(product_id: @current_product.id, p: :net_worth), class: @parameter == 'net_worth' ? 'btn btn-info btn-sm active' : 'btn btn-info btn-sm' %>
-      <%= link_to t('activerecord.properties.parameter.name.margin'), risk_plans_path(product_id: @current_product.id, p: :margin), class: @parameter == 'margin' ? 'btn btn-info btn-sm active' : 'btn btn-info btn-sm' %>
-      <%= link_to t('activerecord.properties.parameter.name.exposure'), risk_plans_path(product_id: @current_product.id, p: :exposure), class: @parameter == 'exposure' ? 'btn btn-info btn-sm active' : 'btn btn-info btn-sm' %>
-      <%= link_to t('activerecord.properties.parameter.name.all'), risk_plans_path(product_id: @current_product.id), class: @parameter == nil ? 'btn btn-info btn-sm active' : 'btn btn-info btn-sm' %>
-    </div>
-
-    <div class="btn-group pull-right">
-      <%= link_to(fa_icon('plus', text: t('models.new', model: RiskPlan.model_name.human)), new_risk_plan_path(product_id: @current_product.id), remote: true, class: 'btn btn-primary btn-sm') %>
-    </div>
-  </div>
-
-  <p></p>
-
-  <div id="risk-plan-list">
-
-    <%= render 'risk_plans_grid' %>
-
-  </div>
-
-  <% end %>
-
-</div> <!-- #main -->
+<% content_for :anything_else do %>
 
 <!-- Modal -->
 
 <div class="modal fade" id="risk-plan-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 </div><!-- /.modal -->
+
+<% end %>
+
+<div class="page-header">
+  <h2><%= t('navigation.page.risk_plan_list') %></h2>
+</div>
+
+<div class="btn-toolbar">
+  <div class="btn-group">
+    <%= link_to t('activerecord.properties.parameter.name.net_worth'), risk_plans_path(product_id: @current_product.id, p: :net_worth), class: @parameter == 'net_worth' ? 'btn btn-info btn-sm active' : 'btn btn-info btn-sm' %>
+    <%= link_to t('activerecord.properties.parameter.name.margin'), risk_plans_path(product_id: @current_product.id, p: :margin), class: @parameter == 'margin' ? 'btn btn-info btn-sm active' : 'btn btn-info btn-sm' %>
+    <%= link_to t('activerecord.properties.parameter.name.exposure'), risk_plans_path(product_id: @current_product.id, p: :exposure), class: @parameter == 'exposure' ? 'btn btn-info btn-sm active' : 'btn btn-info btn-sm' %>
+    <%= link_to t('activerecord.properties.parameter.name.all'), risk_plans_path(product_id: @current_product.id), class: @parameter == nil ? 'btn btn-info btn-sm active' : 'btn btn-info btn-sm' %>
+  </div>
+
+  <div class="btn-group pull-right">
+    <%= link_to(fa_icon('plus', text: t('models.new', model: RiskPlan.model_name.human)), new_risk_plan_path(product_id: @current_product.id), remote: true, class: 'btn btn-primary btn-sm') %>
+  </div>
+</div>
+
+<p></p>
+
+<div id="risk-plan-list">
+
+  <%= render 'risk_plans_grid' %>
+
+</div>

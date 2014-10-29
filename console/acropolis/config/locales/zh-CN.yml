@@ -16,6 +16,8 @@ zh-CN:
   navigation:
     page:
       risk_plan: 风控方案
+      risk_plan_list: 风控方案列表
+      product: 产品
     tab:
       sign_up: 注册新用户
       sign_in: 登录

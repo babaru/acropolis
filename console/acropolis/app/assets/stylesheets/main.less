@@ -18,84 +18,104 @@ body {
 header {
 
   #global-header {
-    height: 50px;
-    padding: 10px 20px;
+    padding: 0px 20px;
+    background-color: @wet-asphalt;
 
-    #logo {
-      h1 {
-        display: none;
-      }
-
-      width: 110px; height: 30px;
-
-      .at2x("logo.png", 110px, 30px);
-    }
-  }
-
-  #global-navigation {
-    height: @global-nav-height;
-
-    .container-fluid {
-      padding: 0px;
-
-      .navbar-collapse {
-        padding: 0px 15px;
-      }
-    }
-
-    .navbar-inverse {
-      height: @global-nav-height;
+    > .navbar {
       .border-top-radius(0);
       .border-bottom-radius(0);
-      border: none;
+      margin: 0px;
 
-      &.navbar {
-        min-height: @global-nav-height;
+      > .navbar-header {
+        > .navbar-brand {
+          display: none;
+        }
+
+        width: 220px; height: 53px;
+        .at2x("logo_150.png", 150px, 50px);
+        background-repeat: no-repeat;
+        background-position: 0px 2px;
       }
 
-      .navbar-nav > li {
-        & > a {
-          // font-size: 14px;
-          // font-weight: normal;
+      img.avatar {
+        width: 40px;
+        .border-top-radius(20px);
+        .border-bottom-radius(20px);
+        border: 2px solid white;
+        margin-top: 5px;
+      }
+
+      #user-nav {
+        > a {
+          font-size: 14px;
+          font-weight: normal;
         }
+      }
 
-        & > a,
-        &.open > a,
-        &.open > a:focus {
-          border: none;
-          height: @global-nav-height;
-          background-color: @wet-asphalt;
-          border-bottom: 5px solid @green-sea;
-        }
+      .navbar-nav {
+        height: 53px;
 
-        &.active > a {
-          border-bottom: 5px solid @green-sea;
-
-          &,
-          &:hover,
-          &:focus {
-            background-color: @wet-asphalt;
+        > li {
+          > a {
+            // font-weight: normal;
           }
-
-        }
-      }
-
-      .dropdown-menu {
-        margin-top: 2px;
-        .border-top-radius(0px);
-        .border-bottom-radius(0px);
-
-        a,
-        a:hover,
-        a:focus {
-          .border-top-radius(0px);
-          .border-bottom-radius(0px);
         }
       }
     }
+  }
+}
 
+#plate-title-panel {
+  background-color: @clouds;
+  height: 80px;
+  border-bottom: 1px solid #ddd;
+  padding-top: 14px;
+  padding-left: 20px;
+
+  > .icon {
+    display: table-cell;
+    width: 55px;
+    img {
+      top: 5px;
+      position: relative;
+      width: 40px;
+    }
   }
 
+  > .product-info {
+    display: table-cell;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin: 0px;
+    display: block;
+    height: 30px;
+  }
+
+  > h2 {
+    font-size: 24px;
+    font-weight: normal;
+    height: 40px;
+    display: block;
+    padding-top: 10px;
+  }
+
+  table {
+    font-size: 12px;
+    color: @silver;
+
+    td.key {
+      padding: 2px 5px 2px 0px;
+      font-weight: bold;
+    }
+
+    td.value {
+      color: @green-sea;
+      padding: 2px 20px 2px 5px;
+      // font-weight: bold;
+    }
+  }
 }
 
 .wrapper {
@@ -134,44 +154,23 @@ footer {
 }
 
 #sidebar {
-  width: 250px;
-  padding-top: 10px;
-  background-color: @navbar-default-bg;
-
-  #sidebar-searchform {
-    padding: 0 5px;
-
-    > .form-group {
-      margin-bottom: 0px;
-    }
-  }
-
-  > .nav-list {
-    .border-top-radius(0px);
-    .border-bottom-radius(0px);
-
-    > li {
-      &,
-      & > a {
-        // font-weight: normal;
-      }
-    }
-
-  }
+  width: 260px;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .breadcrumb {
-  display: block;
+  // display: block;
   background-color: #fff;
   padding: 0px;
   // margin-bottom: 10px;
-  margin: 0px;
+  // margin: 0px;
   font-size: 12px;
-  color: @silver;
-  height: 10px;
-  top: -10px;
-  position: relative;
-  // font-weight: normal;
+  // color: @silver;
+  // height: 10px;
+  // top: -10px;
+  // position: relative;
+  font-weight: normal;
 }
 
 .page-header {
@@ -186,7 +185,9 @@ footer {
   }
 
   h2 {
-    font-size: 36px;
+    font-size: 24px;
+    color: @silver
+    // font-weight: normal;
   }
 }
 
@@ -223,8 +224,6 @@ footer {
   div.avatar {
     display: block;
     width: 40px; height: 40px;
-    border-radius: 20px;
-    background-color: #eee;
     position: absolute;
     top: 5px;
     right: 15px;
@@ -242,12 +241,12 @@ footer {
     right: 60px; top: 5px;
 
     > button {
-        color: @asbestos;
-        background-color: white;
+        color: @clouds;
+        background-color: @midnight-blue;
 
         &:hover {
-          color: @midnight-blue;
-          background-color: white;
+          color: white;
+          background-color: @midnight-blue;
         }
     }
 

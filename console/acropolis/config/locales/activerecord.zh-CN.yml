@@ -1,6 +1,7 @@
 zh-CN:
   activerecord:
     models:
+      product: 产品
       risk_plan: 风控方案
       user: 用户
     attributes:
