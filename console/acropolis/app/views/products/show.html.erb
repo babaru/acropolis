@@ -1,4 +1,21 @@
-<p id="notice"><%= notice %></p>
+<% content_for :plate_title_panel do %>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<%= render partial: 'products/product_panel' %>
+
+<% end %>
+
+<% content_for :sidebar do %>
+
+<%= render partial: 'products/product_sidebar_menu', locals: { product: @product } %>
+
+<% end %>
+
+<% content_for :anything_else do %>
+
+<!-- Modal -->
+
+<div class="modal fade" id="risk-plan-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div><!-- /.modal -->
+
+<% end %>
+

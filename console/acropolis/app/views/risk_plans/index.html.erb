@@ -6,17 +6,7 @@
 
 <% content_for :sidebar do %>
 
-  <ul class="nav nav-list">
-
-    <li class="nav-header"><%= t('navigation.page.risk_plan') %></li>
-    <li class="active"><%= link_to t('navigation.page.risk_plan_list'), risk_plans_path(product_id: @current_product.id) %></li>
-
-    <li class="divider"></li>
-
-    <li class="nav-header"><%= t('navigation.page.monitoring') %></li>
-    <li><%= link_to t('navigation.page.monitoring'), risk_plans_path(product_id: @current_product.id) %></li>
-    <li><%= link_to t('navigation.page.monitoring_settings'), risk_plans_path(product_id: @current_product.id) %></li>
-  </ul>
+<%= render partial: 'products/product_sidebar_menu', locals: {product: @current_product} %>
 
 <% end %>
 

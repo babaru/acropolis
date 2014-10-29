@@ -29,5 +29,8 @@ module Acropolis
     config.to_prepare do
       Devise::SessionsController.layout "devise"
     end
+
+    # For nav_lynx
+    config.nav_lynx.selected_class = 'active'
   end
 end

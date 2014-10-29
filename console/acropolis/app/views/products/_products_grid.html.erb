@@ -1,0 +1,15 @@
+<%= grid(@products_grid, allow_showing_all_records: false) do |g|
+
+  g.column :name => '#' do |product|
+    product.id
+  end
+  g.column name: t('activerecord.attributes.product.client') do |product|
+    product.client.name if product.client
+  end
+  g.column :name => t('activerecord.attributes.product.name') do |product|
+    link_to product.name, product_path(product)
+  end
+  g.column :name => t('activerecord.attributes.product.bank') do |product|
+    product.bank
+  end
+end -%>
