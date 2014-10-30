@@ -1,6 +1,6 @@
 <ul class="nav nav-list">
 
-  <%= nav_link_to t('navigation.page.product_show'), product_path(product), {}, { wrapper: :li } %>
+  <%= nav_link_to t('models.show', model: Product.model_name.human), product_path(product), {}, { wrapper: :li } %>
 
   <li class="divider"></li>
 

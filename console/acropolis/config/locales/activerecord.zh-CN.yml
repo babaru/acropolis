@@ -24,3 +24,4 @@ zh-CN:
     new: "新建%{model}"
     edit: "编辑%{model}"
     delete: "删除%{model}"
+    show: "%{model}概况"
