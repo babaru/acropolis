@@ -7,7 +7,13 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'dashboard#index'
 
-  resources :products
+  resources :products do
+    get 'delete'
+  end
+
+  resources :clients
+
+  resources :product_risk_plans
 
   resources :risk_plans do
     get 'delete'

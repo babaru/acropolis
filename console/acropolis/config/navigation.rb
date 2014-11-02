@@ -63,5 +63,9 @@ SimpleNavigation::Configuration.run do |navigation|
       product_menu.item :page_product_list, t('models.list', model: Product.model_name.human), products_path
     end
 
+    primary.item :page_client, "#{fa_icon('user', text: t('navigation.page.client'))} #{fa_icon('caret-down')}".html_safe, nil, {highlights_on: /clients/} do |client_menu|
+      client_menu.item :page_client_list, t('models.list', model: Client.model_name.human), clients_path
+    end
+
   end
 end

@@ -24,40 +24,55 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(product_params)
+    Product.transaction do
+      @product = Product.new(product_params)
+      @product.save!
+    end
 
     respond_to do |format|
-      if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        format.json { render :show, status: :created, location: @product }
-      else
-        format.html { render :new }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
+      set_products_grid
+      format.html { redirect_to @product, notice: 'Product was successfully created.'}
+      format.js
+    end
+  rescue ActiveRecord::Rollback
+    respond_to do |format|
+      format.html { render :new }
+      format.js { render :new }
     end
   end
 
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
-    respond_to do |format|
-      if @product.update(product_params)
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
-        format.json { render :show, status: :ok, location: @product }
-      else
-        format.html { render :edit }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
+    Product.transaction do
+      @product.update!(product_params)
     end
+
+    respond_to do |format|
+      set_products_grid
+      format.html { redirect_to @product, notice: 'Product was successfully updated.'}
+      format.js
+    end
+  rescue ActiveRecord::Rollback
+    respond_to do |format|
+      format.html { render :edit }
+      format.js { render :edit }
+    end
+  end
+
+  def delete
+    @product = Product.find(params[:product_id])
   end
 
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
+    set_products_grid
     @product.destroy
+
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      format.json { head :no_content }
+      format.js
     end
   end
 
@@ -69,6 +84,16 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params[:product]
+      params.require(:product).permit(
+        :name,
+        :broker,
+        :bank,
+        :client_id,
+        :budget
+      )
+    end
+
+    def set_products_grid
+      @products_grid = initialize_grid(Product)
     end
 end

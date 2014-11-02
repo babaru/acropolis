@@ -12,4 +12,15 @@
   g.column :name => t('activerecord.attributes.product.bank') do |product|
     product.bank
   end
+  g.column name: t('activerecord.attributes.product.budget') do |product|
+    number_with_delimiter(product.budget, delimiter: ',')
+  end
+
+  g.column html: {class: 'btn-cell'} do |product|
+    link_to fa_icon("pencil"), edit_product_path(product), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
+  end
+
+  g.column html: {class: 'btn-cell'} do |product|
+    link_to fa_icon("trash"), product_delete_path(product), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
+  end
 end -%>

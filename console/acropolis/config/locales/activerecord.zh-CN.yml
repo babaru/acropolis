@@ -23,6 +23,12 @@ zh-CN:
         password: 密码
         password_confirmation: 确认密码
         avatar: 头像
+      product:
+        name: 名称
+        client: 客户
+        bank: 银行
+        broker: 期货公司
+        budget: 资金
   models:
     list: "%{model}列表"
     new: "新建%{model}"

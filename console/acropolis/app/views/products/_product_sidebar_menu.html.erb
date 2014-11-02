@@ -1,17 +1,6 @@
 <ul class="nav nav-list">
 
-  <%= nav_link_to t('models.show', model: Product.model_name.human), product_path(product), {}, { wrapper: :li } %>
-
-  <li class="divider"></li>
-
-  <li class="nav-header"><%= t('navigation.page.risk_plan') %></li>
-  <%= nav_link_to t('navigation.page.risk_plan_list'), risk_plans_path(product_id: product.id), {}, { wrapper: :li } %>
-  <%= nav_link_to t('navigation.page.add_risk_plan'), new_risk_plan_path(product_id: product.id), {}, { wrapper: :li } %>
-
-  <li class="divider"></li>
-
-  <li class="nav-header"><%= t('navigation.page.monitoring') %></li>
-  <%= nav_link_to t('navigation.page.monitoring'), risk_plans_path(product_id: product.id), {}, { wrapper: :li } %>
-  <%= nav_link_to t('navigation.page.monitoring_settings'), risk_plans_path(product_id: product.id), {}, { wrapper: :li } %>
+  <li class="nav-header"><%= t('navigation.page.product') %></li>
+  <%= nav_link_to t('navigation.page.product_list'), products_path, {}, { wrapper: :li } %>
 
 </ul>
