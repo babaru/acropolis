@@ -4,15 +4,14 @@ zh-CN:
       product: 产品
       risk_plan: 风控方案
       user: 用户
+      parameter: 风控参数
+      threshold: 阈值
     attributes:
       risk_plan:
-        parameter: 参数
-        parameter_id: 参数
-        thresholds: 阈值
-        priority: 优先级
-        operation: 操作
-        operation_id: 操作
+        name: 名称
+        net_worth_thresholds: 净值阈值
         is_enabled: 启用
+        created_by: 创建人
       user:
         name: 帐号
         email: 邮箱

@@ -57,6 +57,8 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :page_dashboard, fa_icon('dashboard', text: t('navigation.page.dashboard')), dashboard_path, {highlights_on: /dashboard/}
 
+    primary.item :page_risk_plan, "#{fa_icon('life-ring', text: t('navigation.page.risk_plan'))}".html_safe, risk_plans_path, {highlights_on: /risk_plans/}
+
     primary.item :page_product, "#{fa_icon('archive', text: t('navigation.page.product'))} #{fa_icon('caret-down')}".html_safe, nil, {highlights_on: /products/} do |product_menu|
       product_menu.item :page_product_list, t('models.list', model: Product.model_name.human), products_path
     end

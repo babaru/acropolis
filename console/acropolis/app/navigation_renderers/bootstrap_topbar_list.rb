@@ -43,7 +43,6 @@ class BootstrapTopbarList < SimpleNavigation::Renderer::Base
   # Extracts the options relevant for the generated link
   #
   def link_options_for(item)
-    Rails.logger.debug 'sdf'
     special_options = {:method => item.method}.reject {|k, v| v.nil? }
     link_options = item.html_options[:link] || {}
     opts = special_options.merge(link_options)

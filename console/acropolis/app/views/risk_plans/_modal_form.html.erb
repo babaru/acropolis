@@ -4,11 +4,10 @@
 
   <%= f.error_notification %>
 
-  <%= f.input :parameter_id, collection: Parameter.all.collect {|p| [p.name, p.id]} %>
+  <%= f.input :name %>
 
   <div class="form-group required risk_plan_parameter_id">
-    <label class="required col-sm-2 control-label label-sm" for="risk_plan_thresholds">
-    <abbr title="required">*</abbr> 参数</label>
+    <label class="required col-sm-2 control-label label-sm" for="risk_plan_thresholds"><%= t('activerecord.attributes.risk_plan.net_worth_thresholds') %></label>
 
     <div id="threshold-btn" class="col-sm-10">
     <div class="btn-toolbar">
@@ -18,20 +17,16 @@
 
     <div id="threshold-panel" class="col-sm-offset-2 col-sm-10">
 
-      <% @risk_plan.thresholds.each do |threshold| %>
+      <% @risk_plan.net_worth_thresholds.each do |threshold| %>
 
-      <%= render(partial: 'threshold_form_field', locals: {threshold_id: threshold.id, threshold_relation_symbol: threshold.relation_symbol.id, threshold_value: threshold.value}) %>
+      <%= render(partial: 'threshold_form_field', locals: {threshold_type_name: 'net_worth_threshold', threshold_id: threshold.id, threshold_parameter: threshold.parameter.id, threshold_relation_symbol: threshold.relation_symbol.id, threshold_value: threshold.value, parameters: Parameter.where('name like ?', '%net_worth%')}) %>
 
       <% end %>
 
     </div>
   </div>
 
-  <%= f.input :operation_id, collection: Operation.all.collect {|o| [o.name, o.id]} %>
-
   <%= f.input :is_enabled, as: :fui_boolean, wrapper: :fui_boolean %>
-
-  <%= f.input :product_id, as: :hidden %>
 
   </div>
   <div class="modal-footer">
@@ -45,6 +40,11 @@
 
 <script type="text/javascript">
 
+function delete_threshold_field(item) {
+  item.closest('.form-group').find('#risk_plan_net_worth_threshold_removal_flags_').val(true);
+  item.closest('.form-group').hide();
+}
+
 (function ($) {
 
   $(function () {
@@ -52,13 +52,13 @@
     trim_ui();
 
     $('.threshold-item-delete-btn').unbind('click').bind('click', function() {
-      $(this).closest('.form-group').remove();
+      delete_threshold_field($(this));
     });
 
     $('.threshold-item-add-btn').click(function() {
-      $('#threshold-panel').append("<%= escape_javascript("#{render(partial: 'threshold_form_field', locals: {threshold_id: nil, threshold_relation_symbol: nil, threshold_value: nil})}").html_safe %>");
+      $('#threshold-panel').append("<%= escape_javascript("#{render(partial: 'threshold_form_field', locals: {threshold_type_name: 'net_worth_threshold', threshold_id: nil, threshold_parameter: nil, threshold_relation_symbol: nil, threshold_value: nil, parameters: Parameter.where('name like ?', '%net_worth%')})}").html_safe %>");
       $('.threshold-item-delete-btn').unbind('click').bind('click', function() {
-        $(this).closest('.form-group').remove();
+        delete_threshold_field($(this));
       })
     });
 

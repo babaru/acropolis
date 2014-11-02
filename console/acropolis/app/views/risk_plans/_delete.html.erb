@@ -5,19 +5,7 @@
       <h4 class="modal-title"><%= t('messages.confirmation.delete', model: RiskPlan.model_name.human) %></h4>
     </div>
     <div class="modal-body">
-    <ul class="errors"></ul>
-      <div class="panel-heading"><%= @risk_plan.product.name %></div>
-      <table class="table">
-        <tr>
-          <td><%= t('activerecord.attributes.risk_plan.parameter') %></td><td><%= @risk_plan.parameter.name %></td>
-        </tr>
-        <tr>
-          <td><%= t('activerecord.attributes.risk_plan.thresholds') %></td><td><%= @risk_plan.product.name %></td>
-        </tr>
-        <tr>
-          <td><%= t('activerecord.attributes.risk_plan.operation') %></td><td><%= @risk_plan.product.name %></td>
-        </tr>
-      </table>
+      <div class="panel-heading"><%= @risk_plan.name %></div>
     </div>
     <div class="modal-footer">
       <%= link_to t('buttons.confirm_delete'), risk_plan_path(@risk_plan), method: :delete, remote: true, class: "btn btn-danger" %>

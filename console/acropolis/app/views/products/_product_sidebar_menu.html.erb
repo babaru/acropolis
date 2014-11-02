@@ -6,6 +6,7 @@
 
   <li class="nav-header"><%= t('navigation.page.risk_plan') %></li>
   <%= nav_link_to t('navigation.page.risk_plan_list'), risk_plans_path(product_id: product.id), {}, { wrapper: :li } %>
+  <%= nav_link_to t('navigation.page.add_risk_plan'), new_risk_plan_path(product_id: product.id), {}, { wrapper: :li } %>
 
   <li class="divider"></li>
 

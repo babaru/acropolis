@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102054853) do
+ActiveRecord::Schema.define(version: 20141102082716) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -52,20 +52,12 @@ ActiveRecord::Schema.define(version: 20141102054853) do
   end
 
   create_table "risk_plans", force: true do |t|
-    t.integer  "parameter_id"
-    t.integer  "operation_id"
-    t.integer  "priority",     default: 5
-    t.boolean  "is_enabled",   default: false
-    t.integer  "user_id"
-    t.integer  "product_id"
+    t.boolean  "is_enabled",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "created_by_id"
   end
-
-  add_index "risk_plans", ["operation_id"], name: "index_risk_plans_on_operation_id", using: :btree
-  add_index "risk_plans", ["parameter_id"], name: "index_risk_plans_on_parameter_id", using: :btree
-  add_index "risk_plans", ["product_id"], name: "index_risk_plans_on_product_id", using: :btree
-  add_index "risk_plans", ["user_id"], name: "index_risk_plans_on_user_id", using: :btree
 
   create_table "thresholds", force: true do |t|
     t.integer  "risk_plan_id"
@@ -74,8 +66,10 @@ ActiveRecord::Schema.define(version: 20141102054853) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type",                                        default: "ParameterThreshold"
+    t.integer  "parameter_id"
   end
 
+  add_index "thresholds", ["parameter_id"], name: "index_thresholds_on_parameter_id", using: :btree
   add_index "thresholds", ["relation_symbol_id"], name: "index_thresholds_on_relation_symbol_id", using: :btree
   add_index "thresholds", ["risk_plan_id"], name: "index_thresholds_on_risk_plan_id", using: :btree
 
