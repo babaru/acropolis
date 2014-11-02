@@ -3,7 +3,8 @@ class RiskPlan < ActiveRecord::Base
   belongs_to :operation
   belongs_to :user
   belongs_to :product
-  has_many :thresholds
+  has_many :parameter_thresholds, dependent: :destroy
+  has_many :net_worth_thresholds, dependent: :destroy
 
   # validates :parameter_id, :presence => true
 

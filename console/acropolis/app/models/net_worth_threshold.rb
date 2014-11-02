@@ -1,0 +1,2 @@
+class NetWorthThreshold < Threshold
+end

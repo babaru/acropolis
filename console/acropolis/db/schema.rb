@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028092241) do
+ActiveRecord::Schema.define(version: 20141102054853) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20141028092241) do
     t.decimal  "value",              precision: 20, scale: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type",                                        default: "ParameterThreshold"
   end
 
   add_index "thresholds", ["relation_symbol_id"], name: "index_thresholds_on_relation_symbol_id", using: :btree

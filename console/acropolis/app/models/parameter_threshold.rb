@@ -1,0 +1,2 @@
+class ParameterThreshold < Threshold
+end
