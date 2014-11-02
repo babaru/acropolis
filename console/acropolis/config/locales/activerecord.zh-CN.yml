@@ -14,6 +14,8 @@ zh-CN:
         created_by: 创建人
       risk_plan_operation:
         operation: 操作
+        is_enabled: 启用
+        thresholds: 阈值
       user:
         name: 帐号
         email: 邮箱

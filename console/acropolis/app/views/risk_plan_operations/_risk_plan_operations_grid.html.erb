@@ -8,11 +8,19 @@
     content_tag(:span, t("activerecord.properties.operation.name.#{risk_plan_operation.operation.name}"), class: risk_plan_operation.operation.level == 1 ? 'label label-warning label-sm' : risk_plan_operation.operation.level == 5 ? 'label label-danger label-sm' : 'label label-inverse label-sm')
   end
 
+  g.column name: t('activerecord.attributes.risk_plan_operation.thresholds') do |risk_plan_operation|
+
+  end
+
+  g.column name: t('activerecord.attributes.risk_plan_operation.is_enabled') do |risk_plan_operation|
+    link_to(check_box_tag("checkbox-#{risk_plan_operation.id}", nil, risk_plan_operation.is_enabled, data: {toggle: 'switch'}), risk_plan_operation_enable_path(risk_plan_operation), method: :post, remote: true)
+  end
+
   g.column html: {class: 'btn-cell'} do |risk_plan_operation|
     link_to fa_icon("pencil"), edit_risk_plan_risk_plan_operation_path(id: risk_plan_operation, risk_plan_id: @risk_plan.id), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
   end
 
   g.column html: {class: 'btn-cell'} do |risk_plan_operation|
-    link_to fa_icon("trash"), risk_plan_risk_plan_operation_delete_path(risk_plan_operation_id: risk_plan_operation.id, risk_plan_id: @risk_plan.id), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
+    link_to fa_icon("trash"), risk_plan_operation_delete_path(risk_plan_operation.id), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
   end
 end -%>

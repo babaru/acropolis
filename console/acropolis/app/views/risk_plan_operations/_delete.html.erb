@@ -1,0 +1,26 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-title"><%= t('messages.confirmation.delete', model: RiskPlanOperation.model_name.human) %></h4>
+    </div>
+    <div class="modal-body">
+      <div class="panel panel-default">
+        <div class="panel-heading"><%= RiskPlanOperation.model_name.human %></div>
+        <table class="table">
+          <% @risk_plan_operation.thresholds.each do |threshold| %>
+          <tr>
+            <td><%= t("activerecord.attributes.parameter.name.#{threshold.parameter.name}") %></td>
+            <td><%= threshold.value %></td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <%= link_to t('buttons.confirm_delete'), risk_plan_operation_path(@risk_plan_operation), method: :delete, remote: true, class: "btn btn-danger" %>
+      <%= link_to t('buttons.cancel_delete'), "#", class: "btn btn-link", data: { dismiss: "modal" } %>
+    </div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
