@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102082716) do
+ActiveRecord::Schema.define(version: 20141102084148) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -31,6 +31,17 @@ ActiveRecord::Schema.define(version: 20141102082716) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "product_risk_plans", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "risk_plan_id"
+    t.boolean  "is_enabled",   default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_risk_plans", ["product_id"], name: "index_product_risk_plans_on_product_id", using: :btree
+  add_index "product_risk_plans", ["risk_plan_id"], name: "index_product_risk_plans_on_risk_plan_id", using: :btree
 
   create_table "products", force: true do |t|
     t.string   "name"
@@ -52,7 +63,6 @@ ActiveRecord::Schema.define(version: 20141102082716) do
   end
 
   create_table "risk_plans", force: true do |t|
-    t.boolean  "is_enabled",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"

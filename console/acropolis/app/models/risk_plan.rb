@@ -3,6 +3,8 @@ class RiskPlan < ActiveRecord::Base
   has_many :net_worth_thresholds, dependent: :destroy
   has_many :thresholds, dependent: :destroy
   belongs_to :created_by, class_name: 'User', foreign_key: :created_by_id
+  has_many :product_risk_plans, dependent: :destroy
+  has_many :prducts, through: :product_risk_plans
 
   # validates :parameter_id, :presence => true
 
