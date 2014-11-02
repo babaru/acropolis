@@ -154,12 +154,12 @@ class RiskPlanOperationsController < ApplicationController
           unless risk_plan_operation_params[:threshold_removal_flags][index] == 'true'
             threshold = Threshold.create!(
               {
-                risk_plan_operation_id: @risk_plan_operation.id,
                 relation_symbol_id: risk_plan_operation_params[:threshold_relation_symbols][index],
                 value: risk_plan_operation_params[:threshold_values][index],
                 parameter_id: risk_plan_operation_params[:threshold_parameters][index]
               }
             )
+            @risk_plan_operation.thresholds << threshold
           end
         end
       end
