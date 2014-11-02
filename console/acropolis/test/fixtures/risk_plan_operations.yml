@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  risk_plan_id: 
+  operation_id: 
+  is_enabled: false
+
+two:
+  risk_plan_id: 
+  operation_id: 
+  is_enabled: false

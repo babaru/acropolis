@@ -6,5 +6,8 @@
   <li class="divider"></li>
 
   <li class="nav-header"><%= t('navigation.page.recent_risk_plans') %></li>
+  <% RiskPlan.all.each do |risk_plan| %>
+  <%= nav_link_to risk_plan.name, risk_plan_risk_plan_operations_path(risk_plan), {}, { wrapper: :li } %>
+  <% end %>
 
 </ul>

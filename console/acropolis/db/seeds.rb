@@ -38,3 +38,18 @@ Translation.create(locale: 'zh-CN', key: 'activerecord.attributes.relation_symbo
 Translation.create(locale: 'zh-CN', key: 'activerecord.attributes.relation_symbol.name.equals_to', value: '等于')
 Translation.create(locale: 'zh-CN', key: 'activerecord.attributes.relation_symbol.name.greater_than_and_equals_to', value: '大于等于')
 Translation.create(locale: 'zh-CN', key: 'activerecord.attributes.relation_symbol.name.greater_than', value: '大于')
+
+# Basic Operation of Risk Plan
+# -----------------------------
+
+Operation.create(name: 'warning', level: 1)
+Operation.create(name: 'cease_open', level: 5)
+Operation.create(name: 'force_close', level: 10)
+
+# Operation Chinese Name
+# -----------------------------
+
+Translation.create(locale: 'zh-CN', key: 'activerecord.attributes.operation.name.warning', value: '预警')
+Translation.create(locale: 'zh-CN', key: 'activerecord.attributes.operation.name.cease_open', value: '停止开仓')
+Translation.create(locale: 'zh-CN', key: 'activerecord.attributes.operation.name.force_close', value: '强制平仓')
+

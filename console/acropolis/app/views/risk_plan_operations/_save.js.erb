@@ -1,0 +1,10 @@
+$("ul.errors").html("")
+<% if @risk_plan_operation.errors.any? %>
+  <% @risk_plan_operation.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+  $('#risk-plan-operation-list').html("<%= escape_javascript(render 'risk_plan_operations_grid') %>")
+  $("#risk-plan-operation-modal").modal("hide")
+  trim_ui();
+<% end %>

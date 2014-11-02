@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102084148) do
+ActiveRecord::Schema.define(version: 20141102091915) do
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -62,6 +62,17 @@ ActiveRecord::Schema.define(version: 20141102084148) do
     t.datetime "updated_at"
   end
 
+  create_table "risk_plan_operations", force: true do |t|
+    t.integer  "risk_plan_id"
+    t.integer  "operation_id"
+    t.boolean  "is_enabled",   default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "risk_plan_operations", ["operation_id"], name: "index_risk_plan_operations_on_operation_id", using: :btree
+  add_index "risk_plan_operations", ["risk_plan_id"], name: "index_risk_plan_operations_on_risk_plan_id", using: :btree
+
   create_table "risk_plans", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -70,18 +81,17 @@ ActiveRecord::Schema.define(version: 20141102084148) do
   end
 
   create_table "thresholds", force: true do |t|
-    t.integer  "risk_plan_id"
     t.integer  "relation_symbol_id"
-    t.decimal  "value",              precision: 20, scale: 4
+    t.decimal  "value",                   precision: 20, scale: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "type",                                        default: "ParameterThreshold"
+    t.string   "type",                                             default: "ParameterThreshold"
     t.integer  "parameter_id"
+    t.integer  "risk_plan_operations_id"
   end
 
   add_index "thresholds", ["parameter_id"], name: "index_thresholds_on_parameter_id", using: :btree
   add_index "thresholds", ["relation_symbol_id"], name: "index_thresholds_on_relation_symbol_id", using: :btree
-  add_index "thresholds", ["risk_plan_id"], name: "index_thresholds_on_risk_plan_id", using: :btree
 
   create_table "translations", force: true do |t|
     t.string   "locale"

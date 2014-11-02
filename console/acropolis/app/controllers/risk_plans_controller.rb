@@ -9,18 +9,13 @@ class RiskPlansController < ApplicationController
   # GET /risk_plans
   # GET /risk_plans.json
   def index
-    # unless params[:product_id].nil?
-
-      # @current_product = Product.find(params[:product_id])
-      # add_breadcrumb "#{@current_product.name} #{RiskPlan.model_name.human}", Rails.application.routes.url_helpers.risk_plans_path(product_id: @current_product.id)
-
-      set_risk_plans_grid
-    # end
+    set_risk_plans_grid
   end
 
   # GET /risk_plans/1
   # GET /risk_plans/1.json
   def show
+    @risk_plan_operations_grid = initialize_grid(RiskPlanOperation.where(risk_plan_id: @risk_plan.id))
   end
 
   # GET /risk_plans/new

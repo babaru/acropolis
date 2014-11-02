@@ -3,6 +3,7 @@ zh-CN:
     models:
       product: 产品
       risk_plan: 风控方案
+      risk_plan_operation: 风控操作条件
       user: 用户
       parameter: 风控参数
       threshold: 阈值
@@ -10,8 +11,9 @@ zh-CN:
       risk_plan:
         name: 名称
         net_worth_thresholds: 净值阈值
-        is_enabled: 启用
         created_by: 创建人
+      risk_plan_operation:
+        operation: 操作
       user:
         name: 帐号
         email: 邮箱

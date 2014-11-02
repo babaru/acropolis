@@ -1,2 +1,0 @@
-class ParameterThreshold < Threshold
-end

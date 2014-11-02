@@ -11,8 +11,14 @@ Rails.application.routes.draw do
 
   resources :risk_plans do
     get 'delete'
-    post 'enable'
+
+    resources :risk_plan_operations do
+      get 'delete'
+      post 'enable'
+    end
   end
+
+  resources :risk_plan_operations
 
   # Example resource route with options:
   #   resources :products do

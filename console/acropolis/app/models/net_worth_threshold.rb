@@ -1,2 +1,0 @@
-class NetWorthThreshold < Threshold
-end

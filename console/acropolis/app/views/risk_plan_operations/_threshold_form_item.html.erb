@@ -1,0 +1,22 @@
+
+<div class="form-group" id="threshold-1">
+
+  <%= hidden_field_tag("risk_plan_operation[threshold_ids][]", threshold_id) %>
+  <%= hidden_field_tag("risk_plan_operation[threshold_removal_flags][]", false) %>
+
+  <div class="col-sm-4">
+    <%= select_tag("risk_plan_operation[threshold_parameters][]", options_for_select(Parameter.all.collect {|r| [r.name, r.id]}, threshold_parameter), class: 'form-control input-sm') %>
+  </div>
+
+  <div class="col-sm-3">
+    <%= select_tag("risk_plan_operation[threshold_relation_symbols][]", options_for_select(RelationSymbol.all.collect {|r| [r.math, r.id]}, threshold_relation_symbol), class: 'form-control input-sm') %>
+  </div>
+
+  <div class="col-sm-3">
+    <%= text_field_tag("risk_plan_operation[threshold_values][]", threshold_value, class: 'form-control input-sm') %>
+  </div>
+
+  <div class="btn-toolbar">
+    <%= content_tag(:span, fa_icon('trash'), class: 'btn btn-danger btn-sm threshold-item-delete-btn') %>
+  </div>
+</div>
