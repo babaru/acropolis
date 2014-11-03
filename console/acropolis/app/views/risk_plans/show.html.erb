@@ -28,15 +28,18 @@
 <div class="page-header">
   <div class="row">
     <div class="col-sm-6">
-      <h2><%= @risk_plan.name %></h2>
+      <h2><%= t('models.list', model: RiskPlanOperation.model_name.human) %></h2>
     </div>
     <div class="col-sm-6">
       <div class="btn-toolbar">
         <div class="btn-group pull-right">
-
+        <%= link_to(fa_icon('plus', text: t('models.new', model: RiskPlanOperation.model_name.human)), new_risk_plan_risk_plan_operation_path(risk_plan_id: @risk_plan.id), remote: true, class: 'btn btn-primary btn-sm') %>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<div id="item-list">
+  <%= render 'risk_plan_operations/risk_plan_operations_grid' %>
+</div>
