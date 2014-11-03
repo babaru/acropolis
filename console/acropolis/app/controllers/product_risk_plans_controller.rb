@@ -6,6 +6,7 @@ class ProductRiskPlansController < ApplicationController
   # GET /product_risk_plans.json
   def index
     @product_risk_plans_grid = initialize_grid(ProductRiskPlan.all)
+    cache_recent_item(:product, @product.id, @product.name)
   end
 
   # GET /product_risk_plans/1

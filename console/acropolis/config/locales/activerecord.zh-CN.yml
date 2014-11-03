@@ -43,3 +43,4 @@ zh-CN:
     edit: "编辑%{model}"
     delete: "删除%{model}"
     show: "%{model}概况"
+    recent: 最近访问%{model}

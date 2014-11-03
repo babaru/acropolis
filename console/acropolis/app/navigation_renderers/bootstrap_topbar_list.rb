@@ -8,15 +8,19 @@ class BootstrapTopbarList < SimpleNavigation::Renderer::Base
     end
 
     list_content = item_container.items.inject([]) do |list, item|
-      li_options = item.html_options.reject {|k, v| k == :link}
-      if include_sub_navigation?(item)
-        li_options[:class] = [li_options[:class], "dropdown"].flatten.compact.join(' ')
+      if is_divider?(item) # Divider
+        list << render_divider(item)
+      else
+        li_options = item.html_options.reject {|k, v| k == :link}
+        if include_sub_navigation?(item)
+          li_options[:class] = [li_options[:class], "dropdown"].flatten.compact.join(' ')
+        end
+        li_content = tag_for(item)
+        if include_sub_navigation?(item)
+          li_content << render_sub_navigation_for(item)
+        end
+        list << content_tag(:li, li_content, li_options)
       end
-      li_content = tag_for(item)
-      if include_sub_navigation?(item)
-        li_content << render_sub_navigation_for(item)
-      end
-      list << content_tag(:li, li_content, li_options)
     end.join
     if skip_if_empty? && item_container.empty?
       ''
@@ -56,5 +60,13 @@ class BootstrapTopbarList < SimpleNavigation::Renderer::Base
     if include_sub_navigation?(item) && !options[:is_subnavigation]
       "dropdown-toggle"
     end
+  end
+
+  def is_divider?(item)
+    link_options_for(item)[:divider] == true
+  end
+
+  def render_divider(item)
+    content_tag(:li, nil, {class: 'divider'})
   end
 end

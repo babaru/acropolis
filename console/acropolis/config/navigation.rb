@@ -60,6 +60,13 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :page_risk_plan, "#{fa_icon('life-ring', text: t('navigation.page.risk_plan'))}".html_safe, risk_plans_path, {}
 
     primary.item :page_product, "#{fa_icon('archive', text: t('navigation.page.product'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |product_menu|
+      if recent_items(:product).length > 0
+        recent_items(:product).map do |id, name|
+          product_menu.item "page_product_#{id}".to_sym, name, product_risk_plans_path(product_id: id), {}
+        end
+        product_menu.item :page_product_divider_1, nil, nil, {link: {divider: true}}
+      end
+
       product_menu.item :page_product_list, t('models.list', model: Product.model_name.human), products_path
     end
 
