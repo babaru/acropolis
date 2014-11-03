@@ -1,0 +1,15 @@
+<%%= grid(@<%= class_name.split('::').last.underscore.downcase.pluralize %>_grid, :show_filters => :when_filtered) do |g|
+<% for attribute in class_name.split('::').last.constantize.columns -%>
+  g.column :name => t('activerecord.attributes.<%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %>'), :html => {:class => "grid-cell"} do |<%= class_name.split('::').last.underscore.downcase %>|
+    <%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %>
+  end
+<% end %>
+
+  g.column html: {class: 'btn-cell'} do |risk_plan|
+    link_to fa_icon("pencil"), edit_<%= singular_table_name %>_path(<%= class_name.split('::').last.underscore.downcase %>), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
+  end
+
+  g.column html: {class: 'btn-cell'} do |risk_plan|
+    link_to fa_icon("trash"), <%= singular_table_name %>_path(<%= class_name.split('::').last.underscore.downcase %>), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
+  end
+end -%>

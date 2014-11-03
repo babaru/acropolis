@@ -1,0 +1,8 @@
+<ul class="nav nav-list">
+
+  <li class="nav-header"><%%= t('navigation.page.<%= class_name.split('::').last.underscore.downcase %>') %></li>
+  <%%= nav_link_to t('navigation.page.<%= class_name.split('::').last.underscore.downcase.pluralize %>_list'), <%= class_name.split('::').last.underscore.downcase.pluralize %>_path, {}, { wrapper: :li } %>
+
+  <li class="divider"></li>
+
+</ul>

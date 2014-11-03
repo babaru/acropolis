@@ -6,5 +6,5 @@ $("ul.errors").html("")
 <% else %>
   $('#risk-plan-list').html("<%= escape_javascript(render 'risk_plans_grid') %>")
   $("#risk-plan-modal").modal("hide")
-  trim_ui();
+  draw_flat_ui();
 <% end %>

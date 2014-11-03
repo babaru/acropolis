@@ -1,0 +1,10 @@
+$("ul.errors").html("")
+<%% if @<%= class_name.split('::').last.underscore.downcase %>.errors.any? %>
+  <%% @<%= class_name.split('::').last.underscore.downcase %>.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%%= message.html_safe %>"))
+  <%% end %>
+<%% else %>
+  $('#item-list').html("<%%= escape_javascript(render '<%= table_name %>_grid') %>")
+  $("#item-modal").modal("hide")
+  draw_flat_ui();
+<%% end %>

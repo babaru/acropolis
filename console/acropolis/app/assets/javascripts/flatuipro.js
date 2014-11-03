@@ -17,7 +17,7 @@ String.prototype.repeat = function (num) {
   return new Array(num + 1).join(this);
 };
 
-function trim_ui() {
+function draw_flat_ui() {
   // Custom Selects
   if ($('[data-toggle="select"]').length) {
     $('[data-toggle="select"]').select2();
@@ -237,7 +237,7 @@ function trim_ui() {
 
   $(function () {
 
-    trim_ui();
+    draw_flat_ui();
 
   });
 }(jQuery));

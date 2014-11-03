@@ -6,5 +6,5 @@ $("ul.errors").html("")
 <% else %>
   $('#product-list').html("<%= escape_javascript(render 'products_grid') %>")
   $("#product-modal").modal("hide")
-  trim_ui();
+  draw_flat_ui();
 <% end %>
