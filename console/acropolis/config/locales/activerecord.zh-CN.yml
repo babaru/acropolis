@@ -4,6 +4,7 @@ zh-CN:
       product: 产品
       risk_plan: 风控方案
       risk_plan_operation: 风控操作条件
+      product_risk_plan: 产品关联风控方案
       user: 用户
       parameter: 风控参数
       threshold: 阈值
@@ -29,6 +30,10 @@ zh-CN:
         bank: 银行
         broker: 期货公司
         budget: 资金
+      product_risk_plan:
+        risk_plan_id: 风控方案
+        is_enabled: 启用
+        product_id: 产品
   models:
     list: "%{model}列表"
     new: "新建%{model}"

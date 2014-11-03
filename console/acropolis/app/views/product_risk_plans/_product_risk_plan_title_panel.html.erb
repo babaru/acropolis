@@ -3,9 +3,20 @@
 <div class="info">
   <h2><%= @product_risk_plan.name %></h2>
   <table>
+                
     <tr>
-      <td class="key"></td>
-      <td class="value"></td>
+      <td class="key"><%= t('activerecord.attributes.product_risk_plan.product_id') %></td>
+      <td class="value"><%= @product_risk_plan.product_id %></td>
     </tr>
-  </table>
+            
+    <tr>
+      <td class="key"><%= t('activerecord.attributes.product_risk_plan.risk_plan_id') %></td>
+      <td class="value"><%= @product_risk_plan.risk_plan_id %></td>
+    </tr>
+            
+    <tr>
+      <td class="key"><%= t('activerecord.attributes.product_risk_plan.is_enabled') %></td>
+      <td class="value"><%= @product_risk_plan.is_enabled %></td>
+    </tr>
+                          </table>
 </div>

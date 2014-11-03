@@ -4,8 +4,14 @@
   <h2><%%= @<%= class_name.split('::').last.underscore.downcase %>.name %></h2>
   <table>
     <tr>
-      <td class="key"></td>
-      <td class="value"></td>
+    <% for attribute in class_name.split('::').last.constantize.columns -%>
+    <% if attribute.name != "id" && attribute.name !="created_at" && attribute.name !="updated_at" %>
+
+      <td class="key"><%%= t('activerecord.attributes.<%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %>') %></td>
+      <td class="value"><%%= @<%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %> %></td>
+
+    <% end -%>
+    <% end -%>
     </tr>
   </table>
 </div>

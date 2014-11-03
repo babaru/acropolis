@@ -9,11 +9,16 @@ Rails.application.routes.draw do
 
   resources :products do
     get 'delete'
+
+    resources :product_risk_plans
   end
 
-  resources :clients
+  resources :clients, :banks, :brokers
 
-  resources :product_risk_plans
+  resources :product_risk_plans do
+    get 'delete'
+    post 'enable'
+  end
 
   resources :risk_plans do
     get 'delete'

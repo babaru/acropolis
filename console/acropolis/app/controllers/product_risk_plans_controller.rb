@@ -1,5 +1,6 @@
 class ProductRiskPlansController < ApplicationController
   before_action :set_product_risk_plan, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:index, :new]
 
   # GET /product_risk_plans
   # GET /product_risk_plans.json
@@ -15,6 +16,7 @@ class ProductRiskPlansController < ApplicationController
   # GET /product_risk_plans/new
   def new
     @product_risk_plan = ProductRiskPlan.new
+    @product_risk_plan.product = @product
   end
 
   # GET /product_risk_plans/1/edit
@@ -81,10 +83,33 @@ class ProductRiskPlansController < ApplicationController
     end
   end
 
+  # POST /product_risk_plans/1/enable
+  def enable
+    @product_risk_plan = ProductRiskPlan.find params[:product_risk_plan_id]
+    @product_risk_plan.is_enabled = !@product_risk_plan.is_enabled
+    @product_risk_plan.save!
+    @product = @product_risk_plan.product
+
+    respond_to do |format|
+      # set_product_risk_plans_grid
+      format.html { redirect_to @product_risk_plan, notice: 'Product risk plan was successfully updated.'}
+      format.js
+    end
+  rescue ActiveRecord::Rollback
+    respond_to do |format|
+      format.html { render :enable }
+      format.js { render :enable }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product_risk_plan
       @product_risk_plan = ProductRiskPlan.find(params[:id])
+    end
+
+    def set_product
+      @product = Product.find(params[:product_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

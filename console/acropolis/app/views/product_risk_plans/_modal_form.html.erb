@@ -4,13 +4,13 @@
 
   <%= f.error_notification %>
 
-            
-    <%= f.input :product_id %>
-          
-    <%= f.input :risk_plan_id %>
-          
+
+    <%= f.input :product_id, as: :hidden %>
+
+    <%= f.input :risk_plan_id, collection: RiskPlan.all.collect {|p| [p.name, p.id]}  %>
+
     <%= f.input :is_enabled %>
-                  
+
   </div>
 
   <div class="modal-footer">
