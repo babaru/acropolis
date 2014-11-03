@@ -1,0 +1,8 @@
+<ul class="nav nav-list">
+
+  <li class="nav-header"><%= Bank.model_name.human %></li>
+  <%= nav_link_to t('models.list', model: Bank.model_name.human), banks_path, {}, { wrapper: :li } %>
+
+  <li class="divider"></li>
+
+</ul>

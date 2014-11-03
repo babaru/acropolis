@@ -1,12 +1,14 @@
 <%%= grid(@<%= class_name.split('::').last.underscore.downcase.pluralize %>_grid, :show_filters => :when_filtered) do |g|
 <% for attribute in class_name.split('::').last.constantize.columns -%>
-  g.column name: t('activerecord.attributes.<%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %>') do |<%= class_name.split('::').last.underscore.downcase %>|
-    <% if attribute.name == 'name' %>
-    link_to(<%= singular_table_name %>.<%= attribute.name %>, <%= singular_table_name %>_path(<%= singular_table_name %>))
-    <% else %>
-    <%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %>
-    <% end %>
+<% if attribute.name == 'id' %>
+  g.column name: '#' do |<%= singular_table_name %>|
+    <%= singular_table_name %>.<%= attribute.name %>
   end
+  <% else %>
+  g.column name: t('activerecord.attributes.<%= singular_table_name %>.<%= attribute.name %>') do |<%= singular_table_name %>|
+    <% if attribute.name == 'name' %>link_to(<%= singular_table_name %>.<%= attribute.name %>, <%= singular_table_name %>_path(<%= singular_table_name %>))<% else %><%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %><% end %>
+  end
+<% end %>
 <% end %>
 
   g.column html: {class: 'btn-cell'} do |<%= class_name.split('::').last.underscore.downcase %>|
@@ -14,6 +16,6 @@
   end
 
   g.column html: {class: 'btn-cell'} do |<%= class_name.split('::').last.underscore.downcase %>|
-    link_to fa_icon("trash"), <%= singular_table_name %>_path(<%= class_name.split('::').last.underscore.downcase %>), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
+    link_to fa_icon("trash"), <%= singular_table_name %>_delete_path(<%= class_name.split('::').last.underscore.downcase %>), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
   end
 end -%>

@@ -6,7 +6,7 @@
     <tr>
 
       <td class="key"><%= t('activerecord.attributes.product.client_id') %></td>
-      <td class="value"><%= @product.client_id %></td>
+      <td class="value"><%= @product.client.name %></td>
 
 
       <td class="key"><%= t('activerecord.attributes.product.budget') %></td>
@@ -14,12 +14,12 @@
 
 
       <td class="key"><%= t('activerecord.attributes.product.broker_id') %></td>
-      <td class="value"><%= @product.broker_id %></td>
+      <td class="value"><%= @product.broker.name %></td>
 
 
       <td class="key"><%= t('activerecord.attributes.product.bank_id') %></td>
-      <td class="value"><%= @product.bank_id %></td>
+      <td class="value"><%= @product.bank.name %></td>
 
-            </tr>
+    </tr>
   </table>
 </div>

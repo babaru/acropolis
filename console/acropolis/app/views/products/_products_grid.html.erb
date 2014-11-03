@@ -1,48 +1,21 @@
 <%= grid(@products_grid, :show_filters => :when_filtered) do |g|
-  g.column name: t('activerecord.attributes.product.id') do |product|
-
+  g.column name: '#' do |product|
     product.id
-
   end
   g.column name: t('activerecord.attributes.product.name') do |product|
-
     link_to(product.name, product_product_risk_plans_path(product))
-
-  end
-  g.column name: t('activerecord.attributes.product.long_name') do |product|
-
-    product.long_name
-
-  end
-  g.column name: t('activerecord.attributes.product.created_at') do |product|
-
-    product.created_at
-
-  end
-  g.column name: t('activerecord.attributes.product.updated_at') do |product|
-
-    product.updated_at
-
   end
   g.column name: t('activerecord.attributes.product.client_id') do |product|
-
-    product.client_id
-
+    product.client.name
   end
   g.column name: t('activerecord.attributes.product.budget') do |product|
-
-    product.budget
-
+    number_with_delimiter(product.budget, delimiter: ',')
   end
   g.column name: t('activerecord.attributes.product.broker_id') do |product|
-
-    product.broker_id
-
+    product.broker.name
   end
   g.column name: t('activerecord.attributes.product.bank_id') do |product|
-
-    product.bank_id
-
+    product.bank.name
   end
 
 
@@ -51,6 +24,6 @@
   end
 
   g.column html: {class: 'btn-cell'} do |product|
-    link_to fa_icon("trash"), product_path(product), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
+    link_to fa_icon("trash"), product_delete_path(product), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
   end
 end -%>

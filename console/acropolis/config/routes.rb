@@ -13,7 +13,9 @@ Rails.application.routes.draw do
     resources :product_risk_plans
   end
 
-  resources :clients, :banks, :brokers
+  resources :clients, :banks, :brokers do
+    get 'delete'
+  end
 
   resources :product_risk_plans do
     get 'delete'

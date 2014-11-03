@@ -2,7 +2,7 @@
 
 <% content_for :plate_title_panel do %>
 
-<%= render partial: 'client_title_panel' %>
+<%= render partial: 'bank_title_panel' %>
 
 <% end %>
 
@@ -10,7 +10,7 @@
 
 <% content_for :sidebar do %>
 
-<%= render partial: 'clients_sidebar_menu' %>
+<%= render partial: 'banks_sidebar_menu' %>
 
 <% end %>
 
@@ -28,7 +28,7 @@
 <div class="page-header">
   <div class="row">
     <div class="col-sm-6">
-      <h2><%= @client.name %></h2>
+      <h2><%= @bank.name %></h2>
     </div>
     <div class="col-sm-6">
       <div class="btn-toolbar">

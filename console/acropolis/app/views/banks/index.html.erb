@@ -2,7 +2,7 @@
 
 <% content_for :plate_title_panel do %>
 
-<%= render partial: 'client_title_panel' %>
+<%= render partial: 'banks_title_panel' %>
 
 <% end %>
 
@@ -10,7 +10,7 @@
 
 <% content_for :sidebar do %>
 
-<%= render partial: 'clients_sidebar_menu' %>
+<%= render partial: 'banks_sidebar_menu' %>
 
 <% end %>
 
@@ -28,15 +28,20 @@
 <div class="page-header">
   <div class="row">
     <div class="col-sm-6">
-      <h2><%= @client.name %></h2>
+      <h2><%= t('models.list', model: Bank.model_name.human) %></h2>
     </div>
     <div class="col-sm-6">
       <div class="btn-toolbar">
         <div class="btn-group pull-right">
-
+          <%= link_to(fa_icon('plus', text: t('models.new', model: Bank.model_name.human)), new_bank_path, remote: true, class: 'btn btn-primary') %>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<div id="item-list">
+
+  <%= render 'banks_grid' %>
+
+</div>

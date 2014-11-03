@@ -1,0 +1,37 @@
+<%= grid(@banks_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: '#' do |bank|
+    bank.id
+  end
+  
+
+  g.column name: t('activerecord.attributes.bank.name') do |bank|
+    
+    link_to(bank.name, bank_path(bank))
+    
+  end
+
+
+  g.column name: t('activerecord.attributes.bank.created_at') do |bank|
+    
+    bank.created_at
+    
+  end
+
+
+  g.column name: t('activerecord.attributes.bank.updated_at') do |bank|
+    
+    bank.updated_at
+    
+  end
+
+
+
+  g.column html: {class: 'btn-cell'} do |bank|
+    link_to fa_icon("pencil"), edit_bank_path(bank), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
+  end
+
+  g.column html: {class: 'btn-cell'} do |bank|
+    link_to fa_icon("trash"), bank_delete_path(bank), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
+  end
+end -%>

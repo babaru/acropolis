@@ -67,5 +67,13 @@ SimpleNavigation::Configuration.run do |navigation|
       client_menu.item :page_client_list, t('models.list', model: Client.model_name.human), clients_path
     end
 
+    primary.item :page_broker, "#{fa_icon('user', text: t('navigation.page.broker'))} #{fa_icon('caret-down')}".html_safe, nil, {highlights_on: /brokers/} do |broker_menu|
+      broker_menu.item :page_broker_list, t('models.list', model: Broker.model_name.human), brokers_path
+    end
+
+    primary.item :page_bank, "#{fa_icon('user', text: t('navigation.page.bank'))} #{fa_icon('caret-down')}".html_safe, nil, {highlights_on: /banks/} do |bank_menu|
+      bank_menu.item :page_bank_list, t('models.list', model: Bank.model_name.human), banks_path
+    end
+
   end
 end

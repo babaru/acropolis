@@ -27,8 +27,11 @@ zh-CN:
       product:
         name: 名称
         client: 客户
+        client_id: 客户
         bank: 银行
+        bank_id: 银行
         broker: 期货公司
+        broker_id: 期货公司
         budget: 资金
       product_risk_plan:
         risk_plan_id: 风控方案
