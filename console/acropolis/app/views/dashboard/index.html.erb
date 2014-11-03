@@ -1,0 +1,37 @@
+<% content_for :plate_title_panel do %>
+
+<%= render partial: 'dashboard_title_panel' %>
+
+<% end %>
+
+<% content_for :anything_else do %>
+
+<!-- Modal -->
+
+<div class="modal fade" id="item-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div><!-- /.modal -->
+
+<% end %>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-8">
+
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">关注产品</div>
+        <!-- Table -->
+        <%= render partial: 'products_monitoring_grid' %>
+      </div>
+
+    </div>
+    <div class="col-lg-4">
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">最近访问风控方案</div>
+        <!-- Table -->
+        <%= render partial: 'recent_risk_plans_grid' %>
+      </div>
+    </div>
+  </div>
+</div>

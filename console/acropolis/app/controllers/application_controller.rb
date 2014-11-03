@@ -5,6 +5,13 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  def recent_items(type)
+    type = type.to_s if type.is_a?(Symbol)
+    session['recent'] ||= {}
+    session['recent'][type] ||= {}
+    session['recent'][type]
+  end
+
   protected
 
   def configure_permitted_parameters

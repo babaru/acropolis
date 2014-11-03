@@ -55,7 +55,7 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
 
-    primary.item :page_dashboard, fa_icon('dashboard', text: t('navigation.page.dashboard')), dashboard_path, {}
+    primary.item :page_dashboard, fa_icon('rocket', text: t('navigation.page.dashboard')), dashboard_path, {}
 
     primary.item :page_risk_plan, "#{fa_icon('life-ring', text: t('navigation.page.risk_plan'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |risk_plan_menu|
       if recent_items(:risk_plan).length > 0

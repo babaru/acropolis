@@ -1,0 +1,5 @@
+<%= grid(@products_monitoring_grid, :show_filters => :when_filtered) do |g|
+  g.column name: t('activerecord.attributes.product.name') do |product|
+    link_to(product.name, product_path(product))
+  end
+end -%>

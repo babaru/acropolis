@@ -1,0 +1,9 @@
+<%= grid(@recent_risk_plans_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: t('activerecord.attributes.risk_plan.name') do |risk_plan|
+    link_to(risk_plan.name, risk_plan_path(risk_plan))
+  end
+  g.column name: t('activerecord.attributes.risk_plan.created_by_id') do |risk_plan|
+    risk_plan.created_by.full_name
+  end
+end -%>
