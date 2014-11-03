@@ -1,0 +1,27 @@
+<% sidebar = true if local_assigns[:sidebar].nil? %>
+
+<div class="block push">
+  <div class="wrapper">
+    <div class="block push">
+
+      <% if sidebar %>
+
+      <div id="sidebar" class="cell">
+        <%= yield :sidebar %>
+      </div><!-- #sidebar -->
+
+      <% end %>
+
+      <div id="main" class="cell">
+
+        <div class="breadcrumb">
+        <%= render_breadcrumbs :separator => " #{fa_icon('angle-right')} " %>
+        </div>
+
+        <%= yield %>
+
+      </div> <!-- #main -->
+
+    </div>
+  </div>
+</div>

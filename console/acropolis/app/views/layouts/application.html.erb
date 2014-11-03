@@ -10,93 +10,11 @@
 
 <section class="wrapper">
 
-<header class="block">
-  <div id="global-header">
-    <nav class="navbar navbar-inverse" role="navigation">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Flat UI</a>
-      </div>
+<%= render partial: 'shared/header' %>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="navbar-collapse-5">
-        <%= render_navigation(level: 1..2, renderer: :bootstrap_topbar_list, expand_all: true) %>
+<%= render partial: 'shared/content' %>
 
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown" id="user-nav">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t("messages.welcome")%>, <strong><%= current_user.full_name %></strong> <%= fa_icon('caret-down') %></a>
-            <ul class="dropdown-menu">
-              <li><%= link_to( fa_icon('pencil', text: t("buttons.edit")), nil) %></li>
-              <li class="divider"></li>
-              <li><%= link_to( fa_icon('sign-out', text: t("buttons.sign_out")), destroy_user_session_path, :method=>'delete') %></li>
-            </ul>
-          </li>
-          <li>
-            <%= image_tag current_user.avatar.url(:thumb), class: 'avatar' %>
-          </li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </nav>
-  </div>
-
-  <div id="plate-title-panel">
-    <%= yield :plate_title_panel %>
-  </div>
-
-</header>
-
-<div class="block push">
-  <div class="wrapper">
-    <div class="block push">
-
-      <div id="sidebar" class="cell">
-        <%= yield :sidebar %>
-      </div><!-- #sidebar -->
-
-      <div id="main" class="cell">
-
-        <div class="breadcrumb">
-        <%= render_breadcrumbs :separator => " #{fa_icon('angle-right')} " %>
-        </div>
-
-        <%= yield %>
-
-      </div> <!-- #main -->
-
-    </div>
-  </div>
-</div>
-
-<footer class="block">
-  <div class="bottom-menu">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-2 col-sm-2">
-          <a href="#fakelink" class="bottom-menu-brand">Acropolis</a>
-        </div>
-        <div class="col-md-8 col-sm-8">
-          <ul class="bottom-menu-list">
-            <li><a href="#fakelink">About Us</a></li>
-            <li><a href="#fakelink">Store</a></li>
-            <li class="active"><a href="#fakelink">Jobs</a></li>
-            <li><a href="#fakelink">Privacy</a></li>
-            <li><a href="#fakelink">Terms</a></li>
-            <li><a href="#fakelink">Follow Us</a></li>
-            <li><a href="#fakelink">Support</a></li>
-            <li><a href="#fakelink">Links</a></li>
-          </ul>
-        </div>
-        <div class="col-md-2 col-sm-2">
-          <ul class="bottom-menu-iconic-list">
-            <li><a href="#fakelink" class="fui-pinterest"></a></li>
-            <li><a href="#fakelink" class="fui-facebook"></a></li>
-            <li><a href="#fakelink" class="fui-twitter"></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div> <!-- /bottom-menu -->
-</footer>
+<%= render partial: 'shared/footer' %>
 
 </section>
 
