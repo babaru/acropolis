@@ -55,23 +55,23 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
 
-    primary.item :page_dashboard, fa_icon('dashboard', text: t('navigation.page.dashboard')), dashboard_path, {highlights_on: /dashboard/}
+    primary.item :page_dashboard, fa_icon('dashboard', text: t('navigation.page.dashboard')), dashboard_path, {}
 
-    primary.item :page_risk_plan, "#{fa_icon('life-ring', text: t('navigation.page.risk_plan'))}".html_safe, risk_plans_path, {highlights_on: /risk_plans/}
+    primary.item :page_risk_plan, "#{fa_icon('life-ring', text: t('navigation.page.risk_plan'))}".html_safe, risk_plans_path, {}
 
-    primary.item :page_product, "#{fa_icon('archive', text: t('navigation.page.product'))} #{fa_icon('caret-down')}".html_safe, nil, {highlights_on: /products/} do |product_menu|
+    primary.item :page_product, "#{fa_icon('archive', text: t('navigation.page.product'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |product_menu|
       product_menu.item :page_product_list, t('models.list', model: Product.model_name.human), products_path
     end
 
-    primary.item :page_client, "#{fa_icon('user', text: t('navigation.page.client'))} #{fa_icon('caret-down')}".html_safe, nil, {highlights_on: /clients/} do |client_menu|
+    primary.item :page_client, "#{fa_icon('user', text: t('navigation.page.client'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |client_menu|
       client_menu.item :page_client_list, t('models.list', model: Client.model_name.human), clients_path
     end
 
-    primary.item :page_broker, "#{fa_icon('user', text: t('navigation.page.broker'))} #{fa_icon('caret-down')}".html_safe, nil, {highlights_on: /brokers/} do |broker_menu|
+    primary.item :page_broker, "#{fa_icon('user', text: t('navigation.page.broker'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |broker_menu|
       broker_menu.item :page_broker_list, t('models.list', model: Broker.model_name.human), brokers_path
     end
 
-    primary.item :page_bank, "#{fa_icon('user', text: t('navigation.page.bank'))} #{fa_icon('caret-down')}".html_safe, nil, {highlights_on: /banks/} do |bank_menu|
+    primary.item :page_bank, "#{fa_icon('user', text: t('navigation.page.bank'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |bank_menu|
       bank_menu.item :page_bank_list, t('models.list', model: Bank.model_name.human), banks_path
     end
 
