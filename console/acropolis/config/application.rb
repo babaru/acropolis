@@ -28,7 +28,7 @@ module Acropolis
 
     config.to_prepare do
       Devise::SessionsController.layout "devise"
-      DashboardController.layout 'no_sidebar'
+      DashboardController.layout 'dashboard'
     end
 
     # For nav_lynx

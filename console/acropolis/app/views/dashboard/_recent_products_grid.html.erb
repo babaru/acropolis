@@ -1,6 +1,0 @@
-<%= grid(@recent_products_grid, :show_filters => :when_filtered) do |g|
-
-  g.column name: t('activerecord.attributes.product.name') do |product|
-    link_to(product.long_name, product_path(product))
-  end
-end -%>

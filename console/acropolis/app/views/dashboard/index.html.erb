@@ -17,27 +17,34 @@
   <div class="row">
     <div class="col-lg-8">
 
-      <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading">关注产品</div>
-        <!-- Table -->
-        <%= render partial: 'products_monitoring_grid' %>
+    <div class="panel">
+      <div class="page-header">
+        <h3><%= fa_icon('desktop', text: '风险实时监测') %></h3>
       </div>
+      <!-- Table -->
+      <%= render partial: 'products_monitoring_grid' %>
+    </div>
 
     </div>
     <div class="col-lg-4">
-      <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading">最近访问风控方案</div>
-        <!-- Table -->
-        <%= render partial: 'recent_risk_plans_grid' %>
-      </div>
+      <div class="panel">
+        <div class="page-header">
+          <h3><%= fa_icon('clock-o', text: '最近访问') %></h3>
+        </div>
 
-      <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading">最近访问产品</div>
-        <!-- Table -->
-        <%= render partial: 'recent_products_grid' %>
+        <ul class="nav nav-list">
+          <li class="nav-header"><%= RiskPlan.model_name.human %></li>
+          <% recent_items(:risk_plan).map do |id, name| %>
+          <li><%= link_to name, risk_plan_path(id) %></li>
+          <% end %>
+
+          <li class="divider"></li>
+
+          <li class="nav-header"><%= Product.model_name.human %></li>
+          <% recent_items(:product).map do |id, name| %>
+          <li><%= link_to name, product_path(id) %></li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
