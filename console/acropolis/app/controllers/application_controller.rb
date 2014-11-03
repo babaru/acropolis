@@ -14,8 +14,11 @@ class ApplicationController < ActionController::Base
   end
 
   def cache_recent_item(type, id, name)
-    session[:recent] ||= {}
-    session[:recent][type] ||= {}
-    session[:recent][type][id] = name
+    logger.debug "type is #{type.class}"
+    type = type.to_s if type.is_a?(Symbol)
+    session['recent'] ||= {}
+    session['recent'][type] ||= {}
+    session['recent'][type][id.to_s] = name
+    logger.debug "controller: #{session['recent']}"
   end
 end
