@@ -1,30 +1,48 @@
 <%= grid(@products_grid, :show_filters => :when_filtered) do |g|
   g.column name: t('activerecord.attributes.product.id') do |product|
+    
     product.id
+    
   end
   g.column name: t('activerecord.attributes.product.name') do |product|
-    product.name
+    
+    link_to(product.name, product_path(product))
+    
   end
   g.column name: t('activerecord.attributes.product.long_name') do |product|
+    
     product.long_name
+    
   end
   g.column name: t('activerecord.attributes.product.created_at') do |product|
+    
     product.created_at
+    
   end
   g.column name: t('activerecord.attributes.product.updated_at') do |product|
+    
     product.updated_at
+    
   end
   g.column name: t('activerecord.attributes.product.client_id') do |product|
+    
     product.client_id
+    
   end
   g.column name: t('activerecord.attributes.product.budget') do |product|
+    
     product.budget
+    
   end
   g.column name: t('activerecord.attributes.product.broker_id') do |product|
+    
     product.broker_id
+    
   end
   g.column name: t('activerecord.attributes.product.bank_id') do |product|
+    
     product.bank_id
+    
   end
 
 

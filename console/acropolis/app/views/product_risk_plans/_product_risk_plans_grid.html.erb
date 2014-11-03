@@ -1,21 +1,33 @@
 <%= grid(@product_risk_plans_grid, :show_filters => :when_filtered) do |g|
   g.column name: t('activerecord.attributes.product_risk_plan.id') do |product_risk_plan|
+    
     product_risk_plan.id
+    
   end
   g.column name: t('activerecord.attributes.product_risk_plan.product_id') do |product_risk_plan|
+    
     product_risk_plan.product_id
+    
   end
   g.column name: t('activerecord.attributes.product_risk_plan.risk_plan_id') do |product_risk_plan|
+    
     product_risk_plan.risk_plan_id
+    
   end
   g.column name: t('activerecord.attributes.product_risk_plan.is_enabled') do |product_risk_plan|
+    
     product_risk_plan.is_enabled
+    
   end
   g.column name: t('activerecord.attributes.product_risk_plan.created_at') do |product_risk_plan|
+    
     product_risk_plan.created_at
+    
   end
   g.column name: t('activerecord.attributes.product_risk_plan.updated_at') do |product_risk_plan|
+    
     product_risk_plan.updated_at
+    
   end
 
 

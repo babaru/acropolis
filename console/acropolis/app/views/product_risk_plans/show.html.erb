@@ -1,4 +1,42 @@
-<p id="notice"><%= notice %></p>
+<% hide_sidebar = false if local_assigns[:hide_sidebar].nil? %>
 
-<%= link_to 'Edit', edit_product_risk_plan_path(@product_risk_plan) %> |
-<%= link_to 'Back', product_risk_plans_path %>
+<% content_for :plate_title_panel do %>
+
+<%= render partial: 'product_risk_plan_title_panel' %>
+
+<% end %>
+
+<% unless hide_sidebar %>
+
+<% content_for :sidebar do %>
+
+<%= render partial: 'product_risk_plans_sidebar_menu' %>
+
+<% end %>
+
+<% end %>
+
+<% content_for :anything_else do %>
+
+<!-- Modal -->
+
+<div class="modal fade" id="item-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div><!-- /.modal -->
+
+<% end %>
+
+<div class="page-header">
+  <div class="row">
+    <div class="col-sm-6">
+      <h2><%= @product_risk_plan.name %></h2>
+    </div>
+    <div class="col-sm-6">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
