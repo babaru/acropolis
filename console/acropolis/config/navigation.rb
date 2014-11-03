@@ -79,16 +79,10 @@ SimpleNavigation::Configuration.run do |navigation|
       product_menu.item :page_product_list, fa_icon('list', text: t('models.list', model: Product.model_name.human)), products_path
     end
 
-    primary.item :page_client, "#{fa_icon('user', text: t('navigation.page.client'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |client_menu|
-      client_menu.item :page_client_list, t('models.list', model: Client.model_name.human), clients_path
-    end
-
-    primary.item :page_broker, "#{fa_icon('user', text: t('navigation.page.broker'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |broker_menu|
-      broker_menu.item :page_broker_list, t('models.list', model: Broker.model_name.human), brokers_path
-    end
-
-    primary.item :page_bank, "#{fa_icon('user', text: t('navigation.page.bank'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |bank_menu|
-      bank_menu.item :page_bank_list, t('models.list', model: Bank.model_name.human), banks_path
+    primary.item :page_data_settings, "#{fa_icon('database', text: t('navigation.page.data_settings'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |data_settings_menu|
+      data_settings_menu.item :page_client_list, fa_icon('user', text: Client.model_name.human), clients_path
+      data_settings_menu.item :page_broker_list, fa_icon('key', text: Broker.model_name.human), brokers_path
+      data_settings_menu.item :page_bank_list, fa_icon('bank', text: Bank.model_name.human), banks_path
     end
 
   end

@@ -8,6 +8,9 @@ zh-CN:
       user: 用户
       parameter: 风控参数
       threshold: 阈值
+      client: 客户
+      broker: 资管公司
+      bank: 银行
     attributes:
       risk_plan:
         name: 名称
