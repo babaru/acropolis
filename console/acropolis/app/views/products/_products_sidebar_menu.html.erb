@@ -3,7 +3,7 @@
   <% if recent_items(:product).length > 0 %>
   <li class="nav-header"><%= t('models.recent', model: Product.model_name.human) %></li>
   <% recent_items(:product).map do |id, name| %>
-  <%= nav_link_to name, product_product_risk_plans_path(product_id: id), {}, { wrapper: :li } %>
+  <%= nav_link_to name, product_path(id: id), {}, { wrapper: :li } %>
   <% end %>
   <li class="divider"></li>
   <% end %>

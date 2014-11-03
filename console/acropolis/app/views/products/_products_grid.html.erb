@@ -3,7 +3,7 @@
     product.id
   end
   g.column name: t('activerecord.attributes.product.name') do |product|
-    link_to(product.name, product_product_risk_plans_path(product))
+    link_to(product.name, product_path(product))
   end
   g.column name: t('activerecord.attributes.product.client_id') do |product|
     product.client.name
