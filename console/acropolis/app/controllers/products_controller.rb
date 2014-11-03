@@ -67,12 +67,17 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    set_products_grid
-    @product.destroy
+    @product.destroy!
 
     respond_to do |format|
+      set_products_grid
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
       format.js
+    end
+  rescue ActiveRecord::Rollback
+    respond_to do |format|
+      format.html { render :delete }
+      format.js { render :delete }
     end
   end
 
@@ -86,14 +91,16 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit(
         :name,
-        :broker,
         :bank,
+        :broker,
+        :long_name,
         :client_id,
-        :budget
-      )
+        :budget,
+        )
     end
 
     def set_products_grid
       @products_grid = initialize_grid(Product)
     end
 end
+

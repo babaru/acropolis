@@ -1,39 +1,4 @@
-<% content_for :plate_title_panel do %>
+<p id="notice"><%= notice %></p>
 
-<%= render partial: 'products/product_panel' %>
-
-<% end %>
-
-<% content_for :sidebar do %>
-
-<%= render partial: 'products/product_sidebar_menu', locals: {product: @current_product} %>
-
-<% end %>
-
-<% content_for :anything_else do %>
-
-<!-- Modal -->
-
-<div class="modal fade" id="product-risk-plan-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-</div><!-- /.modal -->
-
-<% end %>
-
-<div class="page-header">
-  <h2><%= t('navigation.page.risk_plan_list') %></h2>
-</div>
-
-<div class="btn-toolbar">
-
-  <div class="btn-group pull-right">
-    <%= link_to(fa_icon('plus', text: t('models.new', model: ProductRiskPlan.model_name.human)), new_product_risk_plan_path(product_id: @product.id), remote: true, class: 'btn btn-primary btn-sm') %>
-  </div>
-</div>
-
-<p></p>
-
-<div id="product-risk-plan-list">
-
-  <%= render 'product_risk_plans_grid' %>
-
-</div>
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>

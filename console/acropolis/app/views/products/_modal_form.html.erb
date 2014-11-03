@@ -4,11 +4,20 @@
 
   <%= f.error_notification %>
 
-  <%= f.input :name %>
-  <%= f.input :bank %>
-  <%= f.input :broker %>
-  <%= f.input :client_id, collection: Client.all.collect{|item| [item.name, item.id]} %>
-  <%= f.input :budget %>
+            
+    <%= f.input :name %>
+          
+    <%= f.input :bank %>
+          
+    <%= f.input :broker %>
+          
+    <%= f.input :long_name %>
+                      
+    <%= f.input :client_id %>
+          
+    <%= f.input :budget %>
+      
+  </div>
 
   <div class="modal-footer">
 
@@ -18,3 +27,19 @@
   </div>
 
 <% end %>
+
+<script type="text/javascript">
+
+(function ($) {
+
+  $(function () {
+
+    draw_flat_ui();
+
+    //Add your script here.
+
+  });
+
+}(jQuery));
+
+</script>

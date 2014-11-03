@@ -5,7 +5,7 @@
       <h4 class="modal-title"><%= t('messages.confirmation.delete', model: Product.model_name.human) %></h4>
     </div>
     <div class="modal-body">
-      <div class="panel-heading"><%= @product.name %></div>
+      <div class="panel-heading"></div>
     </div>
     <div class="modal-footer">
       <%= link_to t('buttons.confirm_delete'), product_path(@product), method: :delete, remote: true, class: "btn btn-danger" %>

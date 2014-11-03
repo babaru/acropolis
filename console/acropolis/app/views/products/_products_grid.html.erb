@@ -1,26 +1,38 @@
-<%= grid(@products_grid, allow_showing_all_records: false) do |g|
-
-  g.column :name => '#' do |product|
+<%= grid(@products_grid, :show_filters => :when_filtered) do |g|
+  g.column :name => t('activerecord.attributes.product.id'), :html => {:class => "grid-cell"} do |product|
     product.id
   end
-  g.column name: t('activerecord.attributes.product.client') do |product|
-    product.client.name if product.client
+  g.column :name => t('activerecord.attributes.product.name'), :html => {:class => "grid-cell"} do |product|
+    product.name
   end
-  g.column :name => t('activerecord.attributes.product.name') do |product|
-    link_to product.name, product_path(product)
-  end
-  g.column :name => t('activerecord.attributes.product.bank') do |product|
+  g.column :name => t('activerecord.attributes.product.bank'), :html => {:class => "grid-cell"} do |product|
     product.bank
   end
-  g.column name: t('activerecord.attributes.product.budget') do |product|
-    number_with_delimiter(product.budget, delimiter: ',')
+  g.column :name => t('activerecord.attributes.product.broker'), :html => {:class => "grid-cell"} do |product|
+    product.broker
   end
+  g.column :name => t('activerecord.attributes.product.long_name'), :html => {:class => "grid-cell"} do |product|
+    product.long_name
+  end
+  g.column :name => t('activerecord.attributes.product.created_at'), :html => {:class => "grid-cell"} do |product|
+    product.created_at
+  end
+  g.column :name => t('activerecord.attributes.product.updated_at'), :html => {:class => "grid-cell"} do |product|
+    product.updated_at
+  end
+  g.column :name => t('activerecord.attributes.product.client_id'), :html => {:class => "grid-cell"} do |product|
+    product.client_id
+  end
+  g.column :name => t('activerecord.attributes.product.budget'), :html => {:class => "grid-cell"} do |product|
+    product.budget
+  end
+
 
   g.column html: {class: 'btn-cell'} do |product|
     link_to fa_icon("pencil"), edit_product_path(product), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
   end
 
   g.column html: {class: 'btn-cell'} do |product|
-    link_to fa_icon("trash"), product_delete_path(product), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
+    link_to fa_icon("trash"), product_path(product), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
   end
 end -%>

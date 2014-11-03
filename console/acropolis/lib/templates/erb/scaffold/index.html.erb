@@ -26,7 +26,7 @@
 <%% end %>
 
 <div class="page-header">
-  <h2><%%= t('navigation.page.<%= class_name.split('::').last.underscore.downcase.pluralize %>_list') %></h2>
+  <h2><%%= t('models.list', model: <%= class_name.split('::').last %>.model_name.human) %></h2>
 </div>
 
 <div class="btn-toolbar">

@@ -5,11 +5,11 @@
   end
 <% end %>
 
-  g.column html: {class: 'btn-cell'} do |risk_plan|
+  g.column html: {class: 'btn-cell'} do |<%= class_name.split('::').last.underscore.downcase %>|
     link_to fa_icon("pencil"), edit_<%= singular_table_name %>_path(<%= class_name.split('::').last.underscore.downcase %>), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
   end
 
-  g.column html: {class: 'btn-cell'} do |risk_plan|
+  g.column html: {class: 'btn-cell'} do |<%= class_name.split('::').last.underscore.downcase %>|
     link_to fa_icon("trash"), <%= singular_table_name %>_path(<%= class_name.split('::').last.underscore.downcase %>), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
   end
 end -%>

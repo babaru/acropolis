@@ -1,7 +1,7 @@
 <ul class="nav nav-list">
 
-  <li class="nav-header"><%= t('navigation.page.product_risk_plan') %></li>
-  <%= nav_link_to t('navigation.page.product_risk_plans_list'), product_risk_plans_path, {}, { wrapper: :li } %>
+  <li class="nav-header"><%= ProductRiskPlan.model_name.human %></li>
+  <%= nav_link_to t('models.list', model: ProductRiskPlan.model_name.human), product_risk_plans_path, {}, { wrapper: :li } %>
 
   <li class="divider"></li>
 

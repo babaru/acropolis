@@ -19,11 +19,11 @@
   end
 
 
-  g.column html: {class: 'btn-cell'} do |risk_plan|
+  g.column html: {class: 'btn-cell'} do |product_risk_plan|
     link_to fa_icon("pencil"), edit_product_risk_plan_path(product_risk_plan), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
   end
 
-  g.column html: {class: 'btn-cell'} do |risk_plan|
+  g.column html: {class: 'btn-cell'} do |product_risk_plan|
     link_to fa_icon("trash"), product_risk_plan_path(product_risk_plan), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
   end
 end -%>
