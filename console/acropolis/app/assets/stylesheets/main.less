@@ -74,46 +74,46 @@ header {
 
   > .icon {
     display: table-cell;
-    width: 55px;
+    width: 70px;
     img {
-      top: 5px;
+      top: 0px;
       position: relative;
-      width: 40px;
+      width: 50px;
     }
   }
 
   > .info {
     display: table-cell;
-  }
+    padding-top: 0px;
+    margin-top: 0px;
+    vertical-align: top;
 
-  h2 {
-    font-size: 24px;
-    margin: 0px;
-    display: block;
-    height: 30px;
-  }
+    > h2 {
+      font-size: 24px;
+      margin: 0px;
+      display: block;
+      line-height: 32px;
 
-  > h2 {
-    font-size: 24px;
-    font-weight: normal;
-    height: 40px;
-    display: block;
-    padding-top: 10px;
-  }
-
-  table {
-    font-size: 12px;
-    color: @silver;
-
-    td.key {
-      padding: 2px 5px 2px 0px;
-      font-weight: bold;
+      &.alone {
+        height: 50px;
+        line-height: 50px;
+      }
     }
 
-    td.value {
-      color: @green-sea;
-      padding: 2px 20px 2px 5px;
-      // font-weight: bold;
+    > table {
+      font-size: 12px;
+      color: @silver;
+
+      td.key {
+        padding: 2px 5px 2px 0px;
+        font-weight: bold;
+      }
+
+      td.value {
+        color: @green-sea;
+        padding: 2px 20px 2px 5px;
+        // font-weight: bold;
+      }
     }
   }
 }
