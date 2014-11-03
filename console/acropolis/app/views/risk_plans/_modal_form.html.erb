@@ -2,10 +2,12 @@
 
   <div class="modal-body">
 
-  <%= f.error_notification %>
+    <%= f.error_notification %>
 
-  <%= f.input :name %>
-  <%= f.input :created_by_id, as: :hidden %>
+    <%= f.input :name %>
+    <%= f.input :created_by_id, as: :hidden %>
+
+  </div>
 
   <div class="modal-footer">
 
@@ -15,3 +17,19 @@
   </div>
 
 <% end %>
+
+<script type="text/javascript">
+
+(function ($) {
+
+  $(function () {
+
+    draw_flat_ui();
+
+    //Add your script here.
+
+  });
+
+}(jQuery));
+
+</script>

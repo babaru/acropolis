@@ -1,21 +1,15 @@
 class RiskPlansController < ApplicationController
-  before_filter :authenticate_user!
-
   before_action :set_risk_plan, only: [:show, :edit, :update, :destroy]
-  before_action :set_parameter, only: [:index, :new, :create, :edit, :update, :destroy]
-
-  add_breadcrumb 'Acropolis', :root_path
 
   # GET /risk_plans
   # GET /risk_plans.json
   def index
-    set_risk_plans_grid
+    @risk_plans_grid = initialize_grid(RiskPlan.all)
   end
 
   # GET /risk_plans/1
   # GET /risk_plans/1.json
   def show
-    @risk_plan_operations_grid = initialize_grid(RiskPlanOperation.where(risk_plan_id: @risk_plan.id))
   end
 
   # GET /risk_plans/new
@@ -26,7 +20,6 @@ class RiskPlansController < ApplicationController
 
   # GET /risk_plans/1/edit
   def edit
-    # @current_product = @risk_plan.product
   end
 
   # POST /risk_plans
@@ -39,7 +32,7 @@ class RiskPlansController < ApplicationController
 
     respond_to do |format|
       set_risk_plans_grid
-      format.html { redirect_to @risk_plan, notice: 'Risk plan was successfully created.'}
+      format.html { redirect_to @risk_plan, notice: 'RiskPlan was successfully created.'}
       format.js
     end
   rescue ActiveRecord::Rollback
@@ -58,7 +51,7 @@ class RiskPlansController < ApplicationController
 
     respond_to do |format|
       set_risk_plans_grid
-      format.html { redirect_to @risk_plan, notice: 'Risk plan was successfully updated.'}
+      format.html { redirect_to @risk_plan, notice: 'RiskPlan was successfully updated.'}
       format.js
     end
   rescue ActiveRecord::Rollback
@@ -68,29 +61,24 @@ class RiskPlansController < ApplicationController
     end
   end
 
-  # GET /risk_plans/1
   def delete
     @risk_plan = RiskPlan.find(params[:risk_plan_id])
-  end
-
-  def enable
-    @risk_plan = RiskPlan.find(params[:risk_plan_id])
-    @current_product = @risk_plan.product
-    set_risk_plans_grid
-
-    @risk_plan.is_enabled = !@risk_plan.is_enabled
-    @risk_plan.save
   end
 
   # DELETE /risk_plans/1
   # DELETE /risk_plans/1.json
   def destroy
-    set_risk_plans_grid
-    @risk_plan.destroy
+    @risk_plan.destroy!
 
     respond_to do |format|
-      format.html { redirect_to risk_plans_url, notice: 'Risk plan was successfully destroyed.' }
+      set_risk_plans_grid
+      format.html { redirect_to risk_plans_url, notice: 'RiskPlan was successfully destroyed.' }
       format.js
+    end
+  rescue ActiveRecord::Rollback
+    respond_to do |format|
+      format.html { render :delete }
+      format.js { render :delete }
     end
   end
 
@@ -100,30 +88,16 @@ class RiskPlansController < ApplicationController
       @risk_plan = RiskPlan.find(params[:id])
     end
 
-    def set_parameter
-      @parameter = params[:p]
-      unless @parameter.nil?
-        @parameter.downcase!
-        unless %w(in_bound_net_worth out_bound_net_worth net_worth margin exposure).include?(@parameter)
-          @parameter = 'unknown'
-        end
-      end
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def risk_plan_params
       params.require(:risk_plan).permit(
         :name,
-        :is_enabled,
-        :created_by_id
-      )
+        :created_by_id,
+        )
     end
 
     def set_risk_plans_grid
-      unless @parameter.nil?
-        @risk_plans_grid = initialize_grid(RiskPlan.joins(:parameter).where("product_id=? AND parameters.name LIKE ?", @current_product.id, "%#{@parameter}%"))
-      else
-        @risk_plans_grid = initialize_grid(RiskPlan)
-      end
+      @risk_plans_grid = initialize_grid(RiskPlan)
     end
 end
+
