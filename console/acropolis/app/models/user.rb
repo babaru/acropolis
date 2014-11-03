@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     :path => ":rails_root/public:url",
     :url => "/system/avatars/:attachment_access_token/pic_:style.:extension",
     :styles => { :medium => "300x300>", :thumb => "50x50#" },
-    :default_url => "/images/:style/missing.png"
+    :default_url => "default_user_avatar.png"
 
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
