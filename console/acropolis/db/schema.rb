@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102150924) do
+ActiveRecord::Schema.define(version: 20141103071047) do
+
+  create_table "banks", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "brokers", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -45,15 +57,17 @@ ActiveRecord::Schema.define(version: 20141102150924) do
 
   create_table "products", force: true do |t|
     t.string   "name"
-    t.string   "bank"
-    t.string   "broker"
     t.string   "long_name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "client_id"
     t.integer  "budget",     default: 0
+    t.integer  "broker_id"
+    t.integer  "bank_id"
   end
 
+  add_index "products", ["bank_id"], name: "index_products_on_bank_id", using: :btree
+  add_index "products", ["broker_id"], name: "index_products_on_broker_id", using: :btree
   add_index "products", ["client_id"], name: "index_products_on_client_id", using: :btree
 
   create_table "relation_symbols", force: true do |t|

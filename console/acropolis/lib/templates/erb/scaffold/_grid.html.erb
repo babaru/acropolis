@@ -1,6 +1,6 @@
 <%%= grid(@<%= class_name.split('::').last.underscore.downcase.pluralize %>_grid, :show_filters => :when_filtered) do |g|
 <% for attribute in class_name.split('::').last.constantize.columns -%>
-  g.column :name => t('activerecord.attributes.<%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %>'), :html => {:class => "grid-cell"} do |<%= class_name.split('::').last.underscore.downcase %>|
+  g.column name: t('activerecord.attributes.<%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %>') do |<%= class_name.split('::').last.underscore.downcase %>|
     <%= class_name.split('::').last.underscore.downcase %>.<%= attribute.name %>
   end
 <% end %>
