@@ -65,7 +65,7 @@ SimpleNavigation::Configuration.run do |navigation|
         risk_plan_menu.item :page_risk_plan_divider_1, nil, nil, {link: {divider: true}}
       end
 
-      risk_plan_menu.item :page_risk_plan_list, t('models.list', model: RiskPlan.model_name.human), risk_plans_path
+      risk_plan_menu.item :page_risk_plan_list, fa_icon('list', text: t('models.list', model: RiskPlan.model_name.human)), risk_plans_path
     end
 
     primary.item :page_product, "#{fa_icon('archive', text: t('navigation.page.product'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |product_menu|
@@ -76,7 +76,7 @@ SimpleNavigation::Configuration.run do |navigation|
         product_menu.item :page_product_divider_1, nil, nil, {link: {divider: true}}
       end
 
-      product_menu.item :page_product_list, t('models.list', model: Product.model_name.human), products_path
+      product_menu.item :page_product_list, fa_icon('list', text: t('models.list', model: Product.model_name.human)), products_path
     end
 
     primary.item :page_client, "#{fa_icon('user', text: t('navigation.page.client'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |client_menu|
