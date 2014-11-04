@@ -5,12 +5,20 @@ module Api
 
       def create
         @product_risk_parameter = ProductRiskParameter.where(product_id: product_risk_parameter_params[:product_id], parameter_id: product_risk_parameter_params[:parameter_id]).first
-        super.create and return if @product_risk_parameter.nil?
+        if @product_risk_parameter.nil?
+          @product_risk_parameter = ProductRiskParameter.new(product_risk_parameter_params)
 
-        if @product_risk_parameter.update(product_risk_parameter_params)
-          render :show
+          if @product_risk_parameter.save
+            render :show, status: :created
+          else
+            render json: @product_risk_parameter.errors, status: :unprocessable_entity
+          end
         else
-          render json: @product_risk_parameter.errors, status: :unprocessable_entity
+          if @product_risk_parameter.update(product_risk_parameter_params)
+            render :show
+          else
+            render json: @product_risk_parameter.errors, status: :unprocessable_entity
+          end
         end
       end
 

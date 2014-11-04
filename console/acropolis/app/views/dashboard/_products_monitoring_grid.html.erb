@@ -1,5 +1,30 @@
 <%= grid(@products_monitoring_grid, :show_filters => :when_filtered) do |g|
+  g.column name: '#' do |product|
+    product.id
+  end
+
   g.column name: t('activerecord.attributes.product.name') do |product|
     link_to(product.name, product_path(product))
+  end
+
+  Parameter.all.each do |parameter|
+    g.column name: t("activerecord.attributes.parameter.name.#{parameter.name}") do |product|
+      p = product.product_risk_parameters.where(parameter_id: parameter.id).first
+      if p.nil?
+        ''
+      else
+        if parameter.name == 'in_bound_net_worth' || parameter.name == 'out_bound_net_worth'
+          if p.value > 1
+            p.value
+          elsif p.value < 1 && p.value > 0.9
+            content_tag(:span, p.value, class: "label label-warning", style: 'font-size: 14px; font-weight: bold;')
+          else
+            content_tag(:span, p.value, class: "label label-danger", style: 'font-size: 14px; font-weight: bold;')
+          end
+        else
+          p.value
+        end
+      end
+    end
   end
 end -%>
