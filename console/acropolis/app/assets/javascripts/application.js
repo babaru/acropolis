@@ -37,4 +37,7 @@
 
 //= require nprogress-turbolinks
 
+//= require spin
+//= require jquery.spin
+
 //= require turbolinks
