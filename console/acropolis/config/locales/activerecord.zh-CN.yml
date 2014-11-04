@@ -11,6 +11,7 @@ zh-CN:
       client: 客户
       broker: 资管公司
       bank: 银行
+      risk_event: 风控事件
     attributes:
       risk_plan:
         name: 名称
@@ -40,6 +41,11 @@ zh-CN:
         risk_plan_id: 风控方案
         is_enabled: 启用
         product_id: 产品
+      risk_event:
+        product_id: 产品
+        operation_id: 风控操作
+        remark: 说明
+        happened_at: 发生时间
   models:
     list: "%{model}列表"
     new: "新建%{model}"

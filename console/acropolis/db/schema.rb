@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103141936) do
+ActiveRecord::Schema.define(version: 20141104050946) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -75,6 +75,18 @@ ActiveRecord::Schema.define(version: 20141103141936) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "risk_events", force: true do |t|
+    t.integer  "product_id"
+    t.datetime "happened_at"
+    t.text     "remark"
+    t.integer  "operation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "risk_events", ["operation_id"], name: "index_risk_events_on_operation_id", using: :btree
+  add_index "risk_events", ["product_id"], name: "index_risk_events_on_product_id", using: :btree
 
   create_table "risk_plan_operations", force: true do |t|
     t.integer  "risk_plan_id"

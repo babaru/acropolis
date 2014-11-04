@@ -1,0 +1,26 @@
+<%= grid(@risk_events_grid, :show_filters => :when_filtered) do |g|
+
+  g.row_attributes do |risk_event|
+    {class: risk_event.operation.level == 1 ? '' : risk_event.operation.level == 5 ? 'warning' : 'danger'}
+  end
+
+  g.column name: '#' do |risk_event|
+    risk_event.id
+  end
+
+  g.column name: t('activerecord.attributes.risk_event.happened_at') do |risk_event|
+    risk_event.happened_at.strftime('%H:%M:%S')
+  end
+
+  g.column name: t('activerecord.attributes.risk_event.product_id') do |risk_event|
+    risk_event.product.name
+  end
+
+  g.column name: t('activerecord.attributes.risk_event.operation_id') do |risk_event|
+    content_tag(:span, t("activerecord.attributes.operation.name.#{risk_event.operation.name}"), class: risk_event.operation.level == 1 ? 'label label-default label-sm' : risk_event.operation.level == 5 ? 'label label-warning label-sm' : 'label label-danger label-sm')
+  end
+
+  g.column name: t('activerecord.attributes.risk_event.remark') do |risk_event|
+    risk_event.remark
+  end
+end -%>
