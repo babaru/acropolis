@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141104050946) do
+ActiveRecord::Schema.define(version: 20141104062716) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -43,6 +43,18 @@ ActiveRecord::Schema.define(version: 20141104050946) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "product_risk_parameters", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "parameter_id"
+    t.decimal  "value",        precision: 20, scale: 4
+    t.datetime "happened_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_risk_parameters", ["parameter_id"], name: "index_product_risk_parameters_on_parameter_id", using: :btree
+  add_index "product_risk_parameters", ["product_id"], name: "index_product_risk_parameters_on_product_id", using: :btree
 
   create_table "product_risk_plans", force: true do |t|
     t.integer  "product_id"

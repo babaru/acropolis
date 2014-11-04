@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :products, :risk_events
+      resources :products, :risk_events, :product_risk_parameters
     end
   end
 
