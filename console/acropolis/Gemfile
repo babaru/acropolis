@@ -53,6 +53,8 @@ gem 'devise'
 
 gem 'paperclip'
 
+gem 'kaminari'
+
 gem 'quiet_assets', :group => :development
 
 # Use ActiveModel has_secure_password
