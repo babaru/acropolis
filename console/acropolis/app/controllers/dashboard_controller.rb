@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
     @style ||= 'panel'
     @style = @style.to_sym
     if @style != :panel
-      @products_monitoring_grid = initialize_grid(Product.all)
+      @products_monitoring_grid = initialize_grid(Product.all, per_page: 1)
     end
   end
 

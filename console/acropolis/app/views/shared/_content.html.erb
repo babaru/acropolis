@@ -1,4 +1,5 @@
 <% sidebar = true if local_assigns[:sidebar].nil? %>
+<% breadcrumb = true if local_assigns[:breadcrumb].nil? %>
 
 <div class="block push">
   <div class="wrapper">
@@ -14,9 +15,13 @@
 
       <div id="main" class="cell">
 
+        <% if breadcrumb %>
+
         <div class="breadcrumb">
-        <%= render_breadcrumbs :separator => " #{fa_icon('angle-right')} " %>
+          <%= render_breadcrumbs :separator => " #{fa_icon('angle-right')} " %>
         </div>
+
+        <% end %>
 
         <%= yield %>
 
