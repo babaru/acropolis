@@ -408,8 +408,34 @@ body.dashboard {
       padding-bottom: 15px;
 
       .table {
-        margin-top: 10px;
+        margin-top: 15px;
         margin-bottom: 0px;
+      }
+
+      &.monitor {
+        padding-left: 15px;
+        padding-right: 15px;
+
+        > .page-header {
+          line-height: 50px;
+          font-size: 16px;
+          font-weight: bold;
+          padding-bottom: 0px;
+        }
+
+        > table {
+          font-size: 14px;
+          width: 100%;
+
+          .key {
+            font-weight: bold;
+            color: @silver;
+          }
+
+          .value {
+            text-align: right;
+          }
+        }
       }
 
       > .page-header {
@@ -425,6 +451,7 @@ body.dashboard {
       }
 
       > .nav.nav-list {
+        padding-top: 15px;
 
         > li {
 

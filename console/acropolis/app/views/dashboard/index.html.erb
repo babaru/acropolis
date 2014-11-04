@@ -16,12 +16,14 @@
 <div class="container-fluid">
   <div class="row">
 
-    <div class="col-lg-8">
+    <div class="col-md-9">
+
+      <div class="page-header">
+          <h3><%= fa_icon('exclamation-circle', text: '风控事件') %></h3>
+      </div>
 
       <div class="panel">
-        <div class="page-header">
-          <h3><%= fa_icon('clock-o', text: '风控事件') %></h3>
-        </div>
+
 
         <%= render partial: 'risk_events_grid' %>
 
@@ -33,31 +35,25 @@
           <div class="col-md-6">
             <div class="btn-toolbar">
               <div class="btn-group pull-right">
-                <%= link_to fa_icon('th-large'), nil, class: 'btn btn-default btn-sm' %>
-                <%= link_to fa_icon('reorder'), nil, class: 'btn btn-default btn-sm active' %>
+                <%= link_to fa_icon('th-large'), dashboard_switch_monitor_layout_path(style: :panel), remote: true, class: 'btn btn-default btn-sm switch-monitor-layout-panel-btn active' %>
+                <%= link_to fa_icon('reorder'), dashboard_switch_monitor_layout_path(style: :list), remote: true, class: 'btn btn-default btn-sm switch-monitor-layout-list-btn' %>
               </div>
             </div>
           </div>
         </div>
-
-
-
       </div>
 
-      <div class="panel">
-
-        <!-- Table -->
-        <%= render partial: 'products_monitoring_grid' %>
-      </div>
+      <div id="product-monitor"><%= render partial: 'products_monitoring_panels' %></div>
 
     </div>
 
-    <div class="col-lg-4">
-      <div class="panel">
-        <div class="page-header">
-          <h3><%= fa_icon('clock-o', text: '最近访问') %></h3>
-        </div>
+    <div class="col-md-3">
 
+      <div class="page-header">
+        <h3><%= fa_icon('clock-o', text: '最近访问') %></h3>
+      </div>
+
+      <div class="panel">
         <ul class="nav nav-list">
           <li class="nav-header"><%= RiskPlan.model_name.human %></li>
           <% recent_items(:risk_plan).map do |id, name| %>

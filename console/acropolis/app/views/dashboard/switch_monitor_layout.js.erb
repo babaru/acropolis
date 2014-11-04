@@ -1,0 +1,9 @@
+<% if @style == :panel %>
+$('.switch-monitor-layout-list-btn').removeClass('active');
+$('.switch-monitor-layout-panel-btn').addClass('active');
+$('#product-monitor').html('<%= escape_javascript(render(partial: 'products_monitoring_panels')) %>');
+<% else %>
+$('.switch-monitor-layout-panel-btn').removeClass('active');
+$('.switch-monitor-layout-list-btn').addClass('active');
+$('#product-monitor').html('<%= escape_javascript(render(partial: 'products_monitoring_grid')) %>');
+<% end %>
