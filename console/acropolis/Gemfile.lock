@@ -97,6 +97,7 @@ GEM
     mysql2 (0.3.16)
     nav_lynx (1.1.1)
       rails (>= 3.1.0)
+    nprogress-rails (0.1.6.3)
     orm_adapter (0.5.0)
     paperclip (4.1.1)
       activemodel (>= 3.0.0)
@@ -188,6 +189,7 @@ DEPENDENCIES
   less-rails-bootstrap (~> 3.2.0)
   mysql2 (= 0.3.16)
   nav_lynx
+  nprogress-rails
   paperclip
   quiet_assets
   rails (= 4.1.6)
