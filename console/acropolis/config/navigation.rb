@@ -57,6 +57,8 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :page_dashboard, fa_icon('rocket', text: t('navigation.page.dashboard')), dashboard_path, {}
 
+    primary.item :page_monitoring, fa_icon('desktop', text: t('navigation.page.monitoring')), monitoring_path, {}
+
     primary.item :page_risk_plan, "#{fa_icon('life-ring', text: t('navigation.page.risk_plan'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |risk_plan_menu|
       if recent_items(:risk_plan).length > 0
         recent_items(:risk_plan).map do |id, name|
@@ -65,7 +67,7 @@ SimpleNavigation::Configuration.run do |navigation|
         risk_plan_menu.item :page_risk_plan_divider_1, nil, nil, {link: {divider: true}}
       end
 
-      risk_plan_menu.item :page_risk_plan_list, fa_icon('list', text: t('models.list', model: RiskPlan.model_name.human)), risk_plans_path
+      risk_plan_menu.item :page_risk_plan_list, fa_stacked_icon('list', base: 'square-o', text: t('models.all', model: RiskPlan.model_name.human)), risk_plans_path
     end
 
     primary.item :page_product, "#{fa_icon('archive', text: t('navigation.page.product'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |product_menu|
@@ -76,13 +78,16 @@ SimpleNavigation::Configuration.run do |navigation|
         product_menu.item :page_product_divider_1, nil, nil, {link: {divider: true}}
       end
 
-      product_menu.item :page_product_list, fa_icon('list', text: t('models.list', model: Product.model_name.human)), products_path
+      product_menu.item :page_product_list, fa_stacked_icon('list', base: 'square-o', text: t('models.all', model: Product.model_name.human)), products_path
     end
 
-    primary.item :page_data_settings, "#{fa_icon('database', text: t('navigation.page.data_settings'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |data_settings_menu|
-      data_settings_menu.item :page_client_list, fa_icon('user', text: Client.model_name.human), clients_path
-      data_settings_menu.item :page_broker_list, fa_icon('key', text: Broker.model_name.human), brokers_path
-      data_settings_menu.item :page_bank_list, fa_icon('bank', text: Bank.model_name.human), banks_path
+    primary.item :page_data, "#{fa_icon('database', text: t('navigation.page.data'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |data_menu|
+    end
+
+    primary.item :page_settings, "#{fa_icon('cog', text: t('navigation.page.settings'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |settings_menu|
+      settings_menu.item :page_client_list, fa_icon('user', text: Client.model_name.human), clients_path
+      settings_menu.item :page_broker_list, fa_icon('key', text: Broker.model_name.human), brokers_path
+      settings_menu.item :page_bank_list, fa_icon('bank', text: Bank.model_name.human), banks_path
     end
 
   end

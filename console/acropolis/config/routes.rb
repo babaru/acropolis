@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'monitoring/index'
+
   namespace :api do
     namespace :v1 do
       resources :products, :risk_events, :product_risk_parameters
@@ -83,4 +85,6 @@ Rails.application.routes.draw do
 
   get 'dashboard', to: 'dashboard#index', as: :dashboard
   get 'dashboard/switch_monitor_layout', to: 'dashboard#switch_monitor_layout', as: :dashboard_switch_monitor_layout
+
+  get 'monitoring', to: 'monitoring#index', as: :monitoring
 end

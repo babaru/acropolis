@@ -55,3 +55,4 @@ zh-CN:
     delete: "删除%{model}"
     show: "%{model}概况"
     recent: 最近访问%{model}
+    all: 全部%{model}

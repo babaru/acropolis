@@ -15,14 +15,15 @@ zh-CN:
     welcome: 欢迎
   navigation:
     page:
-      risk_plan: 风控方案
+      risk_plan: 风控
       risk_plan_list: 风控方案列表
       product: 产品
       product_list: 产品列表
-      monitoring: 风控监测
+      monitoring: 监测
       dashboard: 控制台
       system_settings: 系统设置
-      data_settings: 数据设置
+      settings: 设置
+      data: 数据
       client: 客户
       broker: 期货公司
       bank: 银行
