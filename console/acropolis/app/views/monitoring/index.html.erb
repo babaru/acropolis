@@ -1,2 +1,15 @@
-<h1>Monitoring#index</h1>
-<p>Find me in app/views/monitoring/index.html.erb</p>
+<% content_for :plate_title_panel do %>
+
+<%= render partial: 'monitoring/title_panel' %>
+
+<% end %>
+
+<% content_for :anything_else do %>
+
+<!-- Modal -->
+
+<div class="modal fade" id="item-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div><!-- /.modal -->
+
+<% end %>
+
