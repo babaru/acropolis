@@ -1,15 +1,22 @@
 class RiskPlansController < ApplicationController
   before_action :set_risk_plan, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb I18n.t('navigation.page.risk_plan'), :risk_plans_path, only: [:show]
+
   # GET /risk_plans
   # GET /risk_plans.json
   def index
+    add_breadcrumb I18n.t('navigation.page.risk_plan'), nil
+
     @risk_plans_grid = initialize_grid(RiskPlan.all)
   end
 
   # GET /risk_plans/1
   # GET /risk_plans/1.json
   def show
+
+    add_breadcrumb @risk_plan.name, nil
+
     @risk_plan_operations_grid = initialize_grid(RiskPlanOperation.where(risk_plan_id: @risk_plan.id))
     cache_recent_item(:risk_plan, @risk_plan.id, @risk_plan.name)
   end

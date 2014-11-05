@@ -1,5 +1,15 @@
 <ul class="nav nav-list">
 
+  <% if @risk_plan %>
+
+  <li class="nav-header">本方案关联产品</li>
+  <% @risk_plan.products.each do |product| %>
+  <%= nav_link_to product.name, product_path(product), {}, { wrapper: :li } %>
+  <% end %>
+
+  <li class="divider"></li>
+  <% end %>
+
   <% if recent_items(:risk_plan).length > 0 %>
   <li class="nav-header"><%= t('models.recent', model: RiskPlan.model_name.human) %></li>
   <% recent_items(:risk_plan).map do |id, name| %>

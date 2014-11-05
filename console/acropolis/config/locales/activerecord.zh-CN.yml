@@ -3,8 +3,8 @@ zh-CN:
     models:
       product: 产品
       risk_plan: 风控方案
-      risk_plan_operation: 风控操作条件
-      product_risk_plan: 产品关联风控方案
+      risk_plan_operation: 风控条件
+      product_risk_plan: 关联风控方案
       user: 用户
       parameter: 风控参数
       threshold: 阈值
@@ -19,7 +19,8 @@ zh-CN:
         created_by_id: 创建人
         operation_count: 风控条件数量
       risk_plan_operation:
-        operation: 操作
+        operation: 风控操作
+        operation_id: 风控操作
         is_enabled: 启用
         thresholds: 阈值
       user:
@@ -49,6 +50,7 @@ zh-CN:
   models:
     list: "%{model}列表"
     new: "新建%{model}"
+    add: 添加%{model}
     edit: "编辑%{model}"
     delete: "删除%{model}"
     show: "%{model}概况"

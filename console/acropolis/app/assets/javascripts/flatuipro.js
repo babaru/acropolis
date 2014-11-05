@@ -11,7 +11,6 @@
 //= require typeahead.bundle
 //= require video
 
-
 String.prototype.repeat = function (num) {
   'use strict';
   return new Array(num + 1).join(this);

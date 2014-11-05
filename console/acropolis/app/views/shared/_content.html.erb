@@ -15,13 +15,7 @@
 
       <div id="main" class="cell">
 
-        <% if breadcrumb %>
-
-        <div class="breadcrumb">
-          <%= render_breadcrumbs :separator => " #{fa_icon('angle-right')} " %>
-        </div>
-
-        <% end %>
+        <%= render partial: 'shared/breadcrumb' if breadcrumb %>
 
         <%= yield %>
 

@@ -24,6 +24,7 @@
 
 //= require twitter/bootstrap
 //= require flatuipro
+//= require main
 
 //= require retina.min
 //= require bootstrap-notify

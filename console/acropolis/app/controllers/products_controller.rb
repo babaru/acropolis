@@ -1,10 +1,14 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb I18n.t('navigation.page.product'), :products_path, only: [:show]
+
   # GET /products
   # GET /products.json
   def index
     @products_grid = initialize_grid(Product.all)
+
+    add_breadcrumb I18n.t('navigation.page.product'), nil
   end
 
   # GET /products/1
@@ -12,6 +16,8 @@ class ProductsController < ApplicationController
   def show
     @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(product_id: @product.id))
     cache_recent_item(:product, @product.id, @product.name)
+
+    add_breadcrumb @product.name, nil
   end
 
   # GET /products/new
