@@ -26,6 +26,7 @@
 //= require flatuipro
 
 //= require retina.min
+//= require bootstrap-notify
 
 //= require nprogress
 

@@ -238,6 +238,9 @@ function draw_flat_ui() {
   $(function () {
 
     draw_flat_ui();
+  //   $('.notifications.top-center').notify({
+  //   message: { text: 'Aw yeah, It works!' }
+  // }).show();
 
   });
 }(jQuery));

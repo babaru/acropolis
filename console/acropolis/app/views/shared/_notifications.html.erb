@@ -1,0 +1,18 @@
+<div class="notifications">
+
+<% if notice %>
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <strong>成功 </strong><%=fa_icon('smile-o') %> <%= notice %>
+  </div>
+
+<% end %>
+<% if alert %>
+
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <strong>警告 </strong><%=fa_icon('warning') %> <%= alert %>
+  </div>
+
+<% end %>
+</div>
