@@ -13,5 +13,6 @@
  *= require twitter/bootstrap
  *= require font-awesome
  *= require flatuipro
+ *= require nprogress-override
  *= require main
  */

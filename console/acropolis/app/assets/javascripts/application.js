@@ -30,13 +30,6 @@
 //= require bootstrap-notify
 
 //= require nprogress
-
-// NProgress.configure({
-//   // showSpinner: false,
-//   ease: 'ease',
-//   speed: 500
-// });
-
 //= require nprogress-turbolinks
 
 //= require spin
