@@ -11,6 +11,11 @@
     <div class="btn-toolbar pull-right">
 
       <div class="btn-group">
+        <%= link_to fa_icon('th-large'), dashboard_switch_monitor_layout_path(style: :panel), remote: true, class: 'btn btn-default switch-monitor-layout-panel-btn active' %>
+        <%= link_to fa_icon('reorder'), dashboard_switch_monitor_layout_path(style: :list), remote: true, class: 'btn btn-default switch-monitor-layout-list-btn' %>
+      </div>
+
+      <div class="btn-group">
         <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">Default <span class="caret"></span></button>
         <ul role="menu" class="dropdown-menu">
           <li><a href="#">Action</a></li>
@@ -32,7 +37,9 @@
           <li><a href="#">Separated link</a></li>
         </ul>
       </div>
+
     </div>
+
   </div>
 </div>
 

@@ -1,0 +1,23 @@
+
+<div class="row">
+
+  <% Product.all.each do |product| %>
+  <div class="col-md-3">
+
+    <div class="panel monitor">
+      <div class="page-header"><%= product.name %></div>
+
+      <table>
+        <% Parameter.all.each do |parameter| %>
+        <tr>
+          <td class="key"><%= t("activerecord.attributes.parameter.name.#{parameter.name}") %></td>
+          <td class="value"><%= render_product_parameter(product, parameter) %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+
+  </div>
+  <% end %>
+
+</div>

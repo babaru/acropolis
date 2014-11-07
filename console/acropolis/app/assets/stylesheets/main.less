@@ -407,11 +407,21 @@ body.session {
   }
 }
 
-body.dashboard {
+.monitor {
+  .panel {
+    padding-bottom: 15px;
 
-  #plate-title-panel {
-    // border-bottom: none;
+    &.warning {
+      background-color: @table-bg-warning;
+    }
+
+    &.danger {
+      background-color: @table-bg-danger;
+    }
   }
+}
+
+body.dashboard {
 
   #main {
     background-color: @clouds;
@@ -440,7 +450,6 @@ body.dashboard {
       .border-top-radius(0);
       .border-bottom-radius(0);
       border: 1px solid darken(@clouds, 5%);
-      padding-bottom: 0px;
 
       .table {
         margin-top: 15px;
@@ -450,12 +459,23 @@ body.dashboard {
       &.monitor {
         padding-left: 15px;
         padding-right: 15px;
+        padding-bottom: 15px;
+
+        &.warning {
+          background-color: @table-bg-warning;
+        }
+
+        &.danger {
+          background-color: @table-bg-danger;
+        }
 
         > .page-header {
           line-height: 50px;
           font-size: 16px;
           font-weight: bold;
           padding-bottom: 0px;
+          border-bottom: 1px solid @clouds;
+          margin-bottom: 15px;
         }
 
         > table {
@@ -490,20 +510,6 @@ body.dashboard {
 
           padding-left: 10px;
           padding-right: 10px;
-        }
-      }
-    }
-
-    #product-monitor {
-      .panel.monitor {
-        padding-bottom: 15px;
-
-        &.warning {
-          background-color: @table-bg-warning;
-        }
-
-        &.danger {
-          background-color: @table-bg-danger;
         }
       }
     }
@@ -547,3 +553,10 @@ body.dashboard {
   }
 }
 
+.panel-list {
+  margin: 20px 0px;
+
+  .panel {
+    padding-bottom: 15px;
+  }
+}
