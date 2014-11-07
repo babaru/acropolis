@@ -15,4 +15,52 @@
 
 <p></p>
 
+<div id="monitor-panel-list">
 <%= render partial: 'monitoring_panels' %>
+</div>
+
+<script type="text/javascript">
+
+var auto_refresh = false;
+var interval = 5; // seconds
+var timer = null;
+
+function refresh() {
+  $.ajax({
+    url: '<%= monitoring_path %>',
+    method: 'GET',
+    dataType: 'script'
+  });
+};
+
+function stop_auto_refresh() {
+  if (timer != null) {
+    clearInterval(timer);
+    auto_refresh = false;
+  }
+}
+
+function auto_refresh_toggle() {
+  if (auto_refresh == true) {
+    stop_auto_refresh();
+  } else {
+    start_auto_refresh();
+  }
+}
+
+function start_auto_refresh() {
+  timer = setInterval(refresh, interval * 1000);
+  auto_refresh = true;
+}
+
+(function ($) {
+
+  $(function () {
+
+
+
+  });
+
+}(jQuery));
+
+</script>

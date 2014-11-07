@@ -9,6 +9,7 @@ zh-CN:
     sign_in: 登录
     sign_up: 注册
     sign_out: 注销
+    auto_refresh: 自动刷新
   messages:
     confirmation:
       delete: "删除这条%{model}记录？"
