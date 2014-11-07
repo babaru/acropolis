@@ -1,0 +1,2 @@
+module MonitoringProductsHelper
+end

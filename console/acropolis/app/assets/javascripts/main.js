@@ -8,7 +8,7 @@ String.prototype.repeat = function (num) {
 
   $(function () {
 
-    $('.pagination_status').addClass('label label-default');
+    // $('.pagination_status').addClass('label label-default');
     $('ul.pagination').addClass('pagination-plain pull-right').removeClass('pagination');
     $('div.pagination').removeClass('pagination');
 

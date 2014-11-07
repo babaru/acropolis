@@ -44,17 +44,17 @@ function draw_flat_ui() {
   $('[data-toggle="popover"]').popover();
 
   // jQuery UI Sliders
-  // var $slider = $('#slider');
-  // if ($slider.length) {
-  //   $slider.slider({
-  //     min: 1,
-  //     max: 5,
-  //     values: [3, 4],
-  //     orientation: 'horizontal',
-  //     range: true
-  //   }).addSliderSegments($slider.slider('option').max);
+  var $slider = $('#slider');
+  if ($slider.length) {
+    $slider.slider({
+      min: 1,
+      max: 5,
+      values: [3, 4],
+      orientation: 'horizontal',
+      range: true
+    }).addSliderSegments($slider.slider('option').max);
 
-  // }
+  }
 
   // var $slider2 = $('#slider2');
   // if ($slider2.length) {

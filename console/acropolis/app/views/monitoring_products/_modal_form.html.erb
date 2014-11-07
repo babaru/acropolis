@@ -1,0 +1,38 @@
+<%= simple_form_for(@user, remote: true, html: {class: 'form-horizontal'}) do |f| %>
+
+  <div class="modal-body">
+
+  <%= f.error_notification %>
+
+
+
+  </div>
+
+  <div class="modal-footer">
+
+  <%= link_to t('buttons.cancel'), "#", class: "btn btn-default", data: {dismiss: "modal"} %>
+  <%= f.button :submit, t('buttons.save_changes'), class: 'btn-primary col-sm-offset-2' %>
+
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+
+(function ($) {
+
+  $(function () {
+
+    draw_flat_ui();
+
+    // $('#monitoring_product_product_id').typeahead(null, {
+    //     name: 'states',
+    //     displayKey: 'name',
+    //     source: <%= api_v1_products_path(format: :json) %>
+    //   });
+
+  });
+
+}(jQuery));
+
+</script>

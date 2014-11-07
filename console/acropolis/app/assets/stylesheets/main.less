@@ -407,20 +407,6 @@ body.session {
   }
 }
 
-.monitor {
-  .panel {
-    padding-bottom: 15px;
-
-    &.warning {
-      background-color: @table-bg-warning;
-    }
-
-    &.danger {
-      background-color: @table-bg-danger;
-    }
-  }
-}
-
 body.dashboard {
 
   #main {
@@ -489,6 +475,12 @@ body.dashboard {
 
           .value {
             text-align: right;
+            font-size: 18px;
+
+            .label {
+              font-size: 18px;
+              font-weight: bold;
+            }
           }
         }
       }

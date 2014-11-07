@@ -1,0 +1,10 @@
+$("ul.errors").html("")
+<% if @monitoring_product.errors.any? %>
+  <% @monitoring_product.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+  $('#item-list').html("<%= escape_javascript(render 'monitoring_products_grid') %>")
+  $("#item-modal").modal("hide")
+  draw_flat_ui();
+<% end %>

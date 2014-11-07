@@ -1,0 +1,42 @@
+<% hide_sidebar = false if local_assigns[:hide_sidebar].nil? %>
+
+<% content_for :plate_title_panel do %>
+
+<%= render partial: 'monitoring_product_title_panel' %>
+
+<% end %>
+
+<% unless hide_sidebar %>
+
+<% content_for :sidebar do %>
+
+<%= render partial: 'monitoring_products_sidebar_menu' %>
+
+<% end %>
+
+<% end %>
+
+<% content_for :anything_else do %>
+
+<!-- Modal -->
+
+<div class="modal fade" id="item-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div><!-- /.modal -->
+
+<% end %>
+
+<div class="page-header">
+  <div class="row">
+    <div class="col-sm-6">
+      <h2><%= @monitoring_product.name %></h2>
+    </div>
+    <div class="col-sm-6">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

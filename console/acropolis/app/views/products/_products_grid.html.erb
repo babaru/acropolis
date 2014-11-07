@@ -18,6 +18,10 @@
     product.bank.name
   end
 
+  g.column name: t('activerecord.attributes.product.is_monitored') do |product|
+    link_to(content_tag(:div, check_box_tag("checkbox-#{product.id}", nil, product.is_monitored_by?(current_user), data: {toggle: 'switch', 'on-text' => '<span class="fui-check"></span>', 'off-text' => '<span class="fui-cross"></span>'}), class: 'bootstrap-switch-square'), product_monitor_path(product), method: :post, remote: true)
+  end
+
 
   g.column html: {class: 'btn-cell'} do |product|
     link_to fa_icon("pencil"), edit_product_path(product), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')

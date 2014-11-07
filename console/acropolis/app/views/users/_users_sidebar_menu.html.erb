@@ -1,0 +1,8 @@
+<ul class="nav nav-list">
+
+  <li class="nav-header"><%= User.model_name.human %></li>
+  <%= nav_link_to t('models.list', model: User.model_name.human), users_path, {}, { wrapper: :li } %>
+
+  <li class="divider"></li>
+
+</ul>

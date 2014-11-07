@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141104062716) do
+ActiveRecord::Schema.define(version: 20141107021954) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(version: 20141104062716) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "monitoring_products", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "monitoring_products", ["product_id"], name: "index_monitoring_products_on_product_id", using: :btree
+  add_index "monitoring_products", ["user_id"], name: "index_monitoring_products_on_user_id", using: :btree
 
   create_table "operations", force: true do |t|
     t.string   "name"

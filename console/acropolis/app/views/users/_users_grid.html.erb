@@ -1,0 +1,111 @@
+<%= grid(@users_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: '#' do |user|
+    user.id
+  end
+  
+
+  g.column name: t('activerecord.attributes.user.email') do |user|
+    user.email
+  end
+
+
+  g.column name: t('activerecord.attributes.user.encrypted_password') do |user|
+    user.encrypted_password
+  end
+
+
+  g.column name: t('activerecord.attributes.user.reset_password_token') do |user|
+    user.reset_password_token
+  end
+
+
+  g.column name: t('activerecord.attributes.user.reset_password_sent_at') do |user|
+    user.reset_password_sent_at
+  end
+
+
+  g.column name: t('activerecord.attributes.user.remember_created_at') do |user|
+    user.remember_created_at
+  end
+
+
+  g.column name: t('activerecord.attributes.user.sign_in_count') do |user|
+    user.sign_in_count
+  end
+
+
+  g.column name: t('activerecord.attributes.user.current_sign_in_at') do |user|
+    user.current_sign_in_at
+  end
+
+
+  g.column name: t('activerecord.attributes.user.last_sign_in_at') do |user|
+    user.last_sign_in_at
+  end
+
+
+  g.column name: t('activerecord.attributes.user.current_sign_in_ip') do |user|
+    user.current_sign_in_ip
+  end
+
+
+  g.column name: t('activerecord.attributes.user.last_sign_in_ip') do |user|
+    user.last_sign_in_ip
+  end
+
+
+  g.column name: t('activerecord.attributes.user.created_at') do |user|
+    user.created_at
+  end
+
+
+  g.column name: t('activerecord.attributes.user.updated_at') do |user|
+    user.updated_at
+  end
+
+
+  g.column name: t('activerecord.attributes.user.name') do |user|
+    link_to(user.name, user_path(user))
+  end
+
+
+  g.column name: t('activerecord.attributes.user.full_name') do |user|
+    user.full_name
+  end
+
+
+  g.column name: t('activerecord.attributes.user.avatar_file_name') do |user|
+    user.avatar_file_name
+  end
+
+
+  g.column name: t('activerecord.attributes.user.avatar_content_type') do |user|
+    user.avatar_content_type
+  end
+
+
+  g.column name: t('activerecord.attributes.user.avatar_file_size') do |user|
+    user.avatar_file_size
+  end
+
+
+  g.column name: t('activerecord.attributes.user.avatar_updated_at') do |user|
+    user.avatar_updated_at
+  end
+
+
+  g.column name: t('activerecord.attributes.user.attachment_access_token') do |user|
+    user.attachment_access_token
+  end
+
+
+
+  g.column html: {class: 'btn-cell'} do |user|
+    link_to fa_icon("pencil"), edit_user_path(user), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
+  end
+
+  g.column html: {class: 'btn-cell'} do |user|
+    link_to fa_icon("trash"), user_delete_path(user), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
+  end
+end -%>

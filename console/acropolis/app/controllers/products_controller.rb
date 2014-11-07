@@ -89,6 +89,26 @@ class ProductsController < ApplicationController
     end
   end
 
+  def monitor
+    @product = Product.find(params[:product_id])
+    @monitoring_product = MonitoringProduct.where(product_id: @product.id, user_id: current_user.id).first
+    Product.transaction do
+      if @monitoring_product.nil?
+        MonitoringProduct.create!(product_id: @product.id, user_id: current_user.id)
+      else
+        @monitoring_product.destroy!
+      end
+    end
+
+    respond_to do |format|
+      format.js
+    end
+  rescue ActiveRecord::Rollback
+    respond_to do |format|
+      format.js { render :monitor }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product

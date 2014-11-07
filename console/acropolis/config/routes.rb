@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'monitoring/index'
+  get 'flatuipro_demo/index'
 
   namespace :api do
     namespace :v1 do
@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   end
 
 
-  devise_for :users
+  devise_for :users, :path_prefix => 'my'
+  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -19,6 +20,7 @@ Rails.application.routes.draw do
 
   resources :products do
     get 'delete'
+    post 'monitor'
 
     resources :product_risk_plans
   end
@@ -42,6 +44,8 @@ Rails.application.routes.draw do
     get 'delete'
     post 'enable'
   end
+
+  resources :monitoring_products
 
   # Example resource route with options:
   #   resources :products do

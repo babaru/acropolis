@@ -1,0 +1,11 @@
+<%= grid(@products_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: t('activerecord.attributes.product.product_id') do |product|
+    product.name
+  end
+
+  g.column name: t('activerecord.attributes.product.is_monitored') do |product|
+    link_to(check_box_tag("checkbox-#{product.id}", nil, product.is_monitored_by?(current_user), data: {toggle: 'switch', on: {text: '<span class="fui-check"></span>'}, off: {text: '<span class="fui-cross"></span>'}}), monitoring_product_monitor_path(product), method: :post, remote: true)
+  end
+
+end -%>

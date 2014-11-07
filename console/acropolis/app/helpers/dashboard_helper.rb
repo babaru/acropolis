@@ -8,9 +8,9 @@ module DashboardHelper
         if p.value > 1
           p.value
         elsif p.value < 1 && p.value > 0.9
-          content_tag(:span, p.value, class: "label label-warning", style: 'font-size: 14px; font-weight: bold;')
+          content_tag(:span, p.value, class: "label label-warning")
         else
-          content_tag(:span, p.value, class: "label label-danger", style: 'font-size: 14px; font-weight: bold;')
+          content_tag(:span, p.value, class: "label label-danger")
         end
       else
         p.value

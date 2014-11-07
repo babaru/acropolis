@@ -1,0 +1,67 @@
+<%= simple_form_for(@user, remote: true, html: {class: 'form-horizontal'}) do |f| %>
+
+  <div class="modal-body">
+
+  <%= f.error_notification %>
+
+            
+    <%= f.input :email %>
+          
+    <%= f.input :encrypted_password %>
+          
+    <%= f.input :reset_password_token %>
+          
+    <%= f.input :reset_password_sent_at %>
+          
+    <%= f.input :remember_created_at %>
+          
+    <%= f.input :sign_in_count %>
+          
+    <%= f.input :current_sign_in_at %>
+          
+    <%= f.input :last_sign_in_at %>
+          
+    <%= f.input :current_sign_in_ip %>
+          
+    <%= f.input :last_sign_in_ip %>
+                      
+    <%= f.input :name %>
+          
+    <%= f.input :full_name %>
+          
+    <%= f.input :avatar_file_name %>
+          
+    <%= f.input :avatar_content_type %>
+          
+    <%= f.input :avatar_file_size %>
+          
+    <%= f.input :avatar_updated_at %>
+          
+    <%= f.input :attachment_access_token %>
+      
+  </div>
+
+  <div class="modal-footer">
+
+  <%= link_to t('buttons.cancel'), "#", class: "btn btn-default", data: {dismiss: "modal"} %>
+  <%= f.button :submit, t('buttons.save_changes'), class: 'btn-primary col-sm-offset-2' %>
+
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+
+(function ($) {
+
+  $(function () {
+
+    draw_flat_ui();
+
+    //Add your script here.
+
+  });
+
+}(jQuery));
+
+</script>

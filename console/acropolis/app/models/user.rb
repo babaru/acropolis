@@ -27,6 +27,9 @@ class User < ActiveRecord::Base
       :case_sensitive => false
     }
 
+  has_many :monitoring_products
+  has_many :products, through: :monitoring_products
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
