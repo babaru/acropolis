@@ -11,25 +11,9 @@
 
   <div class="modal-footer">
 
-  <%= link_to t('buttons.cancel'), "#", class: "btn btn-default", data: {dismiss: "modal"} %>
-  <%= f.button :submit, t('buttons.save_changes'), class: 'btn-primary col-sm-offset-2' %>
+  <%= link_to t('buttons.cancel'), "#", class: "btn btn-default btn-sm", data: {dismiss: "modal"} %>
+  <%= f.submit t("models.#{f.object.new_record? ? 'create' : 'update'}", model: RiskPlan.model_name.human), class: 'btn btn-primary btn-sm' %>
 
   </div>
 
 <% end %>
-
-<script type="text/javascript">
-
-(function ($) {
-
-  $(function () {
-
-    draw_flat_ui();
-
-    //Add your script here.
-
-  });
-
-}(jQuery));
-
-</script>

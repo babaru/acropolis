@@ -52,6 +52,8 @@ zh-CN:
     list: "%{model}列表"
     new: "新建%{model}"
     add: 添加%{model}
+    create: 创建%{model}
+    update: 更新%{model}
     edit: "编辑%{model}"
     delete: "删除%{model}"
     show: "%{model}详情"

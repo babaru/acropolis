@@ -24,7 +24,7 @@ class RiskPlansController < ApplicationController
   # GET /risk_plans/new
   def new
     @risk_plan = RiskPlan.new
-    @risk_plan.created_by = current_user
+    @risk_plan.created_by = User.second
   end
 
   # GET /risk_plans/1/edit
