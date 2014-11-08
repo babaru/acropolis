@@ -1,8 +1,8 @@
 <% hide_sidebar = false if local_assigns[:hide_sidebar].nil? %>
 
-<% content_for :plate_title_panel do %>
+<% content_for :page_title do %>
 
-<%= render partial: 'risk_plan_title_panel' %>
+<%= [t('models.show', model: RiskPlan.model_name.human), @risk_plan.name].join(': ') %>
 
 <% end %>
 
@@ -25,21 +25,44 @@
 
 <% end %>
 
-<div class="page-header">
-  <div class="row">
-    <div class="col-sm-6">
-      <h2><%= t('models.list', model: RiskPlanOperation.model_name.human) %></h2>
-    </div>
-    <div class="col-sm-6">
+<!-- Extra Javascripts -->
+
+<%= content_for :js do %>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+  var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+  elems.forEach(function(html) {
+    var element = $(html);
+    if (element.data('switchery') != true) {
+      var switchery = new Switchery(html);
+    }
+  });
+
+});
+
+</script>
+
+<% end %>
+
+<div class="ibox no-drop">
+  <div class="ibox-title">
+      <h5><%= t('models.list', model: RiskPlanOperation.model_name.human) %></h5>
       <div class="btn-toolbar">
         <div class="btn-group pull-right">
         <%= link_to(fa_icon('plus-square', text: t('models.add', model: RiskPlanOperation.model_name.human)), new_risk_plan_risk_plan_operation_path(risk_plan_id: @risk_plan.id), remote: true, class: 'btn btn-primary btn-sm') %>
         </div>
       </div>
-    </div>
+  </div>
+  <div class="ibox-content">
+
+      <div id="item-list">
+          <%= render 'risk_plan_operations/risk_plan_operations_grid' %>
+      </div>
+
   </div>
 </div>
 
-<div id="item-list">
-  <%= render 'risk_plan_operations/risk_plan_operations_grid' %>
-</div>
+

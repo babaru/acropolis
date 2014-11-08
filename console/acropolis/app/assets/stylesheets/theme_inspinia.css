@@ -13,9 +13,12 @@
  *= require twitter/bootstrap
  *= require font-awesome
  *= require nprogress-override
- *= require inspinia/plugins/morris/morris-0.4.3.min
 
+ * Styles used by INSPINIA Theme
+
+ *= require inspinia/plugins/morris/morris-0.4.3.min
  *= require inspinia/plugins/gritter/jquery.gritter
+ *= require inspinia/plugins/switchery/switchery
 
  *= require inspinia/animate
  *= require inspinia/style

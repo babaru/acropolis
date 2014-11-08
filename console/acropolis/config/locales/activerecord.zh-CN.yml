@@ -54,6 +54,6 @@ zh-CN:
     add: 添加%{model}
     edit: "编辑%{model}"
     delete: "删除%{model}"
-    show: "%{model}概况"
+    show: "%{model}详情"
     recent: 最近访问%{model}
     all: 全部%{model}

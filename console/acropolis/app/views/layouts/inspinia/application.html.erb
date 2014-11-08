@@ -6,14 +6,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | Dashboard</title>
+    <title>Acropolis</title>
 
     <%= stylesheet_link_tag 'theme_inspinia', media: 'all', 'data-turbolinks-track' => true %>
-
+    <%= csrf_meta_tags %>
 </head>
 
-<body class="">
-    <div id="wrapper">
+<body>
+    <div id="wrapper" style="display:table; height: 100%; width: 100%;">
         <%= render partial: 'shared/inspinia/navigation' %>
 
         <div id="page-wrapper" class="gray-bg">
@@ -30,8 +30,6 @@
 
                     </div>
 
-                    <%= render partial: 'shared/inspinia/footer' %>
-
                 </div>
             </div>
 
@@ -40,152 +38,7 @@
 
     <%= javascript_include_tag 'theme_inspinia', 'data-turbolinks-track' => true %>
 
-    <script>
-        $(document).ready(function() {
-            WinMove();
-            setTimeout(function() {
-                $.gritter.add({
-                    title: 'You have two new messages',
-                    text: 'Go to <a href="mailbox.html" class="text-warning">Mailbox</a> to see who wrote to you.<br/> Check the date and today\'s tasks.',
-                    time: 2000
-                });
-            }, 2000);
+    <%= yield :js %>
 
-
-            $('.chart').easyPieChart({
-                barColor: '#f8ac59',
-//                scaleColor: false,
-                scaleLength: 5,
-                lineWidth: 4,
-                size: 80
-            });
-
-            $('.chart2').easyPieChart({
-                barColor: '#1c84c6',
-                scaleLength: 5,
-                lineWidth: 4,
-                size: 80
-            });
-
-            var data1 = [
-                [0,4],[1,8],[2,5],[3,10],[4,4],[5,16],[6,5],[7,11],[8,6],[9,11],[10,30],[11,10],[12,13],[13,4],[14,3],[15,3],[16,6]
-            ];
-            var data2 = [
-                [0,1],[1,0],[2,2],[3,0],[4,1],[5,3],[6,1],[7,5],[8,2],[9,3],[10,2],[11,1],[12,0],[13,2],[14,8],[15,0],[16,0]
-            ];
-            $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [
-                data1, data2
-            ],
-                    {
-                        series: {
-                            lines: {
-                                show: false,
-                                fill: true
-                            },
-                            splines: {
-                                show: true,
-                                tension: 0.4,
-                                lineWidth: 1,
-                                fill: 0.4
-                            },
-                            points: {
-                                radius: 0,
-                                show: true
-                            },
-                            shadowSize: 2
-                        },
-                        grid: {
-                            hoverable: true,
-                            clickable: true,
-                            tickColor: "#d5d5d5",
-                            borderWidth: 1,
-                            color: '#d5d5d5'
-                        },
-                        colors: ["#1ab394", "#464f88"],
-                        xaxis:{
-                        },
-                        yaxis: {
-                            ticks: 4
-                        },
-                        tooltip: false
-                    }
-            );
-
-            var doughnutData = [
-                {
-                    value: 300,
-                    color: "#a3e1d4",
-                    highlight: "#1ab394",
-                    label: "App"
-                },
-                {
-                    value: 50,
-                    color: "#dedede",
-                    highlight: "#1ab394",
-                    label: "Software"
-                },
-                {
-                    value: 100,
-                    color: "#b5b8cf",
-                    highlight: "#1ab394",
-                    label: "Laptop"
-                }
-            ];
-
-            var doughnutOptions = {
-                segmentShowStroke: true,
-                segmentStrokeColor: "#fff",
-                segmentStrokeWidth: 2,
-                percentageInnerCutout: 45, // This is 0 for Pie charts
-                animationSteps: 100,
-                animationEasing: "easeOutBounce",
-                animateRotate: true,
-                animateScale: false,
-            };
-
-            var ctx = document.getElementById("doughnutChart").getContext("2d");
-            var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
-
-            var polarData = [
-                {
-                    value: 300,
-                    color: "#a3e1d4",
-                    highlight: "#1ab394",
-                    label: "App"
-                },
-                {
-                    value: 140,
-                    color: "#dedede",
-                    highlight: "#1ab394",
-                    label: "Software"
-                },
-                {
-                    value: 200,
-                    color: "#b5b8cf",
-                    highlight: "#1ab394",
-                    label: "Laptop"
-                }
-            ];
-
-            var polarOptions = {
-                scaleShowLabelBackdrop: true,
-                scaleBackdropColor: "rgba(255,255,255,0.75)",
-                scaleBeginAtZero: true,
-                scaleBackdropPaddingY: 1,
-                scaleBackdropPaddingX: 1,
-                scaleShowLine: true,
-                segmentShowStroke: true,
-                segmentStrokeColor: "#fff",
-                segmentStrokeWidth: 2,
-                animationSteps: 100,
-                animationEasing: "easeOutBounce",
-                animateRotate: true,
-                animateScale: false,
-            };
-            var ctx = document.getElementById("polarChart").getContext("2d");
-            var Polarchart = new Chart(ctx).PolarArea(polarData, polarOptions);
-
-        });
-    </script>
 </body>
 </html>
