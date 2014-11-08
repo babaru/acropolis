@@ -1,52 +1,53 @@
-<div class="login-box">
-  <ul class="nav nav-tabs">
-    <li class="active"><%= link_to t('navigation.tab.sign_in'), '#' %></li>
-    <li><%= link_to t('navigation.tab.sign_up'), new_user_registration_path %></li>
-  </ul> <!-- /tabs -->
-  <div class='content'>
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+    <div>
+        <div>
+            <h1 class="logo-name"><span>ACROPOLIS</span></h1>
 
-    <div class="login-form">
-
-      <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-
-        <%= f.error_notification %>
-
-        <div class="form-group">
-          <div class="input-group">
-            <%= f.input :login, wrapper: false, label: false, placeholder: 'Email or user name' %>
-          </div>
         </div>
+        <h3>Welcome to Acropolis system</h3>
+        <p>
+        </p>
 
-        <div class="form-group">
-          <div class="input-group">
-            <%= f.input :password, wrapper: false, label: false, placeholder: 'Password' %>
-          </div>
-        </div>
+  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'm-t' }) do |f| %>
 
-        <%= f.submit t('buttons.sign_in'), class: 'btn btn-inverse btn-lg btn-block' %>
+    <%= f.error_notification %>
 
-      <% end %>
+    <div class="form-group">
+      <%= f.input :login, wrapper: false, label: false, placeholder: 'Email or user name' %>
+    </div>
+
+    <div class="form-group">
+        <%= f.input :password, wrapper: false, label: false, placeholder: 'Password' %>
+    </div>
+
+    <%= f.submit t('buttons.sign_in'), class: 'btn btn-primary block full-width m-b' %>
+
+  <% end %>
 
     </div>
-  </div>
-</div> <!-- /login-box -->
+</div>
+
+
+<% content_for :js do %>
 
 <script type="text/javascript">
 
 (function ($) {
-  'use strict'
 
   $(function () {
 
     $('input[type=text]').removeClass('input-sm');
-    $('input[type=text]').closest('.input-group').append($('input[type=text]'));
-    $('input[type=text]').closest('.input-group').append($('<span class="input-group-addon"><i class="fui-user"></i></span>'));
+    $('input[type=text]').closest('.form-group').append($('input[type=text]'));
+    // $('input[type=text]').closest('.input-group').append($('<span class="input-group-addon"><i class="fui-user"></i></span>'));
     $('input[type=password]').removeClass('input-sm');
-    $('input[type=password]').closest('.input-group').append($('input[type=password]'));
-    $('input[type=password]').closest('.input-group').append($('<span class="input-group-addon"><i class="fui-lock"></i></span>'));
+    $('input[type=password]').closest('.form-group').append($('input[type=password]'));
+    // $('input[type=password]').closest('.input-group').append($('<span class="input-group-addon"><i class="fui-lock"></i></span>'));
+    $('div.col-sm-10').remove();
     $('div.col-sm-10').remove();
 
   });
 }(jQuery));
 
 </script>
+
+<% end %>

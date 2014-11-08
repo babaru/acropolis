@@ -27,7 +27,7 @@ module Acropolis
     config.i18n.default_locale = 'zh-CN'
 
     config.to_prepare do
-      Devise::SessionsController.layout "devise"
+      Devise::SessionsController.layout "inspinia/devise"
       ApplicationController.layout 'inspinia/application'
       DashboardController.layout 'dashboard'
       MonitoringController.layout 'dashboard'

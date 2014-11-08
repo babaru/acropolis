@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Acropolis</title>
+
+    <%= stylesheet_link_tag 'theme_inspinia_devise', media: 'all', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+</head>
+
+<body class="gray-bg devise">
+
+    <%= yield %>
+
+    <%= javascript_include_tag 'theme_inspinia_devise', 'data-turbolinks-track' => true %>
+
+    <%= yield :js %>
+
+</body>
+</html>
