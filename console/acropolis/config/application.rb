@@ -28,6 +28,7 @@ module Acropolis
 
     config.to_prepare do
       Devise::SessionsController.layout "devise"
+      ApplicationController.layout 'inspinia/application'
       DashboardController.layout 'dashboard'
       MonitoringController.layout 'dashboard'
       InspiniaController.layout 'inspinia/application'

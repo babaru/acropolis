@@ -12,7 +12,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
   # Specify the class that will be applied to the current leaf of
   # active navigation items. Defaults to 'simple-navigation-active-leaf'
-  navigation.active_leaf_class = 'active_leaf'
+  # navigation.active_leaf_class = 'active_leaf'
 
   # Item keys are normally added to list items as id.
   # This setting turns that off
@@ -59,7 +59,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :page_monitoring, fa_icon('desktop', text: t('navigation.page.monitoring')), monitoring_path, {}
 
-    primary.item :page_risk_plan, "#{fa_icon('life-ring', text: t('navigation.page.risk_plan'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |risk_plan_menu|
+    primary.item :page_risk_plan, fa_icon('life-ring', text: t('navigation.page.risk_plan')), nil, {} do |risk_plan_menu|
       if recent_items(:risk_plan).length > 0
         recent_items(:risk_plan).map do |id, name|
           risk_plan_menu.item "page_risk_plan_#{id}".to_sym, name, risk_plan_path(id: id), {}
@@ -67,10 +67,10 @@ SimpleNavigation::Configuration.run do |navigation|
         risk_plan_menu.item :page_risk_plan_divider_1, nil, nil, {link: {divider: true}}
       end
 
-      risk_plan_menu.item :page_risk_plan_list, fa_stacked_icon('list', base: 'square-o', text: t('models.all', model: RiskPlan.model_name.human)), risk_plans_path
+      risk_plan_menu.item :page_risk_plan_list, t('models.all', model: RiskPlan.model_name.human), risk_plans_path
     end
 
-    primary.item :page_product, "#{fa_icon('archive', text: t('navigation.page.product'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |product_menu|
+    primary.item :page_product, fa_icon('archive', text: t('navigation.page.product')), nil, {} do |product_menu|
       if recent_items(:product).length > 0
         recent_items(:product).map do |id, name|
           product_menu.item "page_product_#{id}".to_sym, name, product_path(id: id), {}
@@ -81,10 +81,10 @@ SimpleNavigation::Configuration.run do |navigation|
       product_menu.item :page_product_list, fa_stacked_icon('list', base: 'square-o', text: t('models.all', model: Product.model_name.human)), products_path
     end
 
-    primary.item :page_data, "#{fa_icon('database', text: t('navigation.page.data'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |data_menu|
+    primary.item :page_data, fa_icon('database', text: t('navigation.page.data')), nil, {} do |data_menu|
     end
 
-    primary.item :page_settings, "#{fa_icon('cog', text: t('navigation.page.settings'))} #{fa_icon('caret-down')}".html_safe, nil, {} do |settings_menu|
+    primary.item :page_settings, fa_icon('cog', text: t('navigation.page.settings')), nil, {} do |settings_menu|
       settings_menu.item :page_client_list, fa_icon('user', text: Client.model_name.human), clients_path
       settings_menu.item :page_broker_list, fa_icon('key', text: Broker.model_name.human), brokers_path
       settings_menu.item :page_bank_list, fa_icon('bank', text: Bank.model_name.human), banks_path
