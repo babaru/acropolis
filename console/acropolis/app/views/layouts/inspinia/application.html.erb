@@ -33,8 +33,12 @@
                 </div>
             </div>
 
+            <%= render partial: 'shared/inspinia/footer' %>
+
         </div>
     </div>
+
+    <%= yield :anything_else %>
 
     <%= javascript_include_tag 'theme_inspinia', 'data-turbolinks-track' => true %>
 
