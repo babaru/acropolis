@@ -1,8 +1,8 @@
 <% hide_sidebar = false if local_assigns[:hide_sidebar].nil? %>
 
-<% content_for :plate_title_panel do %>
+<% content_for :page_title do %>
 
-<%= render partial: 'banks_title_panel' %>
+<%= Bank.model_name.human %>
 
 <% end %>
 

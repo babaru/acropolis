@@ -3,6 +3,7 @@
 //= require jquery_ujs
 
 //= require twitter/bootstrap
+//= require wice_grid
 
 //= require inspinia/plugins/metisMenu/jquery.metisMenu
 
