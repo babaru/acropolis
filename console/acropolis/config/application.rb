@@ -30,6 +30,7 @@ module Acropolis
       Devise::SessionsController.layout "devise"
       DashboardController.layout 'dashboard'
       MonitoringController.layout 'dashboard'
+      InspiniaController.layout 'inspinia/application'
     end
 
     # For nav_lynx

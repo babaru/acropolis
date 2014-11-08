@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'inspinia/index'
+
   get 'flatuipro_demo/index'
 
   namespace :api do
