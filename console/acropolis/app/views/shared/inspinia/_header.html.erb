@@ -1,29 +1,22 @@
 <div class="row border-bottom">
-<nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-<div class="navbar-header">
-    <div class="logo-element">
-    </div>
-</div>
-    <ul class="nav navbar-top-links navbar-right">
-        <li>
-            <span class="m-r-sm text-muted welcome-message">Welcome to ACROPOLIS System.</span>
-        </li>
-
-        <li class="dropdown">
-            <a class="dropdown-toggle profile-element2" data-toggle="dropdown" href="#">
-                <%= image_tag('default_user_avatar.png', class: 'img-circle') %>
-                <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Amelia Smith</strong>
-                     </span> <span class="text-xs block">Art Director <b class="caret"></b></span> </span>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="profile.html"><%= fa_icon('user', text: 'Profile') %></a></li>
-                <li><a href="contacts.html"><%= fa_icon('cog', text: 'Settings') %></a></li>
-                <li class="divider"></li>
-                <li><a href="login.html"><%= fa_icon('power-off', text: 'Logout') %></a></li>
-            </ul>
-        </li>
-
-    </ul>
-
-</nav>
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <h5><%= t('messages.welcome_to_use') %> ACROPOLIS System.</h5>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle profile-element2" data-toggle="dropdown" href="#">
+                    <%= image_tag('default_user_avatar.png', class: 'img-circle') %>
+                    <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Amelia Smith</strong>
+                         </span> <span class="text-xs block">Art Director <b class="caret"></b></span> </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="profile.html"><%= fa_icon('user', text: 'Profile') %></a></li>
+                    <li><a href="contacts.html"><%= fa_icon('cog', text: 'Settings') %></a></li>
+                    <li class="divider"></li>
+                    <li><a href="login.html"><%= fa_icon('power-off', text: 'Logout') %></a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
 </div>
