@@ -28,13 +28,13 @@
     </div>
   </div>
 
-  <%= f.input :is_enabled, as: :fui_boolean, wrapper: :fui_boolean %>
+  <%= f.input :is_enabled, as: :boolean, input_html: { class: 'i-checks' } %>
 
   </div>
   <div class="modal-footer">
 
-  <%= link_to t('buttons.cancel'), "#", class: "btn btn-default", data: {dismiss: "modal"} %>
-  <%= f.button :submit, t('buttons.save_changes'), class: 'btn-primary col-sm-offset-2' %>
+  <%= link_to t('buttons.cancel'), "#", class: "btn btn-default btn-sm", data: {dismiss: "modal"} %>
+  <%= f.submit t("models.#{f.object.new_record? ? 'create' : 'update'}", model: RiskPlanOperation.model_name.human), class: 'btn btn-primary btn-sm' %>
 
   </div>
 
@@ -51,7 +51,11 @@ function delete_threshold_field(item) {
 
   $(function () {
 
-    draw_flat_ui();
+    // Checkbox style
+  $('.i-checks').iCheck({
+      checkboxClass: 'icheckbox_square-green',
+      radioClass: 'iradio_square-green',
+  });
 
     $('.threshold-item-delete-btn').unbind('click').bind('click', function() {
       delete_threshold_field($(this));

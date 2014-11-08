@@ -19,6 +19,7 @@
  *= require inspinia/plugins/morris/morris-0.4.3.min
  *= require inspinia/plugins/gritter/jquery.gritter
  *= require inspinia/plugins/switchery/switchery
+ *= require inspinia/plugins/iCheck/custom
 
  *= require inspinia/animate
  *= require inspinia/style
