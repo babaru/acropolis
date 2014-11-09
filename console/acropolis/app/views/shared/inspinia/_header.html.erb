@@ -6,15 +6,15 @@
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle profile-element2" data-toggle="dropdown" href="#">
-                    <%= image_tag('default_user_avatar.png', class: 'img-circle') %>
-                    <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Amelia Smith</strong>
+                    <%= image_tag current_user.avatar.url(:thumb), class: 'img-circle' %>
+                    <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%= current_user.full_name %></strong>
                          </span> <span class="text-xs block">Art Director <b class="caret"></b></span> </span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="profile.html"><%= fa_icon('user', text: 'Profile') %></a></li>
                     <li><a href="contacts.html"><%= fa_icon('cog', text: 'Settings') %></a></li>
                     <li class="divider"></li>
-                    <li><a href="login.html"><%= fa_icon('power-off', text: 'Logout') %></a></li>
+                    <li><%= link_to( fa_icon('power-off', text: t("buttons.sign_out")), destroy_user_session_path, :method=>'delete') %></li>
                 </ul>
             </li>
         </ul>
