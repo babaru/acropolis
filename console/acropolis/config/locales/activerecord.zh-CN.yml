@@ -40,7 +40,9 @@ zh-CN:
         broker: 期货公司
         broker_id: 期货公司
         budget: 资金
-        is_monitored: 加入监控
+        is_monitored: 加入实时监控
+        created_at: 创建于
+        updated_at: 最后编辑于
       product_risk_plan:
         risk_plan_id: 风控方案
         is_enabled: 启用

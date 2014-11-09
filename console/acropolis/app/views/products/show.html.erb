@@ -1,18 +1,6 @@
-<% hide_sidebar = false if local_assigns[:hide_sidebar].nil? %>
+<% content_for :page_title do %>
 
-<% content_for :plate_title_panel do %>
-
-<%= render partial: 'product_title_panel' %>
-
-<% end %>
-
-<% unless hide_sidebar %>
-
-<% content_for :sidebar do %>
-
-<%= render partial: 'products_sidebar_menu' %>
-
-<% end %>
+<%= t('models.show', model: Product.model_name.human) %>
 
 <% end %>
 
@@ -25,23 +13,51 @@
 
 <% end %>
 
-<div class="page-header">
-  <div class="row">
-    <div class="col-sm-6">
-      <h2><%= t('models.list', model: ProductRiskPlan.model_name.human) %></h2>
+<div class="ibox">
+  <div class="ibox-content">
+    <div id="product-detail">
+      <%= render partial: 'product_detail' %>
     </div>
-    <div class="col-sm-6">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-right">
-          <%= link_to(fa_icon('plus-square', text: t('models.add', model: ProductRiskPlan.model_name.human)), new_product_product_risk_plan_path(@product), remote: true, class: 'btn btn-primary') %>
+    <div class="row m-t-sm">
+      <div class="col-lg-12">
+        <div class="panel blank-panel">
+          <div class="panel-heading">
+              <div class="panel-options">
+                  <ul class="nav nav-tabs">
+                      <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('navigation.tab.binding_risk_plans') %></a></li>
+                      <li class=""><a href="#tab-2" data-toggle="tab">Last activity</a></li>
+                  </ul>
+              </div>
+          </div>
+
+          <div class="panel-body">
+
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab-1">
+
+                <div class="btn-toolbar">
+                  <div class="btn-group pull-right">
+                  <%= link_to(fa_icon('plus-square', text: t('models.add', model: ProductRiskPlan.model_name.human)), new_product_risk_plan_path(product_id: @product.id), remote: true, class: 'btn btn-primary btn-sm') %>
+                  </div>
+                </div>
+
+                <div id="product-risk-plan-list" class="tooltip-demo">
+                  <%= render partial: 'binding_risk_plans_grid' %>
+                </div>
+
+              </div>
+              <div class="tab-pane" id="tab-2">
+
+
+
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </div>
   </div>
-</div>
-
-<div id="item-list">
-
-  <%= render 'product_risk_plans/product_risk_plans_grid' %>
 
 </div>

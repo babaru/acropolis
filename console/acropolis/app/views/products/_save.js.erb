@@ -4,6 +4,12 @@ $("ul.errors").html("")
     $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
   <% end %>
 <% else %>
-  $('#product-list').html("<%= escape_javascript(render 'products_grid') %>")
+  if ($('#product-detail').length) {
+    $('#product-detail').html("<%= escape_javascript(render 'product_detail') %>");
+  }
+
+  if ($('#product-list').length) {
+    $('#product-list').html("<%= escape_javascript(render 'products_grid') %>");
+  }
   $("#item-modal").modal("hide")
 <% end %>
