@@ -2,15 +2,26 @@
   g.column name: '#' do |product|
     product.id
   end
-  g.column name: t('activerecord.attributes.product.name') do |product|
-    link_to(product.name, product_path(product))
+
+  g.column name: t('activerecord.attributes.product.is_monitored') do |product|
+    link_to(check_box_tag("checkbox-#{product.id}", nil, product.is_monitored_by?(current_user), class: 'js-switch'), product_monitor_path(product), method: :post, remote: true)
   end
+
+  g.column name: t('activerecord.attributes.product.name'), class: 'project-title' do |product|
+    [
+      link_to(product.name, product_path(product)),
+      content_tag(:small, "#{t('labels.last_modified_at')} #{product.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
+    ].join('<br/>').html_safe
+  end
+
+  g.column name: t('activerecord.attributes.product.budget') do |product|
+    content_tag(:div, number_with_delimiter(product.budget, delimiter: ','), class: 'label label-success', style: 'font-size: 14px;')
+  end
+
   g.column name: t('activerecord.attributes.product.client_id') do |product|
     product.client.name
   end
-  g.column name: t('activerecord.attributes.product.budget') do |product|
-    number_with_delimiter(product.budget, delimiter: ',')
-  end
+
   g.column name: t('activerecord.attributes.product.broker_id') do |product|
     product.broker.name
   end
@@ -18,16 +29,10 @@
     product.bank.name
   end
 
-  g.column name: t('activerecord.attributes.product.is_monitored') do |product|
-    link_to(content_tag(:div, check_box_tag("checkbox-#{product.id}", nil, product.is_monitored_by?(current_user), data: {toggle: 'switch', 'on-text' => '<span class="fui-check"></span>', 'off-text' => '<span class="fui-cross"></span>'}), class: 'bootstrap-switch-square'), product_monitor_path(product), method: :post, remote: true)
-  end
-
-
-  g.column html: {class: 'btn-cell'} do |product|
-    link_to fa_icon("pencil"), edit_product_path(product), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
-  end
-
-  g.column html: {class: 'btn-cell'} do |product|
-    link_to fa_icon("trash"), product_delete_path(product), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
+  g.column html: {class: 'project-actions'} do |product|
+    [
+      link_to(fa_icon("pencil"), edit_product_path(product), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), product_delete_path(product), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
   end
 end -%>

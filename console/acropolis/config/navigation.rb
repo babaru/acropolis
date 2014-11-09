@@ -78,7 +78,7 @@ SimpleNavigation::Configuration.run do |navigation|
         product_menu.item :page_product_divider_1, nil, nil, {link: {divider: true}}
       end
 
-      product_menu.item :page_product_list, fa_stacked_icon('list', base: 'square-o', text: t('models.all', model: Product.model_name.human)), products_path
+      product_menu.item :page_product_list, t('models.all', model: Product.model_name.human), products_path
     end
 
     primary.item :page_data, fa_icon('database', text: t('navigation.page.data')), nil, {} do |data_menu|

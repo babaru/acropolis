@@ -4,7 +4,6 @@ $("ul.errors").html("")
     $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
   <% end %>
 <% else %>
-  $('#item-list').html("<%= escape_javascript(render 'products_grid') %>")
+  $('#product-list').html("<%= escape_javascript(render 'products_grid') %>")
   $("#item-modal").modal("hide")
-  draw_flat_ui();
 <% end %>

@@ -19,8 +19,8 @@
 
   <div class="modal-footer">
 
-  <%= link_to t('buttons.cancel'), "#", class: "btn btn-default", data: {dismiss: "modal"} %>
-  <%= f.button :submit, t('buttons.save_changes'), class: 'btn-primary col-sm-offset-2' %>
+  <%= link_to t('buttons.cancel'), "#", class: 'btn btn-default btn-sm', data: {dismiss: "modal"} %>
+  <%= f.submit t('buttons.save_changes'), class: 'btn btn-primary btn-sm' %>
 
   </div>
 
@@ -31,8 +31,6 @@
 (function ($) {
 
   $(function () {
-
-    draw_flat_ui();
 
     //Add your script here.
 
