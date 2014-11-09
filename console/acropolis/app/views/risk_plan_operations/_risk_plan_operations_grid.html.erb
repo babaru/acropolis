@@ -16,11 +16,10 @@
     link_to(check_box_tag("checkbox-#{risk_plan_operation.id}", nil, risk_plan_operation.is_enabled, class: 'js-switch'), risk_plan_operation_enable_path(risk_plan_operation), method: :post, remote: true)
   end
 
-  g.column html: {class: 'btn-cell'} do |risk_plan_operation|
-    link_to fa_icon("pencil"), edit_risk_plan_risk_plan_operation_path(id: risk_plan_operation, risk_plan_id: @risk_plan.id), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
-  end
-
-  g.column html: {class: 'btn-cell'} do |risk_plan_operation|
-    link_to fa_icon("trash"), risk_plan_operation_delete_path(risk_plan_operation.id), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
+  g.column html: {class: 'project-actions'} do |risk_plan_operation|
+    [
+      link_to(fa_icon("pencil"), edit_risk_plan_risk_plan_operation_path(id: risk_plan_operation, risk_plan_id: @risk_plan.id), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), risk_plan_operation_delete_path(risk_plan_operation.id), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
   end
 end -%>
