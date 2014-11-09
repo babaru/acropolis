@@ -19,6 +19,7 @@ class RiskPlansController < ApplicationController
 
     @risk_plan_operations_grid = initialize_grid(RiskPlanOperation.where(risk_plan_id: @risk_plan.id))
     cache_recent_item(:risk_plan, @risk_plan.id, @risk_plan.name)
+    @binding_products_grid = initialize_grid(ProductRiskPlan.where(risk_plan_id: @risk_plan.id))
   end
 
   # GET /risk_plans/new

@@ -18,6 +18,8 @@ zh-CN:
         created_by: 创建人
         created_by_id: 创建人
         operation_count: 风控条件数量
+        created_at: 创建于
+        updated_at: 最后编辑于
       risk_plan_operation:
         operation: 风控操作
         operation_id: 风控操作

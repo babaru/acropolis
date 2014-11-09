@@ -1,0 +1,24 @@
+<%= grid(@binding_products_grid, :show_filters => :when_filtered) do |g|
+  g.column name: '#' do |binding_product|
+    binding_product.product.id
+  end
+  g.column name: t('activerecord.attributes.product.name') do |binding_product|
+    link_to(binding_product.product.name, product_path(binding_product.product))
+  end
+  g.column name: t('activerecord.attributes.product.client_id') do |binding_product|
+    binding_product.product.client.name
+  end
+  g.column name: t('activerecord.attributes.product.budget') do |binding_product|
+    number_with_delimiter(binding_product.product.budget, delimiter: ',')
+  end
+  g.column name: t('activerecord.attributes.product.broker_id') do |binding_product|
+    binding_product.product.broker.name
+  end
+  g.column name: t('activerecord.attributes.product.bank_id') do |binding_product|
+    binding_product.product.bank.name
+  end
+
+  # g.column name: t('activerecord.attributes.product.is_monitored') do |binding_product|
+  #   link_to(content_tag(:div, check_box_tag("checkbox-#{product.id}", nil, product.is_monitored_by?(current_user), data: {toggle: 'switch', 'on-text' => '<span class="fui-check"></span>', 'off-text' => '<span class="fui-cross"></span>'}), class: 'bootstrap-switch-square'), product_monitor_path(product), method: :post, remote: true)
+  # end
+end -%>

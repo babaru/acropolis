@@ -1,18 +1,12 @@
-<% hide_sidebar = false if local_assigns[:hide_sidebar].nil? %>
-
 <% content_for :page_title do %>
 
-<%= [t('models.show', model: RiskPlan.model_name.human), @risk_plan.name].join(': ') %>
+<%= t('models.show', model: RiskPlan.model_name.human) %>
 
 <% end %>
-
-<% unless hide_sidebar %>
 
 <% content_for :sidebar do %>
 
 <%= render partial: 'risk_plans_sidebar_menu' %>
-
-<% end %>
 
 <% end %>
 
@@ -47,22 +41,73 @@ $(document).ready(function() {
 
 <% end %>
 
-<div class="ibox no-drop">
-  <div class="ibox-title">
-      <h5><%= t('models.list', model: RiskPlanOperation.model_name.human) %></h5>
-      <div class="btn-toolbar">
-        <div class="btn-group pull-right">
-        <%= link_to(fa_icon('plus-square', text: t('models.add', model: RiskPlanOperation.model_name.human)), new_risk_plan_risk_plan_operation_path(risk_plan_id: @risk_plan.id), remote: true, class: 'btn btn-primary btn-sm') %>
-        </div>
-      </div>
-  </div>
+<div class="ibox">
   <div class="ibox-content">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="m-b-md">
+                  <%= link_to t('models.edit', model: RiskPlan.model_name.human), edit_risk_plan_path(@risk_plan), remote: true, class: 'btn btn-white btn-xs pull-right' %>
+                  <h2><%= @risk_plan.name %></h2>
+              </div>
+              <dl class="dl-horizontal">
 
-      <div id="item-list">
-          <%= render 'risk_plan_operations/risk_plan_operations_grid' %>
+              </dl>
+          </div>
       </div>
+      <div class="row">
+          <div class="col-lg-5">
+              <dl class="dl-horizontal">
+                  <dt><%= t('activerecord.attributes.risk_plan.created_by') %></dt> <dd><%= @risk_plan.created_by.full_name %></dd>
+              </dl>
+          </div>
+          <div class="col-lg-7" id="cluster_info">
+              <dl class="dl-horizontal">
 
+                  <dt><%= t('activerecord.attributes.risk_plan.updated_at') %></dt> <dd><%= @risk_plan.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></dd>
+                  <dt><%= t('activerecord.attributes.risk_plan.created_at') %></dt> <dd><%= @risk_plan.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></dd>
+              </dl>
+          </div>
+      </div>
+      <div class="row m-t-sm">
+          <div class="col-lg-12">
+          <div class="panel blank-panel">
+          <div class="panel-heading">
+              <div class="panel-options">
+                  <ul class="nav nav-tabs">
+                      <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('models.list', model: RiskPlanOperation.model_name.human) %></a></li>
+                      <li><a href="#tab-2" data-toggle="tab"><%= t('navigation.tab.binding_products') %></a></li>
+                      <li class=""><a href="#tab-3" data-toggle="tab">Last activity</a></li>
+                  </ul>
+              </div>
+          </div>
+
+          <div class="panel-body">
+
+          <div class="tab-content">
+          <div class="tab-pane active" id="tab-1">
+
+          <div class="btn-toolbar">
+            <div class="btn-group pull-right">
+            <%= link_to(fa_icon('plus-square', text: t('models.add', model: RiskPlanOperation.model_name.human)), new_risk_plan_risk_plan_operation_path(risk_plan_id: @risk_plan.id), remote: true, class: 'btn btn-primary btn-sm') %>
+            </div>
+          </div>
+
+            <div id="item-list">
+              <%= render 'risk_plan_operations/risk_plan_operations_grid' %>
+            </div>
+
+          </div>
+          <div class="tab-pane" id="tab-2">
+
+            <%= render partial: 'binding_products_grid' %>
+
+          </div>
+          </div>
+
+          </div>
+
+          </div>
+          </div>
+      </div>
   </div>
 </div>
-
-
