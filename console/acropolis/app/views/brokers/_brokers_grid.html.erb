@@ -1,0 +1,32 @@
+<%= grid(@brokers_grid, :show_filters => :when_filtered) do |g|
+  
+  g.column name: '#' do |broker|
+    broker.id
+  end
+  
+  
+  g.column name: t('activerecord.attributes.broker.name'), class: 'project-title' do |broker|
+    [
+      link_to(broker.name, broker_path(broker)),
+      content_tag(:small, "#{t('labels.last_modified_at')} #{broker.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
+    ].join('<br/>').html_safe
+  end
+  
+  
+  g.column name: t('activerecord.attributes.time_stamp.created_at') do |broker|
+    broker.created_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+  
+  g.column name: t('activerecord.attributes.time_stamp.updated_at') do |broker|
+    broker.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+
+  g.column html: {class: 'project-actions'} do |broker|
+    [
+      link_to(fa_icon("pencil"), edit_broker_path(broker), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), broker_delete_path(broker), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

@@ -1,0 +1,18 @@
+$("ul.errors").html("")
+<% if @bank.errors.any? %>
+  <% @bank.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  if ($('#bank-detail').length) {
+    $('#bank-detail').html("<%= escape_javascript(render 'bank_detail') %>")
+  }
+
+  if ($('#bank-list').length) {
+    $('#bank-list').html("<%= escape_javascript(render 'banks_grid') %>")
+  }
+
+  $("#item-modal").modal("hide")
+
+<% end %>

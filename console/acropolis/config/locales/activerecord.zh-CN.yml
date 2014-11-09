@@ -13,6 +13,9 @@ zh-CN:
       bank: 银行
       risk_event: 风控事件
     attributes:
+      time_stamp:
+        created_at: 创建于
+        updated_at: 最后编辑于
       risk_plan:
         name: 名称
         created_by: 创建人

@@ -1,0 +1,32 @@
+<%= grid(@banks_grid, :show_filters => :when_filtered) do |g|
+  
+  g.column name: '#' do |bank|
+    bank.id
+  end
+  
+  
+  g.column name: t('activerecord.attributes.bank.name'), class: 'project-title' do |bank|
+    [
+      link_to(bank.name, bank_path(bank)),
+      content_tag(:small, "#{t('labels.last_modified_at')} #{bank.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
+    ].join('<br/>').html_safe
+  end
+  
+  
+  g.column name: t('activerecord.attributes.time_stamp.created_at') do |bank|
+    bank.created_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+  
+  g.column name: t('activerecord.attributes.time_stamp.updated_at') do |bank|
+    bank.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+
+  g.column html: {class: 'project-actions'} do |bank|
+    [
+      link_to(fa_icon("pencil"), edit_bank_path(bank), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), bank_delete_path(bank), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

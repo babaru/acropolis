@@ -1,0 +1,54 @@
+<% content_for :page_title do %>
+
+<%= t('models.show', model: Broker.model_name.human) %>
+
+<% end %>
+
+<% content_for :anything_else do %>
+
+<!-- Modal -->
+
+<div class="modal fade" id="item-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div><!-- /.modal -->
+
+<% end %>
+
+<div class="ibox">
+  <div class="ibox-content">
+      <div id="broker-detail">
+        <%= render partial: 'broker_detail' %>
+      </div>
+      <div class="row m-t-sm">
+        <div class="col-lg-12">
+          <div class="panel blank-panel">
+            <div class="panel-heading">
+                <div class="panel-options">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab-1" data-toggle="tab">Children</a></li>
+                        <li class=""><a href="#tab-2" data-toggle="tab">Last activity</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab-1">
+
+
+
+                </div>
+                <div class="tab-pane" id="tab-2">
+
+
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+

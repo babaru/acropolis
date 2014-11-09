@@ -1,0 +1,18 @@
+$("ul.errors").html("")
+<% if @broker.errors.any? %>
+  <% @broker.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  if ($('#broker-detail').length) {
+    $('#broker-detail').html("<%= escape_javascript(render 'broker_detail') %>")
+  }
+
+  if ($('#broker-list').length) {
+    $('#broker-list').html("<%= escape_javascript(render 'brokers_grid') %>")
+  }
+
+  $("#item-modal").modal("hide")
+
+<% end %>

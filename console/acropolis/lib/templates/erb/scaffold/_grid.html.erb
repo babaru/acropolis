@@ -11,9 +11,13 @@
       content_tag(:small, "#{t('labels.last_modified_at')} #{<%= singular_table_name %>.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
     ].join('<br/>').html_safe
   end
+  <% elsif attribute.name == 'created_at' || attribute.name == 'updated_at' %>
+  g.column name: t('activerecord.attributes.time_stamp.<%= attribute.name %>') do |<%= singular_table_name %>|
+    <%= singular_table_name %>.<%= attribute.name %>.strftime('%Y-%m-%d %H:%M:%S')
+  end
   <% else %>
   g.column name: t('activerecord.attributes.<%= singular_table_name %>.<%= attribute.name %>') do |<%= singular_table_name %>|
-    <% if attribute.name == 'created_at' || attribute.name == 'updated_at' %><%= singular_table_name %>.<%= attribute.name %>.strftime('%Y-%m-%d %H:%M:%S')<% else %><%= singular_table_name %>.<%= attribute.name %><% end %>
+    <%= singular_table_name %>.<%= attribute.name %>
   end
 <% end %>
 <% end %>
