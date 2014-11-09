@@ -13,65 +13,50 @@
 
 <% end %>
 
-<div class="container-fluid">
-  <div class="row">
+<div class="row">
+  <div class="col-lg-9">
 
-    <div class="col-md-9">
-
-      <div class="page-header">
-          <h3><%= fa_icon('exclamation-circle', text: '风控事件') %></h3>
+    <div class="ibox no-drop">
+      <div class="ibox-title">
+        <h5><%= fa_icon('exclamation-circle', text: '风控事件') %></h5>
       </div>
-
-      <div class="panel">
-
-        <%= render partial: 'risk_events_grid' %>
-
-      </div>
-
-      <div id="realtime-monitoring-panel">
-
-      <div class="page-header">
-        <div class="row">
-          <div class="col-md-6"><h3><%= fa_icon('desktop', text: '风险实时监测') %></h3><div class="spin"></div></div>
-          <div class="col-md-6">
-            <div class="btn-toolbar">
-              <div class="btn-group pull-right">
-                <%= link_to fa_icon('th-large'), dashboard_switch_monitor_layout_path(style: :panel), remote: true, class: 'btn btn-default btn-sm switch-monitor-layout-panel-btn active' %>
-                <%= link_to fa_icon('reorder'), dashboard_switch_monitor_layout_path(style: :list), remote: true, class: 'btn btn-default btn-sm switch-monitor-layout-list-btn' %>
-              </div>
-            </div>
-          </div>
+      <div class="ibox-content">
+        <div id="risk_event_grid">
+          <%= render partial: 'risk_events_grid' %>
         </div>
       </div>
-
-      <div id="product-monitor"><%= render partial: 'products_monitoring_panels' %></div>
-
-      </div>
-
     </div>
 
-    <div class="col-md-3">
+  </div>
 
-      <div class="page-header">
-        <h3><%= fa_icon('clock-o', text: '最近访问') %></h3>
+  <div class="col-lg-3">
+
+    <div class="ibox no-drop">
+      <div class="ibox-title">
+          <h5><%= fa_icon('clock-o', text: '最近访问') %><%= Product.model_name.human %></h5>
       </div>
-
-      <div class="panel">
-        <ul class="nav nav-list">
-          <li class="nav-header"><%= RiskPlan.model_name.human %></li>
-          <% recent_items(:risk_plan).map do |id, name| %>
-          <li><%= link_to name, risk_plan_path(id) %></li>
-          <% end %>
-
-          <li class="divider"></li>
-
-          <li class="nav-header"><%= Product.model_name.human %></li>
+      <div class="ibox-content no-padding">
+        <ul class="list-group">
           <% recent_items(:product).map do |id, name| %>
-          <li><%= link_to name, product_path(id) %></li>
+          <li class="list-group-item"><%= link_to name, product_path(id) %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ibox no-drop">
+      <div class="ibox-title">
+          <h5><%= fa_icon('clock-o', text: '最近访问') %><%= RiskPlan.model_name.human %></h5>
+      </div>
+      <div class="ibox-content no-padding">
+        <ul class="list-group">
+          <% recent_items(:risk_plan).map do |id, name| %>
+          <li class="list-group-item"><%= link_to name, product_path(id) %></li>
           <% end %>
         </ul>
       </div>
     </div>
 
   </div>
+
 </div>

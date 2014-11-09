@@ -1,6 +1,6 @@
-<% content_for :plate_title_panel do %>
+<% content_for :page_title do %>
 
-<%= render partial: 'monitoring/title_panel' %>
+<%= fa_icon('desktop', text: t('navigation.page.monitoring')) %>
 
 <% end %>
 
@@ -13,11 +13,17 @@
 
 <% end %>
 
-<p></p>
+<% content_for :page_header_right_panel do %>
 
-<div id="monitor-panel-list">
+<div class="auto-refresh-switcher pull-right" style="position: relative; top: 25px;"><span style="display: inline-block; position: relative; top: 2px; padding-right: 5px;"><%= t('buttons.auto_refresh') %></span> <%= link_to(check_box_tag("checkbox-auto-refresh", nil, nil, class: 'js-switch'), 'javascript:auto_refresh_toggle();') %></div>
+
+<% end %>
+
+<div id="monitoring-wrapper">
 <%= render partial: 'monitoring_panels' %>
 </div>
+
+<% content_for :js do %>
 
 <script type="text/javascript">
 
@@ -57,10 +63,12 @@ function start_auto_refresh() {
 
   $(function () {
 
-
+    WinMove();
 
   });
 
 }(jQuery));
 
 </script>
+
+<% end %>

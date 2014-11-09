@@ -1,6 +1,28 @@
+<% if controller_name == 'dashboard' %>
+<div class="row  border-bottom white-bg dashboard-header">
+  <div class="col-sm-3">
+      <h2><%= t('messages.welcome')%> <%= current_user.full_name %></h2>
+      <small></small>
+  </div>
+  <div class="col-sm-6">
+
+  </div>
+  <div class="col-sm-3">
+
+  </div>
+
+</div>
+
+<% else %>
+
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-9">
+    <div class="col-lg-6">
         <h2><%= yield :page_title %></h2>
         <%= render partial: 'shared/inspinia/breadcrumb' %>
     </div>
+    <div class="col-lg-6">
+      <%= yield :page_header_right_panel %>
+    </div>
 </div>
+
+<% end %>

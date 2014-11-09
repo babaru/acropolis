@@ -4,17 +4,23 @@
   <% current_user.monitoring_products.each do |monitoring_product| %>
   <div class="col-md-3">
 
-    <div class="panel monitor">
-      <div class="page-header"><%= monitoring_product.product.name %></div>
+    <div class="ibox">
+      <div class="ibox-title">
+      <h5><%= monitoring_product.product.name %></h5>
+      </div>
 
-      <table>
-        <% Parameter.all.each do |parameter| %>
-        <tr>
-          <td class="key"><%= t("activerecord.attributes.parameter.name.#{parameter.name}") %></td>
-          <td class="value"><%= render_product_parameter(monitoring_product.product, parameter) %></td>
-        </tr>
-        <% end %>
-      </table>
+      <div class="ibox-content">
+
+        <table class="monitoring">
+          <% Parameter.all.each do |parameter| %>
+          <tr>
+            <td class="key"><%= t("activerecord.attributes.parameter.name.#{parameter.name}") %></td>
+            <td class="value"><%= render_product_parameter(monitoring_product.product, parameter) %></td>
+          </tr>
+          <% end %>
+        </table>
+
+      </div>
     </div>
 
   </div>
