@@ -12,7 +12,12 @@
  *
  *= require twitter/bootstrap
  *= require font-awesome
+
+ *= require wice_grid
  *= require nprogress-override
+
+ *= require inspinia/animate
+ *= require inspinia/style
 
  * Styles used by INSPINIA Theme
 
@@ -21,8 +26,5 @@
  *= require inspinia/plugins/switchery/switchery
  *= require inspinia/plugins/iCheck/custom
 
- *= require inspinia/animate
- *= require inspinia/style
- *= require wice_grid
  *= require theme_inspinia_override
  */

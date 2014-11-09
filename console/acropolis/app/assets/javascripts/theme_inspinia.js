@@ -1,8 +1,8 @@
 //= require jquery
 //= require jquery.turbolinks
+//= require twitter/bootstrap
 //= require jquery_ujs
 
-//= require twitter/bootstrap
 //= require wice_grid
 
 // Plugins used by INSPINIA Theme
@@ -24,8 +24,6 @@
 //= require inspinia/plugins/sparkline/jquery.sparkline.min
 //= require inspinia/plugins/chartJs/Chart.min
 //= require inspinia/plugins/iCheck/icheck.min
-
-//= require jquery-ui
 
 //= require nprogress
 //= require nprogress-turbolinks

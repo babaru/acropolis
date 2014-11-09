@@ -46,7 +46,7 @@ $(document).ready(function () {
 
     // tooltips
     $('.tooltip-demo').tooltip({
-        selector: "[data-toggle=tooltip]",
+        selector: '[data-toggle=tooltip]',
         container: "body"
     })
 

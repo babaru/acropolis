@@ -18,7 +18,7 @@
 
   g.column html: {class: 'project-actions'} do |risk_plan_operation|
     [
-      link_to(fa_icon("pencil"), edit_risk_plan_risk_plan_operation_path(id: risk_plan_operation, risk_plan_id: @risk_plan.id), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("pencil"), edit_risk_plan_risk_plan_operation_path(id: risk_plan_operation, risk_plan_id: @risk_plan.id), class: 'btn btn-white btn-sm', data: {toggle: 'tooltip', placement: 'top'}, title: t('buttons.edit'), remote: true),
       link_to(fa_icon("trash"), risk_plan_operation_delete_path(risk_plan_operation.id), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
     ].join(' ').html_safe
   end
