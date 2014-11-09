@@ -1,10 +1,10 @@
-<%%= simple_form_for(@<%= class_name.split('::').last.underscore.downcase %>, remote: true, html: {class: 'form-horizontal'}) do |f| %>
+<%%= simple_form_for(@<%= singular_table_name %>, remote: true, html: {class: 'form-horizontal'}) do |f| %>
 
   <div class="modal-body">
 
   <%%= f.error_notification %>
 
-  <% for attribute in class_name.split('::').last.constantize.columns -%>
+  <% for attribute in class_name.constantize.columns -%>
     <% if attribute.name != "id" && attribute.name !="created_at" && attribute.name !="updated_at" %>
     <%%= f.input :<%= attribute.name %> %>
     <% end -%>
@@ -14,8 +14,8 @@
 
   <div class="modal-footer">
 
-  <%%= link_to t('buttons.cancel'), "#", class: "btn btn-default", data: {dismiss: "modal"} %>
-  <%%= f.button :submit, t('buttons.save_changes'), class: 'btn-primary col-sm-offset-2' %>
+  <%%= link_to t('buttons.cancel'), "#", class: "btn btn-default btn-sm", data: {dismiss: "modal"} %>
+  <%%= f.submit t('buttons.save_changes'), class: 'btn btn-primary btn-sm' %>
 
   </div>
 
@@ -26,8 +26,6 @@
 (function ($) {
 
   $(function () {
-
-    draw_flat_ui();
 
     //Add your script here.
 

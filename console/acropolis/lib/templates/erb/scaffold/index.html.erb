@@ -1,18 +1,16 @@
-<%% hide_sidebar = false if local_assigns[:hide_sidebar].nil? %>
+<%% content_for :page_title do %>
 
-<%% content_for :plate_title_panel do %>
-
-<%%= render partial: '<%= class_name.split('::').last.underscore.downcase.pluralize %>_title_panel' %>
+<%%= t('models.list', model: <%= class_name %>.model_name.human) %>
 
 <%% end %>
 
-<%% unless hide_sidebar %>
+<%% content_for :page_header_right_panel do %>
 
-<%% content_for :sidebar do %>
-
-<%%= render partial: '<%= class_name.split('::').last.underscore.downcase.pluralize %>_sidebar_menu' %>
-
-<%% end %>
+<div class="btn-toolbar">
+  <div class="btn-group pull-right" style="position: relative; top: 28px;">
+      <%%= link_to(fa_icon('plus-square', text: t('models.add', model: <%= class_name %>.model_name.human)), new_<%= singular_table_name %>_path, remote: true, class: 'btn btn-primary') %>
+  </div>
+</div>
 
 <%% end %>
 
@@ -25,23 +23,12 @@
 
 <%% end %>
 
-<div class="page-header">
-  <div class="row">
-    <div class="col-sm-6">
-      <h2><%%= t('models.list', model: <%= class_name.split('::').last %>.model_name.human) %></h2>
-    </div>
-    <div class="col-sm-6">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-right">
-          <%%= link_to(fa_icon('plus', text: t('models.new', model: <%= class_name.split('::').last %>.model_name.human)), new_<%= class_name.split('::').last.underscore.downcase %>_path, remote: true, class: 'btn btn-primary') %>
-        </div>
-      </div>
+<div class="ibox no-drop">
+  <div class="ibox-content">
+    <div id="<%= singular_table_name %>-list" class="project-list">
+
+      <%%= render '<%= table_name %>_grid' %>
+
     </div>
   </div>
-</div>
-
-<div id="item-list">
-
-  <%%= render '<%= class_name.split('::').last.underscore.downcase.pluralize %>_grid' %>
-
 </div>

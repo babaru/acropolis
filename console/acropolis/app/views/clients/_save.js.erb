@@ -4,7 +4,15 @@ $("ul.errors").html("")
     $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
   <% end %>
 <% else %>
-  $('#item-list').html("<%= escape_javascript(render 'clients_grid') %>")
+
+  if ($('#client-detail').length) {
+    $('#client-detail').html("<%= escape_javascript(render 'client_detail') %>")
+  }
+
+  if ($('#client-list').length) {
+    $('#client-list').html("<%= escape_javascript(render 'clients_grid') %>")
+  }
+
   $("#item-modal").modal("hide")
-  draw_flat_ui();
+
 <% end %>

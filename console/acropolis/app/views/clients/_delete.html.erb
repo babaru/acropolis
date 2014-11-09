@@ -8,8 +8,8 @@
       <div class="panel-heading"></div>
     </div>
     <div class="modal-footer">
-      <%= link_to t('buttons.confirm_delete'), client_path(@client), method: :delete, remote: true, class: "btn btn-danger" %>
-      <%= link_to t('buttons.cancel_delete'), "#", class: "btn btn-link", data: { dismiss: "modal" } %>
+      <%= link_to t('buttons.cancel_delete'), "#", class: "btn btn-default btn-sm", data: { dismiss: "modal" } %>
+      <%= link_to t('buttons.confirm_delete'), client_path(@client), method: :delete, remote: true, class: "btn btn-danger btn-sm" %>
     </div>
   </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->

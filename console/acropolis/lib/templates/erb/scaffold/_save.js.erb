@@ -1,10 +1,18 @@
 $("ul.errors").html("")
-<%% if @<%= class_name.split('::').last.underscore.downcase %>.errors.any? %>
-  <%% @<%= class_name.split('::').last.underscore.downcase %>.errors.full_messages.each do |message| %>
+<%% if @<%= singular_table_name %>.errors.any? %>
+  <%% @<%= singular_table_name %>.errors.full_messages.each do |message| %>
     $("ul.errors").append($("<li />").html("<%%= message.html_safe %>"))
   <%% end %>
 <%% else %>
-  $('#item-list').html("<%%= escape_javascript(render '<%= table_name %>_grid') %>")
+
+  if ($('#<%= singular_table_name %>-detail').length) {
+    $('#<%= singular_table_name %>-detail').html("<%%= escape_javascript(render '<%= singular_table_name %>_detail') %>")
+  }
+
+  if ($('#<%= singular_table_name %>-list').length) {
+    $('#<%= singular_table_name %>-list').html("<%%= escape_javascript(render '<%= table_name %>_grid') %>")
+  }
+
   $("#item-modal").modal("hide")
-  draw_flat_ui();
+
 <%% end %>

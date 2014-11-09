@@ -1,19 +1,32 @@
 <%= grid(@clients_grid, :show_filters => :when_filtered) do |g|
-
+  
   g.column name: '#' do |client|
     client.id
   end
-
-
-  g.column name: t('activerecord.attributes.client.name') do |client|
-    link_to(client.name, client_path(client))
+  
+  
+  g.column name: t('activerecord.attributes.client.name'), class: 'project-title' do |client|
+    [
+      link_to(client.name, client_path(client)),
+      content_tag(:small, "#{t('labels.last_modified_at')} #{client.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
+    ].join('<br/>').html_safe
+  end
+  
+  
+  g.column name: t('activerecord.attributes.client.created_at') do |client|
+    client.created_at.strftime('%Y-%m-%d %H:%M:%S')
   end
 
-  g.column html: {class: 'btn-cell'} do |client|
-    link_to fa_icon("pencil"), edit_client_path(client), class: 'btn btn-default btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')
+  
+  g.column name: t('activerecord.attributes.client.updated_at') do |client|
+    client.updated_at.strftime('%Y-%m-%d %H:%M:%S')
   end
 
-  g.column html: {class: 'btn-cell'} do |client|
-    link_to fa_icon("trash"), client_delete_path(client), class: 'btn btn-danger btn-xs', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete')
+
+  g.column html: {class: 'project-actions'} do |client|
+    [
+      link_to(fa_icon("pencil"), edit_client_path(client), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), client_delete_path(client), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
   end
 end -%>

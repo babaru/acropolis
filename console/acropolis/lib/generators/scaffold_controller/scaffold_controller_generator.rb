@@ -31,9 +31,7 @@ module Rails
         template "../../erb/scaffold/_modal_form.html.erb", File.join('app/views', "#{controller_file_name}/_modal_form.html.erb")
 
         template "../../erb/scaffold/_grid.html.erb", File.join('app/views', "#{controller_file_name}/_#{controller_file_name}_grid.html.erb")
-        template "../../erb/scaffold/_list_title_panel.html.erb", File.join('app/views', "#{controller_file_name}/_#{controller_file_name}_title_panel.html.erb")
-        template "../../erb/scaffold/_show_title_panel.html.erb", File.join('app/views', "#{controller_file_name}/_#{class_name.split('::').last.underscore.downcase}_title_panel.html.erb")
-        template "../../erb/scaffold/_sidebar_menu.html.erb", File.join('app/views', "#{controller_file_name}/_#{controller_file_name}_sidebar_menu.html.erb")
+        template "../../erb/scaffold/_detail.html.erb", File.join('app/views', "#{controller_file_name}/_#{singular_table_name}_detail.html.erb")
       end
 
       hook_for :template_engine, :test_framework, as: :scaffold

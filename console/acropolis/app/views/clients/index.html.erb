@@ -1,18 +1,16 @@
-<% hide_sidebar = false if local_assigns[:hide_sidebar].nil? %>
+<% content_for :page_title do %>
 
-<% content_for :plate_title_panel do %>
-
-<%= render partial: 'clients_title_panel' %>
+<%= t('models.list', model: Client.model_name.human) %>
 
 <% end %>
 
-<% unless hide_sidebar %>
+<% content_for :page_header_right_panel do %>
 
-<% content_for :sidebar do %>
-
-<%= render partial: 'clients_sidebar_menu' %>
-
-<% end %>
+<div class="btn-toolbar">
+  <div class="btn-group pull-right" style="position: relative; top: 28px;">
+      <%= link_to(fa_icon('plus-square', text: t('models.add', model: Client.model_name.human)), new_client_path, remote: true, class: 'btn btn-primary') %>
+  </div>
+</div>
 
 <% end %>
 
@@ -25,23 +23,12 @@
 
 <% end %>
 
-<div class="page-header">
-  <div class="row">
-    <div class="col-sm-6">
-      <h2><%= t('models.list', model: Client.model_name.human) %></h2>
-    </div>
-    <div class="col-sm-6">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-right">
-          <%= link_to(fa_icon('plus', text: t('models.new', model: Client.model_name.human)), new_client_path, remote: true, class: 'btn btn-primary') %>
-        </div>
-      </div>
+<div class="ibox no-drop">
+  <div class="ibox-content">
+    <div id="client-list" class="project-list">
+
+      <%= render 'clients_grid' %>
+
     </div>
   </div>
-</div>
-
-<div id="item-list">
-
-  <%= render 'clients_grid' %>
-
 </div>
