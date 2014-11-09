@@ -15,6 +15,8 @@ zh-CN:
       delete: "删除这条%{model}记录？"
     welcome: 欢迎
     welcome_to_use: 欢迎使用
+  labels:
+    last_modified_at: 最后编辑于
   navigation:
     page:
       risk_plan: 风控管理
