@@ -4,7 +4,13 @@ $("ul.errors").html("")
     $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
   <% end %>
 <% else %>
-  $('#item-list').html("<%= escape_javascript(render 'risk_plans_grid') %>")
-  $("#item-modal").modal("hide")
-  draw_flat_ui();
+  if ($('#risk-plan-detail').length) {
+    $('#risk-plan-detail').html("<%= escape_javascript(render 'risk_plan_detail') %>");
+  }
+
+  if ($('#risk-plan-list').length) {
+    $('#risk-plan-list').html("<%= escape_javascript(render 'risk_plans_grid') %>");
+  }
+
+  $("#item-modal").modal("hide");
 <% end %>
