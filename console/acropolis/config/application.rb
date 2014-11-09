@@ -29,9 +29,6 @@ module Acropolis
     config.to_prepare do
       Devise::SessionsController.layout "inspinia/devise"
       ApplicationController.layout 'inspinia/application'
-      DashboardController.layout 'dashboard'
-      MonitoringController.layout 'dashboard'
-      InspiniaController.layout 'inspinia/application'
     end
 
     # For nav_lynx
