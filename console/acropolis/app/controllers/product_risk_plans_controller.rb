@@ -5,8 +5,7 @@ class ProductRiskPlansController < ApplicationController
   # GET /product_risk_plans
   # GET /product_risk_plans.json
   def index
-    @product_risk_plans_grid = initialize_grid(ProductRiskPlan.all)
-    cache_recent_item(:product, @product.id, @product.name)
+    @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(product_id: params[:product_id]))
   end
 
   # GET /product_risk_plans/1
@@ -29,6 +28,7 @@ class ProductRiskPlansController < ApplicationController
   def create
     ProductRiskPlan.transaction do
       @product_risk_plan = ProductRiskPlan.new(product_risk_plan_params)
+      @product = @product_risk_plan.product
       @product_risk_plan.save!
     end
 
@@ -70,6 +70,7 @@ class ProductRiskPlansController < ApplicationController
   # DELETE /product_risk_plans/1
   # DELETE /product_risk_plans/1.json
   def destroy
+    @product = @product_risk_plan.product
     @product_risk_plan.destroy!
 
     respond_to do |format|
@@ -123,7 +124,7 @@ class ProductRiskPlansController < ApplicationController
     end
 
     def set_product_risk_plans_grid
-      @product_risk_plans_grid = initialize_grid(ProductRiskPlan)
+      @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(product_id: @product.id))
     end
 end
 

@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :bind_risk_plan]
 
   add_breadcrumb I18n.t('navigation.page.product'), :products_path, only: [:show]
 
@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
-    @binding_risk_plans_grid = initialize_grid(ProductRiskPlan.where(product_id: @product.id))
+    @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(product_id: @product.id))
     cache_recent_item(:product, @product.id, @product.name)
 
     add_breadcrumb @product.name, nil
@@ -46,6 +46,23 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html { render :new }
       format.js { render :new }
+    end
+  end
+
+  # POST /products/1/bind_risk_plan
+  def bind_risk_plan
+    Product.transaction do
+      unless ProductRiskPlan.exists?(risk_plan_id: params[:risk_plan_id], product_id: @product.id)
+        ProductRiskPlan.create!(risk_plan_id: params[:risk_plan_id], product_id: @product.id)
+      end
+    end
+
+    respond_to do |format|
+      format.js
+    end
+  rescue ActiveRecord::Rollback
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -123,7 +140,7 @@ class ProductsController < ApplicationController
         :client_id,
         :budget,
         :broker_id,
-        :bank_id,
+        :bank_id
         )
     end
 

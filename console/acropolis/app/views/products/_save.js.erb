@@ -5,11 +5,11 @@ $("ul.errors").html("")
   <% end %>
 <% else %>
   if ($('#product-detail').length) {
-    $('#product-detail').html("<%= escape_javascript(render 'product_detail') %>");
+    $('#product-detail').html("<%= escape_javascript(render 'products/product_detail') %>");
   }
 
   if ($('#product-list').length) {
-    $('#product-list').html("<%= escape_javascript(render 'products_grid') %>");
+    $('#product-list').html("<%= escape_javascript(render 'products/products_grid') %>");
   }
   $("#item-modal").modal("hide")
 <% end %>

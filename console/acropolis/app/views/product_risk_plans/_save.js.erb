@@ -4,7 +4,8 @@ $("ul.errors").html("")
     $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
   <% end %>
 <% else %>
-  $('#item-list').html("<%= escape_javascript(render 'product_risk_plans_grid') %>")
-  $("#item-modal").modal("hide")
-  draw_flat_ui();
+  if ($('#product_risk_plan-list').length) {
+    $('#product_risk_plan-list').html("<%= escape_javascript(render 'product_risk_plans_grid') %>");
+  }
+  $("#item-modal").modal("hide");
 <% end %>

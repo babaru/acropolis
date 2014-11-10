@@ -37,12 +37,12 @@
 
                 <div class="btn-toolbar">
                   <div class="btn-group pull-right">
-                  <%= link_to(fa_icon('plus-square', text: t('models.add', model: ProductRiskPlan.model_name.human)), new_product_risk_plan_path(product_id: @product.id), remote: true, class: 'btn btn-primary btn-sm') %>
+                  <%= link_to(fa_icon('plus-square', text: t('models.add', model: ProductRiskPlan.model_name.human)), new_product_product_risk_plan_path(@product), remote: true, class: 'btn btn-primary btn-sm') %>
                   </div>
                 </div>
 
-                <div id="product-risk-plan-list" class="tooltip-demo">
-                  <%= render partial: 'binding_risk_plans_grid' %>
+                <div id="product_risk_plan-list" class="tooltip-demo">
+                  <%= render partial: 'product_risk_plans/product_risk_plans_grid' %>
                 </div>
 
               </div>
