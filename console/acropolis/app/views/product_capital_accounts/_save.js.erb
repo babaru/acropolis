@@ -1,0 +1,14 @@
+$("ul.errors").html("")
+<% if @product_capital_account.errors.any? %>
+  <% @product_capital_account.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  if ($('#product_capital_account-list').length) {
+    $('#product_capital_account-list').html("<%= escape_javascript(render 'product_capital_accounts_grid') %>")
+  }
+
+  $("#item-modal").modal("hide")
+
+<% end %>

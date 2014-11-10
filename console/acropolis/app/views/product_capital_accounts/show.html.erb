@@ -1,6 +1,6 @@
 <% content_for :page_title do %>
 
-<%= t('models.show', model: Client.model_name.human) %>
+<%= t('models.show', model: ProductCapitalAccount.model_name.human) %>
 
 <% end %>
 
@@ -15,8 +15,8 @@
 
 <div class="ibox">
   <div class="ibox-content">
-      <div id="client-detail">
-        <%= render partial: 'client_detail' %>
+      <div id="product_capital_account-detail">
+        <%= render partial: 'product_capital_account_detail' %>
       </div>
       <div class="row m-t-sm">
         <div class="col-lg-12">
@@ -24,7 +24,7 @@
             <div class="panel-heading">
                 <div class="panel-options">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('models.list', model: CapitalAccount.model_name.human) %></a></li>
+                        <li class="active"><a href="#tab-1" data-toggle="tab">Children</a></li>
                         <li class=""><a href="#tab-2" data-toggle="tab">Last activity</a></li>
                     </ul>
                 </div>
@@ -35,17 +35,7 @@
               <div class="tab-content">
                 <div class="tab-pane active" id="tab-1">
 
-                  <div class="btn-toolbar">
-                    <div class="btn-group pull-right">
-                    <%= link_to(fa_icon('plus-square', text: t('models.add', model: CapitalAccount.model_name.human)), new_client_capital_account_path(@client), remote: true, class: 'btn btn-primary btn-sm') %>
-                    </div>
-                  </div>
 
-                  <div id="capital_account-list" class="tooltip-demo">
-
-                    <%= render partial: 'capital_accounts/capital_accounts_grid' %>
-
-                  </div>
 
                 </div>
                 <div class="tab-pane" id="tab-2">

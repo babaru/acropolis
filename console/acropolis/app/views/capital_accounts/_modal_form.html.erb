@@ -1,0 +1,37 @@
+<%= simple_form_for(@capital_account, remote: true, html: {class: 'form-horizontal'}) do |f| %>
+
+  <div class="modal-body">
+
+  <%= f.error_notification %>
+
+
+    <%= f.input :name %>
+
+    <%= f.input :budget, as: :string %>
+
+    <%= f.input :client_id, as: :hidden %>
+
+  </div>
+
+  <div class="modal-footer">
+
+  <%= link_to t('buttons.cancel'), "#", class: "btn btn-default btn-sm", data: {dismiss: "modal"} %>
+  <%= f.submit t('buttons.save_changes'), class: 'btn btn-primary btn-sm' %>
+
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+
+(function ($) {
+
+  $(function () {
+
+    //Add your script here.
+
+  });
+
+}(jQuery));
+
+</script>

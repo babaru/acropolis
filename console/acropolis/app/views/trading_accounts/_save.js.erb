@@ -1,0 +1,18 @@
+$("ul.errors").html("")
+<% if @trading_account.errors.any? %>
+  <% @trading_account.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  if ($('#trading_account-detail').length) {
+    $('#trading_account-detail').html("<%= escape_javascript(render 'trading_account_detail') %>")
+  }
+
+  if ($('#trading_account-list').length) {
+    $('#trading_account-list').html("<%= escape_javascript(render 'trading_accounts_grid') %>")
+  }
+
+  $("#item-modal").modal("hide")
+
+<% end %>

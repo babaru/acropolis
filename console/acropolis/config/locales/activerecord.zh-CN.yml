@@ -4,7 +4,8 @@ zh-CN:
       product: 产品
       risk_plan: 风控方案
       risk_plan_operation: 风控条件
-      product_risk_plan: 关联风控方案
+      product_risk_plan: 产品风控方案
+      product_capital_account: 产品资金帐号
       user: 用户
       parameter: 风控参数
       threshold: 阈值
@@ -12,6 +13,8 @@ zh-CN:
       broker: 资管公司
       bank: 银行
       risk_event: 风控事件
+      capital_account: 资金账户
+      trading_account: 交易账户
     attributes:
       time_stamp:
         created_at: 创建于
@@ -55,6 +58,15 @@ zh-CN:
         operation_id: 风控操作
         remark: 说明
         happened_at: 发生时间
+      capital_account:
+        name: 名称
+        budget: 资金
+      trading_account:
+        name: 名称
+        budget: 资金
+      product_capital_account:
+        capital_account: 资金帐号名称
+        capital_account_id: 资金帐号名称
   models:
     list: "%{model}列表"
     new: "新建%{model}"

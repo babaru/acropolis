@@ -1,0 +1,16 @@
+<%= grid(@product_capital_accounts_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: '#' do |product_capital_account|
+    product_capital_account.id
+  end
+
+  g.column name: t('activerecord.attributes.product_capital_account.capital_account_id') do |product_capital_account|
+    product_capital_account.capital_account.name
+  end
+
+  g.column html: {class: 'project-actions'} do |product_capital_account|
+    [
+      link_to(fa_icon("trash"), product_capital_account_delete_path(product_capital_account), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

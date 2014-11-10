@@ -36,4 +36,5 @@ zh-CN:
       sign_up: 注册新用户
       sign_in: 登录
       binding_products: 绑定产品
-      binding_risk_plans: 绑定风控方案
+      binding_risk_plans: 已绑定风控方案
+      binding_capital_accounts: 已绑定资金帐号

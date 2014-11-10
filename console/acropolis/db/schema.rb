@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107021954) do
+ActiveRecord::Schema.define(version: 20141110155743) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 20141107021954) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "capital_accounts", force: true do |t|
+    t.string   "name"
+    t.decimal  "budget",     precision: 20, scale: 4
+    t.integer  "client_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "capital_accounts", ["client_id"], name: "index_capital_accounts_on_client_id", using: :btree
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -53,6 +63,16 @@ ActiveRecord::Schema.define(version: 20141107021954) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "product_capital_accounts", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "capital_account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_capital_accounts", ["capital_account_id"], name: "index_product_capital_accounts_on_capital_account_id", using: :btree
+  add_index "product_capital_accounts", ["product_id"], name: "index_product_capital_accounts_on_product_id", using: :btree
 
   create_table "product_risk_parameters", force: true do |t|
     t.integer  "product_id"
@@ -140,6 +160,16 @@ ActiveRecord::Schema.define(version: 20141107021954) do
   add_index "thresholds", ["parameter_id"], name: "index_thresholds_on_parameter_id", using: :btree
   add_index "thresholds", ["relation_symbol_id"], name: "index_thresholds_on_relation_symbol_id", using: :btree
   add_index "thresholds", ["risk_plan_operation_id"], name: "index_thresholds_on_risk_plan_operation_id", using: :btree
+
+  create_table "trading_accounts", force: true do |t|
+    t.string   "name"
+    t.decimal  "budget",     precision: 20, scale: 4
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "trading_accounts", ["product_id"], name: "index_trading_accounts_on_product_id", using: :btree
 
   create_table "translations", force: true do |t|
     t.string   "locale"

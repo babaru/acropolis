@@ -25,9 +25,29 @@ Rails.application.routes.draw do
     post 'monitor'
 
     resources :product_risk_plans
+    resources :trading_accounts
+    resources :product_capital_accounts
   end
 
-  resources :clients, :banks, :brokers do
+  resources :trading_accounts do
+    get 'delete'
+  end
+
+  resources :product_capital_accounts do
+    get 'delete'
+  end
+
+  resources :banks, :brokers do
+    get 'delete'
+  end
+
+  resources :clients do
+    get 'delete'
+
+    resources :capital_accounts
+  end
+
+  resources :capital_accounts do
     get 'delete'
   end
 

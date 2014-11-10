@@ -10,6 +10,7 @@ class ClientsController < ApplicationController
   # GET /clients/1
   # GET /clients/1.json
   def show
+    @capital_accounts_grid = initialize_grid(CapitalAccount.where(client_id: @client.id))
   end
 
   # GET /clients/new

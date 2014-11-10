@@ -1,0 +1,27 @@
+<%= grid(@capital_accounts_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: '#' do |capital_account|
+    capital_account.id
+  end
+
+
+  g.column name: t('activerecord.attributes.capital_account.name'), class: 'project-title' do |capital_account|
+    [
+      link_to(capital_account.name, capital_account_path(capital_account)),
+      content_tag(:small, "#{t('labels.last_modified_at')} #{capital_account.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
+    ].join('<br/>').html_safe
+  end
+
+
+  g.column name: t('activerecord.attributes.capital_account.budget') do |capital_account|
+    render_budget(capital_account.budget)
+  end
+
+
+  g.column html: {class: 'project-actions'} do |capital_account|
+    [
+      link_to(fa_icon("pencil"), edit_capital_account_path(capital_account), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), capital_account_delete_path(capital_account), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

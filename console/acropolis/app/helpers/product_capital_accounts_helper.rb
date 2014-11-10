@@ -1,0 +1,2 @@
+module ProductCapitalAccountsHelper
+end

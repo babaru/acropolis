@@ -15,7 +15,7 @@
   end
 
   g.column name: t('activerecord.attributes.product.budget') do |product|
-    content_tag(:div, number_with_delimiter(product.budget, delimiter: ','), class: 'label label-success', style: 'font-size: 14px;')
+    render_budget(product.budget)
   end
 
   g.column name: t('activerecord.attributes.product.client_id') do |product|

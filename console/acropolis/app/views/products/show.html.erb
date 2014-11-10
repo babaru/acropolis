@@ -25,7 +25,9 @@
               <div class="panel-options">
                   <ul class="nav nav-tabs">
                       <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('navigation.tab.binding_risk_plans') %></a></li>
-                      <li class=""><a href="#tab-2" data-toggle="tab">Last activity</a></li>
+                      <li class=""><a href="#tab-2" data-toggle="tab"><%= t('navigation.tab.binding_capital_accounts') %></a></li>
+                      <li class=""><a href="#tab-3" data-toggle="tab"><%= t('models.list', model: TradingAccount.model_name.human) %></a></li>
+                      <li class=""><a href="#tab-4" data-toggle="tab">Last activity</a></li>
                   </ul>
               </div>
           </div>
@@ -48,7 +50,29 @@
               </div>
               <div class="tab-pane" id="tab-2">
 
+                <div class="btn-toolbar">
+                  <div class="btn-group pull-right">
+                  <%= link_to(fa_icon('plus-square', text: t('models.add', model: ProductCapitalAccount.model_name.human)), new_product_product_capital_account_path(@product), remote: true, class: 'btn btn-primary btn-sm') %>
+                  </div>
+                </div>
 
+                <div id="product_capital_account-list" class="tooltip-demo">
+                  <%= render partial: 'product_capital_accounts/product_capital_accounts_grid' %>
+                </div>
+
+              </div>
+
+              <div class="tab-pane" id="tab-3">
+
+                <div class="btn-toolbar">
+                  <div class="btn-group pull-right">
+                  <%= link_to(fa_icon('plus-square', text: t('models.add', model: TradingAccount.model_name.human)), new_product_trading_account_path(@product), remote: true, class: 'btn btn-primary btn-sm') %>
+                  </div>
+                </div>
+
+                <div id="trading_account-list" class="tooltip-demo">
+                  <%= render partial: 'trading_accounts/trading_accounts_grid' %>
+                </div>
 
               </div>
             </div>
