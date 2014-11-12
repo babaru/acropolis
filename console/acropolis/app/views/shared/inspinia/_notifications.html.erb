@@ -1,7 +1,8 @@
-<div id="notifications" style="position: absolute; z-index: 9999999999999999999999999; top: 80px; left: 220px;">
+<div id="notifications" style="position: fixed; z-index: 9999999999999999999999999; top: 5px; left: 50%;">
+
 <% if notice %>
-  <div style="position: relative; left: 100%; ">
-      <div class="alert alert-success alert-dismissable animated fadeInDown" style="position: relative; left: -50%;">
+  <div style="position: relative; right: 100%;">
+      <div class="alert alert-success alert-dismissable animated fadeInDown" style="position: relative; right: -50%;">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
         <%= notice %>
       </div>
@@ -9,8 +10,8 @@
 <% end %>
 
 <% if alert %>
-  <div style="position: relative; left: 100%; ">
-      <div class="alert alert-danger alert-dismissable animated fadeInDown" style="position: relative; left: -50%;">
+  <div style="position: relative; right: 100%; ">
+      <div class="alert alert-danger alert-dismissable animated fadeInDown" style="position: relative; right: -50%;">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
         <%= alert %>
       </div>

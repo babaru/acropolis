@@ -16,6 +16,7 @@ class ProductCapitalAccountsController < ApplicationController
   # GET /product_capital_accounts/new
   def new
     @product_capital_account = ProductCapitalAccount.new
+    @product_capital_account.product = @product
   end
 
   # GET /product_capital_accounts/1/edit
@@ -27,6 +28,7 @@ class ProductCapitalAccountsController < ApplicationController
   def create
     ProductCapitalAccount.transaction do
       @product_capital_account = ProductCapitalAccount.new(product_capital_account_params)
+      @product = @product_capital_account.product
       @product_capital_account.save!
     end
 
@@ -47,6 +49,7 @@ class ProductCapitalAccountsController < ApplicationController
   def update
     ProductCapitalAccount.transaction do
       @product_capital_account.update!(product_capital_account_params)
+      @product = @product_capital_account.product
     end
 
     respond_to do |format|
@@ -68,6 +71,7 @@ class ProductCapitalAccountsController < ApplicationController
   # DELETE /product_capital_accounts/1
   # DELETE /product_capital_accounts/1.json
   def destroy
+    @product = @product_capital_account.product
     @product_capital_account.destroy!
 
     respond_to do |format|
@@ -101,7 +105,7 @@ class ProductCapitalAccountsController < ApplicationController
     end
 
     def set_product_capital_accounts_grid
-      @product_capital_accounts_grid = initialize_grid(ProductCapitalAccount)
+      @product_capital_accounts_grid = initialize_grid(ProductCapitalAccount.where(product_id: @product.id))
     end
 end
 

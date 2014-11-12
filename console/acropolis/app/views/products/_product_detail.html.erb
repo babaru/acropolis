@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <div class="m-b-md">
             <%= link_to t('models.edit', model: Product.model_name.human), edit_product_path(@product), remote: true, class: 'btn btn-white btn-xs pull-right' %>
-            <h2><%= @product.name %></h2>
+            <h2><span style="color: #f8ac59;"><%= fa_icon('star') %></span> <%= @product.name %></h2>
         </div>
         <dl class="dl-horizontal">
             <dt><%= t('activerecord.attributes.product.budget') %></dt> <dd><span class="label label-success" style="font-size: 12px;"><%= number_with_delimiter(@product.budget, delimiter: ',') %></span></dd>
