@@ -85,9 +85,9 @@ SimpleNavigation::Configuration.run do |navigation|
     end
 
     primary.item :page_settings, fa_icon('cog', text: t('navigation.page.settings')), nil, {} do |settings_menu|
-      settings_menu.item :page_client_list, fa_icon('user', text: Client.model_name.human), clients_path
-      settings_menu.item :page_broker_list, fa_icon('key', text: Broker.model_name.human), brokers_path
-      settings_menu.item :page_bank_list, fa_icon('bank', text: Bank.model_name.human), banks_path
+      settings_menu.item :page_client_list, Client.model_name.human, clients_path
+      settings_menu.item :page_broker_list, Broker.model_name.human, brokers_path
+      settings_menu.item :page_bank_list, Bank.model_name.human, banks_path
     end
 
   end
