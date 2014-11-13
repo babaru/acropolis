@@ -18,6 +18,13 @@ zh-CN:
       risk_event: 风控事件
       capital_account: 资金账户
       trading_account: 交易账户
+      instrument: 交易产品
+      stock_instrument: 证券
+      futuers_instrument: 期货
+      options_instrument: 期权
+      fund_instrument: 基金
+      bond_instrument: 债券
+      warrant_instrument: 权证
     attributes:
       time_stamp:
         created_at: 创建于
@@ -77,6 +84,14 @@ zh-CN:
         full_en_name: 英文全称
         short_en_name: 英文简称
         type: 类型
+      instrument:
+        name: 名称
+        type: 类型
+        symbol_id: 产品代码
+        underlying: 标的
+        underlying_id: 标的
+        expiration_date: 合约到期日
+        strike_price: 执行价
   models:
     list: "%{model}列表"
     new: "新建%{model}"
