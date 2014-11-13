@@ -1,0 +1,2 @@
+class FuturesExchange < Exchange
+end

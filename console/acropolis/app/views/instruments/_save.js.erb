@@ -1,0 +1,18 @@
+$("ul.errors").html("")
+<% if @instrument.errors.any? %>
+  <% @instrument.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  if ($('#instrument-detail').length) {
+    $('#instrument-detail').html("<%= escape_javascript(render 'instrument_detail') %>")
+  }
+
+  if ($('#instrument-list').length) {
+    $('#instrument-list').html("<%= escape_javascript(render 'instruments_grid') %>")
+  }
+
+  $("#item-modal").modal("hide")
+
+<% end %>

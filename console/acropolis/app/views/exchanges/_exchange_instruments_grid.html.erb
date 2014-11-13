@@ -1,0 +1,47 @@
+<%= grid(@instruments_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: '#' do |instrument|
+    instrument.id
+  end
+
+
+  g.column name: t('activerecord.attributes.instrument.name'), class: 'project-title' do |instrument|
+    [
+      link_to(instrument.name, instrument_path(instrument)),
+      content_tag(:small, "#{t('labels.last_modified_at')} #{instrument.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
+    ].join('<br/>').html_safe
+  end
+
+
+  g.column name: t('activerecord.attributes.instrument.symbol_id') do |instrument|
+    instrument.symbol_id
+  end
+
+
+  g.column name: t('activerecord.attributes.instrument.type') do |instrument|
+    instrument.type
+  end
+
+
+  g.column name: t('activerecord.attributes.instrument.underlying_id') do |instrument|
+    instrument.underlying_id
+  end
+
+
+  g.column name: t('activerecord.attributes.instrument.expiration_date') do |instrument|
+    instrument.expiration_date
+  end
+
+
+  g.column name: t('activerecord.attributes.instrument.strike_price') do |instrument|
+    instrument.strike_price
+  end
+
+
+  g.column html: {class: 'project-actions'} do |instrument|
+    [
+      link_to(fa_icon("pencil"), edit_instrument_path(instrument), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), instrument_delete_path(instrument), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

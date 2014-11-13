@@ -88,6 +88,7 @@ SimpleNavigation::Configuration.run do |navigation|
       settings_menu.item :page_client_list, Client.model_name.human, clients_path
       settings_menu.item :page_broker_list, Broker.model_name.human, brokers_path
       settings_menu.item :page_bank_list, Bank.model_name.human, banks_path
+      settings_menu.item :page_exchange_list, Exchange.model_name.human, exchanges_path
     end
 
   end

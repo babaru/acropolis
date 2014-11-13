@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  symbol_id: MyString
+  type: 
+  underlying_id: 
+  expiration_date: 2014-11-13 10:09:10
+  strike_price: 9.99
+  exchange_id: 
+
+two:
+  name: MyString
+  symbol_id: MyString
+  type: 
+  underlying_id: 
+  expiration_date: 2014-11-13 10:09:10
+  strike_price: 9.99
+  exchange_id: 

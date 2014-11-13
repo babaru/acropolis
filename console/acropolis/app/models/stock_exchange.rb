@@ -1,0 +1,2 @@
+class StockExchange < Exchange
+end

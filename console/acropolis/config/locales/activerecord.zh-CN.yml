@@ -12,6 +12,9 @@ zh-CN:
       client: 客户
       broker: 资管公司
       bank: 银行
+      exchange: 交易所
+      stock_exchange: 证券交易所
+      futures_exchange: 期货交易所
       risk_event: 风控事件
       capital_account: 资金账户
       trading_account: 交易账户
@@ -67,6 +70,13 @@ zh-CN:
       product_capital_account:
         capital_account: 资金帐号名称
         capital_account_id: 资金帐号名称
+      exchange:
+        name: 名称
+        full_cn_name: 中文全称
+        short_cn_name: 中文简称
+        full_en_name: 英文全称
+        short_en_name: 英文简称
+        type: 类型
   models:
     list: "%{model}列表"
     new: "新建%{model}"

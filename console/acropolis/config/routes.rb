@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     get 'delete'
   end
 
-  resources :banks, :brokers do
+  resources :banks, :brokers, :exchanges do
     get 'delete'
   end
 

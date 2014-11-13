@@ -1,0 +1,2 @@
+class OptionsInstrument < Instrument
+end

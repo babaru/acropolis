@@ -1,0 +1,2 @@
+class FuturesInstrument < Instrument
+end

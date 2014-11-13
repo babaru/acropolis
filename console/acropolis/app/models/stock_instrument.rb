@@ -1,0 +1,2 @@
+class StockInstrument < Instrument
+end

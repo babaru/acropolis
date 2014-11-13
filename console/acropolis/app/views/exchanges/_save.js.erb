@@ -1,0 +1,18 @@
+$("ul.errors").html("")
+<% if @exchange.errors.any? %>
+  <% @exchange.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  if ($('#exchange-detail').length) {
+    $('#exchange-detail').html("<%= escape_javascript(render 'exchange_detail') %>")
+  }
+
+  if ($('#exchange-list').length) {
+    $('#exchange-list').html("<%= escape_javascript(render 'exchanges_grid') %>")
+  }
+
+  $("#item-modal").modal("hide")
+
+<% end %>

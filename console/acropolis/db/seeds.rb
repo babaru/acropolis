@@ -5,6 +5,57 @@
 system_admin = User.create(name: 'sys_admin', email: 'sys_admin@acropolis.com', password: '12345678', password_confirmation: '12345678', full_name: 'System Administrator')
 me = User.create(name: 'stanley.deng', email: 'stanley.deng@acropolis.com', password: '12345678', password_confirmation: '12345678', full_name: 'Stanley Deng')
 
+# Exchanges
+# -----------------------------
+
+sse = Exchange.create(
+  name:           'SSE',
+  full_cn_name:   '上海证券交易所',
+  short_cn_name:  '上交所',
+  full_en_name:   'Shanghai Stock Exchange',
+  short_en_name:  'SSE',
+  type:           'StockExchange')
+
+szse = Exchange.create(
+  name:           'SZSE',
+  full_cn_name:   '深圳证券交易所',
+  short_cn_name:  '深交所',
+  full_en_name:   'Shenzhen Stock Exchange',
+  short_en_name:  'SZSE',
+  type:           'StockExchange')
+
+cffex = Exchange.create(
+  name:           'CFFEX',
+  full_cn_name:   '中国金融期货交易所',
+  short_cn_name:  '中金所',
+  full_en_name:   'China Financial Futures Exchange',
+  short_en_name:  'CFFEX',
+  type:           'FuturesExchange')
+
+shfe = Exchange.create(
+  name:           'SHFE',
+  full_cn_name:   '上海期货交易所',
+  short_cn_name:  '上期所',
+  full_en_name:   'Shanghai Futures Exchange',
+  short_en_name:  'SHFE',
+  type:           'FuturesExchange')
+
+dce = Exchange.create(
+  name:           'DCE',
+  full_cn_name:   '大连商品交易所',
+  short_cn_name:  '大商所',
+  full_en_name:   'Dalian Commodity Exchange',
+  short_en_name:  'DCE',
+  type:           'FuturesExchange')
+
+zce = Exchange.create(
+  name:           'ZCE',
+  full_cn_name:   '郑州商品交易所',
+  short_cn_name:  '郑商所',
+  full_en_name:   'Zhengzhou Commodity Exchange',
+  short_en_name:  'ZCE',
+  type:           'FuturesExchange')
+
 # Basic Risk Parameters
 # -----------------------------
 

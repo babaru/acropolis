@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110155743) do
+ActiveRecord::Schema.define(version: 20141113020910) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -40,6 +40,32 @@ ActiveRecord::Schema.define(version: 20141110155743) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "exchanges", force: true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.string   "full_cn_name"
+    t.string   "short_cn_name"
+    t.string   "full_en_name"
+    t.string   "short_en_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "instruments", force: true do |t|
+    t.string   "name"
+    t.string   "symbol_id"
+    t.string   "type"
+    t.integer  "underlying_id"
+    t.datetime "expiration_date"
+    t.decimal  "strike_price",    precision: 20, scale: 4
+    t.integer  "exchange_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "instruments", ["exchange_id"], name: "index_instruments_on_exchange_id", using: :btree
+  add_index "instruments", ["underlying_id"], name: "index_instruments_on_underlying_id", using: :btree
 
   create_table "monitoring_products", force: true do |t|
     t.integer  "product_id"
