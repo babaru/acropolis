@@ -31,6 +31,10 @@
     exchange.short_en_name
   end
 
+  g.column name: t('activerecord.attributes.exchange.currency_unit') do |exchange|
+    exchange.currency_unit
+  end
+
 
   g.column html: {class: 'project-actions'} do |exchange|
     [

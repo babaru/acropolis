@@ -101,6 +101,7 @@ class InstrumentsController < ApplicationController
         :expiration_date,
         :strike_price,
         :exchange_id,
+        :currency_unit
         )
     end
 

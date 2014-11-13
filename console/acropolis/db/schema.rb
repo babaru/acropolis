@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113020910) do
+ActiveRecord::Schema.define(version: 20141113035907) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20141113020910) do
     t.string   "short_en_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "currency_unit"
   end
 
   create_table "instruments", force: true do |t|
@@ -62,6 +63,7 @@ ActiveRecord::Schema.define(version: 20141113020910) do
     t.integer  "exchange_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "currency_unit"
   end
 
   add_index "instruments", ["exchange_id"], name: "index_instruments_on_exchange_id", using: :btree

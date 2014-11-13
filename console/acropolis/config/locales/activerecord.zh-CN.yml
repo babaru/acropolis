@@ -85,6 +85,7 @@ zh-CN:
         full_en_name: 英文全称
         short_en_name: 英文简称
         type: 类型
+        currency_unit: 货币代码
       instrument:
         name: 名称
         type: 类型
@@ -94,6 +95,7 @@ zh-CN:
         underlying_symbol_id: 合约标的交易代码
         expiration_date: 合约到期日
         strike_price: 执行价
+        currency_unit: 货币代码
   models:
     list: "%{model}列表"
     new: "新建%{model}"

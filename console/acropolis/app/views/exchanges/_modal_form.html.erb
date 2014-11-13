@@ -1,4 +1,6 @@
-<%= simple_form_for(@exchange, remote: true, html: {class: 'form-horizontal'}) do |f| %>
+<%= simple_form_for(@exchange.becomes(Exchange), remote: true, html: {class: 'form-horizontal'}) do |f| %>
+
+  <% @exchange.becomes(@exchange.class) %>
 
   <div class="modal-body">
 
@@ -16,6 +18,8 @@
     <%= f.input :full_en_name %>
 
     <%= f.input :short_en_name %>
+
+    <%= f.input :currency_unit %>
 
   </div>
 

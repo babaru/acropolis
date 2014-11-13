@@ -7,7 +7,7 @@
 
   g.column name: t('activerecord.attributes.instrument.name'), class: 'project-title' do |instrument|
     [
-      link_to(instrument.name, instrument_path(instrument)),
+      link_to(instrument.name, '#'),
       content_tag(:small, "#{t('labels.last_modified_at')} #{instrument.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
     ].join('<br/>').html_safe
   end
@@ -15,6 +15,10 @@
 
   g.column name: t('activerecord.attributes.instrument.symbol_id') do |instrument|
     instrument.symbol_id
+  end
+
+  g.column name: t('activerecord.attributes.instrument.currency_unit') do |instrument|
+    instrument.currency_unit
   end
 
 
