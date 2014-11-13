@@ -9,4 +9,8 @@ module ApplicationHelper
   def render_budget(value)
     content_tag(:div, number_with_delimiter(value, delimiter: ','), class: 'label label-success', style: 'font-size: 14px;')
   end
+
+  def render_price(value)
+    content_tag(:div, number_to_currency(value, unit: "￥", separator: ",", delimiter: "", format: "%n %u"), class: 'label label-info', style: 'font-size: 14px;')
+  end
 end

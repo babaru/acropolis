@@ -3,4 +3,6 @@ class Instrument < ActiveRecord::Base
   belongs_to :exchange
 
   has_many :derivaties
+
+  attr_accessor :underlying_name, :exchange_name
 end

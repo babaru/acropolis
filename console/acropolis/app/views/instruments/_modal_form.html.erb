@@ -1,24 +1,26 @@
-<%= simple_form_for(@instrument, remote: true, html: {class: 'form-horizontal'}) do |f| %>
+<%= simple_form_for(@instrument.becomes(Instrument), remote: true, html: {class: 'form-horizontal'}) do |f| %>
+
+  <% @instrument.becomes(@instrument.class) %>
 
   <div class="modal-body">
 
   <%= f.error_notification %>
 
-            
+
     <%= f.input :name %>
-          
+
     <%= f.input :symbol_id %>
-          
-    <%= f.input :type %>
-          
+
+    <%= f.input :type, collection: [StockInstrument, IndexInstrument, FuturesInstrument, OptionsInstrument].map {|item| [item.model_name.human, item.name]} %>
+
     <%= f.input :underlying_id %>
-          
+
     <%= f.input :expiration_date %>
-          
+
     <%= f.input :strike_price %>
-          
-    <%= f.input :exchange_id %>
-                  
+
+    <%= f.input :exchange_id, as: :hidden %>
+
   </div>
 
   <div class="modal-footer">

@@ -15,6 +15,8 @@ class InstrumentsController < ApplicationController
   # GET /instruments/new
   def new
     @instrument = Instrument.new
+    @exchange = Exchange.find(params[:exchange_id])
+    @instrument.exchange = @exchange
   end
 
   # GET /instruments/1/edit
@@ -26,6 +28,7 @@ class InstrumentsController < ApplicationController
   def create
     Instrument.transaction do
       @instrument = Instrument.new(instrument_params)
+      @exchange = @instrument.exchange
       @instrument.save!
     end
 
@@ -46,6 +49,7 @@ class InstrumentsController < ApplicationController
   def update
     Instrument.transaction do
       @instrument.update!(instrument_params)
+      @exchange = @instrument.exchange
     end
 
     respond_to do |format|
@@ -101,7 +105,7 @@ class InstrumentsController < ApplicationController
     end
 
     def set_instruments_grid
-      @instruments_grid = initialize_grid(Instrument)
+      @instruments_grid = initialize_grid(Instrument.where(exchange_id: @exchange.id))
     end
 end
 

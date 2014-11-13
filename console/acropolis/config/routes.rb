@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :products, :risk_events, :product_risk_parameters
+      resources :products, :risk_events, :product_risk_parameters, :instruments, :exchanges
     end
   end
 
@@ -37,8 +37,12 @@ Rails.application.routes.draw do
     get 'delete'
   end
 
-  resources :banks, :brokers, :exchanges do
+  resources :banks, :brokers, :exchanges, :instruments do
     get 'delete'
+  end
+
+  resources :exchanges do
+    resources :instruments
   end
 
   resources :clients do

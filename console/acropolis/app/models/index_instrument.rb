@@ -1,0 +1,2 @@
+class IndexInstrument < Instrument
+end

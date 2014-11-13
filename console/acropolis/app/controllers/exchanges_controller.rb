@@ -96,7 +96,7 @@ class ExchangesController < ApplicationController
         :full_cn_name,
         :short_cn_name,
         :full_en_name,
-        :short_en_name,
+        :short_en_name
         )
     end
 

@@ -19,22 +19,25 @@
 
 
   g.column name: t('activerecord.attributes.instrument.type') do |instrument|
-    instrument.type
+    t("activerecord.models.#{instrument.type.underscore.downcase}")
+  end
+
+  g.column name: t('activerecord.attributes.instrument.underlying_id'), class: 'futures-instrument' do |instrument|
+    instrument.underlying.name if instrument.underlying
+  end
+
+  g.column name: t('activerecord.attributes.instrument.underlying_symbol_id'), class: 'futures-instrument' do |instrument|
+    instrument.underlying.symbol_id if instrument.underlying
   end
 
 
-  g.column name: t('activerecord.attributes.instrument.underlying_id') do |instrument|
-    instrument.underlying_id
+  g.column name: t('activerecord.attributes.instrument.expiration_date'), class: 'futures-instrument' do |instrument|
+    instrument.expiration_date.strftime("%Y-%m-%d") if instrument.expiration_date
   end
 
 
-  g.column name: t('activerecord.attributes.instrument.expiration_date') do |instrument|
-    instrument.expiration_date
-  end
-
-
-  g.column name: t('activerecord.attributes.instrument.strike_price') do |instrument|
-    instrument.strike_price
+  g.column name: t('activerecord.attributes.instrument.strike_price'), class: 'options-instrument' do |instrument|
+    render_price(instrument.strike_price)
   end
 
 

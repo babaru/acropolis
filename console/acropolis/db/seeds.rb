@@ -8,6 +8,14 @@ me = User.create(name: 'stanley.deng', email: 'stanley.deng@acropolis.com', pass
 # Exchanges
 # -----------------------------
 
+index = Exchange.create(
+  name:           'INDEX',
+  full_cn_name:   '指数',
+  short_cn_name:  '指数',
+  full_en_name:   'INDEX',
+  short_en_name:  'INDEX',
+  type:           'Exchange')
+
 sse = Exchange.create(
   name:           'SSE',
   full_cn_name:   '上海证券交易所',

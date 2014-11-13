@@ -10,7 +10,7 @@ $("ul.errors").html("")
   }
 
   if ($('#instrument-list').length) {
-    $('#instrument-list').html("<%= escape_javascript(render 'instruments_grid') %>")
+    $('#instrument-list').html("<%= escape_javascript(render 'exchanges/exchange_instruments_grid') %>")
   }
 
   $("#item-modal").modal("hide")

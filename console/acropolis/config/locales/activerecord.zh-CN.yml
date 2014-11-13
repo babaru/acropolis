@@ -20,8 +20,9 @@ zh-CN:
       trading_account: 交易账户
       instrument: 交易产品
       stock_instrument: 证券
-      futuers_instrument: 期货
+      futures_instrument: 期货
       options_instrument: 期权
+      index_instrument: 指数
       fund_instrument: 基金
       bond_instrument: 债券
       warrant_instrument: 权证
@@ -87,9 +88,10 @@ zh-CN:
       instrument:
         name: 名称
         type: 类型
-        symbol_id: 产品代码
-        underlying: 标的
-        underlying_id: 标的
+        symbol_id: 交易代码
+        underlying: 合约标的
+        underlying_id: 合约标的
+        underlying_symbol_id: 合约标的交易代码
         expiration_date: 合约到期日
         strike_price: 执行价
   models:

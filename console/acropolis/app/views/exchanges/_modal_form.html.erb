@@ -7,7 +7,7 @@
 
     <%= f.input :name %>
 
-    <%= f.input :type, collection: [StockExchange, FuturesExchange, Exchange].map {|item| [item.model_name.human, item.class]} %>
+    <%= f.input :type, collection: [StockExchange, FuturesExchange, Exchange].map {|item| [item.model_name.human, item.name]} %>
 
     <%= f.input :full_cn_name %>
 
