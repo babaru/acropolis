@@ -1,0 +1,79 @@
+<%= grid(@trades_grid, :show_filters => :when_filtered) do |g|
+  
+  g.column name: '#' do |trade|
+    trade.id
+  end
+  
+  
+  g.column name: t('activerecord.attributes.trade.instrument_id') do |trade|
+    trade.instrument_id
+  end
+
+  
+  g.column name: t('activerecord.attributes.trade.trade_price') do |trade|
+    trade.trade_price
+  end
+
+  
+  g.column name: t('activerecord.attributes.trade.order_side') do |trade|
+    trade.order_side
+  end
+
+  
+  g.column name: t('activerecord.attributes.trade.order_price') do |trade|
+    trade.order_price
+  end
+
+  
+  g.column name: t('activerecord.attributes.trade.trading_account_id') do |trade|
+    trade.trading_account_id
+  end
+
+  
+  g.column name: t('activerecord.attributes.trade.traded_at') do |trade|
+    trade.traded_at
+  end
+
+  
+  g.column name: t('activerecord.attributes.trade.trade_volume') do |trade|
+    trade.trade_volume
+  end
+
+  
+  g.column name: t('activerecord.attributes.trade.exchange_fee') do |trade|
+    trade.exchange_fee
+  end
+
+  
+  g.column name: t('activerecord.attributes.trade.broker_fee') do |trade|
+    trade.broker_fee
+  end
+
+  
+  g.column name: t('activerecord.attributes.trade.margin') do |trade|
+    trade.margin
+  end
+
+  
+  g.column name: t('activerecord.attributes.trade.open_close') do |trade|
+    trade.open_close
+  end
+
+  
+  g.column name: t('activerecord.attributes.time_stamp.created_at') do |trade|
+    trade.created_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+  
+  g.column name: t('activerecord.attributes.time_stamp.updated_at') do |trade|
+    trade.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+
+  g.column html: {class: 'project-actions'} do |trade|
+    [
+      link_to(fa_icon("pencil"), edit_trade_path(trade), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), trade_delete_path(trade), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113035907) do
+ActiveRecord::Schema.define(version: 20141117100612) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -188,6 +188,25 @@ ActiveRecord::Schema.define(version: 20141113035907) do
   add_index "thresholds", ["parameter_id"], name: "index_thresholds_on_parameter_id", using: :btree
   add_index "thresholds", ["relation_symbol_id"], name: "index_thresholds_on_relation_symbol_id", using: :btree
   add_index "thresholds", ["risk_plan_operation_id"], name: "index_thresholds_on_risk_plan_operation_id", using: :btree
+
+  create_table "trades", force: true do |t|
+    t.integer  "instrument_id"
+    t.decimal  "trade_price",        precision: 20, scale: 4
+    t.integer  "order_side",                                  default: 0
+    t.decimal  "order_price",        precision: 20, scale: 4
+    t.integer  "trading_account_id"
+    t.datetime "traded_at"
+    t.integer  "trade_volume"
+    t.decimal  "exchange_fee",       precision: 20, scale: 4
+    t.decimal  "broker_fee",         precision: 20, scale: 4
+    t.decimal  "margin",             precision: 20, scale: 4
+    t.integer  "open_close",                                  default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "trades", ["instrument_id"], name: "index_trades_on_instrument_id", using: :btree
+  add_index "trades", ["trading_account_id"], name: "index_trades_on_trading_account_id", using: :btree
 
   create_table "trading_accounts", force: true do |t|
     t.string   "name"
