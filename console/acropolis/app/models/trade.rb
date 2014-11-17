@@ -6,6 +6,10 @@ class Trade < ActiveRecord::Base
 
   after_create :refresh_positions
 
+  def self.order_sides
+    Acropolis::OrderSides.order_sides.map{ |k,v| [I18n.t("order_sides.#{k}"),v] }
+  end
+
   def is_open?
     open_close == Acropolis::TradeOpenFlags.trade_open_flags.open
   end

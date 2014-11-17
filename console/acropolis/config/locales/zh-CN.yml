@@ -18,6 +18,12 @@ zh-CN:
     welcome_to: 欢迎来到
   labels:
     last_modified_at: 最后编辑于
+  order_sides:
+    buy: 买
+    sell: 卖
+  trade_open_flags:
+    open: 开
+    close: 平
   navigation:
     page:
       risk_plan: 风控管理

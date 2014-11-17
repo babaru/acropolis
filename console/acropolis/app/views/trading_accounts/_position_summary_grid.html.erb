@@ -1,7 +1,7 @@
 <%= grid(@position_summary_grid, :show_filters => :when_filtered) do |g|
 
   g.column name: t('activerecord.attributes.position.order_side') do |position|
-    position.order_side
+    render_order_side(position)
   end
 
   g.column name: t('activerecord.attributes.position.volume') do |position|
@@ -9,11 +9,11 @@
   end
 
   g.column name: t('activerecord.attributes.position.trade_price') do |position|
-    position.trade_price
+    render_trade_price(position.trade_price, {})
   end
 
   g.column name: t('activerecord.attributes.position.instrument') do |position|
-    position.instrument.name
+    position.instrument.symbol_id
   end
 
   g.column name: t('activerecord.attributes.position.exchange') do |position|
