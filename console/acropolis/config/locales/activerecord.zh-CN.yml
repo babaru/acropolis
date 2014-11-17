@@ -27,6 +27,7 @@ zh-CN:
       bond_instrument: 债券
       warrant_instrument: 权证
       trade: 成交记录
+      position: 持仓记录
     attributes:
       time_stamp:
         created_at: 创建于
@@ -107,6 +108,12 @@ zh-CN:
         traded_at: 成交时间
         trade_volume: 成交量
         open_close: 开平仓
+      position:
+        instrument: 交易产品
+        exchange: 交易所
+        order_side: 买卖
+        trade_price: 成交价格
+        volume: 持仓量
   models:
     list: "%{model}列表"
     new: "新建%{model}"

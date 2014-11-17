@@ -1,0 +1,23 @@
+<%= grid(@position_summary_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: t('activerecord.attributes.position.order_side') do |position|
+    position.order_side
+  end
+
+  g.column name: t('activerecord.attributes.position.volume') do |position|
+    position.volume
+  end
+
+  g.column name: t('activerecord.attributes.position.trade_price') do |position|
+    position.trade_price
+  end
+
+  g.column name: t('activerecord.attributes.position.instrument') do |position|
+    position.instrument.name
+  end
+
+  g.column name: t('activerecord.attributes.position.exchange') do |position|
+    position.instrument.exchange.name
+  end
+
+end -%>

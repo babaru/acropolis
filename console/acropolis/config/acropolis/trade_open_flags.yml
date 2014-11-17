@@ -1,0 +1,13 @@
+defaults: &defaults
+  trade_open_flags:
+    open: 1
+    close: 0
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

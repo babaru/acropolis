@@ -1,0 +1,13 @@
+defaults: &defaults
+  order_sides:
+    buy: 1
+    sell: 2
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

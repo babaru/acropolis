@@ -23,25 +23,25 @@ module Api
 
       private
 
-        def trade_params
-          params.require(:trade).permit(
-            :instrument_id,
-            :symbol_id,
-            :exchange_id,
-            :exchange_name,
-            :trade_price,
-            :order_side,
-            :trading_account_id,
-            :trading_account_name,
-            :traded_at,
-            :trade_volume,
-            :open_close,
-            )
-        end
+      def trade_params
+        params.require(:trade).permit(
+          :instrument_id,
+          :symbol_id,
+          :exchange_id,
+          :exchange_name,
+          :trade_price,
+          :order_side,
+          :trading_account_id,
+          :trading_account_name,
+          :traded_at,
+          :trade_volume,
+          :open_close,
+          )
+      end
 
-        def query_params
-          params.permit(:id, :trading_account_id)
-        end
+      def query_params
+        params.permit(:id, :trading_account_id)
+      end
 
     end
 
