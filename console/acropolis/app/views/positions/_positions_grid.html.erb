@@ -1,0 +1,49 @@
+<%= grid(@positions_grid, :show_filters => :when_filtered) do |g|
+  
+  g.column name: '#' do |position|
+    position.id
+  end
+  
+  
+  g.column name: t('activerecord.attributes.position.order_side') do |position|
+    position.order_side
+  end
+
+  
+  g.column name: t('activerecord.attributes.position.volume') do |position|
+    position.volume
+  end
+
+  
+  g.column name: t('activerecord.attributes.position.trade_price') do |position|
+    position.trade_price
+  end
+
+  
+  g.column name: t('activerecord.attributes.position.instrument_id') do |position|
+    position.instrument_id
+  end
+
+  
+  g.column name: t('activerecord.attributes.position.trading_account_id') do |position|
+    position.trading_account_id
+  end
+
+  
+  g.column name: t('activerecord.attributes.time_stamp.created_at') do |position|
+    position.created_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+  
+  g.column name: t('activerecord.attributes.time_stamp.updated_at') do |position|
+    position.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+
+  g.column html: {class: 'project-actions'} do |position|
+    [
+      link_to(fa_icon("pencil"), edit_position_path(position), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), position_delete_path(position), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

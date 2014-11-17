@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141117100612) do
+ActiveRecord::Schema.define(version: 20141117102428) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -91,6 +91,19 @@ ActiveRecord::Schema.define(version: 20141117100612) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "positions", force: true do |t|
+    t.integer  "order_side",                                  default: 0
+    t.integer  "volume"
+    t.decimal  "trade_price",        precision: 20, scale: 4
+    t.integer  "instrument_id"
+    t.integer  "trading_account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "positions", ["instrument_id"], name: "index_positions_on_instrument_id", using: :btree
+  add_index "positions", ["trading_account_id"], name: "index_positions_on_trading_account_id", using: :btree
 
   create_table "product_capital_accounts", force: true do |t|
     t.integer  "product_id"

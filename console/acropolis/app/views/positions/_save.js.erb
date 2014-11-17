@@ -1,0 +1,18 @@
+$("ul.errors").html("")
+<% if @position.errors.any? %>
+  <% @position.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  if ($('#position-detail').length) {
+    $('#position-detail').html("<%= escape_javascript(render 'position_detail') %>")
+  }
+
+  if ($('#position-list').length) {
+    $('#position-list').html("<%= escape_javascript(render 'positions_grid') %>")
+  }
+
+  $("#item-modal").modal("hide")
+
+<% end %>
