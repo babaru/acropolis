@@ -73,6 +73,10 @@ Rails.application.routes.draw do
 
   resources :monitoring_products
 
+  resources :trading_accounts do
+    resources :trades
+  end
+
   resources :trades do
     get 'delete'
   end

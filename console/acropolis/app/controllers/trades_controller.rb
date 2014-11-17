@@ -97,9 +97,6 @@ class TradesController < ApplicationController
         :trading_account_id,
         :traded_at,
         :trade_volume,
-        :exchange_fee,
-        :broker_fee,
-        :margin,
         :open_close,
         )
     end

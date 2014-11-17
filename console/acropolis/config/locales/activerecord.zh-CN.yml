@@ -26,6 +26,7 @@ zh-CN:
       fund_instrument: 基金
       bond_instrument: 债券
       warrant_instrument: 权证
+      trade: 成交记录
     attributes:
       time_stamp:
         created_at: 创建于
@@ -60,6 +61,7 @@ zh-CN:
         is_monitored: 加入实时监控
         created_at: 创建于
         updated_at: 最后编辑于
+        allocated_budget: 已分配资金
       product_risk_plan:
         risk_plan_id: 风控方案
         is_enabled: 启用
@@ -96,6 +98,15 @@ zh-CN:
         expiration_date: 合约到期日
         strike_price: 执行价
         currency_unit: 货币代码
+      trade:
+        instrument: 交易产品
+        exchange: 交易所
+        trade_price: 成交价格
+        order_side: 买卖
+        order_price: 委托价格
+        traded_at: 成交时间
+        trade_volume: 成交量
+        open_close: 开平仓
   models:
     list: "%{model}列表"
     new: "新建%{model}"

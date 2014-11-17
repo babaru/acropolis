@@ -11,6 +11,7 @@ class TradingAccountsController < ApplicationController
   # GET /trading_accounts/1
   # GET /trading_accounts/1.json
   def show
+    @trading_records_grid = initialize_grid(Trade.where(trading_account_id: @trading_account.id).order('traded_at DESC'))
   end
 
   # GET /trading_accounts/new
@@ -29,6 +30,7 @@ class TradingAccountsController < ApplicationController
     TradingAccount.transaction do
       @trading_account = TradingAccount.new(trading_account_params)
       @trading_account.save!
+      @product = @trading_account.product
     end
 
     respond_to do |format|
@@ -48,6 +50,7 @@ class TradingAccountsController < ApplicationController
   def update
     TradingAccount.transaction do
       @trading_account.update!(trading_account_params)
+      @product = @trading_account.product
     end
 
     respond_to do |format|
@@ -69,6 +72,7 @@ class TradingAccountsController < ApplicationController
   # DELETE /trading_accounts/1
   # DELETE /trading_accounts/1.json
   def destroy
+    @product = @trading_account.product
     @trading_account.destroy!
 
     respond_to do |format|
@@ -103,7 +107,7 @@ class TradingAccountsController < ApplicationController
     end
 
     def set_trading_accounts_grid
-      @trading_accounts_grid = initialize_grid(TradingAccount)
+      @trading_accounts_grid = initialize_grid(TradingAccount.where(product_id: @product.id))
     end
 end
 

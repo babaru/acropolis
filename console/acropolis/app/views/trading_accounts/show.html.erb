@@ -24,7 +24,7 @@
             <div class="panel-heading">
                 <div class="panel-options">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab-1" data-toggle="tab">Children</a></li>
+                        <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('navigation.tab.trades') %></a></li>
                         <li class=""><a href="#tab-2" data-toggle="tab">Last activity</a></li>
                     </ul>
                 </div>
@@ -35,7 +35,9 @@
               <div class="tab-content">
                 <div class="tab-pane active" id="tab-1">
 
-
+                <div id="trade-list" class="tooltip-demo">
+                  <%= render partial: 'trading_records_grid' %>
+                </div>
 
                 </div>
                 <div class="tab-pane" id="tab-2">

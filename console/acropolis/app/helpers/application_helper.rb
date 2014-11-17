@@ -11,6 +11,6 @@ module ApplicationHelper
   end
 
   def render_price(value)
-    content_tag(:div, number_to_currency(value, unit: "￥", separator: ",", delimiter: "", format: "%n %u"), class: 'label label-info', style: 'font-size: 14px;')
+    content_tag(:div, number_to_currency(value, unit: "￥", separator: ".", delimiter: ",", format: "%u %n"), class: 'label label-info', style: 'font-size: 14px;')
   end
 end

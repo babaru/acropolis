@@ -1,0 +1,36 @@
+<%= grid(@trading_records_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: '#' do |trade|
+    trade.id
+  end
+
+  g.column name: t('activerecord.attributes.trade.instrument') do |trade|
+    trade.instrument.name
+  end
+
+  g.column name: t('activerecord.attributes.trade.exchange') do |trade|
+    trade.instrument.exchange.name
+  end
+
+  g.column name: t('activerecord.attributes.trade.trade_price') do |trade|
+    render_price(trade.trade_price)
+  end
+
+  g.column name: t('activerecord.attributes.trade.order_side') do |trade|
+    trade.order_side == 1 ? content_tag(:span, 'BUY', class: 'label label-primary') : content_tag(:span, 'SELL', class: 'label label-danger')
+  end
+
+  g.column name: t('activerecord.attributes.trade.traded_at') do |trade|
+    trade.traded_at
+  end
+
+
+  g.column name: t('activerecord.attributes.trade.trade_volume') do |trade|
+    trade.trade_volume
+  end
+
+  g.column name: t('activerecord.attributes.trade.open_close') do |trade|
+    trade.open_close == 1 ? content_tag(:span, 'OPEN', class: 'label label-primary') : content_tag(:span, 'CLOSE', class: 'label label-default')
+  end
+
+end -%>
