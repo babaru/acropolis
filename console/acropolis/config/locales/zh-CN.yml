@@ -26,11 +26,12 @@ zh-CN:
     close: 平
   navigation:
     page:
+      risk_control: 风控
       risk_plan: 风控管理
       risk_plan_list: 风控方案列表
-      product: 资管产品
+      product: 产品
       product_list: 产品列表
-      monitoring: 风控监测
+      risk_monitoring: 实时监测
       dashboard: 控制面板
       system_settings: 系统设置
       settings: 设置

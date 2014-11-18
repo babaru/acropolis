@@ -57,19 +57,39 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :page_dashboard, fa_icon('rocket', text: t('navigation.page.dashboard')), dashboard_path, {}
 
-    primary.item :page_monitoring, fa_icon('desktop', text: t('navigation.page.monitoring')), monitoring_path, {}
+    #
+    # Risk control menus
+    #
+    primary.item :page_risk_control, fa_icon('life-ring', text: t('navigation.page.risk_control')), nil, {} do |risk_control_menu|
 
-    primary.item :page_risk_plan, fa_icon('life-ring', text: t('navigation.page.risk_plan')), nil, {} do |risk_plan_menu|
+      risk_control_menu.item(
+        :page_risk_monitoring,
+        fa_icon('desktop', text: t('navigation.page.risk_monitoring')),
+        risk_monitoring_path,
+        {
+          highlights_on: /risk_monitoring/
+        }
+      )
+
       if recent_items(:risk_plan).length > 0
         recent_items(:risk_plan).map do |id, name|
-          risk_plan_menu.item "page_risk_plan_#{id}".to_sym, name, risk_plan_path(id: id), {}
+          risk_control_menu.item "page_risk_plan_#{id}".to_sym, name, risk_plan_path(id: id), {}
         end
-        risk_plan_menu.item :page_risk_plan_divider_1, nil, nil, {link: {divider: true}}
       end
 
-      risk_plan_menu.item :page_risk_plan_list, t('models.all', model: RiskPlan.model_name.human), risk_plans_path
+      risk_control_menu.item(
+        :page_risk_plan_list,
+        fa_icon('book', text: RiskPlan.model_name.human),
+        risk_plans_path,
+        {
+          highlights_on: /risk_plans/
+        }
+      )
     end
 
+    #
+    # Product menus
+    #
     primary.item :page_product, fa_icon('archive', text: t('navigation.page.product')), nil, {} do |product_menu|
       if recent_items(:product).length > 0
         recent_items(:product).map do |id, name|

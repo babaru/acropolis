@@ -124,5 +124,5 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index', as: :dashboard
   get 'dashboard/switch_monitor_layout', to: 'dashboard#switch_monitor_layout', as: :dashboard_switch_monitor_layout
 
-  get 'monitoring', to: 'monitoring#index', as: :monitoring
+  get 'risk_monitoring', to: 'monitoring#index', as: :risk_monitoring
 end
