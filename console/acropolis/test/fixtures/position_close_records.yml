@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  open_trade_id: 
+  close_trade_id: 
+  close_volume: 1
+
+two:
+  open_trade_id: 
+  close_trade_id: 
+  close_volume: 1

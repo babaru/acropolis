@@ -1,6 +1,26 @@
 class Trade < ActiveRecord::Base
   belongs_to :instrument
   belongs_to :trading_account
+  has_many :open_trade_records, class_name: 'PositionCloseRecord', dependent: :destroy, foreign_key: 'close_trade_id'
+  has_many :close_trade_records, class_name: 'PositionCloseRecord', dependent: :destroy, foreign_key: 'open_trade_id'
+
+  has_many :open_trades, through: :open_trade_records
+  has_many :close_trades, through: :close_trade_records
+
+  scope :open, -> { where(
+    Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
+      Trade.arel_table[:open_volume].gt(0)
+    )
+  )}
+
+  scope :close, -> { where(
+    Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.close)
+  )}
+
+  scope :whose, ->(trading_account_id) { where(trading_account_id: trading_account_id) }
+  scope :side, ->(side) { where(order_side: side) }
+
+  scope :not_later, ->(time) { where('traded_at <= ?', time)}
 
   attr_accessor :symbol_id, :exchange_name
 
@@ -26,100 +46,58 @@ class Trade < ActiveRecord::Base
     open_close == Acropolis::TradeOpenFlags.trade_open_flags.close
   end
 
-  private
+  def is_buy?
+    order_side == Acropolis::OrderSides.order_sides.buy
+  end
+
+  def is_sell?
+    order_side == Acropolis::OrderSides.order_sides.sell
+  end
+
+  def self.reset_open_volume
+    Trade.update_all('open_volume = trade_volume')
+    PositionCloseRecord.delete_all
+  end
 
   def adjust_open_volume
     if self.is_close?
-      open_trades = Trade.select(Arel.star).where(
-        Trade.arel_table[:instrument_id].eq(self.instrument_id).and(
-          Trade.arel_table[:order_side].eq(Trade.opposite_side(self.order_side)).and(
-            Trade.arel_table[:trading_account_id].eq(self.trading_account_id).and(
-              Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
-                Trade.arel_table[:open_volume].gt(0)
-              )
-            )
-          )
-        )
-      ).order(:traded_at).reverse_order
-
       rest_volume = self.trade_volume
-      open_trades.each do |trade|
+
+      Trade.open
+        .whose(self.trading_account_id)
+        .side(Trade.opposite_side(self.order_side))
+        .not_later(self.traded_at)
+        .order(:traded_at)
+        .reverse_order
+        .each do |trade|
+
         if trade.open_volume <= rest_volume
-          rest_volume -= trade.open_volume
+          close_volume = trade.open_volume
+          rest_volume -= close_volume
           trade.open_volume = 0
           trade.save
+
+          unless PositionCloseRecord.exists?(open_trade_id: trade.id, close_trade_id: self.id)
+            close_record = PositionCloseRecord.create(open_trade_id: trade.id, close_trade_id: self.id, close_volume: close_volume)
+          end
         end
 
         if trade.open_volume > rest_volume
-          trade.open_volume -= rest_volume
+          close_volume = rest_volume
+          trade.open_volume -= close_volume
           rest_volume = 0
           trade.save
+
+          unless PositionCloseRecord.exists?(open_trade_id: trade.id, close_trade_id: self.id)
+            close_record = PositionCloseRecord.create(open_trade_id: trade.id, close_trade_id: self.id, close_volume: close_volume)
+          end
         end
 
         break if rest_volume == 0
       end
     end
+
+    self.trading_account.refresh_trading_summary
   end
 
-  def refresh_positions_by_side(side)
-    open_trades = Trade.where({
-
-      instrument_id:      instrument_id,
-      order_side:         side,
-      trading_account_id: trading_account_id,
-      open_close:         Acropolis::TradeOpenFlags.trade_open_flags.open
-
-      }).order('traded_at asc')
-
-    open_volume = open_trades.sum('trade_volume')
-    close_volume = Trade.where({
-
-      instrument_id:      instrument_id,
-      order_side:         side == Acropolis::OrderSides.order_sides.buy ? Acropolis::OrderSides.order_sides.sell : Acropolis::OrderSides.order_sides.buy,
-      trading_account_id: trading_account_id,
-      open_close:         Acropolis::TradeOpenFlags.trade_open_flags.close
-
-      }).sum('trade_volume')
-
-    find_out_position_trades(open_trades, open_volume - close_volume).map do |trade_price, volume|
-      if volume > 0
-        Position.create({
-          instrument_id:      instrument_id,
-          trading_account_id: trading_account_id,
-          trade_price:        trade_price,
-          volume:             volume,
-          order_side:         side
-          })
-      end
-    end
-
-  end
-
-  def refresh_positions
-    Position.where({
-      instrument_id:      instrument_id,
-      trading_account_id: trading_account_id
-      }).delete_all
-
-    refresh_positions_by_side(Acropolis::OrderSides.order_sides.buy)
-    refresh_positions_by_side(Acropolis::OrderSides.order_sides.sell)
-  end
-
-  def find_out_position_trades(open_trades, rest_volume)
-    position_trades = {}
-    open_trades.each do |trade|
-      if trade.trade_volume <= rest_volume
-        position_trades[trade.trade_price] ||= 0
-        position_trades[trade.trade_price] += trade.trade_volume
-        rest_volume -= trade.trade_volume
-      else
-        position_trades[trade.trade_price] ||= 0
-        position_trades[trade.trade_price] += rest_volume
-        rest_volume = 0
-      end
-
-      break if rest_volume == 0
-    end
-    position_trades
-  end
 end

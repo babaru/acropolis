@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118040128) do
+ActiveRecord::Schema.define(version: 20141118061535) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -91,6 +91,17 @@ ActiveRecord::Schema.define(version: 20141118040128) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "position_close_records", force: true do |t|
+    t.integer  "open_trade_id"
+    t.integer  "close_trade_id"
+    t.integer  "close_volume"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "position_close_records", ["close_trade_id"], name: "index_position_close_records_on_close_trade_id", using: :btree
+  add_index "position_close_records", ["open_trade_id"], name: "index_position_close_records_on_open_trade_id", using: :btree
 
   create_table "product_capital_accounts", force: true do |t|
     t.integer  "product_id"
@@ -230,13 +241,13 @@ ActiveRecord::Schema.define(version: 20141118040128) do
 
   create_table "trading_summaries", force: true do |t|
     t.string   "type"
-    t.decimal  "net_worth",        precision: 10, scale: 0
-    t.decimal  "customer_benefit", precision: 10, scale: 0
-    t.decimal  "leverage",         precision: 10, scale: 0
-    t.decimal  "margin",           precision: 10, scale: 0
-    t.decimal  "exposure",         precision: 10, scale: 0
-    t.decimal  "profit",           precision: 10, scale: 0
-    t.decimal  "balance",          precision: 10, scale: 0
+    t.decimal  "net_worth",        precision: 20, scale: 4
+    t.decimal  "customer_benefit", precision: 20, scale: 4
+    t.decimal  "leverage",         precision: 20, scale: 4
+    t.decimal  "margin",           precision: 20, scale: 4
+    t.decimal  "exposure",         precision: 20, scale: 4
+    t.decimal  "profit",           precision: 20, scale: 4
+    t.decimal  "balance",          precision: 20, scale: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
