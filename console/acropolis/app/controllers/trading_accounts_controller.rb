@@ -13,6 +13,70 @@ class TradingAccountsController < ApplicationController
   def show
     @trading_records_grid = initialize_grid(Trade.where(trading_account_id: @trading_account.id).order('traded_at DESC'))
     @position_summary_grid = initialize_grid(Position.where(trading_account_id: @trading_account.id).order('order_side'))
+
+    @buy_positions = Trade.select(
+        :instrument_id,
+        :trade_price,
+        :order_side,
+        :trading_account_id,
+        Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
+        :open_close,
+        :traded_at
+      ).where(
+        Trade.arel_table[:open_volume].gt(0).and(
+          Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
+            Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.buy)
+          )
+        )
+      ).order(:traded_at).reverse_order.group(:instrument_id, :trade_price)
+
+    @buy_position_summary = Trade.select(
+        :instrument_id,
+        :trade_price,
+        :order_side,
+        :trading_account_id,
+        Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
+        :open_close,
+        :traded_at
+      ).where(
+        Trade.arel_table[:open_volume].gt(0).and(
+          Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
+            Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.buy)
+          )
+        )
+      ).order(:traded_at).reverse_order.group(:instrument_id)
+
+    @sell_positions = Trade.select(
+        :instrument_id,
+        :trade_price,
+        :order_side,
+        :trading_account_id,
+        Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
+        :open_close,
+        :traded_at
+      ).where(
+        Trade.arel_table[:open_volume].gt(0).and(
+          Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
+            Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.sell)
+          )
+        )
+      ).order(:traded_at).reverse_order.group(:instrument_id, :trade_price)
+
+    @sell_position_summary = Trade.select(
+        :instrument_id,
+        :trade_price,
+        :order_side,
+        :trading_account_id,
+        Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
+        :open_close,
+        :traded_at
+      ).where(
+        Trade.arel_table[:open_volume].gt(0).and(
+          Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
+            Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.sell)
+          )
+        )
+      ).order(:traded_at).reverse_order.group(:instrument_id)
   end
 
   # GET /trading_accounts/new

@@ -38,7 +38,7 @@ module ApplicationHelper
     content_tag(:span, content, class: "label label-#{options[:color]}", style: "font-size: #{options[:font_size]}px;")
   end
 
-  def render_order_side(entity, options = {})
+  def render_order_side(value, options = {})
     default_options = {
       colors: {
         buy: 'primary',
@@ -49,7 +49,7 @@ module ApplicationHelper
 
     options = default_options.merge(options)
 
-    key = Acropolis::OrderSides.order_sides.key(entity.order_side)
+    key = Acropolis::OrderSides.order_sides.key(value)
     content = I18n.t("order_sides.#{key}")
 
     content_tag(:span, content, class: "label label-#{options[:colors][key.to_sym]}", style: "font-size: #{options[:font_size]}px;")

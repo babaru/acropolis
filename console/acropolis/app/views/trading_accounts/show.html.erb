@@ -24,9 +24,9 @@
             <div class="panel-heading">
                 <div class="panel-options">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('navigation.tab.positions') %></a></li>
-                        <li><a href="#tab-2" data-toggle="tab"><%= t('navigation.tab.trades') %></a></li>
-                        <li><a href="#tab-3" data-toggle="tab">Last activity</a></li>
+                        <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('navigation.tab.position_summary') %></a></li>
+                        <li><a href="#tab-2" data-toggle="tab"><%= t('navigation.tab.position_detail') %></a></li>
+                        <li><a href="#tab-3" data-toggle="tab"><%= t('navigation.tab.trades') %></a></li>
                     </ul>
                 </div>
             </div>
@@ -37,20 +37,36 @@
                 <div class="tab-pane active" id="tab-1">
 
                   <div id="position-list" class="tooltip-demo">
-                    <%= render partial: 'position_summary_grid' %>
+                    <div class="row">
+                      <div class="col-lg-6" style="border-right: 1px solid #eee;">
+                        <%= render partial: 'buy_position_summary' %>
+                      </div>
+                      <div class="col-lg-6">
+                        <%= render partial: 'sell_position_summary' %>
+                      </div>
+                    </div>
+
                   </div>
 
                 </div>
 
                 <div class="tab-pane" id="tab-2">
 
-                  <div id="trade-list" class="tooltip-demo">
-                    <%= render partial: 'trading_records_grid' %>
+                  <div class="row">
+                    <div class="col-lg-6" style="border-right: 1px solid #eee;">
+                      <%= render partial: 'buy_position_detail' %>
+                    </div>
+                    <div class="col-lg-6">
+                      <%= render partial: 'sell_position_detail' %>
+                    </div>
                   </div>
 
                 </div>
                 <div class="tab-pane" id="tab-3">
 
+                  <div id="trade-list" class="tooltip-demo">
+                    <%= render partial: 'trading_records_grid' %>
+                  </div>
 
                 </div>
               </div>

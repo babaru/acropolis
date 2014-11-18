@@ -5,11 +5,7 @@
   end
 
   g.column name: t('activerecord.attributes.trade.traded_at') do |trade|
-    trade.traded_at.strftime('%H:%M:%S')
-  end
-
-  g.column name: t('activerecord.attributes.trade.order_side') do |trade|
-    render_order_side(trade)
+    fa_icon('clock-o', text: trade.traded_at.strftime('%H:%M:%S'))
   end
 
   g.column name: t('activerecord.attributes.trade.instrument') do |trade|
@@ -20,16 +16,24 @@
     trade.instrument.exchange.name
   end
 
-  g.column name: t('activerecord.attributes.trade.trade_volume') do |trade|
-    trade.trade_volume
+  g.column name: t('activerecord.attributes.trade.trade_price'), class: 'text-right' do |trade|
+    render_trade_price(trade.trade_price)
   end
 
-  g.column name: t('activerecord.attributes.trade.trade_price') do |trade|
-    render_trade_price(trade.trade_price)
+  g.column name: t('activerecord.attributes.trade.order_side') do |trade|
+    render_order_side(trade.order_side)
   end
 
   g.column name: t('activerecord.attributes.trade.open_close') do |trade|
     render_open_close(trade)
+  end
+
+  g.column name: t('activerecord.attributes.trade.trade_volume'), class: 'text-right' do |trade|
+    trade.trade_volume
+  end
+
+  g.column name: t('activerecord.attributes.trade.open_volume'), class: 'text-right' do |trade|
+    content_tag(:strong, trade.open_volume) if trade.is_open?
   end
 
 end -%>

@@ -47,4 +47,5 @@ zh-CN:
       holiday_risk_plans: 节假日风控方案
       instruments: 交易产品
       trades: 成交记录
-      positions: 持仓汇总
+      position_summary: 持仓汇总
+      position_detail: 持仓明细

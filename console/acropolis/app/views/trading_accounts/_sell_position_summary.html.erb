@@ -1,0 +1,21 @@
+
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th><%= t('activerecord.attributes.trade.open_volume') %></th>
+        <th><%= t('activerecord.attributes.trade.order_side') %></th>
+        <th class="text-right"><%= t('activerecord.attributes.trade.exchange') %></th>
+        <th class="text-right"><%= t('activerecord.attributes.trade.instrument') %></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @sell_position_summary.each do |trade| %>
+    <tr>
+        <td><%= trade.open_volume %></td>
+        <td><%= render_order_side(trade.order_side) %></td>
+        <td class="text-right"><%= trade.instrument.symbol_id %></td>
+        <td class="text-right"><%= trade.instrument.exchange.name %></td>
+    </tr>
+    <% end %>
+    </tbody>
+</table>

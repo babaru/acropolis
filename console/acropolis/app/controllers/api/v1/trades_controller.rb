@@ -14,6 +14,12 @@ module Api
           @trade.instrument = @instrument
         end
 
+        @trade.open_volume = trade_params[:trade_volume] if @trade.is_open?
+
+        if trade_params[:traded_at].nil?
+          @trade.traded_at = Time.now
+        end
+
         if @trade.save
           render json: @trade, status: :created
         else

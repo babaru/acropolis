@@ -108,6 +108,7 @@ zh-CN:
         traded_at: 成交时间
         trade_volume: 成交量
         open_close: 开平仓
+        open_volume: 持仓量
       position:
         instrument: 交易产品
         exchange: 交易所
