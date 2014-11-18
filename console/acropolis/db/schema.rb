@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118102103) do
+ActiveRecord::Schema.define(version: 20141118102906) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -69,6 +69,16 @@ ActiveRecord::Schema.define(version: 20141118102103) do
 
   add_index "instruments", ["exchange_id"], name: "index_instruments_on_exchange_id", using: :btree
   add_index "instruments", ["underlying_id"], name: "index_instruments_on_underlying_id", using: :btree
+
+  create_table "margins", force: true do |t|
+    t.string   "type"
+    t.decimal  "factor",        precision: 20, scale: 4
+    t.integer  "instrument_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "margins", ["instrument_id"], name: "index_margins_on_instrument_id", using: :btree
 
   create_table "monitoring_products", force: true do |t|
     t.integer  "product_id"

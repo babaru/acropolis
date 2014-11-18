@@ -16,6 +16,7 @@ class InstrumentsController < ApplicationController
   def new
     @instrument = Instrument.new
     @instrument.build_trading_fee
+    @instrument.build_margin
     @exchange = Exchange.find(params[:exchange_id])
     @instrument.exchange = @exchange
   end
@@ -23,6 +24,7 @@ class InstrumentsController < ApplicationController
   # GET /instruments/1/edit
   def edit
     @instrument.build_trading_fee if @instrument.trading_fee.nil?
+    @instrument.build_margin if @instrument.margin.nil?
   end
 
   # POST /instruments
@@ -106,6 +108,11 @@ class InstrumentsController < ApplicationController
         :currency_unit,
         :multiplier,
         trading_fee_attributes: [
+          :id,
+          :type,
+          :factor
+        ],
+        margin_attributes: [
           :id,
           :type,
           :factor

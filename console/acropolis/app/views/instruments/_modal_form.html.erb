@@ -30,6 +30,11 @@
       <%= tf.input :factor, as: :string %>
     <% end %>
 
+    <%= f.simple_fields_for :margin, @instrument.margin do |tf| %>
+      <%= tf.input :type, collection: [[FixedRateMargin.model_name.human, FixedRateMargin.name]] %>
+      <%= tf.input :factor, as: :string %>
+    <% end %>
+
   </div>
 
   <div class="modal-footer">

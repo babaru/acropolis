@@ -47,11 +47,18 @@
     instrument.multiplier
   end
 
-  g.column name: t('activerecord.attributes.instrument.trading_fee') do |instrument|
+  g.column name: t('activerecord.attributes.instrument.trading_fee'), class: 'project-title' do |instrument|
     [
-      t("activerecord.models.#{instrument.trading_fee.type.underscore.downcase}"),
-      instrument.trading_fee.factor
-    ].join(': ').html_safe unless instrument.trading_fee.nil?
+      link_to(instrument.trading_fee.factor, '#'),
+      content_tag(:small, t("activerecord.models.#{instrument.trading_fee.type.underscore.downcase}"))
+    ].join('<br/>').html_safe unless instrument.trading_fee.nil?
+  end
+
+  g.column name: t('activerecord.attributes.instrument.margin'), class: 'project-title' do |instrument|
+    [
+      link_to(number_to_percentage(instrument.margin.factor * 100, precision: 0), '#'),
+      content_tag(:small, t("activerecord.models.#{instrument.margin.type.underscore.downcase}"))
+    ].join('<br/>').html_safe unless instrument.margin.nil?
   end
 
   g.column html: {class: 'project-actions'} do |instrument|
