@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  net_worth: 9.99
+  customer_benefit: 9.99
+  leverage: 9.99
+  margin: 9.99
+  exposure: 9.99
+  profit: 9.99
+  balance: 9.99
+
+two:
+  type: 
+  net_worth: 9.99
+  customer_benefit: 9.99
+  leverage: 9.99
+  margin: 9.99
+  exposure: 9.99
+  profit: 9.99
+  balance: 9.99

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118015737) do
+ActiveRecord::Schema.define(version: 20141118040128) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -205,15 +205,41 @@ ActiveRecord::Schema.define(version: 20141118015737) do
   add_index "trades", ["instrument_id"], name: "index_trades_on_instrument_id", using: :btree
   add_index "trades", ["trading_account_id"], name: "index_trades_on_trading_account_id", using: :btree
 
+  create_table "trading_account_trading_summaries", force: true do |t|
+    t.integer  "trading_account_id"
+    t.integer  "trading_summary_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "trading_account_trading_summaries", ["trading_account_id"], name: "index_trading_account_trading_summaries_on_trading_account_id", using: :btree
+  add_index "trading_account_trading_summaries", ["trading_summary_id"], name: "index_trading_account_trading_summaries_on_trading_summary_id", using: :btree
+
   create_table "trading_accounts", force: true do |t|
     t.string   "name"
     t.decimal  "budget",     precision: 20, scale: 4
     t.integer  "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "account_no"
+    t.string   "password"
+    t.string   "legal_id"
   end
 
   add_index "trading_accounts", ["product_id"], name: "index_trading_accounts_on_product_id", using: :btree
+
+  create_table "trading_summaries", force: true do |t|
+    t.string   "type"
+    t.decimal  "net_worth",        precision: 10, scale: 0
+    t.decimal  "customer_benefit", precision: 10, scale: 0
+    t.decimal  "leverage",         precision: 10, scale: 0
+    t.decimal  "margin",           precision: 10, scale: 0
+    t.decimal  "exposure",         precision: 10, scale: 0
+    t.decimal  "profit",           precision: 10, scale: 0
+    t.decimal  "balance",          precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "translations", force: true do |t|
     t.string   "locale"

@@ -8,7 +8,7 @@
   g.column name: t('activerecord.attributes.trading_account.name'), class: 'project-title' do |trading_account|
     [
       link_to(trading_account.name, trading_account_path(trading_account)),
-      content_tag(:small, "#{t('labels.last_modified_at')} #{trading_account.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
+      content_tag(:small, "<strong>#{t('activerecord.attributes.trading_account.account_no')}:</strong> #{trading_account.account_no}".html_safe)
     ].join('<br/>').html_safe
   end
 
