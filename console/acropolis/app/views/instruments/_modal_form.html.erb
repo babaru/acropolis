@@ -23,6 +23,11 @@
 
     <%= f.input :currency_unit %>
 
+    <%= f.simple_fields_for :trading_fee, @instrument.trading_fee do |tf| %>
+      <%= tf.input :type, collection: [[FixedTradingFee.model_name.human, FixedTradingFee.name]] %>
+      <%= tf.input :factor, as: :string %>
+    <% end %>
+
   </div>
 
   <div class="modal-footer">

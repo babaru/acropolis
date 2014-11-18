@@ -8,9 +8,7 @@ class Trade < ActiveRecord::Base
   has_many :close_trades, through: :close_trade_records
 
   scope :open, -> { where(
-    Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
-      Trade.arel_table[:open_volume].gt(0)
-    )
+    Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open)
   )}
 
   scope :close, -> { where(
@@ -54,7 +52,7 @@ class Trade < ActiveRecord::Base
     order_side == Acropolis::OrderSides.order_sides.sell
   end
 
-  def self.reset_open_volume
+  def self.reset_all_open_volumes
     Trade.update_all('open_volume = trade_volume')
     PositionCloseRecord.delete_all
   end

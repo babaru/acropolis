@@ -19,25 +19,39 @@ class TradingAccount < ActiveRecord::Base
     end
   end
 
+  def self.refresh_all_trading_summaries
+    TradingAccount.transaction do
+      Trade.reset_all_open_volumes
+      PositionCloseRecord.delete_all
+      Trade.all.order('traded_at asc').each { |trade| trade.adjust_open_volume }
+    end
+  end
+
   private
 
   def calculate_raw_summary
-    open_position_profit = Trade.open.whose(self.id).inject(0) do |sum, trade|
-      sum += (trade.is_buy? ? 1 : -1) * (1400 - trade.trade_price) * trade.open_volume
+    trading_fee = 0
+    total_profit = 0
+
+    Trade.open.whose(self.id).each do |trade|
+      total_profit += (trade.is_buy? ? 1 : -1) * (1400 - trade.trade_price) * trade.open_volume
+      trading_fee += trade.instrument.trading_fee.calculate(trade)
     end
 
-    total_profit = 0
-    close_position_profit = Trade.close.whose(self.id).inject(0) do |sum, trade|
+    Trade.close.whose(self.id).each do |trade|
       trade.open_trade_records.each do |open_trade_record|
         profit = trade.trade_price - open_trade_record.open_trade.trade_price
         close_profit = (trade.is_sell? ? 1 : -1) * profit * open_trade_record.close_volume
         total_profit += close_profit
       end
-      sum = total_profit
+      trading_fee += trade.instrument.trading_fee.calculate(trade)
     end
 
+    logger.debug("trading fee: #{trading_fee}")
+    logger.debug("total profit: #{total_profit}")
+
     {
-      customer_benefit: self.budget + open_position_profit + close_position_profit
+      customer_benefit: self.budget + total_profit - trading_fee
     }
   end
 end

@@ -80,6 +80,9 @@ Translation.create(locale: 'zh-CN', key: 'activerecord.attributes.parameter.name
 Translation.create(locale: 'zh-CN', key: 'activerecord.attributes.parameter.name.margin', value: '保证金')
 Translation.create(locale: 'zh-CN', key: 'activerecord.attributes.parameter.name.exposure', value: '敞口')
 
+Translation.create(locale: 'zh-CN', key: 'activerecord.attributes.instrument.trading_fee.algo_type.fix', value: '固定值')
+
+
 # Basic Relation Symbols of Thresholds
 # -----------------------------
 

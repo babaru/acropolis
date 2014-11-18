@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  factor: 9.99
+  instrument_id: 
+
+two:
+  type: 
+  factor: 9.99
+  instrument_id: 

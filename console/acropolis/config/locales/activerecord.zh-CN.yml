@@ -29,6 +29,8 @@ zh-CN:
       trade: 成交记录
       position: 持仓记录
       trading_summary: 交易概况
+      trading_fee: 交易手续费
+      fixed_trading_fee: 固定手续费
     attributes:
       time_stamp:
         created_at: 创建于
@@ -103,6 +105,7 @@ zh-CN:
         expiration_date: 合约到期日
         strike_price: 执行价
         currency_unit: 货币代码
+        trading_fee: 交易手续费
       trade:
         instrument: 交易产品
         exchange: 交易所

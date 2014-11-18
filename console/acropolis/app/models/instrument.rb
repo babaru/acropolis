@@ -3,6 +3,9 @@ class Instrument < ActiveRecord::Base
   belongs_to :exchange
 
   has_many :derivaties
+  has_one :trading_fee
+
+  accepts_nested_attributes_for :trading_fee
 
   attr_accessor :underlying_name, :exchange_name
 end

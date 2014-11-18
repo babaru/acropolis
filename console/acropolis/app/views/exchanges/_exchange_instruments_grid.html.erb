@@ -39,11 +39,16 @@
     instrument.expiration_date.strftime("%Y-%m-%d") if instrument.expiration_date
   end
 
-
   g.column name: t('activerecord.attributes.instrument.strike_price'), class: 'options-instrument' do |instrument|
     render_currency(instrument.strike_price)
   end
 
+  g.column name: t('activerecord.attributes.instrument.trading_fee') do |instrument|
+    [
+      t("activerecord.models.#{instrument.trading_fee.type.underscore.downcase}"),
+      instrument.trading_fee.factor
+    ].join(': ').html_safe unless instrument.trading_fee.nil?
+  end
 
   g.column html: {class: 'project-actions'} do |instrument|
     [
