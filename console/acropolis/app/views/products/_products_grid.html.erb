@@ -15,7 +15,7 @@
   end
 
   g.column name: t('activerecord.attributes.product.budget') do |product|
-    render_budget(product.budget)
+    render_currency(product.budget)
   end
 
   g.column name: t('activerecord.attributes.product.client_id') do |product|
