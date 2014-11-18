@@ -43,6 +43,10 @@
     render_currency(instrument.strike_price)
   end
 
+  g.column name: t('activerecord.attributes.instrument.multiplier'), class: 'futures-instrument' do |instrument|
+    instrument.multiplier
+  end
+
   g.column name: t('activerecord.attributes.instrument.trading_fee') do |instrument|
     [
       t("activerecord.models.#{instrument.trading_fee.type.underscore.downcase}"),

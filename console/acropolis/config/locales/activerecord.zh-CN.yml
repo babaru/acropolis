@@ -106,6 +106,7 @@ zh-CN:
         strike_price: 执行价
         currency_unit: 货币代码
         trading_fee: 交易手续费
+        multiplier: 合约乘数
       trade:
         instrument: 交易产品
         exchange: 交易所
@@ -130,6 +131,9 @@ zh-CN:
         leverage: 杠杆
         margin: 保证金占用
         profit: 损益
+      trading_fee:
+        type: 手续费收取方式
+        factor: 手续费
   models:
     list: "%{model}列表"
     new: "新建%{model}"

@@ -104,6 +104,7 @@ class InstrumentsController < ApplicationController
         :strike_price,
         :exchange_id,
         :currency_unit,
+        :multiplier,
         trading_fee_attributes: [
           :id,
           :type,
