@@ -5,36 +5,59 @@
             <h2><%= @trading_account.name %></h2>
         </div>
         <div class="row">
-            <div class="col-lg-5">
+            <div class="col-lg-3">
                 <dl class="dl-horizontal">
-                    <dt><%= t('activerecord.attributes.trading_account.account_no') %></dt>
-                    <dd><%= @trading_account.account_no %></dd>
+                    <dt><%= t('activerecord.attributes.trading_summary.net_worth') %></dt>
+                    <dd class="text-right"><%= render_net_worth(@trading_account.trading_summary.net_worth) %></dd>
                 </dl>
             </div>
-            <div class="col-lg-7">
+            <div class="col-lg-6">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
                 <dl class="dl-horizontal">
-                    <dt><%= t('activerecord.attributes.time_stamp.updated_at') %></dt> <dd><%= @trading_account.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></dd>
-                    <dt><%= t('activerecord.attributes.time_stamp.created_at') %></dt> <dd><%= @trading_account.created_at.strftime('%Y-%m-%d %H:%M:%S') %></dd>
+                    <dt><%= t('activerecord.attributes.trading_account.budget') %></dt>
+                    <dd class="text-right"><%= render_currency(@trading_account.budget) %></dd>
                 </dl>
+            </div>
+            <div class="col-lg-6">
+
             </div>
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-5">
+    <div class="col-lg-3">
         <dl class="dl-horizontal">
-            <dt><%= t('activerecord.attributes.trading_account.budget') %></dt> <dd><%= @trading_account.budget %></dd>
-            <dt><%= t('activerecord.attributes.trading_summary.net_worth') %></dt> <dd><%= @trading_account.trading_summary.nil? ? 'N/A' : @trading_account.trading_summary.net_worth %></dd>
-            <dt><%= t('activerecord.attributes.trading_summary.customer_benefit') %></dt> <dd><%= @trading_account.trading_summary.nil? ? 'N/A' : @trading_account.trading_summary.customer_benefit %></dd>
-            <dt><%= t('activerecord.attributes.trading_summary.exposure') %></dt> <dd><%= @trading_account.trading_summary.nil? ? 'N/A' : @trading_account.trading_summary.exposure %></dd>
+            <dt><%= t('activerecord.attributes.trading_summary.balance') %></dt>
+            <dd class="text-right"><%= render_currency(@trading_account.trading_summary.balance) %></dd>
+            <dt><%= t('activerecord.attributes.trading_summary.customer_benefit') %></dt>
+            <dd class="text-right"><%= render_currency(@trading_account.trading_summary.customer_benefit) %></dd>
+            <dt><%= t('activerecord.attributes.trading_summary.profit') %></dt>
+            <dd class="text-right"><%= render_currency(@trading_account.trading_summary.profit) %></dd>
         </dl>
     </div>
-    <div class="col-lg-7" id="cluster_info">
+    <div class="col-lg-3">
         <dl class="dl-horizontal">
-            <dt><%= t('activerecord.attributes.trading_summary.balance') %></dt> <dd><%= @trading_account.trading_summary.nil? ? 'N/A' : @trading_account.trading_summary.balance %></dd>
-            <dt><%= t('activerecord.attributes.trading_summary.leverage') %></dt> <dd><%= @trading_account.trading_summary.nil? ? 'N/A' : @trading_account.trading_summary.leverage %></dd>
-            <dt><%= t('activerecord.attributes.trading_summary.margin') %></dt> <dd><%= @trading_account.trading_summary.nil? ? 'N/A' : @trading_account.trading_summary.margin %></dd>
-            <dt><%= t('activerecord.attributes.trading_summary.profit') %></dt> <dd><%= @trading_account.trading_summary.nil? ? 'N/A' : @trading_account.trading_summary.profit %></dd>
+            <dt><%= t('activerecord.attributes.trading_summary.leverage') %></dt>
+            <dd class="text-right"><%= render_decimal(@trading_account.trading_summary.leverage) %></dd>
+            <dt><%= t('activerecord.attributes.trading_summary.margin') %></dt>
+            <dd class="text-right"><%= render_currency(@trading_account.trading_summary.margin) %></dd>
+            <dt><%= t('activerecord.attributes.trading_summary.margin_rate') %></dt>
+            <dd class="text-right"><%= render_percentage(@trading_account.trading_summary.margin.fdiv(@trading_account.budget)) %></dd>
+        </dl>
+    </div>
+    <div class="col-lg-3">
+        <dl class="dl-horizontal">
+            <dt><%= t('activerecord.attributes.trading_summary.exposure') %></dt>
+            <dd class="text-right"><%= render_currency(@trading_account.trading_summary.exposure) %></dd>
+        </dl>
+    </div>
+    <div class="col-lg-3">
+        <dl class="dl-horizontal">
+
         </dl>
     </div>
 </div>

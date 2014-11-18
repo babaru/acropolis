@@ -15,6 +15,11 @@ class TradingAccount < ActiveRecord::Base
 
       self.trading_summary.customer_benefit = raw_summary[:customer_benefit]
       self.trading_summary.net_worth = raw_summary[:customer_benefit].fdiv(self.budget)
+      self.trading_summary.margin = raw_summary[:margin]
+      self.trading_summary.balance = raw_summary[:balance]
+      self.trading_summary.leverage = raw_summary[:leverage]
+      self.trading_summary.exposure = raw_summary[:exposure]
+      self.trading_summary.profit = self.budget - raw_summary[:customer_benefit]
       self.trading_summary.save
     end
   end
@@ -31,27 +36,25 @@ class TradingAccount < ActiveRecord::Base
 
   def calculate_raw_summary
     trading_fee = 0
-    total_profit = 0
+    profit = 0
+    margin = 0
+    exposure = 0
+    position_cost = 0
 
-    Trade.open.whose(self.id).each do |trade|
-      total_profit += (trade.is_buy? ? 1 : -1) * (1400 - trade.trade_price) * trade.open_volume
-      trading_fee += trade.instrument.trading_fee.calculate(trade)
+    self.trades.each do |trade|
+      profit += trade.profit
+      position_cost += trade.position_cost
+      trading_fee += trade.trading_fee
+      margin += trade.margin
+      exposure += trade.exposure
     end
-
-    Trade.close.whose(self.id).each do |trade|
-      trade.open_trade_records.each do |open_trade_record|
-        profit = trade.trade_price - open_trade_record.open_trade.trade_price
-        close_profit = (trade.is_sell? ? 1 : -1) * profit * open_trade_record.close_volume
-        total_profit += close_profit
-      end
-      trading_fee += trade.instrument.trading_fee.calculate(trade)
-    end
-
-    logger.debug("trading fee: #{trading_fee}")
-    logger.debug("total profit: #{total_profit}")
 
     {
-      customer_benefit: self.budget + total_profit - trading_fee
+      customer_benefit: self.budget + profit - trading_fee,
+      balance: self.budget - position_cost - trading_fee - margin,
+      leverage: position_cost / self.budget,
+      margin: margin,
+      exposure: exposure.abs,
     }
   end
 end

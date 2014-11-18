@@ -1,39 +1,45 @@
 class Trade < ActiveRecord::Base
+  attr_accessor :symbol_id, :exchange_name
+
+  after_create :adjust_open_volume
+
   belongs_to :instrument
   belongs_to :trading_account
   has_many :open_trade_records, class_name: 'PositionCloseRecord', dependent: :destroy, foreign_key: 'close_trade_id'
   has_many :close_trade_records, class_name: 'PositionCloseRecord', dependent: :destroy, foreign_key: 'open_trade_id'
-
   has_many :open_trades, through: :open_trade_records
   has_many :close_trades, through: :close_trade_records
 
   scope :open, -> { where(
     Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open)
   )}
-
   scope :close, -> { where(
     Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.close)
   )}
-
   scope :whose, ->(trading_account_id) { where(trading_account_id: trading_account_id) }
   scope :side, ->(side) { where(order_side: side) }
-
   scope :not_later, ->(time) { where('traded_at <= ?', time)}
 
-  attr_accessor :symbol_id, :exchange_name
+  # Class Methods
+  class << self
 
-  after_create :adjust_open_volume
+    def order_sides
+      Acropolis::OrderSides.order_sides.map{ |k,v| [I18n.t("order_sides.#{k}"),v] }
+    end
 
-  def self.order_sides
-    Acropolis::OrderSides.order_sides.map{ |k,v| [I18n.t("order_sides.#{k}"),v] }
-  end
+    def open_or_close
+      Acropolis::TradeOpenFlags.trade_open_flags.map{ |k,v| [I18n.t("order_sides.#{k}"),v] }
+    end
 
-  def self.open_or_close
-    Acropolis::TradeOpenFlags.trade_open_flags.map{ |k,v| [I18n.t("order_sides.#{k}"),v] }
-  end
+    def opposite_side(side)
+      side == Acropolis::OrderSides.order_sides.buy ? Acropolis::OrderSides.order_sides.sell : Acropolis::OrderSides.order_sides.buy
+    end
 
-  def self.opposite_side(side)
-    side == Acropolis::OrderSides.order_sides.buy ? Acropolis::OrderSides.order_sides.sell : Acropolis::OrderSides.order_sides.buy
+    def reset_all_open_volumes
+      Trade.update_all('open_volume = trade_volume')
+      PositionCloseRecord.delete_all
+    end
+
   end
 
   def is_open?
@@ -52,9 +58,43 @@ class Trade < ActiveRecord::Base
     order_side == Acropolis::OrderSides.order_sides.sell
   end
 
-  def self.reset_all_open_volumes
-    Trade.update_all('open_volume = trade_volume')
-    PositionCloseRecord.delete_all
+  # Margin of this trade
+  def margin
+    self.instrument.margin.calculate(self)
+  end
+
+  # Trading fee of this trade
+  def trading_fee
+    self.instrument.trading_fee.calculate(self)
+  end
+
+  # Position cost of this trade
+  def position_cost
+    return 0 if self.is_close?
+    self.trade_price * self.open_volume * self.instrument.multiplier
+  end
+
+  # Market value of this trade
+  def market_value
+    1400 * self.open_volume * self.instrument.multiplier
+  end
+
+  # Profit of this trade
+  def profit
+    return (self.is_buy? ? 1 : -1) * (market_value - position_cost) if self.is_open? # TODO: change to real market price
+
+    profit = 0
+    self.open_trade_records.each do |open_trade_record|
+      price_difference = self.trade_price - open_trade_record.open_trade.trade_price
+      profit += (self.is_sell? ? 1 : -1) * price_difference * open_trade_record.close_volume * self.instrument.multiplier
+    end
+    profit
+  end
+
+  # Exposure of this trade
+  # ps. buy trade will be oppsitive and sell trade will be negative
+  def exposure
+    (self.is_buy? ? 1 : -1) * position_cost
   end
 
   def adjust_open_volume

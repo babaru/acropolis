@@ -6,18 +6,94 @@ module ApplicationHelper
     session['recent'][type]
   end
 
-  def render_budget(value)
-    content_tag(:div, number_with_delimiter(value, delimiter: ','), class: 'label label-success', style: 'font-size: 14px;')
+  def render_net_worth(value, options = {})
+    default_options = {
+      font_size:  16,
+      precision:  2,
+      color:      :normal
+    }
+
+    options = default_options.merge(options)
+
+    options[:class] = 'label label-primary' if options[:color] == :normal
+    options[:class] = 'label label-warning' if options[:color] == :warning
+    options[:class] = 'label label-danger' if options[:color] == :danger
+
+    value = 'n/a' if value.nil?
+
+    content_tag(:span,
+      number_with_precision(
+        value,
+        precision:     options[:precision]
+      ), class: options[:class], style: "font-size: #{options[:font_size]}px;")
   end
 
-  def render_currency(value, unit = nil)
-    number_to_currency(value, unit: unit.nil? ? "￥" : unit, separator: ".", delimiter: ",", format: "%u %n")
+  def render_currency(value, options = {})
+    default_options = {
+      font_size:  12,
+      unit:       '￥',
+      separator:  '.',
+      delimiter:  '',
+      format:     "%u %n",
+      negative_style:       'text-danger',
+      null_style:           'text-muted'
+    }
+
+    options = default_options.merge(options)
+
+    options[:class] = options[:negative_style] if value < 0
+    options[:class] = options[:null_style] if value.nil?
+
+    value = 'n/a' if value.nil?
+
+    content_tag(:span,
+      number_to_currency(
+        value,
+        unit:       options[:unit],
+        separator:  options[:separator],
+        delimiter:  options[:delimiter],
+        format:     options[:format]
+      ), class: options[:class])
+  end
+
+  def render_decimal(value, options = {})
+    default_options = {
+      negative_style:       'text-danger',
+      null_style:           'text-muted'
+    }
+
+    options = default_options.merge(options)
+
+    options[:class] = options[:negative_style] if value < 0
+    options[:class] = options[:null_style] if value.nil?
+
+    value = 'n/a' if value.nil?
+
+    content_tag(:span, value, class: options[:class])
+  end
+
+  def render_percentage(value, options = {})
+    default_options = {
+      precision:            0,
+      negative_style:       'text-danger',
+      null_style:           'text-muted'
+    }
+
+    options = default_options.merge(options)
+
+    options[:class] = options[:negative_style] if value < 0
+    options[:class] = options[:null_style] if value.nil?
+
+    value *= 100 if value
+    value = 'n/a' if value.nil?
+
+    content_tag(:span, number_to_percentage(value, precision: options[:precision]), class: options[:class])
   end
 
   def render_trade_price(value, options = {})
     default_options = {
       side:       Acropolis::OrderSides.order_sides.buy,
-      font_size:  14,
+      font_size:  12,
       unit:       '￥',
       separator:  '.',
       delimiter:  '',
