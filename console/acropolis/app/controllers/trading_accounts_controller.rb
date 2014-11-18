@@ -12,7 +12,6 @@ class TradingAccountsController < ApplicationController
   # GET /trading_accounts/1.json
   def show
     @trading_records_grid = initialize_grid(Trade.where(trading_account_id: @trading_account.id).order('traded_at DESC'))
-    @position_summary_grid = initialize_grid(Position.where(trading_account_id: @trading_account.id).order('order_side'))
 
     @buy_positions = Trade.select(
         :instrument_id,
