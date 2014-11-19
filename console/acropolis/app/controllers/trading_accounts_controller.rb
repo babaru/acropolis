@@ -155,6 +155,11 @@ class TradingAccountsController < ApplicationController
     end
   end
 
+  def calculate_trading_summary
+    @trading_account = TradingAccount.find(params[:trading_account_id])
+    @trading_account.calculate_trading_summary
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trading_account

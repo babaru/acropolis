@@ -133,6 +133,7 @@ zh-CN:
         balance: 账户余额
         leverage: 杠杆
         margin: 保证金占用
+        margin_rate: 保证金占用率
         profit: 损益
       trading_fee:
         type: 手续费收取方式

@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="m-b-md">
-            <%= link_to t('models.edit', model: TradingAccount.model_name.human), edit_trading_account_path(@trading_account), remote: true, class: 'btn btn-white btn-xs pull-right' %>
+            <%= link_to fa_icon('refresh'), trading_account_calculate_trading_summary_path(@trading_account), remote: true, method: :post, class: 'btn btn-white btn-xs pull-right' %> <%= link_to t('models.edit', model: TradingAccount.model_name.human), edit_trading_account_path(@trading_account), remote: true, class: 'btn btn-white btn-xs pull-right' %>
             <h2><%= @trading_account.name %></h2>
         </div>
         <div class="row">
@@ -22,8 +22,11 @@
                     <dd class="text-right"><%= render_currency(@trading_account.budget) %></dd>
                 </dl>
             </div>
-            <div class="col-lg-6">
-
+            <div class="col-lg-3">
+                <dl class="dl-horizontal">
+                    <dt><%= t('activerecord.attributes.trading_summary.balance') %></dt>
+                    <dd class="text-right"><%= render_currency(@trading_account.trading_summary.balance) %></dd>
+                </dl>
             </div>
         </div>
     </div>
@@ -31,12 +34,12 @@
 <div class="row">
     <div class="col-lg-3">
         <dl class="dl-horizontal">
-            <dt><%= t('activerecord.attributes.trading_summary.balance') %></dt>
-            <dd class="text-right"><%= render_currency(@trading_account.trading_summary.balance) %></dd>
             <dt><%= t('activerecord.attributes.trading_summary.customer_benefit') %></dt>
             <dd class="text-right"><%= render_currency(@trading_account.trading_summary.customer_benefit) %></dd>
             <dt><%= t('activerecord.attributes.trading_summary.profit') %></dt>
             <dd class="text-right"><%= render_currency(@trading_account.trading_summary.profit) %></dd>
+            <dt><%= t('activerecord.attributes.trading_summary.exposure') %></dt>
+            <dd class="text-right"><%= render_currency(@trading_account.trading_summary.exposure) %></dd>
         </dl>
     </div>
     <div class="col-lg-3">
@@ -51,8 +54,7 @@
     </div>
     <div class="col-lg-3">
         <dl class="dl-horizontal">
-            <dt><%= t('activerecord.attributes.trading_summary.exposure') %></dt>
-            <dd class="text-right"><%= render_currency(@trading_account.trading_summary.exposure) %></dd>
+
         </dl>
     </div>
     <div class="col-lg-3">

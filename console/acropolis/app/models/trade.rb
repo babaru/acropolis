@@ -1,8 +1,6 @@
 class Trade < ActiveRecord::Base
   attr_accessor :symbol_id, :exchange_name
 
-  after_create :adjust_open_volume
-
   belongs_to :instrument
   belongs_to :trading_account
   has_many :open_trade_records, class_name: 'PositionCloseRecord', dependent: :destroy, foreign_key: 'close_trade_id'
@@ -35,11 +33,6 @@ class Trade < ActiveRecord::Base
       side == Acropolis::OrderSides.order_sides.buy ? Acropolis::OrderSides.order_sides.sell : Acropolis::OrderSides.order_sides.buy
     end
 
-    def reset_all_open_volumes
-      Trade.update_all('open_volume = trade_volume')
-      PositionCloseRecord.delete_all
-    end
-
   end
 
   def is_open?
@@ -60,6 +53,7 @@ class Trade < ActiveRecord::Base
 
   # Margin of this trade
   def margin
+    return 0 if self.is_close?
     self.instrument.margin.calculate(self)
   end
 
@@ -97,45 +91,53 @@ class Trade < ActiveRecord::Base
     (self.is_buy? ? 1 : -1) * position_cost
   end
 
-  def adjust_open_volume
-    if self.is_close?
-      rest_volume = self.trade_volume
+  def reset_position
+    Trade.transaction do
+      if self.is_open?
+        self.open_volume = self.trade_volume
+        self.save
 
-      Trade.open
-        .whose(self.trading_account_id)
-        .side(Trade.opposite_side(self.order_side))
-        .not_later(self.traded_at)
-        .order(:traded_at)
-        .reverse_order
-        .each do |trade|
-
-        if trade.open_volume <= rest_volume
-          close_volume = trade.open_volume
-          rest_volume -= close_volume
-          trade.open_volume = 0
-          trade.save
-
-          unless PositionCloseRecord.exists?(open_trade_id: trade.id, close_trade_id: self.id)
-            close_record = PositionCloseRecord.create(open_trade_id: trade.id, close_trade_id: self.id, close_volume: close_volume)
-          end
-        end
-
-        if trade.open_volume > rest_volume
-          close_volume = rest_volume
-          trade.open_volume -= close_volume
-          rest_volume = 0
-          trade.save
-
-          unless PositionCloseRecord.exists?(open_trade_id: trade.id, close_trade_id: self.id)
-            close_record = PositionCloseRecord.create(open_trade_id: trade.id, close_trade_id: self.id, close_volume: close_volume)
-          end
-        end
-
-        break if rest_volume == 0
+        PositionCloseRecord.where(open_trade_id: self.id).delete_all
       end
     end
+  end
 
-    self.trading_account.refresh_trading_summary
+  def close_position
+    Trade.transaction do
+      if self.is_close?
+
+        rest_volume = self.trade_volume
+
+        Trade.open
+          .whose(self.trading_account_id)
+          .side(Trade.opposite_side(self.order_side))
+          .not_later(self.traded_at)
+          .order(:traded_at)
+          .reverse_order
+          .each do |trade|
+
+          if trade.open_volume <= rest_volume
+            close_volume = trade.open_volume
+            rest_volume -= close_volume
+            trade.open_volume = 0
+            trade.save
+
+            PositionCloseRecord.create(open_trade_id: trade.id, close_trade_id: self.id, close_volume: close_volume)
+          end
+
+          if trade.open_volume > rest_volume
+            close_volume = rest_volume
+            trade.open_volume -= close_volume
+            rest_volume = 0
+            trade.save
+
+            PositionCloseRecord.create(open_trade_id: trade.id, close_trade_id: self.id, close_volume: close_volume)
+          end
+
+          break if rest_volume == 0
+        end
+      end
+    end
   end
 
 end
