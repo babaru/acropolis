@@ -1,7 +1,7 @@
 class RiskPlansController < ApplicationController
   before_action :set_risk_plan, only: [:show, :edit, :update, :destroy]
 
-  add_breadcrumb I18n.t('navigation.page.risk_plan'), :risk_plans_path, only: [:show]
+  add_breadcrumb I18n.t('models.list', model: RiskPlan.model_name.human), :risk_plans_path, only: [:show]
 
   # GET /risk_plans
   # GET /risk_plans.json

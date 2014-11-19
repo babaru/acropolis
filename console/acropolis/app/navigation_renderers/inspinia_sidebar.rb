@@ -2,25 +2,22 @@ class InspiniaSidebar < SimpleNavigation::Renderer::Base
 
   def render(item_container)
     if options[:is_subnavigation]
-      ul_class = "nav nav-second-level"
+      ul_class = "nav nav-second-level" if item_container.level.to_i == 2
+      ul_class = "nav nav-third-level" if item_container.level.to_i == 3
     else
       ul_class = "nav"
     end
 
     list_content = item_container.items.inject([]) do |list, item|
-      if is_divider?(item) # Divider
-        list << render_divider(item)
-      else
-        li_options = item.html_options.reject {|k, v| k == :link}
-        if include_sub_navigation?(item)
-          li_options[:class] = [li_options[:class], ""].flatten.compact.join(' ')
-        end
-        li_content = tag_for(item)
-        if include_sub_navigation?(item)
-          li_content << render_sub_navigation_for(item)
-        end
-        list << content_tag(:li, li_content, li_options)
+      li_options = item.html_options.reject {|k, v| k == :link}
+      if include_sub_navigation?(item)
+        li_options[:class] = [li_options[:class], ""].flatten.compact.join(' ')
       end
+      li_content = tag_for(item)
+      if include_sub_navigation?(item)
+        li_content << render_sub_navigation_for(item)
+      end
+      list << content_tag(:li, li_content, li_options)
     end.join
     if skip_if_empty? && item_container.empty?
       ''
@@ -38,7 +35,6 @@ class InspiniaSidebar < SimpleNavigation::Renderer::Base
   def tag_for(item)
     if item.url.nil?
       link_to([content_tag(:span, item.name, class: 'nav-label'), content_tag(:span, nil, class: 'fa arrow')].join.html_safe, '#', link_options_for(item))
-      # content_tag('span', item.name, link_options_for(item).except(:method))
     else
       link_to(content_tag(:span, item.name, class: 'nav-label'), item.url, link_options_for(item))
     end
@@ -50,24 +46,8 @@ class InspiniaSidebar < SimpleNavigation::Renderer::Base
     special_options = {:method => item.method}.reject {|k, v| v.nil? }
     link_options = item.html_options[:link] || {}
     opts = special_options.merge(link_options)
-    # opts['data-toggle'] = 'dropdown' if include_sub_navigation?(item)
-    # opts[:class] = [link_options[:class], item.selected_class, dropdown_link_class(item)].flatten.compact.join(' ')
     opts[:class] = [link_options[:class], item.selected_class].flatten.compact.join(' ')
     opts.delete(:class) if opts[:class].nil? || opts[:class] == ''
     opts
-  end
-
-  # def dropdown_link_class(item)
-  #   if include_sub_navigation?(item) && !options[:is_subnavigation]
-  #     "dropdown-toggle"
-  #   end
-  # end
-
-  def is_divider?(item)
-    link_options_for(item)[:divider] == true
-  end
-
-  def render_divider(item)
-    content_tag(:li, nil, {class: 'divider'})
   end
 end

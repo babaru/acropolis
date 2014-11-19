@@ -55,7 +55,6 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
 
-    primary.item :page_dashboard, fa_icon('rocket', text: t('navigation.page.dashboard')), dashboard_path, {}
 
     #
     # Risk control menus
@@ -91,14 +90,54 @@ SimpleNavigation::Configuration.run do |navigation|
     # Product menus
     #
     primary.item :page_product, fa_icon('archive', text: t('navigation.page.product')), nil, {} do |product_menu|
-      if recent_items(:product).length > 0
-        recent_items(:product).map do |id, name|
-          product_menu.item "page_product_#{id}".to_sym, name, product_path(id: id), {}
-        end
-        product_menu.item :page_product_divider_1, nil, nil, {link: {divider: true}}
-      end
+      product_menu.item(
+        :page_product_list,
+        t('models.list', model: Product.model_name.human),
+        products_path,
+        {
+          highlights_on: /products(\/)*$/
+        }
+      )
 
-      product_menu.item :page_product_list, t('models.all', model: Product.model_name.human), products_path
+      if recent_items(:product).length > 0
+        product_menu.item :page_recent_products, t('navigation.page.recent_products'), nil, {} do |recent_product_menu|
+          recent_items(:product).map do |id, name|
+            recent_product_menu.item(
+              "page_product_#{id}".to_sym,
+              name,
+              product_path(id: id),
+              {
+                highlights_on: /products\/\d+/
+              }
+            )
+          end
+        end
+      end
+    end
+
+    #
+    # Trading menus
+    #
+    primary.item :page_trading, fa_icon('exchange', text: t('navigation.page.trading')), nil, {} do |trading_menu|
+
+      trading_menu.item(
+        :page_exchange,
+        Exchange.model_name.human,
+        exchanges_path,
+        {
+          highlights_on: /exchanges/
+        }
+      )
+
+      trading_menu.item(
+        :page_trading_account,
+        TradingAccount.model_name.human,
+        trading_accounts_path,
+        {
+          highlights_on: /trading_accounts/
+        }
+      )
+
     end
 
     primary.item :page_data, fa_icon('database', text: t('navigation.page.data')), nil, {} do |data_menu|
@@ -108,7 +147,6 @@ SimpleNavigation::Configuration.run do |navigation|
       settings_menu.item :page_client_list, Client.model_name.human, clients_path
       settings_menu.item :page_broker_list, Broker.model_name.human, brokers_path
       settings_menu.item :page_bank_list, Bank.model_name.human, banks_path
-      settings_menu.item :page_exchange_list, Exchange.model_name.human, exchanges_path
     end
 
   end

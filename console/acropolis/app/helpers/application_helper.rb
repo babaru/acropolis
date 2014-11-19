@@ -33,7 +33,7 @@ module ApplicationHelper
       font_size:  12,
       unit:       '￥',
       separator:  '.',
-      delimiter:  '',
+      delimiter:  ',',
       format:     "%u %n",
       negative_style:       'text-danger',
       null_style:           'text-muted'
