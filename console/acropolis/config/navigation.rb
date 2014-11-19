@@ -86,7 +86,7 @@ SimpleNavigation::Configuration.run do |navigation|
             fa_icon('clock-o', text: name),
             risk_plan_path(id: id),
             {
-              highlights_on: /risk_plans\/\d+/
+              highlights_on: Regexp.new("risk_plans/#{id}")
             }
           )
         end
@@ -105,7 +105,7 @@ SimpleNavigation::Configuration.run do |navigation|
             fa_icon('clock-o', text: name),
             client_path(id: id),
             {
-              highlights_on: /clients\/\d+/
+              highlights_on: Regexp.new("clients/#{id}")
             }
           )
         end
@@ -133,7 +133,7 @@ SimpleNavigation::Configuration.run do |navigation|
             fa_icon('clock-o', text: name),
             product_path(id: id),
             {
-              highlights_on: /products\/\d+/
+              highlights_on: Regexp.new("products/#{id}")
             }
           )
         end
