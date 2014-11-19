@@ -63,25 +63,60 @@ SimpleNavigation::Configuration.run do |navigation|
 
       risk_control_menu.item(
         :page_risk_monitoring,
-        fa_icon('desktop', text: t('navigation.page.risk_monitoring')),
+        t('navigation.page.risk_monitoring'),
         risk_monitoring_path,
         {
           highlights_on: /risk_monitoring/
         }
       )
 
+      risk_control_menu.item(
+        :page_risk_plan,
+        t('models.list', model: RiskPlan.model_name.human),
+        risk_plans_path,
+        {
+          highlights_on: /risk_plans(\/)*$/
+        }
+      )
+
       if recent_items(:risk_plan).length > 0
         recent_items(:risk_plan).map do |id, name|
-          risk_control_menu.item "page_risk_plan_#{id}".to_sym, name, risk_plan_path(id: id), {}
+          risk_control_menu.item(
+            "page_risk_plan_#{id}".to_sym,
+            fa_icon('clock-o', text: name),
+            risk_plan_path(id: id),
+            {
+              highlights_on: /risk_plans\/\d+/
+            }
+          )
         end
       end
 
-      risk_control_menu.item(
-        :page_risk_plan_list,
-        fa_icon('book', text: RiskPlan.model_name.human),
-        risk_plans_path,
+    end
+
+    #
+    # Client menus
+    #
+    primary.item :page_client, fa_icon('briefcase', text: t('navigation.page.client')), nil, {} do |client_menu|
+      if recent_items(:client).length > 0
+        recent_items(:client).map do |id, name|
+          client_menu.item(
+            "page_client_#{id}".to_sym,
+            fa_icon('clock-o', text: name),
+            client_path(id: id),
+            {
+              highlights_on: /clients\/\d+/
+            }
+          )
+        end
+      end
+
+      client_menu.item(
+        :page_client_list,
+        t('models.list', model: Client.model_name.human),
+        clients_path,
         {
-          highlights_on: /risk_plans/
+          highlights_on: /clients(\/)*$/
         }
       )
     end
@@ -90,6 +125,20 @@ SimpleNavigation::Configuration.run do |navigation|
     # Product menus
     #
     primary.item :page_product, fa_icon('archive', text: t('navigation.page.product')), nil, {} do |product_menu|
+
+      if recent_items(:product).length > 0
+        recent_items(:product).map do |id, name|
+          product_menu.item(
+            "page_product_#{id}".to_sym,
+            fa_icon('clock-o', text: name),
+            product_path(id: id),
+            {
+              highlights_on: /products\/\d+/
+            }
+          )
+        end
+      end
+
       product_menu.item(
         :page_product_list,
         t('models.list', model: Product.model_name.human),
@@ -98,21 +147,6 @@ SimpleNavigation::Configuration.run do |navigation|
           highlights_on: /products(\/)*$/
         }
       )
-
-      if recent_items(:product).length > 0
-        product_menu.item :page_recent_products, t('navigation.page.recent_products'), nil, {} do |recent_product_menu|
-          recent_items(:product).map do |id, name|
-            recent_product_menu.item(
-              "page_product_#{id}".to_sym,
-              name,
-              product_path(id: id),
-              {
-                highlights_on: /products\/\d+/
-              }
-            )
-          end
-        end
-      end
     end
 
     #
@@ -144,7 +178,6 @@ SimpleNavigation::Configuration.run do |navigation|
     end
 
     primary.item :page_settings, fa_icon('cog', text: t('navigation.page.settings')), nil, {} do |settings_menu|
-      settings_menu.item :page_client_list, Client.model_name.human, clients_path
       settings_menu.item :page_broker_list, Broker.model_name.human, brokers_path
       settings_menu.item :page_bank_list, Bank.model_name.human, banks_path
     end

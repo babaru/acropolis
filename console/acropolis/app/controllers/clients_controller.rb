@@ -1,16 +1,22 @@
 class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb I18n.t('navigation.page.client'), 'javascript:void(0);'
+  add_breadcrumb I18n.t('models.list', model: Client.model_name.human), :clients_path, only: [:show]
+
   # GET /clients
   # GET /clients.json
   def index
     @clients_grid = initialize_grid(Client.all)
+    add_breadcrumb I18n.t('models.list', model: Client.model_name.human), nil
   end
 
   # GET /clients/1
   # GET /clients/1.json
   def show
     @capital_accounts_grid = initialize_grid(CapitalAccount.where(client_id: @client.id))
+    cache_recent_item(:client, @client.id, @client.name)
+    add_breadcrumb @client.name, nil
   end
 
   # GET /clients/new

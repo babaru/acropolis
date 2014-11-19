@@ -1,4 +1,5 @@
 module ApplicationHelper
+
   def recent_items(type)
     type = type.to_s if type.is_a?(Symbol)
     session['recent'] ||= {}
@@ -90,6 +91,29 @@ module ApplicationHelper
     content_tag(:span, number_to_percentage(value, precision: options[:precision]), class: options[:class])
   end
 
+  def render_money(value, options = {})
+    default_options = {
+      font_size:  14,
+      unit:       '￥',
+      separator:  '.',
+      delimiter:  ',',
+      format:     "%u %n",
+      color:      'info'
+    }
+
+    options = default_options.merge(options)
+
+    content = number_to_currency(
+      value,
+      unit:       options[:unit],
+      separator:  options[:separator],
+      delimiter:  options[:delimiter],
+      format:     options[:format]
+    )
+
+    content_tag(:span, content, class: "label label-#{options[:color]}", style: "font-size: #{options[:font_size]}px;")
+  end
+
   def render_trade_price(value, options = {})
     default_options = {
       side:       Acropolis::OrderSides.order_sides.buy,
@@ -98,7 +122,7 @@ module ApplicationHelper
       separator:  '.',
       delimiter:  '',
       format:     "%u %n",
-      color:      'info'
+      color:      'default'
     }
 
     options = default_options.merge(options)

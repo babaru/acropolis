@@ -61,8 +61,8 @@ zh-CN:
         client_id: 客户
         bank: 银行
         bank_id: 银行
-        broker: 期货公司
-        broker_id: 期货公司
+        broker: 资管公司
+        broker_id: 资管公司
         budget: 资金
         is_monitored: 加入实时监控
         created_at: 创建于
@@ -140,6 +140,8 @@ zh-CN:
       margin:
         type: 保证金计算方式
         factor: 保证金比率
+      client:
+        name: 名称
   models:
     list: "%{model}列表"
     new: "新建%{model}"

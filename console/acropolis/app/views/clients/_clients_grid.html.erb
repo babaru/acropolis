@@ -1,27 +1,16 @@
 <%= grid(@clients_grid, :show_filters => :when_filtered) do |g|
-  
+
   g.column name: '#' do |client|
     client.id
   end
-  
-  
+
+
   g.column name: t('activerecord.attributes.client.name'), class: 'project-title' do |client|
     [
       link_to(client.name, client_path(client)),
       content_tag(:small, "#{t('labels.last_modified_at')} #{client.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
     ].join('<br/>').html_safe
   end
-  
-  
-  g.column name: t('activerecord.attributes.time_stamp.created_at') do |client|
-    client.created_at.strftime('%Y-%m-%d %H:%M:%S')
-  end
-  
-  
-  g.column name: t('activerecord.attributes.time_stamp.updated_at') do |client|
-    client.updated_at.strftime('%Y-%m-%d %H:%M:%S')
-  end
-  
 
   g.column html: {class: 'project-actions'} do |client|
     [

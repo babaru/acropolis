@@ -1,11 +1,15 @@
 class TradingAccountsController < ApplicationController
   before_action :set_trading_account, only: [:show, :edit, :update, :destroy]
-  before_action :set_product, only: [:index, :new]
+  before_action :set_product, only: [:new]
 
   # GET /trading_accounts
   # GET /trading_accounts.json
   def index
-    @trading_accounts_grid = initialize_grid(TradingAccount.where(product_id: params[:product_id]))
+    if params[:product_id]
+      @trading_accounts_grid = initialize_grid(TradingAccount.where(product_id: params[:product_id]))
+    else
+      @trading_accounts_grid = initialize_grid(TradingAccount.order(:product_id))
+    end
   end
 
   # GET /trading_accounts/1

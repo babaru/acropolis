@@ -16,14 +16,14 @@
 //= require inspinia/plugins/flot/jquery.flot.pie
 //= require inspinia/plugins/peity/jquery.peity.min
 
-//= require inspinia/inspinia
-
 //= require inspinia/plugins/switchery/switchery
 //= require inspinia/plugins/gritter/jquery.gritter.min
 //= require inspinia/plugins/easypiechart/jquery.easypiechart
 //= require inspinia/plugins/sparkline/jquery.sparkline.min
 //= require inspinia/plugins/chartJs/Chart.min
 //= require inspinia/plugins/iCheck/icheck.min
+
+//= require inspinia/inspinia
 
 //= require nprogress
 //= require nprogress-turbolinks

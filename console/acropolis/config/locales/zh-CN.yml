@@ -28,17 +28,16 @@ zh-CN:
     page:
       risk_control: 风控
       risk_plan: 风控方案
-      risk_plan_list: 风控方案列表
       product: 产品
-      product_list: 产品列表
       risk_monitoring: 实时监测
       dashboard: 控制面板
       system_settings: 系统设置
       settings: 设置
-      data: 数据管理
+      data: 数据
       client: 客户
       broker: 期货公司
       bank: 银行
+      trading: 交易
     tab:
       sign_up: 注册新用户
       sign_in: 登录
