@@ -147,6 +147,14 @@ module ApplicationHelper
     content_tag(:span, content, class: "label label-#{options[:color]}", style: "font-size: #{options[:font_size]}px;")
   end
 
+  def render_market_price(value, options = {})
+    options = {
+      delimiter: ''
+    }.merge(options)
+    content_tag(:strong, render_currency(value, options))
+  end
+
+
   def render_order_side(value, options = {})
     default_options = {
       colors: {

@@ -13,8 +13,9 @@
 
 <% end %>
 
+
 <div class="ibox">
-  <div class="ibox-content">
+  <div class="ibox-content" id="trading-account-show-page-content">
       <div id="trading_account-detail">
         <%= render partial: 'trading_account_detail' %>
       </div>
@@ -38,10 +39,10 @@
 
                   <div id="position-list" class="tooltip-demo">
                     <div class="row">
-                      <div class="col-lg-6" style="border-right: 1px solid #eee;">
+                      <div class="col-lg-6" style="border-right: 1px solid #eee;" id="trading-account-buy-position-summary">
                         <%= render partial: 'buy_position_summary' %>
                       </div>
-                      <div class="col-lg-6">
+                      <div class="col-lg-6" id="trading-account-sell-position-summary">
                         <%= render partial: 'sell_position_summary' %>
                       </div>
                     </div>
@@ -53,10 +54,10 @@
                 <div class="tab-pane" id="tab-2">
 
                   <div class="row">
-                    <div class="col-lg-6" style="border-right: 1px solid #eee;">
+                    <div class="col-lg-6" style="border-right: 1px solid #eee;" id="trading-account-buy-position-detail">
                       <%= render partial: 'buy_position_detail' %>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" id="trading-account-buy-position-detail">
                       <%= render partial: 'sell_position_detail' %>
                     </div>
                   </div>
@@ -64,7 +65,7 @@
                 </div>
                 <div class="tab-pane" id="tab-3">
 
-                  <div id="trade-list" class="tooltip-demo">
+                  <div id="trade-list" class="tooltip-demo" id="trading-account-trading-records-grid">
                     <%= render partial: 'trading_records_grid' %>
                   </div>
 
@@ -79,3 +80,24 @@
   </div>
 </div>
 
+<% content_for :js do %>
+
+<%= javascript_include_tag 'auto_refresher', 'data-turbolinks-track' => true %>
+
+<script type="text/javascript">
+
+var autoRefresher = new AutoRefresher(3, '<%= trading_account_path(@trading_account.id) %>');
+
+(function ($) {
+
+  $(function () {
+
+    autoRefresher.toggle();
+
+  });
+
+} ( jQuery ) );
+
+</script>
+
+<% end %>

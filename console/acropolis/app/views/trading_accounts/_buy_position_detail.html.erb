@@ -4,6 +4,7 @@
     <tr>
         <th><%= t('activerecord.attributes.trade.exchange') %></th>
         <th><%= t('activerecord.attributes.trade.instrument') %></th>
+        <th><%= t('activerecord.attributes.instrument.market_price') %></th>
         <th><%= t('activerecord.attributes.trade.order_side') %></th>
         <th class="text-right"><%= t('activerecord.attributes.trade.trade_price') %></th>
         <th class="text-right"><%= t('activerecord.attributes.trade.open_volume') %></th>
@@ -14,6 +15,7 @@
     <tr>
         <td><%= trade.instrument.exchange.name %></td>
         <td><%= trade.instrument.symbol_id %></td>
+        <td><%= render_market_price(trade.instrument.latest_price) %></td>
         <td><%= render_order_side(trade.order_side) %></td>
         <td class="text-right"><%= render_trade_price(trade.trade_price) %></td>
         <td class="text-right"><%= trade.open_volume %></td>

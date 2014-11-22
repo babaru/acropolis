@@ -1,8 +1,9 @@
 class Trade < ActiveRecord::Base
-  attr_accessor :symbol_id, :exchange_name
+  attr_accessor :symbol_id, :exchange_name, :trading_account_no
 
   belongs_to :instrument
   belongs_to :trading_account
+  belongs_to :exchange
   has_many :open_trade_records, class_name: 'PositionCloseRecord', dependent: :destroy, foreign_key: 'close_trade_id'
   has_many :close_trade_records, class_name: 'PositionCloseRecord', dependent: :destroy, foreign_key: 'open_trade_id'
   has_many :open_trades, through: :open_trade_records
@@ -15,6 +16,7 @@ class Trade < ActiveRecord::Base
     Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.close)
   )}
   scope :whose, ->(trading_account_id) { where(trading_account_id: trading_account_id) }
+  scope :which, ->(instrument_id) { where(instrument_id: instrument_id) }
   scope :side, ->(side) { where(order_side: side) }
   scope :not_later, ->(time) { where('traded_at <= ?', time)}
 
@@ -70,7 +72,9 @@ class Trade < ActiveRecord::Base
 
   # Market value of this trade
   def market_value
-    1400 * self.open_volume * self.instrument.multiplier
+    mp = self.instrument.latest_price
+    mp ||= self.trade_price
+    mp * self.open_volume * self.instrument.multiplier
   end
 
   # Profit of this trade

@@ -33,6 +33,7 @@ zh-CN:
       fixed_trading_fee: 固定手续费
       margin: 保证金
       fixed_rate_margin: 固定比率保证金
+      market_price: 市场价格
     attributes:
       time_stamp:
         created_at: 创建于
@@ -111,6 +112,7 @@ zh-CN:
         trading_fee: 交易手续费
         multiplier: 合约乘数
         margin: 保证金
+        market_price: 市场价格
       trade:
         instrument: 交易产品
         exchange: 交易所

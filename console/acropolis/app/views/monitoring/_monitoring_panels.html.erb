@@ -12,10 +12,10 @@
       <div class="ibox-content">
 
         <table class="monitoring">
-          <% Parameter.all.each do |parameter| %>
+          <% monitoring_product.product.trading_accounts.each do |trading_account| %>
           <tr>
-            <td class="key"><%= t("activerecord.attributes.parameter.name.#{parameter.name}") %></td>
-            <td class="value"><%= render_product_parameter(monitoring_product.product, parameter) %></td>
+            <td class="key"><%= trading_account.name %></td>
+            <td class="value"><%= render_net_worth(trading_account.net_worth) %></td>
           </tr>
           <% end %>
         </table>
