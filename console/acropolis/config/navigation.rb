@@ -55,29 +55,19 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
 
-
-    #
-    # Risk control menus
-    #
-    primary.item :page_risk_control, fa_icon('life-ring', text: t('navigation.page.risk_control')), nil, {} do |risk_control_menu|
-
-      risk_control_menu.item(
+    primary.item(
         :page_risk_monitoring,
-        t('navigation.page.risk_monitoring'),
+        fa_icon('desktop', text: t('navigation.page.risk_monitoring')),
         risk_monitoring_path,
         {
           highlights_on: /risk_monitoring/
         }
       )
 
-      risk_control_menu.item(
-        :page_risk_plan,
-        t('models.list', model: RiskPlan.model_name.human),
-        risk_plans_path,
-        {
-          highlights_on: /risk_plans(\/)*$/
-        }
-      )
+    #
+    # Risk control menus
+    #
+    primary.item :page_risk_control, fa_icon('life-ring', text: t('navigation.page.risk_control')), nil, {} do |risk_control_menu|
 
       if recent_items(:risk_plan).length > 0
         recent_items(:risk_plan).map do |id, name|
@@ -91,6 +81,15 @@ SimpleNavigation::Configuration.run do |navigation|
           )
         end
       end
+
+      risk_control_menu.item(
+        :page_risk_plan,
+        t('models.list', model: RiskPlan.model_name.human),
+        risk_plans_path,
+        {
+          highlights_on: /risk_plans(\/)*$/
+        }
+      )
 
     end
 
@@ -119,27 +118,8 @@ SimpleNavigation::Configuration.run do |navigation|
           highlights_on: /clients(\/)*$/
         }
       )
-    end
 
-    #
-    # Product menus
-    #
-    primary.item :page_product, fa_icon('archive', text: t('navigation.page.product')), nil, {} do |product_menu|
-
-      if recent_items(:product).length > 0
-        recent_items(:product).map do |id, name|
-          product_menu.item(
-            "page_product_#{id}".to_sym,
-            fa_icon('clock-o', text: name),
-            product_path(id: id),
-            {
-              highlights_on: Regexp.new("products/#{id}")
-            }
-          )
-        end
-      end
-
-      product_menu.item(
+      client_menu.item(
         :page_product_list,
         t('models.list', model: Product.model_name.human),
         products_path,

@@ -114,6 +114,15 @@ module ApplicationHelper
     content_tag(:span, content, class: "label label-#{options[:color]}", style: "font-size: #{options[:font_size]}px;")
   end
 
+  def render_balance(value)
+    return render_money(value, color: 'inverse') if value > 0
+    render_money(value, color: 'danger')
+  end
+
+  def render_fixed_budget(value)
+    render_money(value, color: 'default')
+  end
+
   def render_trade_price(value, options = {})
     default_options = {
       side:       Acropolis::OrderSides.order_sides.buy,

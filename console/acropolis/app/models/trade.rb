@@ -97,7 +97,7 @@ class Trade < ActiveRecord::Base
         self.open_volume = self.trade_volume
         self.save
 
-        PositionCloseRecord.where(open_trade_id: self.id).delete_all
+        PositionCloseRecord.where(open_trade_id: self.id).update_all(close_volume: 0)
       end
     end
   end
@@ -122,7 +122,7 @@ class Trade < ActiveRecord::Base
             trade.open_volume = 0
             trade.save
 
-            PositionCloseRecord.create(open_trade_id: trade.id, close_trade_id: self.id, close_volume: close_volume)
+            update_close_record(trade.id, self.id, close_volume)
           end
 
           if trade.open_volume > rest_volume
@@ -131,7 +131,7 @@ class Trade < ActiveRecord::Base
             rest_volume = 0
             trade.save
 
-            PositionCloseRecord.create(open_trade_id: trade.id, close_trade_id: self.id, close_volume: close_volume)
+            update_close_record(trade.id, self.id, close_volume)
           end
 
           break if rest_volume == 0
@@ -140,4 +140,15 @@ class Trade < ActiveRecord::Base
     end
   end
 
+  private
+
+  def update_close_record(open_trade_id, close_trade_id, close_volume)
+    close_record = PositionCloseRecord.where(open_trade_id: open_trade_id, close_trade_id: close_trade_id).first
+    if close_record.nil?
+      PositionCloseRecord.create(open_trade_id: open_trade_id, close_trade_id: close_trade_id, close_volume: close_volume)
+    else
+      close_record.close_volume = close_volume
+      close_record.save
+    end
+  end
 end

@@ -86,6 +86,7 @@ zh-CN:
         account_no: 帐号
         password: 密码
         legal_id: 身份证件号
+        product: 所属产品
       product_capital_account:
         capital_account: 资金帐号名称
         capital_account_id: 资金帐号名称

@@ -12,13 +12,19 @@
 
     <%= f.error_notification %>
 
+    <fieldset>
+
+    <legend><%= t('messages.welcome') %></legend>
+
     <div class="form-group">
-      <%= f.input :login, wrapper: false, label: false, placeholder: 'Email or user name' %>
+      <%= f.input :login, wrapper: false, label: false, placeholder: t('placeholders.email_or_user_name') %>
     </div>
 
     <div class="form-group">
-        <%= f.input :password, wrapper: false, label: false, placeholder: 'Password' %>
+        <%= f.input :password, wrapper: false, label: false, placeholder: t('placeholders.password') %>
     </div>
+
+    </fieldset>
 
     <%= f.submit t('buttons.sign_in'), class: 'btn btn-primary block full-width m-b' %>
 

@@ -24,6 +24,9 @@ zh-CN:
   trade_open_flags:
     open: 开
     close: 平
+  placeholders:
+    email_or_user_name: 邮箱 / 帐号
+    password: 密码
   navigation:
     page:
       risk_control: 风控
@@ -42,7 +45,7 @@ zh-CN:
       sign_up: 注册新用户
       sign_in: 登录
       binding_products: 绑定产品
-      binding_risk_plans: 已绑定风控方案
+      risk_plan: 风控
       binding_capital_accounts: 已绑定资金帐号
       holiday_risk_plans: 节假日风控方案
       instruments: 交易产品

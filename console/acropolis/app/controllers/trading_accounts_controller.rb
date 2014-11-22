@@ -174,6 +174,9 @@ class TradingAccountsController < ApplicationController
     def trading_account_params
       params.require(:trading_account).permit(
         :name,
+        :account_no,
+        :password,
+        :legal_id,
         :budget,
         :product_id,
         )

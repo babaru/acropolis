@@ -19,4 +19,20 @@ class Product < ActiveRecord::Base
   def allocated_budget
     trading_accounts.inject(0) {|sum, item| sum += item.budget }
   end
+
+  def fixed_budget
+    budget - allocated_budget
+  end
+
+  def balance
+    fixed_budget + self.trading_accounts.inject(0) {|sum, account| sum += account.balance }
+  end
+
+  def customer_benefit
+    fixed_budget + self.trading_accounts.inject(0) {|sum, account| sum += account.customer_benefit }
+  end
+
+  def net_worth
+    customer_benefit / budget
+  end
 end

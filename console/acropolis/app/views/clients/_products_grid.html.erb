@@ -1,0 +1,35 @@
+<%= grid(@products_grid, :show_filters => :when_filtered) do |g|
+  g.column name: '#' do |product|
+    product.id
+  end
+
+  g.column name: t('activerecord.attributes.product.is_monitored') do |product|
+    link_to(check_box_tag("checkbox-#{product.id}", nil, product.is_monitored_by?(current_user), class: 'js-switch'), product_monitor_path(product), method: :post, remote: true)
+  end
+
+  g.column name: t('activerecord.attributes.product.name'), class: 'project-title' do |product|
+    [
+      link_to(product.name, product_path(product)),
+      content_tag(:small, "#{product.broker.name} | #{product.bank.name}")
+    ].join('<br/>').html_safe
+  end
+
+  g.column name: t('activerecord.attributes.product.budget') do |product|
+    render_money(product.budget)
+  end
+
+  g.column name: t('activerecord.attributes.product.balance') do |product|
+    render_money(product.balance)
+  end
+
+  g.column name: t('activerecord.attributes.product.net_worth') do |product|
+    render_net_worth(product.net_worth)
+  end
+
+  g.column html: {class: 'project-actions'} do |product|
+    [
+      link_to(fa_icon("pencil"), edit_product_path(product), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), product_delete_path(product), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

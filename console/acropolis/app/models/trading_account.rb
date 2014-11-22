@@ -24,6 +24,16 @@ class TradingAccount < ActiveRecord::Base
     end
   end
 
+  #
+  # Trading summary delegates
+  #
+  %w(balance margin leverage exposure customer_benefit net_worth profit).each do |method_name|
+    define_method(method_name) do
+      return 0 unless self.trading_summary
+      self.trading_summary.send(method_name.to_sym)
+    end
+  end
+
   private
 
   def calculate_raw_summary

@@ -4,24 +4,42 @@
             <%= link_to t('models.edit', model: Product.model_name.human), edit_product_path(@product), remote: true, class: 'btn btn-white btn-xs pull-right' %>
             <h2><span style="color: #f8ac59;"><%= fa_icon('star') %></span> <%= @product.name %></h2>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-5">
-        <dl class="dl-horizontal">
-            <dt><%= t('activerecord.attributes.product.budget') %></dt> <dd><span class="label label-success" style="font-size: 12px;"><%= number_to_currency(@product.budget, unit: "￥", separator: ".", delimiter: ",", format: "%u %n") %></span></dd>
-            <p></p>
-            <dt><%= t('activerecord.attributes.product.client') %></dt> <dd><%= @product.client.name %></dd>
-            <dt><%= t('activerecord.attributes.product.broker') %></dt> <dd><%= @product.broker.name %></dd>
-            <dt><%= t('activerecord.attributes.product.bank') %></dt> <dd><%= @product.bank.name %></dd>
-        </dl>
-    </div>
-    <div class="col-lg-7" id="cluster_info">
-        <dl class="dl-horizontal">
-            <dt><%= t('activerecord.attributes.product.allocated_budget') %></dt> <dd><span class="label label-info" style="font-size: 12px;"><%= number_to_currency(@product.allocated_budget, unit: "￥", separator: ".", delimiter: ",", format: "%u %n") %></span></dd>
-            <p></p>
-            <dt><%= t('activerecord.attributes.product.updated_at') %></dt> <dd><%= @product.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></dd>
-            <dt><%= t('activerecord.attributes.product.created_at') %></dt> <dd><%= @product.created_at.strftime('%Y-%m-%d %H:%M:%S') %></dd>
-        </dl>
+        <div class="row">
+            <div class="col-lg-3">
+                <dl class="dl-horizontal">
+                    <dt><%= t('activerecord.attributes.product.net_worth') %></dt>
+                    <dd><%= render_net_worth(@product.net_worth) %></dd>
+                </dl>
+            </div>
+            <div class="col-lg-6">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <dl class="dl-horizontal">
+                    <dt><%= t('activerecord.attributes.product.budget') %></dt>
+                    <dd class="text-right"><%= render_money(@product.budget) %></dd>
+                    <dt><%= t('activerecord.attributes.product.client') %></dt>
+                    <dd class="text-right"><%= @product.client.name %></dd>
+                </dl>
+            </div>
+            <div class="col-lg-3">
+                <dl class="dl-horizontal">
+                    <dt><%= t('activerecord.attributes.product.fixed_budget') %></dt>
+                    <dd class="text-right"><%= render_fixed_budget(@product.fixed_budget) %></dd>
+                    <dt><%= t('activerecord.attributes.product.broker') %></dt>
+                    <dd class="text-right"><%= @product.broker.name %></dd>
+                </dl>
+            </div>
+            <div class="col-lg-3">
+                <dl class="dl-horizontal">
+                    <dt><%= t('activerecord.attributes.product.balance') %></dt>
+                    <dd class="text-right"><%= render_balance(@product.balance) %></dd>
+                    <dt><%= t('activerecord.attributes.product.bank') %></dt>
+                    <dd class="text-right"><%= @product.bank.name %></dd>
+                </dl>
+            </div>
+        </div>
     </div>
 </div>
