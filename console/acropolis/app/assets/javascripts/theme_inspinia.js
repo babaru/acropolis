@@ -5,8 +5,6 @@
 
 //= require wice_grid
 
-// Plugins used by INSPINIA Theme
-
 //= require inspinia/plugins/metisMenu/jquery.metisMenu
 //= require inspinia/plugins/slimscroll/jquery.slimscroll.min
 //= require inspinia/plugins/flot/jquery.flot
@@ -24,6 +22,7 @@
 //= require inspinia/plugins/iCheck/icheck.min
 
 //= require inspinia/inspinia
+//= require auto_refresher
 
 //= require nprogress
 //= require nprogress-turbolinks

@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'monitoring#index'
+  root 'risk_monitor#index'
 
   resources :products do
     get 'delete'
@@ -127,4 +127,5 @@ Rails.application.routes.draw do
   get 'dashboard/switch_monitor_layout', to: 'dashboard#switch_monitor_layout', as: :dashboard_switch_monitor_layout
 
   get 'risk_monitoring', to: 'monitoring#index', as: :risk_monitoring
+  get 'risk_monitor', to: 'risk_monitor#index', as: :risk_monitor
 end

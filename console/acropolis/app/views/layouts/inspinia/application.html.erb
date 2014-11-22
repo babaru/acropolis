@@ -9,6 +9,10 @@
     <title>Acropolis</title>
 
     <%= stylesheet_link_tag 'theme_inspinia', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'theme_inspinia', 'data-turbolinks-track' => true %>
+
+    <%= yield :js %>
+
     <%= csrf_meta_tags %>
 </head>
 
@@ -39,10 +43,6 @@
     </div>
 
     <%= yield :anything_else %>
-
-    <%= javascript_include_tag 'theme_inspinia', 'data-turbolinks-track' => true %>
-
-    <%= yield :js %>
 
 </body>
 </html>

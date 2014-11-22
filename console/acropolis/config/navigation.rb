@@ -58,7 +58,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item(
         :page_risk_monitoring,
         fa_icon('desktop', text: t('navigation.page.risk_monitoring')),
-        risk_monitoring_path,
+        risk_monitor_path,
         {
           highlights_on: /risk_monitoring/
         }

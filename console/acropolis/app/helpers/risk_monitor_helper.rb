@@ -1,0 +1,2 @@
+module RiskMonitorHelper
+end

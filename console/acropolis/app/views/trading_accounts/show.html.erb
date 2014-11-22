@@ -16,6 +16,7 @@
 
 <div class="ibox">
   <div class="ibox-content" id="trading-account-show-page-content">
+    <span id="trading-account-id" style="display:none;"><%= @trading_account.id %></span>
       <div id="trading_account-detail">
         <%= render partial: 'trading_account_detail' %>
       </div>
@@ -80,24 +81,3 @@
   </div>
 </div>
 
-<% content_for :js do %>
-
-<%= javascript_include_tag 'auto_refresher', 'data-turbolinks-track' => true %>
-
-<script type="text/javascript">
-
-var autoRefresher = new AutoRefresher(3, '<%= trading_account_path(@trading_account.id) %>');
-
-(function ($) {
-
-  $(function () {
-
-    autoRefresher.toggle();
-
-  });
-
-} ( jQuery ) );
-
-</script>
-
-<% end %>

@@ -35,6 +35,6 @@ module Acropolis
     config.nav_lynx.selected_class = 'active'
 
     config.generators.stylesheets = false
-    config.generators.javascripts = false
+    # config.generators.javascripts = false
   end
 end

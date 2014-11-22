@@ -17,7 +17,7 @@ module ApplicationHelper
     options = default_options.merge(options)
 
     options[:class] = 'label label-primary' if options[:color] == :normal
-    options[:class] = 'label label-warning' if options[:color] == :warning
+    options[:class] = 'label label-warning' if value < 1
     options[:class] = 'label label-danger' if options[:color] == :danger
 
     value = 'n/a' if value.nil?

@@ -1,0 +1,24 @@
+<% content_for :page_title do %>
+
+<%= t('navigation.page.risk_monitoring') %>
+
+<% end %>
+
+<% content_for :anything_else do %>
+
+<!-- Modal -->
+
+<div class="modal fade" id="item-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div><!-- /.modal -->
+
+<% end %>
+
+<% content_for :page_header_right_panel do %>
+
+<div class="auto-refresh-switcher pull-right" style="position: relative; top: 25px;"><span style="display: inline-block; position: relative; top: 2px; padding-right: 5px;"><%= t('buttons.auto_refresh') %></span> <%= link_to(check_box_tag("checkbox-auto-refresh", nil, true, class: 'js-switch'), 'javascript:toggle_auto_refresh();') %></div>
+
+<% end %>
+
+<div id="monitoring-wrapper">
+  <%= render partial: 'monitoring_products_list' %>
+</div>
