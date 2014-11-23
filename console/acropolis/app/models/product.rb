@@ -33,6 +33,7 @@ class Product < ActiveRecord::Base
   end
 
   def net_worth
+    return 0 if budget.nil? || budget == 0 || customer_benefit.nil? || customer_benefit == 0
     customer_benefit / budget
   end
 end

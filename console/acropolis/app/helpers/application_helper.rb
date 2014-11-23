@@ -119,6 +119,10 @@ module ApplicationHelper
     render_money(value, color: 'danger')
   end
 
+  def render_budget(value)
+    render_money(value)
+  end
+
   def render_fixed_budget(value)
     render_money(value, color: 'default')
   end

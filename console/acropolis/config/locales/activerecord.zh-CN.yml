@@ -70,6 +70,9 @@ zh-CN:
         created_at: 创建于
         updated_at: 最后编辑于
         allocated_budget: 已分配资金
+        fixed_budget: 固定资金
+        balance: 余额
+        net_worth: 净值
       product_risk_plan:
         risk_plan_id: 风控方案
         is_enabled: 启用
@@ -89,6 +92,7 @@ zh-CN:
         password: 密码
         legal_id: 身份证件号
         product: 所属产品
+        client: 所属客户
       product_capital_account:
         capital_account: 资金帐号名称
         capital_account_id: 资金帐号名称

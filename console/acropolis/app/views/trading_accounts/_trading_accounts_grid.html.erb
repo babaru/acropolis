@@ -4,28 +4,31 @@
     trading_account.id
   end
 
-
   g.column name: t('activerecord.attributes.trading_account.name'), class: 'project-title' do |trading_account|
     [
-      link_to(trading_account.name, trading_account_path(trading_account)),
-      content_tag(:small, link_to(trading_account.product.name, product_path(trading_account.product)))
+      link_to(trading_account.account_no, trading_account_path(trading_account)),
+      content_tag(:small, trading_account.name)
     ].join('<br/>').html_safe
   end
 
-  g.column name: t('activerecord.attributes.trading_account.account_no') do |trading_account|
-    trading_account.account_no
+  g.column name: t('activerecord.attributes.trading_account.client') do |trading_account|
+    trading_account.product.client.name
+  end
+
+  g.column name: t('activerecord.attributes.trading_account.product') do |trading_account|
+    trading_account.product.name
   end
 
   g.column name: t('activerecord.attributes.trading_account.budget') do |trading_account|
-    render_money(trading_account.budget)
-  end
-
-  g.column name: t('activerecord.attributes.trading_summary.net_worth') do |trading_account|
-    render_net_worth(trading_account.trading_summary.net_worth) if trading_account.trading_summary
+    render_currency(trading_account.budget)
   end
 
   g.column name: t('activerecord.attributes.trading_summary.balance') do |trading_account|
-    render_currency(trading_account.trading_summary.balance) if trading_account.trading_summary
+    render_currency(trading_account.balance)
+  end
+
+  g.column name: t('activerecord.attributes.trading_summary.net_worth') do |trading_account|
+    render_net_worth(trading_account.net_worth)
   end
 
   g.column html: {class: 'project-actions'} do |trading_account|

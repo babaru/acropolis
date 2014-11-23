@@ -1,18 +1,18 @@
 
 <div class="row">
 
-  <% current_user.monitoring_products.each do |monitoring_product| %>
+  <% Product.all.each do |product| %>
   <div class="col-md-3">
 
     <div class="ibox">
       <div class="ibox-title">
-      <h5><%= monitoring_product.product.name %></h5>
+      <h5><%= product.name %></h5>
       </div>
 
       <div class="ibox-content">
 
         <table class="monitoring">
-          <% monitoring_product.product.trading_accounts.each do |trading_account| %>
+          <% product.trading_accounts.each do |trading_account| %>
           <tr>
             <td class="key"><%= trading_account.name %></td>
             <td class="value"><%= render_net_worth(trading_account.net_worth) %></td>

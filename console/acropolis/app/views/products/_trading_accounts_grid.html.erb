@@ -12,15 +12,15 @@
   end
 
   g.column name: t('activerecord.attributes.trading_account.budget') do |trading_account|
-    render_money(trading_account.budget)
+    render_currency(trading_account.budget)
+  end
+
+  g.column name: t('activerecord.attributes.trading_summary.balance') do |trading_account|
+    render_currency(trading_account.balance)
   end
 
   g.column name: t('activerecord.attributes.trading_summary.net_worth') do |trading_account|
     render_net_worth(trading_account.net_worth)
-  end
-
-  g.column name: t('activerecord.attributes.trading_summary.balance') do |trading_account|
-    render_balance(trading_account.balance)
   end
 
   g.column html: {class: 'project-actions'} do |trading_account|

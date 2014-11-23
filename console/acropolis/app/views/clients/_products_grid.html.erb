@@ -3,9 +3,9 @@
     product.id
   end
 
-  g.column name: t('activerecord.attributes.product.is_monitored') do |product|
-    link_to(check_box_tag("checkbox-#{product.id}", nil, product.is_monitored_by?(current_user), class: 'js-switch'), product_monitor_path(product), method: :post, remote: true)
-  end
+  # g.column name: t('activerecord.attributes.product.is_monitored') do |product|
+  #   link_to(check_box_tag("checkbox-#{product.id}", nil, product.is_monitored_by?(current_user), class: 'js-switch'), product_monitor_path(product), method: :post, remote: true)
+  # end
 
   g.column name: t('activerecord.attributes.product.name'), class: 'project-title' do |product|
     [
@@ -15,11 +15,11 @@
   end
 
   g.column name: t('activerecord.attributes.product.budget') do |product|
-    render_money(product.budget)
+    render_currency(product.budget)
   end
 
   g.column name: t('activerecord.attributes.product.balance') do |product|
-    render_money(product.balance)
+    render_currency(product.balance)
   end
 
   g.column name: t('activerecord.attributes.product.net_worth') do |product|
