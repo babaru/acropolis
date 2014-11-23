@@ -19,7 +19,7 @@ class TradingAccountsController < ApplicationController
     @trading_records_grid = initialize_grid(Trade.where(trading_account_id: @trading_account.id).order('traded_at DESC'))
     @trading_account_instruments_grid = initialize_grid(TradingAccountInstrument.where(trading_account_id: @trading_account.id))
 
-    @buy_positions = Trade.select(
+    @buy_positions = Trade.whose(@trading_account.id).select(
         :instrument_id,
         :trade_price,
         :order_side,
@@ -35,7 +35,7 @@ class TradingAccountsController < ApplicationController
         )
       ).order(:traded_at).reverse_order.group(:instrument_id, :trade_price)
 
-    @buy_position_summary = Trade.select(
+    @buy_position_summary = Trade.whose(@trading_account.id).select(
         :instrument_id,
         :trade_price,
         :order_side,
@@ -51,7 +51,7 @@ class TradingAccountsController < ApplicationController
         )
       ).order(:traded_at).reverse_order.group(:instrument_id)
 
-    @sell_positions = Trade.select(
+    @sell_positions = Trade.whose(@trading_account.id).select(
         :instrument_id,
         :trade_price,
         :order_side,
@@ -67,7 +67,7 @@ class TradingAccountsController < ApplicationController
         )
       ).order(:traded_at).reverse_order.group(:instrument_id, :trade_price)
 
-    @sell_position_summary = Trade.select(
+    @sell_position_summary = Trade.whose(@trading_account.id).select(
         :instrument_id,
         :trade_price,
         :order_side,
