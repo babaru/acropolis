@@ -36,6 +36,14 @@ class TradingAccount < ActiveRecord::Base
     end
   end
 
+  #
+  # Trading status of '0: normal', '1: forbid to open' and '2: force to close',
+  # according to risk plan controlling
+  #
+  def trading_status
+    return 0
+  end
+
   private
 
   def calculate_raw_summary

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :products, :risk_events, :product_risk_parameters, :instruments, :exchanges, :trades, :market_prices
+      resources :products, :risk_events, :product_risk_parameters, :instruments, :exchanges, :trades, :market_prices, :trading_accounts
     end
   end
 
