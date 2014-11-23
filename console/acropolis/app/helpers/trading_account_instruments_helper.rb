@@ -1,0 +1,2 @@
+module TradingAccountInstrumentsHelper
+end

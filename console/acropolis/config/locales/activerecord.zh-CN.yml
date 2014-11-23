@@ -1,7 +1,7 @@
 zh-CN:
   activerecord:
     models:
-      product: 产品
+      product: 资管产品
       risk_plan: 风控方案
       risk_plan_operation: 风控条件
       product_risk_plan: 产品风控方案
@@ -34,6 +34,7 @@ zh-CN:
       margin: 保证金
       fixed_rate_margin: 固定比率保证金
       market_price: 市场价格
+      trading_account_instrument: 可交易品种
     attributes:
       time_stamp:
         created_at: 创建于
@@ -113,6 +114,7 @@ zh-CN:
         multiplier: 合约乘数
         margin: 保证金
         market_price: 市场价格
+        exchange_name: 交易所
       trade:
         instrument: 交易产品
         exchange: 交易所

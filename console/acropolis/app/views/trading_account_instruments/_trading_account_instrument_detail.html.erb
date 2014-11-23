@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="m-b-md">
+            <%= link_to t('models.edit', model: TradingAccountInstrument.model_name.human), edit_trading_account_instrument_path(@trading_account_instrument), remote: true, class: 'btn btn-white btn-xs pull-right' %>
+            <h2><%= @trading_account_instrument.name %></h2>
+        </div>
+        <dl class="dl-horizontal">
+
+        </dl>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-5">
+        <dl class="dl-horizontal">
+            <dt></dt> <dd></dd>
+        </dl>
+    </div>
+    <div class="col-lg-7" id="cluster_info">
+        <dl class="dl-horizontal">
+
+            <dt><%= t('activerecord.attributes.time_stamp.updated_at') %></dt> <dd><%= @trading_account_instrument.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></dd>
+            <dt><%= t('activerecord.attributes.time_stamp.created_at') %></dt> <dd><%= @trading_account_instrument.created_at.strftime('%Y-%m-%d %H:%M:%S') %></dd>
+        </dl>
+    </div>
+</div>

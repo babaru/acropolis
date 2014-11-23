@@ -15,7 +15,9 @@ class TradingAccountsController < ApplicationController
   # GET /trading_accounts/1
   # GET /trading_accounts/1.json
   def show
+    cache_recent_item(:trading_account, @trading_account.id, @trading_account.name)
     @trading_records_grid = initialize_grid(Trade.where(trading_account_id: @trading_account.id).order('traded_at DESC'))
+    @trading_account_instruments_grid = initialize_grid(TradingAccountInstrument.where(trading_account_id: @trading_account.id))
 
     @buy_positions = Trade.select(
         :instrument_id,

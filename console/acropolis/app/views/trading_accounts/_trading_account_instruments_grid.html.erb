@@ -1,0 +1,16 @@
+<%= grid(@trading_account_instruments_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: t('activerecord.attributes.instrument.symbol_id') do |trading_account_instrument|
+    trading_account_instrument.instrument.symbol_id
+  end
+
+  g.column name: t('activerecord.attributes.instrument.exchange_name') do |trading_account_instrument|
+    trading_account_instrument.instrument.exchange.name
+  end
+
+  g.column html: {class: 'project-actions'} do |trading_account_instrument|
+    [
+      link_to(fa_icon("trash"), trading_account_instrument_delete_path(trading_account_instrument), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

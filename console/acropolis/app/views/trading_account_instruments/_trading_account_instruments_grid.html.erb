@@ -1,0 +1,34 @@
+<%= grid(@trading_account_instruments_grid, :show_filters => :when_filtered) do |g|
+  
+  g.column name: '#' do |trading_account_instrument|
+    trading_account_instrument.id
+  end
+  
+  
+  g.column name: t('activerecord.attributes.trading_account_instrument.trading_account_id') do |trading_account_instrument|
+    trading_account_instrument.trading_account_id
+  end
+
+  
+  g.column name: t('activerecord.attributes.trading_account_instrument.instrument_id') do |trading_account_instrument|
+    trading_account_instrument.instrument_id
+  end
+
+  
+  g.column name: t('activerecord.attributes.time_stamp.created_at') do |trading_account_instrument|
+    trading_account_instrument.created_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+  
+  g.column name: t('activerecord.attributes.time_stamp.updated_at') do |trading_account_instrument|
+    trading_account_instrument.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+
+  g.column html: {class: 'project-actions'} do |trading_account_instrument|
+    [
+      link_to(fa_icon("pencil"), edit_trading_account_instrument_path(trading_account_instrument), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), trading_account_instrument_delete_path(trading_account_instrument), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

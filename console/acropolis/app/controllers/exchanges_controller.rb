@@ -10,6 +10,8 @@ class ExchangesController < ApplicationController
   # GET /exchanges/1
   # GET /exchanges/1.json
   def show
+    cache_recent_item(:exchange, @exchange.id, @exchange.name)
+
     @instruments_grid = initialize_grid(Instrument.where(exchange_id: @exchange.id))
   end
 

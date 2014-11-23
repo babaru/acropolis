@@ -14,10 +14,11 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    cache_recent_item(:product, @product.id, @product.name)
+
     @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(product_id: @product.id))
     @product_capital_accounts_grid = initialize_grid(ProductCapitalAccount.where(product_id: @product.id))
     @trading_accounts_grid = initialize_grid(TradingAccount.where(product_id: @product.id))
-    cache_recent_item(:product, @product.id, @product.name)
 
     add_breadcrumb @product.name, nil
   end

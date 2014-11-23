@@ -33,6 +33,7 @@ zh-CN:
       risk_plan: 风控方案
       product: 产品
       risk_monitoring: 实时监测
+      trading_account: 交易帐号
       dashboard: 控制面板
       system_settings: 系统设置
       settings: 设置
@@ -40,7 +41,7 @@ zh-CN:
       client: 客户
       broker: 期货公司
       bank: 银行
-      trading: 交易
+      exchange: 交易所
     tab:
       sign_up: 注册新用户
       sign_in: 登录
@@ -52,3 +53,4 @@ zh-CN:
       trades: 成交记录
       position_summary: 持仓汇总
       position_detail: 持仓明细
+      tradable_instruments: 可交易品种

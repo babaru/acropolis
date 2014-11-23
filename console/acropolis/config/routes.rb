@@ -32,6 +32,12 @@ Rails.application.routes.draw do
   resources :trading_accounts do
     get 'delete'
     post 'calculate_trading_summary'
+
+    resources :trading_account_instruments
+  end
+
+  resources :trading_account_instruments do
+    get 'delete'
   end
 
   resources :product_capital_accounts do

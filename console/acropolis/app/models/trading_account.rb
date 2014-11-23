@@ -3,6 +3,8 @@ class TradingAccount < ActiveRecord::Base
   has_many :trades
   has_one :trading_account_trading_summary
   has_one :trading_summary, through: :trading_account_trading_summary
+  has_many :trading_account_instruments, dependent: :destroy
+  has_many :instruments, through: :trading_account_instruments
 
   def calculate_trading_summary
     TradingAccount.transaction do

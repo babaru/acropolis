@@ -42,7 +42,7 @@ module ApplicationHelper
 
     options = default_options.merge(options)
 
-    options[:class] = options[:negative_style] if value < 0
+    options[:class] = options[:negative_style] if value && value < 0
     options[:class] = options[:null_style] if value.nil?
 
     value = 'n/a' if value.nil?
