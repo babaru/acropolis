@@ -1,24 +1,48 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Acropolis</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Acropolis</title>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+    <%= yield :js %>
+
+    <%= csrf_meta_tags %>
 </head>
+
 <body>
+    <div id="wrapper">
+        <%= render partial: 'shared/inspinia/navigation' %>
 
-<section class="wrapper">
+        <div id="page-wrapper" class="gray-bg">
 
-<%= render partial: 'shared/header' %>
+            <%= render partial: 'shared/inspinia/header' %>
 
-<%= render partial: 'shared/content' %>
+            <%= render partial: 'shared/inspinia/page_header' %>
 
-<%= render partial: 'shared/footer' %>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="wrapper wrapper-content">
 
-</section>
+                        <%= yield %>
 
-<%= yield :anything_else %>
+                    </div>
+
+                </div>
+            </div>
+
+            <%= render partial: 'shared/inspinia/footer' %>
+
+        </div>
+    </div>
+
+    <%= yield :anything_else %>
 
 </body>
 </html>

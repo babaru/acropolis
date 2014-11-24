@@ -27,8 +27,8 @@ module Acropolis
     config.i18n.default_locale = 'zh-CN'
 
     config.to_prepare do
-      Devise::SessionsController.layout "inspinia/devise"
-      ApplicationController.layout 'inspinia/application'
+      Devise::SessionsController.layout "devise"
+      ApplicationController.layout 'application'
     end
 
     # For nav_lynx

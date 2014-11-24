@@ -1,38 +1,50 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// compiled file.
-//
-// Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
-// about supported directives.
-//
 //= require jquery
 //= require jquery.turbolinks
+//= require twitter/bootstrap
 //= require jquery_ujs
 
-//= require jquery-ui/button
-//= require jquery-ui/datepicker
-//= require jquery-ui/slider
-//= require jquery-ui/spinner
-//= require jquery-ui/tooltip
-//= require jquery-ui/effect
 //= require wice_grid
 
-//= require twitter/bootstrap
-//= require flatuipro
-//= require main
+//= require inspinia/plugins/metisMenu/jquery.metisMenu
+//= require inspinia/plugins/slimscroll/jquery.slimscroll.min
+//= require inspinia/plugins/flot/jquery.flot
+//= require inspinia/plugins/flot/jquery.flot.tooltip.min
+//= require inspinia/plugins/flot/jquery.flot.spline
+//= require inspinia/plugins/flot/jquery.flot.resize
+//= require inspinia/plugins/flot/jquery.flot.pie
+//= require inspinia/plugins/peity/jquery.peity.min
 
-//= require retina.min
-//= require bootstrap-notify
+//= require inspinia/plugins/switchery/switchery
+//= require inspinia/plugins/gritter/jquery.gritter.min
+//= require inspinia/plugins/easypiechart/jquery.easypiechart
+//= require inspinia/plugins/sparkline/jquery.sparkline.min
+//= require inspinia/plugins/chartJs/Chart.min
+//= require inspinia/plugins/iCheck/icheck.min
+
+//= require inspinia/inspinia
+//= require auto_refresher
 
 //= require nprogress
 //= require nprogress-turbolinks
 
-//= require spin
-//= require jquery.spin
-
 //= require turbolinks
+
+$(document).ready(function() {
+
+  // Switcher
+  var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+  elems.forEach(function(html) {
+    var element = $(html);
+    if (element.data('switchery') != true) {
+      var switchery = new Switchery(html);
+    }
+  });
+
+  // Checkbox style
+  $('.i-checks').iCheck({
+      checkboxClass: 'icheckbox_square-green',
+      radioClass: 'iradio_square-green',
+  });
+
+
+});
