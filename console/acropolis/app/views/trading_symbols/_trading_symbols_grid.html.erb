@@ -1,0 +1,52 @@
+<%= grid(@trading_symbols_grid, :show_filters => :when_filtered) do |g|
+  
+  g.column name: '#' do |trading_symbol|
+    trading_symbol.id
+  end
+  
+  
+  g.column name: t('activerecord.attributes.trading_symbol.name'), class: 'project-title' do |trading_symbol|
+    [
+      link_to(trading_symbol.name, trading_symbol_path(trading_symbol)),
+      content_tag(:small, "#{t('labels.last_modified_at')} #{trading_symbol.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
+    ].join('<br/>').html_safe
+  end
+  
+  
+  g.column name: t('activerecord.attributes.trading_symbol.exchange_id') do |trading_symbol|
+    trading_symbol.exchange_id
+  end
+
+  
+  g.column name: t('activerecord.attributes.time_stamp.created_at') do |trading_symbol|
+    trading_symbol.created_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+  
+  g.column name: t('activerecord.attributes.time_stamp.updated_at') do |trading_symbol|
+    trading_symbol.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+  
+  g.column name: t('activerecord.attributes.trading_symbol.currency_id') do |trading_symbol|
+    trading_symbol.currency_id
+  end
+
+  
+  g.column name: t('activerecord.attributes.trading_symbol.multiplier') do |trading_symbol|
+    trading_symbol.multiplier
+  end
+
+  
+  g.column name: t('activerecord.attributes.trading_symbol.trading_symbol_type') do |trading_symbol|
+    trading_symbol.trading_symbol_type
+  end
+
+
+  g.column html: {class: 'project-actions'} do |trading_symbol|
+    [
+      link_to(fa_icon("pencil"), edit_trading_symbol_path(trading_symbol), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), trading_symbol_delete_path(trading_symbol), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

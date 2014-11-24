@@ -24,6 +24,16 @@ zh-CN:
   trade_open_flags:
     open: 开
     close: 平
+  instrument_types:
+    index: 指数
+    stock: 股票
+    futures: 期货
+    call_options: 认购期权
+    put_options: 认沽期权
+  trading_symbol_types:
+    euqities: 现货
+    futures: 期货
+    options: 期权
   placeholders:
     email_or_user_name: 邮箱 / 帐号
     password: 密码

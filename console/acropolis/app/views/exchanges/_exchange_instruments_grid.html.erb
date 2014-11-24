@@ -4,36 +4,21 @@
     instrument.id
   end
 
-
-  g.column name: t('activerecord.attributes.instrument.name'), class: 'project-title' do |instrument|
-    [
-      link_to(instrument.name, '#'),
-      content_tag(:small, "#{t('labels.last_modified_at')} #{instrument.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
-    ].join('<br/>').html_safe
+  g.column name: t('activerecord.attributes.instrument.security_code') do |instrument|
+    instrument.security_code
   end
-
 
   g.column name: t('activerecord.attributes.instrument.symbol_id') do |instrument|
-    instrument.symbol_id
+    instrument.trading_symbol.name if instrument.trading_symbol
   end
 
-  g.column name: t('activerecord.attributes.instrument.currency_unit') do |instrument|
-    instrument.currency_unit
+  g.column name: t('activerecord.attributes.instrument.currency') do |instrument|
+    instrument.currency.name if instrument.currency
   end
-
 
   g.column name: t('activerecord.attributes.instrument.type') do |instrument|
     t("activerecord.models.#{instrument.type.underscore.downcase}")
   end
-
-  g.column name: t('activerecord.attributes.instrument.underlying_id'), class: 'futures-instrument' do |instrument|
-    instrument.underlying.name if instrument.underlying
-  end
-
-  g.column name: t('activerecord.attributes.instrument.underlying_symbol_id'), class: 'futures-instrument' do |instrument|
-    instrument.underlying.symbol_id if instrument.underlying
-  end
-
 
   g.column name: t('activerecord.attributes.instrument.expiration_date'), class: 'futures-instrument' do |instrument|
     instrument.expiration_date.strftime("%Y-%m-%d") if instrument.expiration_date
@@ -48,17 +33,13 @@
   end
 
   g.column name: t('activerecord.attributes.instrument.trading_fee'), class: 'project-title' do |instrument|
-    [
-      link_to(instrument.trading_fee.factor, '#'),
-      content_tag(:small, t("activerecord.models.#{instrument.trading_fee.type.underscore.downcase}"))
-    ].join('<br/>').html_safe unless instrument.trading_fee.nil?
+    instrument.trading_fee.factor unless instrument.trading_fee.nil?
   end
 
   g.column name: t('activerecord.attributes.instrument.margin'), class: 'project-title' do |instrument|
     [
-      link_to(number_to_percentage(instrument.margin.factor * 100, precision: 0), '#'),
-      content_tag(:small, t("activerecord.models.#{instrument.margin.type.underscore.downcase}"))
-    ].join('<br/>').html_safe unless instrument.margin.nil?
+      number_to_percentage(instrument.margin_percentage, precision: 0)
+    ].join('<br/>').html_safe if instrument.margin && instrument.margin.type
   end
 
   g.column html: {class: 'project-actions'} do |instrument|

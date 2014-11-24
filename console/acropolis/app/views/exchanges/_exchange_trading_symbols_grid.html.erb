@@ -1,0 +1,39 @@
+<%= grid(@trading_symbols_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: '#' do |trading_symbol|
+    trading_symbol.id
+  end
+
+  g.column name: t('activerecord.attributes.trading_symbol.name') do |trading_symbol|
+    trading_symbol.name
+  end
+
+  g.column name: t('activerecord.attributes.trading_symbol.currency') do |trading_symbol|
+    trading_symbol.currency.code if trading_symbol.currency
+  end
+
+  g.column name: t('activerecord.attributes.trading_symbol.type') do |trading_symbol|
+    TradingSymbol.trading_symbol_type_names[trading_symbol.trading_symbol_type]
+  end
+
+  g.column name: t('activerecord.attributes.trading_symbol.multiplier'), class: 'futures-trading_symbol' do |trading_symbol|
+    trading_symbol.multiplier
+  end
+
+  g.column name: t('activerecord.attributes.trading_symbol.trading_fee'), class: 'project-title' do |trading_symbol|
+    trading_symbol.trading_fee.factor unless trading_symbol.trading_fee.nil?
+  end
+
+  g.column name: t('activerecord.attributes.trading_symbol.margin'), class: 'project-title' do |trading_symbol|
+    [
+      number_to_percentage(trading_symbol.margin.factor * 100, precision: 0)
+    ].join('<br/>').html_safe if trading_symbol.margin && trading_symbol.margin.type
+  end
+
+  g.column html: {class: 'project-actions'} do |trading_symbol|
+    [
+      link_to(fa_icon("pencil"), edit_trading_symbol_path(trading_symbol), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), trading_symbol_delete_path(trading_symbol), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

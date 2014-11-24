@@ -10,7 +10,7 @@ module Api
         end
 
         if market_price_params[:instrument_id].nil?
-          @instrument = Instrument.where(exchange_id: @exchange.id, symbol_id: market_price_params[:symbol_id]).first
+          @instrument = Instrument.where(exchange_id: @exchange.id, security_code: market_price_params[:security_code]).first
         else
           @instrument = Instrument.find(market_price_params[:instrument_id])
         end
@@ -37,7 +37,7 @@ module Api
       def market_price_params
         params.require(:market_price).permit(
           :instrument_id,
-          :symbol_id,
+          :security_code,
           :exchange_id,
           :exchange_name,
           :price

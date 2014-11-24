@@ -1,0 +1,16 @@
+defaults: &defaults
+  instrument_types:
+    index: 1
+    stock: 2
+    futures: 3
+    call_options: 4
+    put_options: 5
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

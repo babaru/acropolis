@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141123140516) do
+ActiveRecord::Schema.define(version: 20141124083648) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(version: 20141123140516) do
     t.datetime "updated_at"
   end
 
+  create_table "currencies", force: true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.string   "symbol"
+    t.decimal  "exchange_rate", precision: 20, scale: 4
+    t.boolean  "is_major",                               default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "exchanges", force: true do |t|
     t.string   "name"
     t.string   "type"
@@ -55,30 +65,28 @@ ActiveRecord::Schema.define(version: 20141123140516) do
 
   create_table "instruments", force: true do |t|
     t.string   "name"
-    t.string   "symbol_id"
-    t.string   "type"
-    t.integer  "underlying_id"
     t.datetime "expiration_date"
-    t.decimal  "strike_price",    precision: 20, scale: 4
+    t.decimal  "strike_price",      precision: 20, scale: 4
     t.integer  "exchange_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "currency_unit"
-    t.decimal  "multiplier",      precision: 20, scale: 4
+    t.integer  "trading_symbol_id"
+    t.string   "security_code"
+    t.integer  "instrument_type"
   end
 
   add_index "instruments", ["exchange_id"], name: "index_instruments_on_exchange_id", using: :btree
-  add_index "instruments", ["underlying_id"], name: "index_instruments_on_underlying_id", using: :btree
+  add_index "instruments", ["trading_symbol_id"], name: "index_instruments_on_trading_symbol_id", using: :btree
 
   create_table "margins", force: true do |t|
     t.string   "type"
-    t.decimal  "factor",        precision: 20, scale: 4
-    t.integer  "instrument_id"
+    t.decimal  "factor",            precision: 20, scale: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "trading_symbol_id"
   end
 
-  add_index "margins", ["instrument_id"], name: "index_margins_on_instrument_id", using: :btree
+  add_index "margins", ["trading_symbol_id"], name: "index_margins_on_trading_symbol_id", using: :btree
 
   create_table "market_prices", force: true do |t|
     t.integer  "instrument_id"
@@ -275,13 +283,13 @@ ActiveRecord::Schema.define(version: 20141123140516) do
 
   create_table "trading_fees", force: true do |t|
     t.string   "type"
-    t.decimal  "factor",        precision: 20, scale: 4
-    t.integer  "instrument_id"
+    t.decimal  "factor",            precision: 20, scale: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "trading_symbol_id"
   end
 
-  add_index "trading_fees", ["instrument_id"], name: "index_trading_fees_on_instrument_id", using: :btree
+  add_index "trading_fees", ["trading_symbol_id"], name: "index_trading_fees_on_trading_symbol_id", using: :btree
 
   create_table "trading_summaries", force: true do |t|
     t.string   "type"
@@ -295,6 +303,19 @@ ActiveRecord::Schema.define(version: 20141123140516) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "trading_symbols", force: true do |t|
+    t.string   "name"
+    t.integer  "exchange_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "currency_id"
+    t.decimal  "multiplier",          precision: 20, scale: 4
+    t.integer  "trading_symbol_type"
+  end
+
+  add_index "trading_symbols", ["currency_id"], name: "index_trading_symbols_on_currency_id", using: :btree
+  add_index "trading_symbols", ["exchange_id"], name: "index_trading_symbols_on_exchange_id", using: :btree
 
   create_table "translations", force: true do |t|
     t.string   "locale"

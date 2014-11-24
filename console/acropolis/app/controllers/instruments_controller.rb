@@ -100,12 +100,13 @@ class InstrumentsController < ApplicationController
       params.require(:instrument).permit(
         :name,
         :symbol_id,
+        :trading_symbol_id,
         :type,
-        :underlying_id,
         :expiration_date,
         :strike_price,
         :exchange_id,
-        :currency_unit,
+        :exchange_name,
+        :currency_id,
         :multiplier,
         trading_fee_attributes: [
           :id,

@@ -1,0 +1,14 @@
+defaults: &defaults
+  trading_symbol_types:
+    equities: 1
+    futures: 2
+    options: 3
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

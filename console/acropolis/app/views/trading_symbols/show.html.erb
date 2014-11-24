@@ -1,6 +1,6 @@
 <% content_for :page_title do %>
 
-<%= t('models.show', model: Exchange.model_name.human) %>
+<%= t('models.show', model: TradingSymbol.model_name.human) %>
 
 <% end %>
 
@@ -15,8 +15,8 @@
 
 <div class="ibox">
   <div class="ibox-content">
-      <div id="exchange-detail">
-        <%= render partial: 'exchange_detail' %>
+      <div id="trading_symbol-detail">
+        <%= render partial: 'trading_symbol_detail' %>
       </div>
       <div class="row m-t-sm">
         <div class="col-lg-12">
@@ -24,7 +24,8 @@
             <div class="panel-heading">
                 <div class="panel-options">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('navigation.tab.instruments') %></a></li>
+                        <li class="active"><a href="#tab-1" data-toggle="tab">Children</a></li>
+                        <li class=""><a href="#tab-2" data-toggle="tab">Last activity</a></li>
                     </ul>
                 </div>
             </div>
@@ -34,22 +35,13 @@
               <div class="tab-content">
                 <div class="tab-pane active" id="tab-1">
 
-                  <div class="btn-toolbar">
 
-
-                    <div class="btn-group pull-right">
-
-                    </div>
-                  </div>
-
-                  <div id="instrument-list" class="tooltip-demo <%= @exchange.type.underscore.downcase %>">
-
-                    <%= render partial: 'exchange_trading_symbols_grid' %>
-
-                  </div>
 
                 </div>
+                <div class="tab-pane" id="tab-2">
 
+
+                </div>
               </div>
 
             </div>

@@ -18,7 +18,7 @@ module Api
         end
 
         if trade_params[:instrument_id].nil?
-          @instrument = Instrument.where(exchange_id: @exchange.id, symbol_id: trade_params[:symbol_id]).first
+          @instrument = Instrument.where(exchange_id: @exchange.id, security_code: trade_params[:security_code]).first
         else
           @instrument = Instrument.find(trade_params[:instrument_id])
         end
@@ -47,7 +47,7 @@ module Api
       def trade_params
         params.require(:trade).permit(
           :instrument_id,
-          :symbol_id,
+          :security_code,
           :exchange_id,
           :exchange_name,
           :trade_price,

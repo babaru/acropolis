@@ -44,12 +44,12 @@ Rails.application.routes.draw do
     get 'delete'
   end
 
-  resources :banks, :brokers, :exchanges, :instruments do
+  resources :banks, :brokers, :exchanges, :instruments, :trading_symbols do
     get 'delete'
   end
 
   resources :exchanges do
-    resources :instruments
+    resources :instruments, :trading_symbols
   end
 
   resources :clients do

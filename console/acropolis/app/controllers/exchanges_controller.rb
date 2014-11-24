@@ -12,7 +12,7 @@ class ExchangesController < ApplicationController
   def show
     cache_recent_item(:exchange, @exchange.id, @exchange.name)
 
-    @instruments_grid = initialize_grid(Instrument.where(exchange_id: @exchange.id))
+    @trading_symbols_grid = initialize_grid(TradingSymbol.where(exchange_id: @exchange.id))
   end
 
   # GET /exchanges/new

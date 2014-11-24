@@ -5,6 +5,12 @@
 system_admin = User.create(name: 'sys_admin', email: 'sys_admin@acropolis.com', password: '12345678', password_confirmation: '12345678', full_name: 'System Administrator')
 me = User.create(name: 'stanley.deng', email: 'stanley.deng@acropolis.com', password: '12345678', password_confirmation: '12345678', full_name: 'Stanley Deng')
 
+# Currency
+# -----------------------------
+
+rmb = Currency.create(name: '人民币', code:'CNY', symbol: '￥', exchange_rate:1, is_major:true)
+usd = Currency.create(name: '美元', code:'USD', symbol: '$', exchange_rate:6.12, is_major:false)
+
 # Exchanges
 # -----------------------------
 

@@ -1,5 +1,5 @@
 class Trade < ActiveRecord::Base
-  attr_accessor :symbol_id, :exchange_name, :trading_account_no
+  attr_accessor :security_code, :exchange_name, :trading_account_no
 
   belongs_to :instrument
   belongs_to :trading_account
@@ -56,25 +56,25 @@ class Trade < ActiveRecord::Base
   # Margin of this trade
   def margin
     return 0 if self.is_close?
-    self.instrument.margin.calculate(self)
+    self.instrument.trading_symbol.margin.calculate(self)
   end
 
   # Trading fee of this trade
   def trading_fee
-    self.instrument.trading_fee.calculate(self)
+    self.instrument.trading_symbol.trading_fee.calculate(self)
   end
 
   # Position cost of this trade
   def position_cost
     return 0 if self.is_close?
-    self.trade_price * self.open_volume * self.instrument.multiplier
+    self.trade_price * self.open_volume * self.instrument.trading_symbol.multiplier
   end
 
   # Market value of this trade
   def market_value
     mp = self.instrument.latest_price
     mp ||= self.trade_price
-    mp * self.open_volume * self.instrument.multiplier
+    mp * self.open_volume * self.instrument.trading_symbol.multiplier
   end
 
   # Profit of this trade
