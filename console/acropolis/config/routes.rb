@@ -52,6 +52,10 @@ Rails.application.routes.draw do
     resources :instruments, :trading_symbols
   end
 
+  resources :trading_symbols do
+    resources :instruments
+  end
+
   resources :clients do
     get 'delete'
 

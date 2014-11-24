@@ -29,6 +29,10 @@ class Instrument < ActiveRecord::Base
       Acropolis::InstrumentTypes.instrument_types.map{ |k,v| [I18n.t("instrument_types.#{k}"),v] }
     end
 
+    def instrument_type_names
+      Hash[Acropolis::InstrumentTypes.instrument_types.map{ |k,v| [v, I18n.t("instrument_types.#{k}")] }]
+    end
+
   end
 
 end

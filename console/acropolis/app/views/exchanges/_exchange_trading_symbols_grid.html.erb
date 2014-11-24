@@ -4,8 +4,8 @@
     trading_symbol.id
   end
 
-  g.column name: t('activerecord.attributes.trading_symbol.name') do |trading_symbol|
-    trading_symbol.name
+  g.column name: t('activerecord.attributes.trading_symbol.name'), class: 'project-title' do |trading_symbol|
+    link_to trading_symbol.name, trading_symbol_instruments_path(trading_symbol_id: trading_symbol.id), remote: true
   end
 
   g.column name: t('activerecord.attributes.trading_symbol.currency') do |trading_symbol|

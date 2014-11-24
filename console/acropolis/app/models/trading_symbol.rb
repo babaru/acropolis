@@ -3,6 +3,7 @@ class TradingSymbol < ActiveRecord::Base
   belongs_to :currency
   has_one :trading_fee
   has_one :margin
+  has_many :instruments
 
   accepts_nested_attributes_for :trading_fee
   accepts_nested_attributes_for :margin

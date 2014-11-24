@@ -1,10 +1,11 @@
 class InstrumentsController < ApplicationController
   before_action :set_instrument, only: [:show, :edit, :update, :destroy]
+  before_action :set_trading_symbol, only: [:index, :new]
 
   # GET /instruments
   # GET /instruments.json
   def index
-    @instruments_grid = initialize_grid(Instrument.all)
+    set_instruments_grid
   end
 
   # GET /instruments/1
@@ -122,7 +123,11 @@ class InstrumentsController < ApplicationController
     end
 
     def set_instruments_grid
-      @instruments_grid = initialize_grid(Instrument.where(exchange_id: @exchange.id))
+      @instruments_grid = initialize_grid(Instrument.where(trading_symbol_id: @trading_symbol.id))
+    end
+
+    def set_trading_symbol
+      @trading_symbol = TradingSymbol.find(params[:trading_symbol_id])
     end
 end
 
