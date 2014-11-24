@@ -9,10 +9,10 @@
   end
 
   g.column name: t('activerecord.attributes.trading_symbol.currency') do |trading_symbol|
-    trading_symbol.currency.code if trading_symbol.currency
+    "#{trading_symbol.currency.code} (#{trading_symbol.currency.symbol})" if trading_symbol.currency
   end
 
-  g.column name: t('activerecord.attributes.trading_symbol.type') do |trading_symbol|
+  g.column name: t('activerecord.attributes.trading_symbol.trading_symbol_type') do |trading_symbol|
     TradingSymbol.trading_symbol_type_names[trading_symbol.trading_symbol_type]
   end
 

@@ -67,26 +67,28 @@ class Trade < ActiveRecord::Base
   # Position cost of this trade
   def position_cost
     return 0 if self.is_close?
-    self.trade_price * self.open_volume * self.instrument.trading_symbol.multiplier
+    self.trade_price * self.open_volume * self.instrument.trading_symbol.multiplier * self.instrument.trading_symbol.currency.exchange_rate
   end
 
   # Market value of this trade
   def market_value
     mp = self.instrument.latest_price
     mp ||= self.trade_price
-    mp * self.open_volume * self.instrument.trading_symbol.multiplier
+    mp * self.open_volume * self.instrument.trading_symbol.multiplier * self.instrument.trading_symbol.currency.exchange_rate
   end
 
   # Profit of this trade
   def profit
-    return (self.is_buy? ? 1 : -1) * (market_value - position_cost) if self.is_open? # TODO: change to real market price
-
     profit = 0
-    self.open_trade_records.each do |open_trade_record|
-      price_difference = self.trade_price - open_trade_record.open_trade.trade_price
-      profit += (self.is_sell? ? 1 : -1) * price_difference * open_trade_record.close_volume * self.instrument.multiplier
+    if self.is_open?
+      return (self.is_buy? ? 1 : -1) * (market_value - position_cost)
+    else
+      self.open_trade_records.each do |open_trade_record|
+        price_difference = self.trade_price - open_trade_record.open_trade.trade_price
+        profit += (self.is_sell? ? 1 : -1) * price_difference * open_trade_record.close_volume * self.instrument.multiplier
+      end
     end
-    profit
+    profit * self.instrument.trading_symbol.currency.exchange_rate
   end
 
   # Exposure of this trade

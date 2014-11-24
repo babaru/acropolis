@@ -17,7 +17,7 @@
   end
 
   g.column name: t('activerecord.attributes.trade.trade_price'), class: 'text-right' do |trade|
-    render_trade_price(trade.trade_price)
+    render_trade_price(trade.trade_price, {unit: trade.instrument.trading_symbol.currency.symbol})
   end
 
   g.column name: t('activerecord.attributes.trade.order_side') do |trade|

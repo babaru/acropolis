@@ -1,7 +1,7 @@
 class FixedTradingFee < TradingFee
 
   def calculate(trade)
-    return self.factor * trade.trade_volume
+    self.factor * trade.trade_volume * self.currency.exchange_rate
   end
 
 end

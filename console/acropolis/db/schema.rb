@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124083648) do
+ActiveRecord::Schema.define(version: 20141124101426) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -287,6 +287,7 @@ ActiveRecord::Schema.define(version: 20141124083648) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "trading_symbol_id"
+    t.integer  "currency_id"
   end
 
   add_index "trading_fees", ["trading_symbol_id"], name: "index_trading_fees_on_trading_symbol_id", using: :btree

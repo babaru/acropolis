@@ -71,7 +71,7 @@ class TradingAccount < ActiveRecord::Base
 
     {
       customer_benefit: self.budget + profit - trading_fee,
-      balance: self.budget - trading_fee - margin,
+      balance: self.budget + profit - trading_fee - margin,
       leverage: position_cost / self.budget,
       margin: margin,
       exposure: exposure.abs,
