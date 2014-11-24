@@ -16,7 +16,7 @@
         <td><%= render_trade_price(trade.trade_price) %></td>
         <td><%= render_order_side(trade.order_side) %></td>
         <td><%= render_market_price(trade.instrument.latest_price) %></td>
-        <td class="text-right"><%= trade.instrument.symbol_id %></td>
+        <td class="text-right"><%= trade.instrument.security_code %></td>
         <td class="text-right"><%= trade.instrument.exchange.name %></td>
     </tr>
     <% end %>

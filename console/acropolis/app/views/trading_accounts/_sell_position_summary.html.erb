@@ -13,7 +13,7 @@
     <tr>
         <td><%= trade.open_volume %></td>
         <td><%= render_order_side(trade.order_side) %></td>
-        <td class="text-right"><%= trade.instrument.symbol_id %></td>
+        <td class="text-right"><%= trade.instrument.security_code %></td>
         <td class="text-right"><%= trade.instrument.exchange.name %></td>
     </tr>
     <% end %>
