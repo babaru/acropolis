@@ -1,6 +1,9 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require twitter/bootstrap
+//= require moment
+//= require bootstrap-datetimepicker.min
+
 //= require jquery_ujs
 
 //= require wice_grid
@@ -45,6 +48,5 @@ $(document).ready(function() {
       checkboxClass: 'icheckbox_square-green',
       radioClass: 'iradio_square-green',
   });
-
 
 });
