@@ -1,7 +1,7 @@
 class TradingAccount < ActiveRecord::Base
   belongs_to :product
-  has_many :trades
-  has_one :trading_account_trading_summary
+  has_many :trades, dependent: :destroy
+  has_one :trading_account_trading_summary, dependent: :destroy
   has_one :trading_summary, through: :trading_account_trading_summary
   has_many :trading_account_instruments, dependent: :destroy
   has_many :instruments, through: :trading_account_instruments
@@ -41,7 +41,7 @@ class TradingAccount < ActiveRecord::Base
   # according to risk plan controlling
   #
   def trading_status
-    return 0
+    return 1
   end
 
   private

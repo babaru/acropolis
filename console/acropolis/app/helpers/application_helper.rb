@@ -9,16 +9,12 @@ module ApplicationHelper
 
   def render_net_worth(value, options = {})
     default_options = {
-      font_size:  16,
+      font_size:  14,
       precision:  2,
-      color:      :normal
+      bold: 'normal'
     }
 
     options = default_options.merge(options)
-
-    options[:class] = 'label label-primary' if options[:color] == :normal
-    options[:class] = 'label label-warning' if value < 1
-    options[:class] = 'label label-danger' if options[:color] == :danger
 
     value = 'n/a' if value.nil?
 
@@ -26,7 +22,7 @@ module ApplicationHelper
       number_with_precision(
         value,
         precision:     options[:precision]
-      ), class: options[:class], style: "font-size: #{options[:font_size]}px;")
+      ), class: options[:class], style: "font-size: #{options[:font_size]}px; font-weight: #{options[:bold]}")
   end
 
   def render_currency(value, options = {})

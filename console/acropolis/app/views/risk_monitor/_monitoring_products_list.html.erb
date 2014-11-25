@@ -2,24 +2,27 @@
 <div class="row">
 
   <% Product.all.each do |product| %>
-  <div class="col-md-3">
+  <div class="col-md-4">
 
     <div class="ibox">
-      <div class="ibox-title">
-      <h5><%= product.name %></h5>
+      <div class="ibox-title" style="height: 70px;">
+        <div class="row">
+          <div class="col-xs-8">
+            <h3><%= product.name %></h3>
+            <small>各交易账户净值列表</small>
+          </div>
+          <div class="col-xs-4"><%= render_net_worth(product.net_worth, class: 'pull-right', font_size: 24) %></div>
+        </div>
       </div>
-
-      <div class="ibox-content">
-
-        <table class="monitoring">
+      <div class="ibox-content" style="height: 150px; overflow-y:auto;">
+        <ul class="todo-list m-t small-list ui-sortable" style="margin-top:0px;">
           <% product.trading_accounts.each do |trading_account| %>
-          <tr>
-            <td class="key"><%= trading_account.name %></td>
-            <td class="value"><%= render_net_worth(trading_account.net_worth) %></td>
-          </tr>
+          <li>
+              <span class="m-l-xs"><%= trading_account.name %></span>
+              <%= render_net_worth(trading_account.net_worth, class: "pull-right #{product.net_worth_style}") %>
+          </li>
           <% end %>
-        </table>
-
+        </ul>
       </div>
     </div>
 

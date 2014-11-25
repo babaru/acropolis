@@ -5,8 +5,8 @@ class Product < ActiveRecord::Base
   has_many :product_risk_plans, dependent: :destroy
   has_many :risk_plans, through: :product_risk_plans
   has_many :product_risk_parameters
-  has_many :monitoring_products
-  has_many :trading_accounts
+  has_many :monitoring_products, dependent: :destroy
+  has_many :trading_accounts, dependent: :destroy
 
   def long_name
     "#{bank.name}-#{broker.name}-#{client.name}-#{name}"
@@ -35,5 +35,9 @@ class Product < ActiveRecord::Base
   def net_worth
     return 0 if budget.nil? || budget == 0 || customer_benefit.nil? || customer_benefit == 0
     customer_benefit / budget
+  end
+
+  def net_worth_style
+    "label label-warning"
   end
 end

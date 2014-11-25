@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
 
-  get 'inspinia/index'
-
   get 'flatuipro_demo/index'
 
   namespace :api do
     namespace :v1 do
+      post 'trading_accounts/auth', to: 'trading_accounts#auth', as: :trading_account_auth
+
       resources :products, :risk_events, :product_risk_parameters, :instruments, :exchanges, :trades, :market_prices, :trading_accounts
     end
   end
