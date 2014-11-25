@@ -75,6 +75,7 @@ class ClientsController < ApplicationController
   # DELETE /clients/1
   # DELETE /clients/1.json
   def destroy
+    remove_recent_item(:client, @client.id)
     @client.destroy!
 
     respond_to do |format|

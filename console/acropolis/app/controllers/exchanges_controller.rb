@@ -70,6 +70,7 @@ class ExchangesController < ApplicationController
   # DELETE /exchanges/1
   # DELETE /exchanges/1.json
   def destroy
+    remove_recent_item(:exchange, @exchange.id)
     @exchange.destroy!
 
     respond_to do |format|

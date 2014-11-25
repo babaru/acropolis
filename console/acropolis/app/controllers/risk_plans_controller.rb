@@ -78,6 +78,7 @@ class RiskPlansController < ApplicationController
   # DELETE /risk_plans/1
   # DELETE /risk_plans/1.json
   def destroy
+    remove_recent_item(:risk_plan, @risk_plan.id)
     @risk_plan.destroy!
 
     respond_to do |format|

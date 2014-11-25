@@ -50,7 +50,7 @@
             <dt><%= t('activerecord.attributes.trading_summary.margin') %></dt>
             <dd class="text-right"><%= render_currency(@trading_account.margin) %></dd>
             <dt><%= t('activerecord.attributes.trading_summary.margin_rate') %></dt>
-            <dd class="text-right"><%= render_percentage(@trading_account.margin.fdiv(@trading_account.budget)) %></dd>
+            <dd class="text-right"><%= render_percentage(@trading_account.margin_rate) %></dd>
         </dl>
     </div>
     <div class="col-lg-3">

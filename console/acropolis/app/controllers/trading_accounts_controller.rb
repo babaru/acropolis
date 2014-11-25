@@ -88,6 +88,7 @@ class TradingAccountsController < ApplicationController
   def new
     @trading_account = TradingAccount.new
     @trading_account.product = @product
+    @trading_account.budget = 0
   end
 
   # GET /trading_accounts/1/edit
@@ -142,6 +143,7 @@ class TradingAccountsController < ApplicationController
   # DELETE /trading_accounts/1
   # DELETE /trading_accounts/1.json
   def destroy
+    remove_recent_item(:trading_account, @trading_account.id)
     @product = @trading_account.product
     @trading_account.destroy!
 

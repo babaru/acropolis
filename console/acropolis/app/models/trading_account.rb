@@ -26,6 +26,12 @@ class TradingAccount < ActiveRecord::Base
     end
   end
 
+  def margin_rate
+    return 0 if self.budget.nil? || self.budget == 0
+    return 0 if self.margin.nil?
+    self.margin.fdiv(self.budget)
+  end
+
   #
   # Trading summary delegates
   #
@@ -69,10 +75,25 @@ class TradingAccount < ActiveRecord::Base
       exposure += trade.exposure
     end
 
+    customer_benefit = self.budget
+    customer_benefit ||= 0
+    customer_benefit += (profit - trading_fee)
+
+    balance = self.budget
+    balance ||= 0
+    balance += (profit - trading_fee - margin)
+
+    leverage = position_cost
+    if (self.budget.nil? || self.budget == 0)
+      leverage = 0
+    else
+      leverage = position_cost / self.budget
+    end
+
     {
-      customer_benefit: self.budget + profit - trading_fee,
-      balance: self.budget + profit - trading_fee - margin,
-      leverage: position_cost / self.budget,
+      customer_benefit: customer_benefit,
+      balance: balance,
+      leverage: leverage,
       margin: margin,
       exposure: exposure.abs,
     }

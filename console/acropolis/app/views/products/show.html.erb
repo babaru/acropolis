@@ -26,7 +26,6 @@
                   <ul class="nav nav-tabs">
                       <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('models.list', model: TradingAccount.model_name.human) %></a></li>
                       <li class=""><a href="#tab-2" data-toggle="tab"><%= t('navigation.tab.risk_plan') %></a></li>
-                      <li class=""><a href="#tab-3" data-toggle="tab"><%= t('models.list', model: CapitalAccount.model_name.human) %></a></li>
                   </ul>
               </div>
           </div>
@@ -59,20 +58,6 @@
 
                 <div id="product_risk_plan-list" class="tooltip-demo">
                   <%= render partial: 'product_risk_plans/product_risk_plans_grid' %>
-                </div>
-
-              </div>
-
-              <div class="tab-pane" id="tab-3">
-
-                <div class="btn-toolbar">
-                  <div class="btn-group pull-right">
-                  <%= link_to(fa_icon('plus-square', text: t('models.add', model: ProductCapitalAccount.model_name.human)), new_product_product_capital_account_path(@product), remote: true, class: 'btn btn-primary btn-sm') %>
-                  </div>
-                </div>
-
-                <div id="product_capital_account-list" class="tooltip-demo">
-                  <%= render partial: 'product_capital_accounts/product_capital_accounts_grid' %>
                 </div>
 
               </div>

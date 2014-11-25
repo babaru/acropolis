@@ -28,6 +28,13 @@ class ApplicationController < ActionController::Base
     session['recent'][type][id.to_s] = name
   end
 
+  def remove_recent_item(type, id)
+    type = type.to_s if type.is_a?(Symbol)
+    session['recent'] ||= {}
+    session['recent'][type] ||= {}
+    session['recent'][type].delete(id.to_s)
+  end
+
   def json_request?
     request.format.json?
   end

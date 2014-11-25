@@ -17,7 +17,6 @@ class ProductsController < ApplicationController
     cache_recent_item(:product, @product.id, @product.name)
 
     @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(product_id: @product.id))
-    @product_capital_accounts_grid = initialize_grid(ProductCapitalAccount.where(product_id: @product.id))
     @trading_accounts_grid = initialize_grid(TradingAccount.where(product_id: @product.id))
 
     add_breadcrumb @product.name, nil
@@ -95,6 +94,7 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
+    remove_recent_item(:product, @product.id)
     @product.destroy!
 
     respond_to do |format|
