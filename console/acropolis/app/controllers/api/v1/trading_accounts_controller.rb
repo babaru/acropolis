@@ -12,7 +12,7 @@ module Api
           trading_account = TradingAccount.find_by_account_no(params[:account_no])
           if trading_account
             if trading_account.password == params[:password]
-              render json: {status: 0}
+              render json: {status: 0, trading_account: trading_account}
             else
               render json: {status: 1}
             end

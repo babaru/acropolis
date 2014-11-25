@@ -48,7 +48,7 @@ class TradingAccount < ActiveRecord::Base
   # according to risk plan controlling
   #
   def trading_status
-    return 1
+    return 0
   end
 
   private
