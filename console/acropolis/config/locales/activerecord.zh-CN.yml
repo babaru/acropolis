@@ -36,6 +36,9 @@ zh-CN:
       market_price: 市场价格
       trading_account_instrument: 可交易品种
       trading_symbol: 交易产品
+      trading_account_budget_record: 出入金记录
+      trading_account_budget_out_record: 出金记录
+      trading_account_budget_in_record: 入金记录
     attributes:
       time_stamp:
         created_at: 创建于
@@ -159,6 +162,10 @@ zh-CN:
         multiplier: 合约乘数
         trading_fee: 交易手续费
         margin: 保证金
+      trading_account_budget_record:
+        money: 金额
+        value: 金额
+        type: 类型
   models:
     list: "%{model}列表"
     new: "新建%{model}"

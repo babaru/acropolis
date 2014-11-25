@@ -1,0 +1,39 @@
+<%= grid(@trading_account_budget_records_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: '#' do |trading_account_budget_record|
+    trading_account_budget_record.id
+  end
+
+
+  g.column name: t('activerecord.attributes.trading_account_budget_record.trading_account_id') do |trading_account_budget_record|
+    trading_account_budget_record.trading_account_id
+  end
+
+
+  g.column name: t('activerecord.attributes.trading_account_budget_record.type') do |trading_account_budget_record|
+    trading_account_budget_record.type
+  end
+
+
+  g.column name: t('activerecord.attributes.trading_account_budget_record.money') do |trading_account_budget_record|
+    trading_account_budget_record.money
+  end
+
+
+  g.column name: t('activerecord.attributes.time_stamp.created_at') do |trading_account_budget_record|
+    trading_account_budget_record.created_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+
+
+  g.column name: t('activerecord.attributes.time_stamp.updated_at') do |trading_account_budget_record|
+    trading_account_budget_record.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+
+
+  g.column html: {class: 'project-actions'} do |trading_account_budget_record|
+    [
+      link_to(fa_icon("pencil"), edit_trading_account_budget_record_path(trading_account_budget_record), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), trading_account_budget_record_delete_path(trading_account_budget_record), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

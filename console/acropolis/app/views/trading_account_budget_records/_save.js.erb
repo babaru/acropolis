@@ -1,0 +1,16 @@
+$("ul.errors").html("")
+<% if @trading_account_budget_record.errors.any? %>
+  <% @trading_account_budget_record.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  if ($('#trading_account_budget_record-list').length) {
+    $('#trading_account_budget_record-list').html("<%= escape_javascript(render 'trading_accounts/trading_account_budget_records_grid') %>")
+  }
+
+  $('#trading_account-detail').html("<%= escape_javascript(render 'trading_accounts/trading_account_detail') %>")
+
+  $("#item-modal").modal("hide")
+
+<% end %>

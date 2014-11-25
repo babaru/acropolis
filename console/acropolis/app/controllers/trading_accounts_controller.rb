@@ -18,6 +18,7 @@ class TradingAccountsController < ApplicationController
     cache_recent_item(:trading_account, @trading_account.id, @trading_account.name)
     @trading_records_grid = initialize_grid(Trade.where(trading_account_id: @trading_account.id).order('traded_at DESC'))
     @trading_account_instruments_grid = initialize_grid(TradingAccountInstrument.where(trading_account_id: @trading_account.id))
+    @trading_account_budget_records_grid = initialize_grid(TradingAccountBudgetRecord.where(trading_account_id: @trading_account.id).order(:created_at))
 
     @buy_positions = Trade.whose(@trading_account.id).select(
         :instrument_id,

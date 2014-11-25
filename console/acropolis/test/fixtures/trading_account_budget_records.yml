@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  trading_account_id: 
+  type: 
+  record: 9.99
+
+two:
+  trading_account_id: 
+  type: 
+  record: 9.99

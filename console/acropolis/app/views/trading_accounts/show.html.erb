@@ -30,6 +30,7 @@
                         <li><a href="#tab-2" data-toggle="tab"><%= t('navigation.tab.position_detail') %></a></li>
                         <li><a href="#tab-3" data-toggle="tab"><%= t('navigation.tab.trades') %></a></li>
                         <li><a href="#tab-4" data-toggle="tab"><%= t('navigation.tab.tradable_instruments') %></a></li>
+                        <li><a href="#tab-5" data-toggle="tab"><%= t('navigation.tab.budget_in_and_out') %></a></li>
                     </ul>
                 </div>
             </div>
@@ -86,6 +87,21 @@
                   </div>
 
                 </div>
+
+                <div class="tab-pane" id="tab-5">
+
+                  <div class="btn-toolbar">
+                    <div class="btn-group pull-right">
+                    <%= link_to(fa_icon('plus-square', text: t('models.add', model: TradingAccountBudgetRecord.model_name.human)), new_trading_account_trading_account_budget_record_path(trading_account_id: @trading_account.id), remote: true, class: 'btn btn-primary btn-sm') %>
+                    </div>
+                  </div>
+
+                  <div id="trading_account_budget_record-list" class="tooltip-demo" id="trading-account-budget-records-grid">
+                    <%= render partial: 'trading_account_budget_records_grid' %>
+                  </div>
+
+                </div>
+
               </div>
 
             </div>

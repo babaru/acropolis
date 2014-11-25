@@ -1,0 +1,20 @@
+<%= grid(@trading_account_budget_records_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: '#' do |trading_account_budget_record|
+    trading_account_budget_record.id
+  end
+
+  g.column name: t('activerecord.attributes.trading_account_budget_record.value') do |trading_account_budget_record|
+    content_tag(:span, trading_account_budget_record.value, class: trading_account_budget_record.value < 0 ? 'text-danger' : '')
+  end
+
+  g.column name: t('activerecord.attributes.time_stamp.created_at') do |trading_account_budget_record|
+    trading_account_budget_record.created_at.strftime("%Y-%m-%d %H:%M:%S")
+  end
+
+  g.column html: {class: 'project-actions'} do |trading_account_budget_record|
+    [
+      link_to(fa_icon("trash"), trading_account_budget_record_delete_path(trading_account_budget_record), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

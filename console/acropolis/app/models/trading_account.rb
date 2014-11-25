@@ -5,6 +5,7 @@ class TradingAccount < ActiveRecord::Base
   has_one :trading_summary, through: :trading_account_trading_summary
   has_many :trading_account_instruments, dependent: :destroy
   has_many :instruments, through: :trading_account_instruments
+  has_many :trading_account_budget_records
 
   def calculate_trading_summary
     TradingAccount.transaction do
@@ -16,7 +17,7 @@ class TradingAccount < ActiveRecord::Base
       raw_summary = calculate_raw_summary
 
       self.trading_summary.customer_benefit = raw_summary[:customer_benefit]
-      self.trading_summary.net_worth = raw_summary[:customer_benefit].fdiv(self.budget)
+      self.trading_summary.net_worth = raw_summary[:net_worth]
       self.trading_summary.margin = raw_summary[:margin]
       self.trading_summary.balance = raw_summary[:balance]
       self.trading_summary.leverage = raw_summary[:leverage]
@@ -83,15 +84,23 @@ class TradingAccount < ActiveRecord::Base
     balance ||= 0
     balance += (profit - trading_fee - margin)
 
+    net_worth = 0
+    if self.budget.nil? || self.budget == 0
+      net_worth = 0
+    else
+      net_worth = customer_benefit.fdiv(self.budget)
+    end
+
     leverage = position_cost
     if (self.budget.nil? || self.budget == 0)
       leverage = 0
     else
-      leverage = position_cost / self.budget
+      leverage = position_cost.fdiv(self.budget)
     end
 
     {
       customer_benefit: customer_benefit,
+      net_worth: net_worth,
       balance: balance,
       leverage: leverage,
       margin: margin,

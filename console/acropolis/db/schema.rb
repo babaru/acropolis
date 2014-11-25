@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124101426) do
+ActiveRecord::Schema.define(version: 20141125091328) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -247,6 +247,16 @@ ActiveRecord::Schema.define(version: 20141124101426) do
   add_index "trades", ["exchange_id"], name: "index_trades_on_exchange_id", using: :btree
   add_index "trades", ["instrument_id"], name: "index_trades_on_instrument_id", using: :btree
   add_index "trades", ["trading_account_id"], name: "index_trades_on_trading_account_id", using: :btree
+
+  create_table "trading_account_budget_records", force: true do |t|
+    t.integer  "trading_account_id"
+    t.string   "type"
+    t.decimal  "money",              precision: 20, scale: 4, default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "trading_account_budget_records", ["trading_account_id"], name: "index_trading_account_budget_records_on_trading_account_id", using: :btree
 
   create_table "trading_account_instruments", force: true do |t|
     t.integer  "trading_account_id"
