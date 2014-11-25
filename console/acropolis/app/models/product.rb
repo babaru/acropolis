@@ -17,7 +17,7 @@ class Product < ActiveRecord::Base
   end
 
   def allocated_budget
-    trading_accounts.inject(0) {|sum, item| sum += item.budget }
+    trading_accounts.inject(0) {|sum, item| sum += item.budget if item.budget }
   end
 
   def fixed_budget
