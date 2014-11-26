@@ -95,6 +95,7 @@ class ProductsController < ApplicationController
   # DELETE /products/1.json
   def destroy
     remove_recent_item(:product, @product.id)
+    @project.trading_accounts.each { |trading_account| remove_recent_item(:trading_account, trading_account.id) }
     @product.destroy!
 
     respond_to do |format|

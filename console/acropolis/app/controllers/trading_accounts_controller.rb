@@ -101,6 +101,7 @@ class TradingAccountsController < ApplicationController
   def create
     TradingAccount.transaction do
       @trading_account = TradingAccount.new(trading_account_params)
+      @trading_account.budget ||= 0
       @trading_account.save!
       @product = @trading_account.product
     end

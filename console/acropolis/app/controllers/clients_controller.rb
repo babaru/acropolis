@@ -76,6 +76,13 @@ class ClientsController < ApplicationController
   # DELETE /clients/1.json
   def destroy
     remove_recent_item(:client, @client.id)
+    @client.products.each do |product|
+      remove_recent_item(:product, product.id)
+      project.trading_accounts.each do |trading_account|
+        remove_recent_item(:trading_account, trading_account.id)
+      end
+    end
+
     @client.destroy!
 
     respond_to do |format|

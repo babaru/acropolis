@@ -16,13 +16,10 @@ module ApplicationHelper
 
     options = default_options.merge(options)
 
-    value = 'n/a' if value.nil?
+    options[:class] = "#{options[:class]} label label-danger" if value && value < 1
 
     content_tag(:span,
-      number_with_precision(
-        value,
-        precision:     options[:precision]
-      ), class: options[:class], style: "font-size: #{options[:font_size]}px; font-weight: #{options[:bold]}")
+      value.nil? ? 'n/a' : (value * 10 ** options[:precision]).floor.fdiv(10 ** options[:precision]) , class: options[:class], style: "font-size: #{options[:font_size]}px; font-weight: #{options[:bold]}")
   end
 
   def render_currency(value, options = {})

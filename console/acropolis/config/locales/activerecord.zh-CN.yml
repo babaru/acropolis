@@ -132,6 +132,7 @@ zh-CN:
         trade_volume: 成交量
         open_close: 开平仓
         open_volume: 持仓量
+        latest_price: 最新成交价
       position:
         instrument: 交易产品
         exchange: 交易所
@@ -154,6 +155,10 @@ zh-CN:
         type: 保证金计算方式
         factor: 保证金比率
       client:
+        name: 名称
+      borker:
+        name: 名称
+      bank:
         name: 名称
       trading_symbol:
         name: 交易代码

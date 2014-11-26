@@ -1,0 +1,7 @@
+console.log('trading summary was calculated successfully');
+$('#trading_account-detail').html('<%= escape_javascript(render(partial: "trading_account_detail")) %>');
+$('#trading-account-buy-position-summary').html('<%= escape_javascript(render(partial: "buy_position_summary")) %>');
+$('#trading-account-sell-position-summary').html('<%= escape_javascript(render(partial: "sell_position_summary")) %>');
+$('#trading-account-buy-position-detail').html('<%= escape_javascript(render(partial: "buy_position_detail")) %>');
+$('#trading-account-sell-position-detail').html('<%= escape_javascript(render(partial: "sell_position_detail")) %>');
+$('#trading-account-trading-records-grid').html('<%= escape_javascript(render(partial: "trading_records_grid")) %>');

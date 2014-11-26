@@ -84,9 +84,9 @@ class TradingAccount < ActiveRecord::Base
     balance ||= 0
     balance += (profit - trading_fee - margin)
 
-    net_worth = 0
+    net_worth = 1
     if self.budget.nil? || self.budget == 0
-      net_worth = 0
+      net_worth = 1
     else
       net_worth = customer_benefit.fdiv(self.budget)
     end

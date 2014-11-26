@@ -8,19 +8,24 @@ module Api
       # 2 for account_no not found, -1 for invalid request
       #
       def auth
+        @rsp = {}
         if params[:account_no] && params[:password]
-          trading_account = TradingAccount.find_by_account_no(params[:account_no])
-          if trading_account
-            if trading_account.password == params[:password]
-              render json: {status: 0, trading_account: trading_account}
+          @trading_account = TradingAccount.find_by_account_no(params[:account_no])
+          if @trading_account
+            if @trading_account.password == params[:password]
+              @rsp = {status: 0, trading_account: @trading_account}
+              render json: @rsp
             else
-              render json: {status: 1}
+              @rsp = {status: 1}
+              render json: @rsp
             end
           else
-            render json: {status: 2}
+            @rsp = {status: 2}
+            render json: @rsp
           end
         else
-          render json: {status: -1}
+          @rsp = {status: -1}
+          render json: @rsp
         end
       end
 
