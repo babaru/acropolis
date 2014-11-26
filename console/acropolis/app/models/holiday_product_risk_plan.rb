@@ -1,0 +1,2 @@
+class HolidayProductRiskPlan < ProductRiskPlan
+end

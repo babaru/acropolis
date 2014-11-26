@@ -7,5 +7,19 @@ $("ul.errors").html("")
   if ($('#product_risk_plan-list').length) {
     $('#product_risk_plan-list').html("<%= escape_javascript(render 'product_risk_plans_grid') %>");
   }
+
+  if ($('#holiday_product_risk_plan-list').length) {
+    $('#holiday_product_risk_plan-list').html("<%= escape_javascript(render 'holiday_product_risk_plans_grid') %>");
+  }
+
+  // Switcher
+  var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+  elems.forEach(function(html) {
+    var element = $(html);
+    if (element.data('switchery') != true) {
+      var switchery = new Switchery(html);
+    }
+  });
+
   $("#item-modal").modal("hide");
 <% end %>

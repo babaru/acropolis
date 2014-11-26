@@ -37,7 +37,10 @@ class Product < ActiveRecord::Base
     customer_benefit / budget
   end
 
-  def net_worth_style
-    "label label-warning"
+  def risk_plans_at(date)
+    risk_plans = self.risk_plans.available.where(
+      ProductRiskPlan.arel_table[:begun_at].lteq(date).and(
+        ProductRiskPlan.arel_table[:ended_at].gteq(date))
+      )
   end
 end

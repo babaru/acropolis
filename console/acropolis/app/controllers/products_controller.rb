@@ -1,7 +1,8 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy, :bind_risk_plan]
+  before_action :set_client, only: [:new]
 
-  add_breadcrumb I18n.t('navigation.page.product'), :products_path, only: [:show]
+  # add_breadcrumb I18n.t('navigation.page.product'), :products_path, only: [:show]
 
   # GET /products
   # GET /products.json
@@ -16,15 +17,26 @@ class ProductsController < ApplicationController
   def show
     cache_recent_item(:product, @product.id, @product.name)
 
-    @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(product_id: @product.id))
+    @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(
+      ProductRiskPlan.arel_table[:product_id].eq(@product.id).and(
+        ProductRiskPlan.arel_table[:type].eq(ProductRiskPlan.name))
+      ))
+
+    @holiday_product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(
+      ProductRiskPlan.arel_table[:product_id].eq(@product.id).and(
+        ProductRiskPlan.arel_table[:type].eq(HolidayProductRiskPlan.name))
+      ))
+
     @trading_accounts_grid = initialize_grid(TradingAccount.where(product_id: @product.id))
 
+    add_breadcrumb @product.client.name, client_path(@product.client)
     add_breadcrumb @product.name, nil
   end
 
   # GET /products/new
   def new
     @product = Product.new
+    @product.client = @client
   end
 
   # GET /products/1/edit
@@ -36,6 +48,7 @@ class ProductsController < ApplicationController
   def create
     Product.transaction do
       @product = Product.new(product_params)
+      @client = @product.client
       @product.save!
     end
 
@@ -73,6 +86,7 @@ class ProductsController < ApplicationController
   def update
     Product.transaction do
       @product.update!(product_params)
+      @client = @product.client
     end
 
     respond_to do |format|
@@ -94,8 +108,9 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
+    @client = @product.client
     remove_recent_item(:product, @product.id)
-    @project.trading_accounts.each { |trading_account| remove_recent_item(:trading_account, trading_account.id) }
+    @product.trading_accounts.each { |trading_account| remove_recent_item(:trading_account, trading_account.id) }
     @product.destroy!
 
     respond_to do |format|
@@ -149,7 +164,11 @@ class ProductsController < ApplicationController
     end
 
     def set_products_grid
-      @products_grid = initialize_grid(Product)
+      @products_grid = initialize_grid(Product.where(client_id: @client.id))
+    end
+
+    def set_client
+      @client = Client.find(params[:client_id])
     end
 end
 

@@ -7,7 +7,7 @@
 
     <%= f.input :name %>
 
-    <%= f.input :client_id, collection: Client.all.collect {|item| [item.name, item.id]} %>
+    <%= f.input :client_id, as: :hidden %>
 
     <%= f.input :broker_id, collection: Broker.all.collect {|item| [item.name, item.id]} %>
 

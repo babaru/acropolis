@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125091328) do
+ActiveRecord::Schema.define(version: 20141126085446) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -161,6 +161,9 @@ ActiveRecord::Schema.define(version: 20141125091328) do
     t.boolean  "is_enabled",   default: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type",         default: "ProductRiskPlan"
+    t.datetime "begun_at"
+    t.datetime "ended_at"
   end
 
   add_index "product_risk_plans", ["product_id"], name: "index_product_risk_plans_on_product_id", using: :btree

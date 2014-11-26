@@ -5,7 +5,7 @@ class ProductRiskPlansController < ApplicationController
   # GET /product_risk_plans
   # GET /product_risk_plans.json
   def index
-    @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(product_id: params[:product_id]))
+    set_product_risk_plans_grid
   end
 
   # GET /product_risk_plans/1
@@ -17,6 +17,7 @@ class ProductRiskPlansController < ApplicationController
   def new
     @product_risk_plan = ProductRiskPlan.new
     @product_risk_plan.product = @product
+    @product_risk_plan.type = params[:type]
   end
 
   # GET /product_risk_plans/1/edit
@@ -29,6 +30,7 @@ class ProductRiskPlansController < ApplicationController
     ProductRiskPlan.transaction do
       @product_risk_plan = ProductRiskPlan.new(product_risk_plan_params)
       @product = @product_risk_plan.product
+      set_duration_columns
       @product_risk_plan.save!
     end
 
@@ -48,6 +50,7 @@ class ProductRiskPlansController < ApplicationController
   # PATCH/PUT /product_risk_plans/1.json
   def update
     ProductRiskPlan.transaction do
+      set_duration_columns
       @product_risk_plan.update!(product_risk_plan_params)
     end
 
@@ -120,11 +123,27 @@ class ProductRiskPlansController < ApplicationController
         :product_id,
         :risk_plan_id,
         :is_enabled,
+        :type,
+        :begun_at,
+        :ended_at
         )
     end
 
     def set_product_risk_plans_grid
-      @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(product_id: @product.id))
+      @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(
+      ProductRiskPlan.arel_table[:product_id].eq(@product.id).and(
+        ProductRiskPlan.arel_table[:type].eq(ProductRiskPlan.name))
+      ))
+
+      @holiday_product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(
+        ProductRiskPlan.arel_table[:product_id].eq(@product.id).and(
+          ProductRiskPlan.arel_table[:type].eq(HolidayProductRiskPlan.name))
+        ))
+    end
+
+    def set_duration_columns
+      @product_risk_plan.begun_at = Time.new(1900, 1, 1) if @product_risk_plan.begun_at.nil?
+      @product_risk_plan.ended_at = Time.new(2050, 12, 31) if @product_risk_plan.ended_at.nil?
     end
 end
 

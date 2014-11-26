@@ -3,4 +3,6 @@ class RiskPlan < ActiveRecord::Base
   has_many :product_risk_plans, dependent: :delete_all
   has_many :products, through: :product_risk_plans
   has_many :risk_plan_operations, dependent: :destroy
+
+  scope :available, -> {where(is_enabled: true)}
 end

@@ -1,4 +1,6 @@
-<%= simple_form_for(@product_risk_plan, remote: true, html: {class: 'form-horizontal'}) do |f| %>
+<%= simple_form_for(@product_risk_plan.becomes(ProductRiskPlan), remote: true, html: {class: 'form-horizontal'}) do |f| %>
+
+  <% @product_risk_plan.becomes(@product_risk_plan.class) %>
 
   <div class="modal-body">
 
@@ -8,7 +10,12 @@
 
     <%= f.input :risk_plan_id, collection: RiskPlan.all.collect {|p| [p.name, p.id]}  %>
 
+    <%= f.input :begun_at, as: :date_picker %>
+    <%= f.input :ended_at, as: :date_picker %>
+
     <%= f.input :is_enabled %>
+
+    <%= f.input :type, as: :hidden %>
 
   </div>
 
@@ -27,7 +34,13 @@
 
   $(function () {
 
-    //Add your script here.
+    $('.date-picker').datetimepicker();
+
+    // Checkbox style
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+    });
 
   });
 

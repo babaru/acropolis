@@ -4,7 +4,8 @@ zh-CN:
       product: 资管产品
       risk_plan: 风控方案
       risk_plan_operation: 风控条件
-      product_risk_plan: 产品风控方案
+      product_risk_plan: 日常风控方案
+      holiday_product_risk_plan: 节假日风控方案
       product_capital_account: 产品资金帐号
       user: 用户
       parameter: 风控参数
@@ -81,6 +82,8 @@ zh-CN:
         risk_plan_id: 风控方案
         is_enabled: 启用
         product_id: 产品
+        begun_at: 开始于
+        ended_at: 结束于
       risk_event:
         product_id: 产品
         operation_id: 风控操作
