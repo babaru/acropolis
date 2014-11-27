@@ -23,6 +23,10 @@
     render_net_worth(trading_account.net_worth)
   end
 
+  g.column name: t('activerecord.attributes.trading_account.trading_status') do |trading_account|
+    render_trading_status(trading_account)
+  end
+
   g.column html: {class: 'project-actions'} do |trading_account|
     [
       link_to(fa_icon("pencil"), edit_trading_account_path(trading_account), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),

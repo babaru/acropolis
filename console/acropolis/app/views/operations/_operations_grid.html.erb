@@ -1,0 +1,20 @@
+<%= grid(@operations_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: '#' do |operation|
+    operation.id
+  end
+
+
+  g.column name: t('activerecord.attributes.operation.name'), class: 'project-title' do |operation|
+    [
+      link_to(operation.human, '#'),
+      content_tag(:small, "#{t('labels.last_modified_at')} #{operation.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
+    ].join('<br/>').html_safe
+  end
+
+
+  g.column name: t('activerecord.attributes.operation.level') do |operation|
+    operation.level
+  end
+
+end -%>

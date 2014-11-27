@@ -1,0 +1,14 @@
+$("ul.errors").html("")
+<% if @trading_account_risk_plan.errors.any? %>
+  <% @trading_account_risk_plan.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  if ($('#trading_account_risk_plan-list').length) {
+    $('#trading_account_risk_plan-list').html("<%= escape_javascript(render 'trading_account_risk_plans_grid') %>")
+  }
+
+  $("#item-modal").modal("hide")
+
+<% end %>

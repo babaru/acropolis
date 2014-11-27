@@ -25,8 +25,6 @@
               <div class="panel-options">
                   <ul class="nav nav-tabs">
                       <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('models.list', model: TradingAccount.model_name.human) %></a></li>
-                      <li class=""><a href="#tab-2" data-toggle="tab"><%= t(ProductRiskPlan.model_name.human) %></a></li>
-                      <li class=""><a href="#tab-3" data-toggle="tab"><%= t(HolidayProductRiskPlan.model_name.human) %></a></li>
                   </ul>
               </div>
           </div>
@@ -45,33 +43,6 @@
 
                 <div id="trading_account-list" class="tooltip-demo project-list">
                   <%= render partial: 'trading_accounts_grid' %>
-                </div>
-
-              </div>
-
-              <div class="tab-pane" id="tab-2">
-
-                <div class="btn-toolbar">
-                  <div class="btn-group pull-right">
-                  <%= link_to(fa_icon('plus-square', text: t('models.add', model: ProductRiskPlan.model_name.human)), new_product_product_risk_plan_path(@product), remote: true, class: 'btn btn-primary btn-sm') %>
-                  </div>
-                </div>
-
-                <div id="product_risk_plan-list" class="tooltip-demo">
-                  <%= render partial: 'product_risk_plans/product_risk_plans_grid' %>
-                </div>
-              </div>
-
-              <div class="tab-pane" id="tab-3">
-
-                <div class="btn-toolbar">
-                  <div class="btn-group pull-right">
-                  <%= link_to(fa_icon('plus-square', text: t('models.add', model: HolidayProductRiskPlan.model_name.human)), new_product_product_risk_plan_path(@product, type: HolidayProductRiskPlan.name), remote: true, class: 'btn btn-primary btn-sm') %>
-                  </div>
-                </div>
-
-                <div id="holiday_product_risk_plan-list" class="tooltip-demo">
-                  <%= render partial: 'product_risk_plans/holiday_product_risk_plans_grid' %>
                 </div>
 
               </div>

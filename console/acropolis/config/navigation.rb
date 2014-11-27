@@ -209,6 +209,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :page_settings, fa_icon('cog', text: t('navigation.page.settings')), nil, {} do |settings_menu|
       settings_menu.item :page_broker_list, Broker.model_name.human, brokers_path
       settings_menu.item :page_bank_list, Bank.model_name.human, banks_path
+      settings_menu.item :page_operation_list, Operation.model_name.human, operations_path
     end
 
   end

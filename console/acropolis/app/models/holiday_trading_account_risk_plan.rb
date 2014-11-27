@@ -1,0 +1,2 @@
+class HolidayTradingAccountRiskPlan < TradingAccountRiskPlan
+end

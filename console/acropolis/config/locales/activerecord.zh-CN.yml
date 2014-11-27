@@ -2,10 +2,13 @@ zh-CN:
   activerecord:
     models:
       product: 资管产品
+      operation: 预定义风控操作
       risk_plan: 风控方案
       risk_plan_operation: 风控条件
       product_risk_plan: 日常风控方案
       holiday_product_risk_plan: 节假日风控方案
+      trading_account_risk_plan: 日常风控方案
+      holiday_trading_account_risk_plan: 节假日风控方案
       product_capital_account: 产品资金帐号
       user: 用户
       parameter: 风控参数
@@ -44,6 +47,8 @@ zh-CN:
       time_stamp:
         created_at: 创建于
         updated_at: 最后编辑于
+      operation:
+        name: 名称
       risk_plan:
         name: 名称
         created_by: 创建人
@@ -51,6 +56,7 @@ zh-CN:
         operation_count: 风控条件数量
         created_at: 创建于
         updated_at: 最后编辑于
+        threshold_string: 方案阈值总览
       risk_plan_operation:
         operation: 风控操作
         operation_id: 风控操作
@@ -84,6 +90,12 @@ zh-CN:
         product_id: 产品
         begun_at: 开始于
         ended_at: 结束于
+      trading_account_risk_plan:
+        risk_plan_id: 风控方案
+        is_enabled: 启用
+        product_id: 产品
+        begun_at: 开始于
+        ended_at: 结束于
       risk_event:
         product_id: 产品
         operation_id: 风控操作
@@ -100,6 +112,8 @@ zh-CN:
         legal_id: 身份证件号
         product: 所属产品
         client: 所属客户
+        trading_status: 交易状态
+        product_net_worth: 产品总净值
       product_capital_account:
         capital_account: 资金帐号名称
         capital_account_id: 资金帐号名称

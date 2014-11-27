@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126085446) do
+ActiveRecord::Schema.define(version: 20141127064531) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -270,6 +270,20 @@ ActiveRecord::Schema.define(version: 20141126085446) do
 
   add_index "trading_account_instruments", ["instrument_id"], name: "index_trading_account_instruments_on_instrument_id", using: :btree
   add_index "trading_account_instruments", ["trading_account_id"], name: "index_trading_account_instruments_on_trading_account_id", using: :btree
+
+  create_table "trading_account_risk_plans", force: true do |t|
+    t.integer  "trading_account_id"
+    t.integer  "risk_plan_id"
+    t.boolean  "is_enabled",         default: true
+    t.datetime "begun_at"
+    t.datetime "ended_at"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "trading_account_risk_plans", ["risk_plan_id"], name: "index_trading_account_risk_plans_on_risk_plan_id", using: :btree
+  add_index "trading_account_risk_plans", ["trading_account_id"], name: "index_trading_account_risk_plans_on_trading_account_id", using: :btree
 
   create_table "trading_account_trading_summaries", force: true do |t|
     t.integer  "trading_account_id"

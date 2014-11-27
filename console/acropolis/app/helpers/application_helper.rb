@@ -7,6 +7,17 @@ module ApplicationHelper
     session['recent'][type]
   end
 
+  def render_trading_status(trading_account)
+    case trading_account.trading_status
+    when 1
+      content_tag(:span, '禁止开仓', class: 'label label-warning', style: 'font-size: 12px;')
+    when 2
+      content_tag(:span, '强制平仓', class: 'label label-danger', style: 'font-size: 12px;')
+    else
+      content_tag(:span, '正常', class: 'label label-primary', style: 'font-size: 12px;')
+    end
+  end
+
   def render_net_worth(value, options = {})
     default_options = {
       font_size:  14,

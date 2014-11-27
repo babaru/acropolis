@@ -38,9 +38,26 @@ class Product < ActiveRecord::Base
   end
 
   def risk_plans_at(date)
-    risk_plans = self.risk_plans.available.where(
+    risk_plans = self.product_risk_plans.available.where(
       ProductRiskPlan.arel_table[:begun_at].lteq(date).and(
         ProductRiskPlan.arel_table[:ended_at].gteq(date))
       )
   end
+
+  def matched_operation(date)
+    operation = nil
+    risk_plans_at(date).each do |rp|
+      new_operation = rp.risk_plan.matched_operation(self)
+      if operation.nil?
+        operation = new_operation
+        next
+      else
+        if new_operation && new_operation.level > operation.level
+          operation = new_operation
+        end
+      end
+    end
+    operation
+  end
+
 end

@@ -29,6 +29,10 @@ Rails.application.routes.draw do
     resources :product_capital_accounts
   end
 
+  resources :operations do
+    get 'delete'
+  end
+
   resources :trading_accounts do
     get 'delete'
     post 'calculate_trading_summary'
@@ -89,8 +93,14 @@ Rails.application.routes.draw do
 
   resources :monitoring_products
 
+  resources :trading_account_risk_plans do
+    get 'delete'
+    post 'enable'
+  end
+
   resources :trading_accounts do
     resources :trades
+    resources :trading_account_risk_plans
   end
 
   resources :trades do

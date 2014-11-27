@@ -1,0 +1,28 @@
+<% content_for :page_title do %>
+
+<%= t('models.list', model: Operation.model_name.human) %>
+
+<% end %>
+
+<% content_for :page_header_right_panel do %>
+
+<% end %>
+
+<% content_for :anything_else do %>
+
+<!-- Modal -->
+
+<div class="modal fade" id="item-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div><!-- /.modal -->
+
+<% end %>
+
+<div class="ibox no-drop">
+  <div class="ibox-content">
+    <div id="operation-list" class="project-list tooltip-demo">
+
+      <%= render 'operations_grid' %>
+
+    </div>
+  </div>
+</div>

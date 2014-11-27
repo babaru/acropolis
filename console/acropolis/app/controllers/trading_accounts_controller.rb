@@ -83,6 +83,16 @@ class TradingAccountsController < ApplicationController
           )
         )
       ).order(:traded_at).reverse_order.group(:instrument_id)
+
+    @trading_account_risk_plans_grid = initialize_grid(TradingAccountRiskPlan.where(
+      TradingAccountRiskPlan.arel_table[:trading_account_id].eq(@trading_account.id).and(
+        TradingAccountRiskPlan.arel_table[:type].eq(TradingAccountRiskPlan.name))
+      ))
+
+    @holiday_trading_account_risk_plans_grid = initialize_grid(TradingAccountRiskPlan.where(
+      TradingAccountRiskPlan.arel_table[:trading_account_id].eq(@trading_account.id).and(
+        TradingAccountRiskPlan.arel_table[:type].eq(HolidayTradingAccountRiskPlan.name))
+      ))
   end
 
   # GET /trading_accounts/new

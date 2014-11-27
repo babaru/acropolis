@@ -3,6 +3,29 @@ class RiskPlan < ActiveRecord::Base
   has_many :product_risk_plans, dependent: :delete_all
   has_many :products, through: :product_risk_plans
   has_many :risk_plan_operations, dependent: :destroy
+  has_many :trading_accoun_risk_plans, dependent: :delete_all
+  has_many :trading_accounts, through: :trading_account_risk_plans
 
-  scope :available, -> {where(is_enabled: true)}
+  def threshold_string
+    risk_plan_operations.inject([]) do |list, item|
+      list << "( #{item.threshold_string} )"
+    end.join(' | ')
+  end
+
+  def matched_operation(product)
+    operation = nil
+    risk_plan_operations.each do |item|
+      if item.is_matched?(product)
+        new_operation = item.operation
+        if operation.nil?
+          operation = new_operation
+        else
+          if item.operation.level > operation.level
+            operation = new_operation
+          end
+        end
+      end
+    end
+    operation
+  end
 end

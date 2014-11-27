@@ -12,8 +12,17 @@
                     <dd class="text-right"><%= render_net_worth(@trading_account.net_worth) %></dd>
                 </dl>
             </div>
-            <div class="col-lg-6">
-
+            <div class="col-lg-3">
+                <dl class="dl-horizontal">
+                    <dt><%= t('activerecord.attributes.trading_account.product_net_worth') %></dt>
+                    <dd class="text-right"><%= render_net_worth(@trading_account.product.net_worth) %></dd>
+                </dl>
+            </div>
+            <div class="col-lg-3">
+                <dl class="dl-horizontal">
+                    <dt><%= t('activerecord.attributes.trading_account.trading_status') %></dt>
+                    <dd class="text-right"><%= render_trading_status(@trading_account) %></dd>
+                </dl>
             </div>
         </div>
         <div class="row">

@@ -1,0 +1,10 @@
+<%= simple_form_for(@trading_account_risk_plan) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit t('buttons.save_changes'), class: 'btn btn-primary btn-sm' %>
+  </div>
+<% end %>
