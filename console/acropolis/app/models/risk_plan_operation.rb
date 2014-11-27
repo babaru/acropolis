@@ -10,6 +10,10 @@ class RiskPlanOperation < ActiveRecord::Base
     :threshold_removal_flags
 
   def threshold_value
-    thresholds.inject([]) { |list, item| list << [item.parameter.i18n_name, item.relation_symbol.math, item.value].join(' ')}.join(' | ')
+    thresholds.inject([]) { |list, item| list << [item.parameter.human, item.relation_symbol.math, item.value].join(' ')}.join(' | ')
+  end
+
+  def human
+    I18n.t("activerecord.attributes.operation.#{self.operation.name}")
   end
 end

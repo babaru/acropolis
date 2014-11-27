@@ -48,7 +48,6 @@ $(document).ready(function() {
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('models.list', model: RiskPlanOperation.model_name.human) %></a></li>
                         <li><a href="#tab-2" data-toggle="tab"><%= t('navigation.tab.binding_products') %></a></li>
-                        <li class=""><a href="#tab-3" data-toggle="tab">Last activity</a></li>
                     </ul>
                 </div>
             </div>
@@ -70,9 +69,7 @@ $(document).ready(function() {
 
                 </div>
                 <div class="tab-pane" id="tab-2">
-
                   <%= render partial: 'binding_products_grid' %>
-
                 </div>
               </div>
 

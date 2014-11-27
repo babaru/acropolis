@@ -1,5 +1,5 @@
 class Parameter < ActiveRecord::Base
-  def i18n_name
-    I18n.t("activerecord.attributes.parameter.name.#{self.name}")
+  def human
+    I18n.t("activerecord.attributes.parameter.#{self.name}")
   end
 end

@@ -6,7 +6,7 @@
 
   <%= f.input :risk_plan_id, as: :hidden %>
 
-  <%= f.input :operation_id, collection: Operation.all.collect{|item| [item.name, item.id]} %>
+  <%= f.input :operation_id, collection: Operation.all.collect{|item| [item.human, item.id]} %>
 
   <div class="form-group required risk_plan_operation_threshold">
     <label class="required col-sm-2 control-label label-sm" for="risk_plan_operation_thresholds"><%= t('activerecord.attributes.risk_plan_operation.thresholds') %></label>

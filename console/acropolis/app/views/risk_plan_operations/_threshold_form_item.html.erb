@@ -4,7 +4,7 @@
   <%= hidden_field_tag("risk_plan_operation[threshold_removal_flags][]", false) %>
 
   <div class="col-sm-4">
-    <%= select_tag("risk_plan_operation[threshold_parameters][]", options_for_select(Parameter.all.collect {|r| [t("activerecord.attributes.parameter.name.#{r.name}"), r.id]}, threshold_parameter), class: 'form-control input-sm') %>
+    <%= select_tag("risk_plan_operation[threshold_parameters][]", options_for_select(Parameter.all.collect {|r| [t("activerecord.attributes.parameter.#{r.name}"), r.id]}, threshold_parameter), class: 'form-control input-sm') %>
   </div>
 
   <div class="col-sm-3">

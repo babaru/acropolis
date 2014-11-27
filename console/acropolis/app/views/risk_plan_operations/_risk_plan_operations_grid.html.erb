@@ -5,7 +5,7 @@
   end
 
   g.column :name => t('activerecord.attributes.risk_plan_operation.operation') do |risk_plan_operation|
-    content_tag(:span, t("activerecord.attributes.operation.name.#{risk_plan_operation.operation.name}"), class: risk_plan_operation.operation.level == 1 ? 'label label-warning label-sm' : risk_plan_operation.operation.level == 5 ? 'label label-danger label-sm' : 'label label-inverse label-sm')
+    content_tag(:span, risk_plan_operation.human, class: risk_plan_operation.operation.level == 1 ? 'label label-warning label-sm' : risk_plan_operation.operation.level == 5 ? 'label label-danger label-sm' : 'label label-inverse label-sm')
   end
 
   g.column name: t('activerecord.attributes.risk_plan_operation.thresholds') do |risk_plan_operation|
