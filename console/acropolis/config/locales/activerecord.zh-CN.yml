@@ -1,7 +1,7 @@
 zh-CN:
   activerecord:
     models:
-      product: 资管产品
+      product: 产品
       operation: 预定义风控操作
       risk_plan: 风控方案
       risk_plan_operation: 风控条件
@@ -68,6 +68,11 @@ zh-CN:
         password: 密码
         password_confirmation: 确认密码
         avatar: 头像
+        profile: 帐号资料
+        full_name: 全名
+        last_sign_in_at: 最后登入时间
+        last_sign_in_ip: 最后登入IP
+        sign_in_count: 登录次数
       product:
         name: 名称
         client: 客户
@@ -199,3 +204,4 @@ zh-CN:
     show: "%{model}详情"
     recent: 最近访问%{model}
     all: 全部%{model}
+    clearing: "%{model}结算信息"

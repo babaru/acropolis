@@ -13,8 +13,53 @@
 
 <% end %>
 
+<div class="row">
 
-<div class="ibox">
+  <div class="col-lg-3">
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+
+            <div>
+                <h5><%= @product.name %></h5>
+                <ul class="folder-list" style="padding: 0">
+                    <% @product.trading_accounts.each do |trading_account| %>
+                    <%= nav_link_to trading_account.name, trading_account_path(trading_account), {}, {:wrapper => 'li'} %>
+                    <% end %>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+
+            <div>
+                <h5><%= @client.name %></h5>
+                <ul class="folder-list" style="padding: 0">
+                    <% @client.products.each do |product| %>
+                    <%= nav_link_to product.name, product_path(product), {}, {:wrapper => 'li'} %>
+                    <% end %>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+
+            <div>
+                <% Client.all.each do |client| %>
+                <h5><%= t('models.list', model: Client.model_name.human) %></h5>
+                <ul class="folder-list" style="padding: 0">
+                    <%= nav_link_to client.name, client_path(client), {}, {:wrapper => 'li'} %>
+                </ul>
+                <% end %>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+  <div class="col-lg-9">
+    <div class="ibox">
   <div class="ibox-content" id="trading-account-show-page-content">
     <span id="trading-account-id" style="display:none;"><%= @trading_account.id %></span>
       <div id="trading_account-detail">
@@ -29,10 +74,11 @@
                         <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('navigation.tab.position_summary') %></a></li>
                         <li><a href="#tab-2" data-toggle="tab"><%= t('navigation.tab.position_detail') %></a></li>
                         <li><a href="#tab-3" data-toggle="tab"><%= t('navigation.tab.trades') %></a></li>
-                        <li><a href="#tab-4" data-toggle="tab"><%= t('navigation.tab.tradable_instruments') %></a></li>
                         <li><a href="#tab-5" data-toggle="tab"><%= t('navigation.tab.budget_in_and_out') %></a></li>
-                        <li><a href="#tab-6" data-toggle="tab"><%= t(TradingAccountRiskPlan.model_name.human) %></a></li>
-                        <li><a href="#tab-7" data-toggle="tab"><%= t(HolidayTradingAccountRiskPlan.model_name.human) %></a></li>
+                        <li><a href="#tab-6" data-toggle="tab"><%= t('navigation.tab.clearing.capital') %></a></li>
+                        <li><a href="#tab-7" data-toggle="tab"><%= t(TradingAccountRiskPlan.model_name.human) %></a></li>
+                        <li><a href="#tab-8" data-toggle="tab"><%= t(HolidayTradingAccountRiskPlan.model_name.human) %></a></li>
+                        <li><a href="#tab-4" data-toggle="tab"><%= t('navigation.tab.tradable_instruments') %></a></li>
                     </ul>
                 </div>
             </div>
@@ -105,6 +151,10 @@
                 </div>
 
                 <div class="tab-pane" id="tab-6">
+                    <%= render partial: 'clearing_capital' %>
+                </div>
+
+                <div class="tab-pane" id="tab-7">
                   <div class="btn-toolbar">
                     <div class="btn-group pull-right">
                     <%= link_to(fa_icon('plus-square', text: t('models.add', model: TradingAccountRiskPlan.model_name.human)), new_trading_account_trading_account_risk_plan_path(@trading_account, type: TradingAccountRiskPlan.name), remote: true, class: 'btn btn-primary btn-sm') %>
@@ -116,7 +166,7 @@
                   </div>
                 </div>
 
-                <div class="tab-pane" id="tab-7">
+                <div class="tab-pane" id="tab-8">
 
                   <div class="btn-toolbar">
                     <div class="btn-group pull-right">
@@ -139,4 +189,9 @@
       </div>
   </div>
 </div>
+  </div>
+
+</div>
+
+
 

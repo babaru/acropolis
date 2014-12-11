@@ -18,7 +18,7 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-6">
         <h2><%= yield :page_title %></h2>
-        <%= render partial: 'shared/inspinia/breadcrumb' %>
+        <%= render partial: 'shared/breadcrumb' %>
     </div>
     <div class="col-lg-6">
       <%= yield :page_header_right_panel %>
@@ -27,4 +27,4 @@
 
 <% end %>
 
-<%= render partial: 'shared/inspinia/notifications' %>
+<%= render partial: 'shared/notifications' %>

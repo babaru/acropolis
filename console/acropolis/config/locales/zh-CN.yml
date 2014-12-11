@@ -10,6 +10,7 @@ zh-CN:
     sign_up: 注册
     sign_out: 注销
     auto_refresh: 自动刷新
+    clearing: 结算
   messages:
     confirmation:
       delete: "删除这条%{model}记录？"
@@ -18,6 +19,9 @@ zh-CN:
     welcome_to: 欢迎来到
   labels:
     last_modified_at: 最后编辑于
+    clearing: 结算信息
+    item_list: 项目列表
+    amount: 金额
   order_sides:
     buy: 买
     sell: 卖
@@ -48,6 +52,7 @@ zh-CN:
       system_settings: 系统设置
       settings: 设置
       data: 数据
+      clearing: 结算
       client: 客户
       broker: 期货公司
       bank: 银行
@@ -65,3 +70,8 @@ zh-CN:
       position_detail: 持仓明细
       tradable_instruments: 可交易品种
       budget_in_and_out: 出入金记录
+      clearing:
+        capital: 资金
+        settlement: 结算
+      user:
+        last_activity: 最近操作

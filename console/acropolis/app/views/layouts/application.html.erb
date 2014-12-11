@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Acropolis</title>
+    <title><%= Acropolis::Settings.application.name %> | <%= Acropolis::Settings.application.owner %></title>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -18,13 +18,13 @@
 
 <body>
     <div id="wrapper">
-        <%= render partial: 'shared/inspinia/navigation' %>
+        <%= render partial: 'shared/navigation' %>
 
         <div id="page-wrapper" class="gray-bg">
 
-            <%= render partial: 'shared/inspinia/header' %>
+            <%= render partial: 'shared/header' %>
 
-            <%= render partial: 'shared/inspinia/page_header' %>
+            <%= render partial: 'shared/page_header' %>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <%= render partial: 'shared/inspinia/footer' %>
+            <%= render partial: 'shared/footer' %>
 
         </div>
     </div>

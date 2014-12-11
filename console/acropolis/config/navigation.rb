@@ -94,37 +94,12 @@ SimpleNavigation::Configuration.run do |navigation|
     end
 
     #
-    # Client menus
-    #
-    primary.item :page_client, fa_icon('empire', text: Client.model_name.human), nil, {} do |client_menu|
-      if recent_items(:client).length > 0
-        recent_items(:client).map do |id, name|
-          client_menu.item(
-            "page_client_#{id}".to_sym,
-            fa_icon('clock-o', text: name),
-            client_path(id: id),
-            {
-              highlights_on: Regexp.new("clients/#{id}")
-            }
-          )
-        end
-      end
-
-      client_menu.item(
-        :page_client_list,
-        t('models.all', model: Client.model_name.human),
-        clients_path,
-        {
-          highlights_on: /clients(\/)*$/
-        }
-      )
-    end
-
-    #
     # Products menus
     #
-    primary.item :page_product, fa_icon('archive', text: Product.model_name.human), nil, {} do |product_menu|
-      if recent_items(:product).length > 0
+    if recent_items(:product).length > 0
+
+      primary.item :page_product, fa_icon('archive', text: Product.model_name.human), nil, {} do |product_menu|
+
         recent_items(:product).map do |id, name|
           product_menu.item(
             "page_product_#{id}".to_sym,
@@ -135,51 +110,70 @@ SimpleNavigation::Configuration.run do |navigation|
             }
           )
         end
-      end
 
-      product_menu.item(
-        :page_product_list,
-        t('models.all', model: Product.model_name.human),
+        product_menu.item(
+          :page_product_list,
+          t('models.all', model: Product.model_name.human),
+          products_path,
+          {
+            highlights_on: /products(\/)*$/
+          }
+        )
+      end
+    else
+      primary.item(
+        :page_product,
+        fa_icon('archive', text: Product.model_name.human),
         products_path,
         {
           highlights_on: /products(\/)*$/
-        }
-      )
+        })
     end
 
+
     #
-    # TradingAccounts menus
+    # Client menus
     #
-    primary.item :page_trading_account, fa_icon('user', text: TradingAccount.model_name.human), nil, {} do |trading_account_menu|
-      if recent_items(:trading_account).length > 0
-        recent_items(:trading_account).map do |id, name|
-          trading_account_menu.item(
-            "page_trading_account_#{id}".to_sym,
+
+    if recent_items(:client).length > 0
+      primary.item :page_client, fa_icon('empire', text: Client.model_name.human), nil, {} do |client_menu|
+        recent_items(:client).map do |id, name|
+          client_menu.item(
+            "page_client_#{id}".to_sym,
             fa_icon('clock-o', text: name),
-            trading_account_path(id: id),
+            client_path(id: id),
             {
-              highlights_on: Regexp.new("trading_accounts/#{id}")
+              highlights_on: Regexp.new("clients/#{id}")
             }
           )
         end
-      end
 
-      trading_account_menu.item(
-        :page_trading_account_list,
-        t('models.all', model: TradingAccount.model_name.human),
-        trading_accounts_path,
+        client_menu.item(
+          :page_client_list,
+          t('models.all', model: Client.model_name.human),
+          clients_path,
+          {
+            highlights_on: /clients(\/)*$/
+          }
+        )
+      end
+    else
+      primary.item(
+        :page_client,
+        fa_icon('empire', text: Client.model_name.human),
+        clients_path,
         {
-          highlights_on: /trading_accounts(\/)*$/
-        }
-      )
+          highlights_on: /clients(\/)*$/
+        })
     end
 
     #
     # Trading menus
     #
-    primary.item :page_exchange, fa_icon('exchange', text: Exchange.model_name.human), nil, {} do |exchange_menu|
 
-      if recent_items(:exchange).length > 0
+    if recent_items(:exchange).length > 0
+
+      primary.item :page_exchange, fa_icon('university', text: Exchange.model_name.human), nil, {} do |exchange_menu|
         recent_items(:exchange).map do |id, name|
           exchange_menu.item(
             "page_exchange_#{id}".to_sym,
@@ -190,20 +184,26 @@ SimpleNavigation::Configuration.run do |navigation|
             }
           )
         end
-      end
 
-      exchange_menu.item(
+        exchange_menu.item(
+          :page_exchange,
+          t('models.all', model: Exchange.model_name.human),
+          exchanges_path,
+          {
+            highlights_on: /exchanges/
+          }
+        )
+      end
+    else
+
+      primary.item(
         :page_exchange,
-        t('models.all', model: Exchange.model_name.human),
+        fa_icon('university', text: Exchange.model_name.human),
         exchanges_path,
         {
-          highlights_on: /exchanges/
-        }
-      )
+          highlights_on: /exchanges(\/)*$/
+        })
 
-    end
-
-    primary.item :page_data, fa_icon('database', text: t('navigation.page.data')), nil, {} do |data_menu|
     end
 
     primary.item :page_settings, fa_icon('cog', text: t('navigation.page.settings')), nil, {} do |settings_menu|

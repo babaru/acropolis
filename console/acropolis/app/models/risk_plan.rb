@@ -15,7 +15,7 @@ class RiskPlan < ActiveRecord::Base
   def matched_operation(product)
     operation = nil
     risk_plan_operations.each do |item|
-      if item.is_matched?(product)
+      if item.is_matched?(product) && item.is_enabled?
         new_operation = item.operation
         if operation.nil?
           operation = new_operation

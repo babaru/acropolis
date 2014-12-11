@@ -16,6 +16,10 @@ class ProductsController < ApplicationController
   # GET /products/1.json
   def show
     cache_recent_item(:product, @product.id, @product.name)
+    add_breadcrumb @product.client.name, client_path(@product.client)
+    add_breadcrumb @product.name, nil
+
+    @client = @product.client
 
     @product_risk_plans_grid = initialize_grid(ProductRiskPlan.where(
       ProductRiskPlan.arel_table[:product_id].eq(@product.id).and(
@@ -28,9 +32,6 @@ class ProductsController < ApplicationController
       ))
 
     @trading_accounts_grid = initialize_grid(TradingAccount.where(product_id: @product.id))
-
-    add_breadcrumb @product.client.name, client_path(@product.client)
-    add_breadcrumb @product.name, nil
   end
 
   # GET /products/new

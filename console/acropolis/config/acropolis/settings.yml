@@ -1,0 +1,14 @@
+defaults: &defaults
+  application:
+    name: 志投风控系统
+    owner: 志投科技 True Partner China
+    copyright: 志投科技 True Partner China © 2014-2015
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

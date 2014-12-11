@@ -1,18 +1,20 @@
-<div class="notifications">
+<div id="notifications" style="position: fixed; z-index: 9999999999999999999999999; top: 5px; left: 50%;">
 
 <% if notice %>
-  <div class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <%= notice %>
+  <div style="position: relative; right: 100%;">
+      <div class="alert alert-success alert-dismissable animated fadeInDown" style="position: relative; right: -50%;">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <%= notice %>
+      </div>
   </div>
-
 <% end %>
+
 <% if alert %>
-
-  <div class="alert alert-danger alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <strong>警告 </strong><%=fa_icon('warning') %> <%= alert %>
+  <div style="position: relative; right: 100%; ">
+      <div class="alert alert-danger alert-dismissable animated fadeInDown" style="position: relative; right: -50%;">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <%= alert %>
+      </div>
   </div>
-
 <% end %>
 </div>

@@ -25,6 +25,7 @@ class TradingAccount < ActiveRecord::Base
       self.trading_summary.leverage = raw_summary[:leverage]
       self.trading_summary.exposure = raw_summary[:exposure]
       self.trading_summary.profit = raw_summary[:customer_benefit] - self.budget
+      self.trading_summary.trading_fee = raw_summary[:trading_fee]
       self.trading_summary.save
     end
   end
@@ -38,7 +39,7 @@ class TradingAccount < ActiveRecord::Base
   #
   # Trading summary delegates
   #
-  %w(balance margin leverage exposure customer_benefit net_worth profit).each do |method_name|
+  %w(balance margin leverage exposure customer_benefit net_worth profit trading_fee).each do |method_name|
     define_method(method_name) do
       return 0 unless self.trading_summary
       self.trading_summary.send(method_name.to_sym)
@@ -134,6 +135,7 @@ class TradingAccount < ActiveRecord::Base
       leverage: leverage,
       margin: margin,
       exposure: exposure.abs,
+      trading_fee: trading_fee
     }
   end
 end

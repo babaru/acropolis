@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'clearing/trading_accounts'
+
   get 'flatuipro_demo/index'
 
   namespace :api do
@@ -35,10 +37,14 @@ Rails.application.routes.draw do
 
   resources :trading_accounts do
     get 'delete'
+    get 'clearing'
     post 'calculate_trading_summary'
+    post 'export'
 
     resources :trading_account_instruments, :trading_account_budget_records
   end
+
+  get 'clearing_trading_accounts', to: 'clearing#trading_accounts', as: :trading_accounts_clearing
 
   resources :trading_account_instruments do
     get 'delete'

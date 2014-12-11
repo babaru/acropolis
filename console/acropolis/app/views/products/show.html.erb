@@ -13,47 +13,85 @@
 
 <% end %>
 
-<div class="ibox">
-  <div class="ibox-content">
-    <div id="product-detail">
-      <%= render partial: 'product_detail' %>
-    </div>
-    <div class="row m-t-sm">
-      <div class="col-lg-12">
-        <div class="panel blank-panel">
-          <div class="panel-heading">
-              <div class="panel-options">
-                  <ul class="nav nav-tabs">
-                      <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('models.list', model: TradingAccount.model_name.human) %></a></li>
-                  </ul>
-              </div>
-          </div>
+<div class="row">
 
-          <div class="panel-body">
+  <div class="col-lg-3">
 
-            <div class="tab-content">
-
-              <div class="tab-pane active" id="tab-1">
-
-                <div class="btn-toolbar">
-                  <div class="btn-group pull-right">
-                  <%= link_to(fa_icon('plus-square', text: t('models.add', model: TradingAccount.model_name.human)), new_product_trading_account_path(@product), remote: true, class: 'btn btn-primary btn-sm') %>
-                  </div>
-                </div>
-
-                <div id="trading_account-list" class="tooltip-demo project-list">
-                  <%= render partial: 'trading_accounts_grid' %>
-                </div>
-
-              </div>
-
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div>
+                <h5><%= @client.name %></h5>
+                <ul class="folder-list" style="padding: 0">
+                    <% @client.products.each do |product| %>
+                    <%= nav_link_to product.name, product_path(product), {}, {:wrapper => 'li'} %>
+                    <% end %>
+                </ul>
+                <div class="clearfix"></div>
             </div>
 
-          </div>
+            <div class="hr-line-dashed"></div>
+
+            <div>
+                <% Client.all.each do |client| %>
+                <h5><%= t('models.list', model: Client.model_name.human) %></h5>
+                <ul class="folder-list" style="padding: 0">
+                    <%= nav_link_to client.name, client_path(client), {}, {:wrapper => 'li'} %>
+                </ul>
+                <% end %>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+  <div class="col-lg-9">
+
+    <div class="ibox">
+        <div class="ibox-content">
+            <div id="product-detail">
+              <%= render partial: 'product_detail' %>
+            </div>
+            <div class="row m-t-sm">
+              <div class="col-lg-12">
+                <div class="panel blank-panel">
+                  <div class="panel-heading">
+                      <div class="panel-options">
+                          <ul class="nav nav-tabs">
+                              <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('models.list', model: TradingAccount.model_name.human) %></a></li>
+                          </ul>
+                      </div>
+                  </div>
+
+                  <div class="panel-body">
+
+                    <div class="tab-content">
+
+                      <div class="tab-pane active" id="tab-1">
+
+                        <div class="btn-toolbar">
+                          <div class="btn-group pull-right">
+                          <%= link_to(fa_icon('plus-square', text: t('models.add', model: TradingAccount.model_name.human)), new_product_trading_account_path(@product), remote: true, class: 'btn btn-primary btn-sm') %>
+                          </div>
+                        </div>
+
+                        <div id="trading_account-list" class="tooltip-demo project-list">
+                          <%= render partial: 'trading_accounts_grid' %>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+        </div>
 
         </div>
-      </div>
-    </div>
   </div>
 
 </div>
+

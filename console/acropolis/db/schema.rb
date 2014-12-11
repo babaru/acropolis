@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141127064531) do
+ActiveRecord::Schema.define(version: 20141211003109) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -330,6 +330,7 @@ ActiveRecord::Schema.define(version: 20141127064531) do
     t.decimal  "balance",          precision: 20, scale: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "trading_fee",      precision: 20, scale: 4, default: 0.0
   end
 
   create_table "trading_symbols", force: true do |t|

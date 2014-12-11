@@ -96,7 +96,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(
         :email,
         :password,
-        :password_confirmation
+        :password_confirmation,
         :encrypted_password,
         :reset_password_token,
         :reset_password_sent_at,

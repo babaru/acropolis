@@ -16,6 +16,14 @@ class TradingAccountsController < ApplicationController
   # GET /trading_accounts/1.json
   def show
     cache_recent_item(:trading_account, @trading_account.id, @trading_account.name)
+
+    @product = @trading_account.product
+    @client = @product.client
+
+    add_breadcrumb @product.client.name, client_path(@product.client)
+    add_breadcrumb @product.name, product_path(@product)
+    add_breadcrumb @trading_account.name, nil
+
     @trading_records_grid = initialize_grid(Trade.where(trading_account_id: @trading_account.id).order('traded_at DESC'))
     @trading_account_instruments_grid = initialize_grid(TradingAccountInstrument.where(trading_account_id: @trading_account.id))
     @trading_account_budget_records_grid = initialize_grid(TradingAccountBudgetRecord.where(trading_account_id: @trading_account.id).order(:created_at))
@@ -93,6 +101,10 @@ class TradingAccountsController < ApplicationController
       TradingAccountRiskPlan.arel_table[:trading_account_id].eq(@trading_account.id).and(
         TradingAccountRiskPlan.arel_table[:type].eq(HolidayTradingAccountRiskPlan.name))
       ))
+  end
+
+  def clearing
+    @trading_account = TradingAccount.find params[:trading_account_id]
   end
 
   # GET /trading_accounts/new
@@ -174,6 +186,22 @@ class TradingAccountsController < ApplicationController
   def calculate_trading_summary
     @trading_account = TradingAccount.find(params[:trading_account_id])
     @trading_account.calculate_trading_summary
+  end
+
+  def export
+
+    RBase.create_table '/Users/apple/Projects/acropolis/console/acropolis/public/system/people' do |t|
+      t.column :name, :string, :size => 30
+      t.column :birthdate, :date
+      t.column :active, :boolean
+      t.column :tax, :integer, :size => 10, :decimal => 2
+    end
+
+    table = RBase::Table.open('/Users/apple/Projects/acropolis/console/acropolis/public/system/people')
+    person = table.build({name: 'sldfsad', birthdate: Date.new(1980,7,16), active: true, tax: 12.2})
+    person.save
+    table.close
+
   end
 
   private
