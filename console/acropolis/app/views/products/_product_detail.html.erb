@@ -5,7 +5,7 @@
             <h2><%= @product.name %></h2>
         </div>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-6">
                 <dl class="dl-horizontal">
                     <dt><%= t('activerecord.attributes.product.net_worth') %></dt>
                     <dd class="text-right"><%= render_net_worth(@product.net_worth) %></dd>
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-6">
                 <dl class="dl-horizontal">
                     <dt><%= t('activerecord.attributes.product.budget') %></dt>
                     <dd class="text-right"><%= render_currency(@product.budget) %></dd>
@@ -26,7 +26,7 @@
                     <dd class="text-right"><%= render_currency(@product.balance) %></dd>
                 </dl>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <dl class="dl-horizontal">
                     <dt><%= t('activerecord.attributes.product.client') %></dt>
                     <dd class="text-right"><%= @product.client.name %></dd>

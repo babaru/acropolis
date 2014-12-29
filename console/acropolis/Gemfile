@@ -78,3 +78,7 @@ gem 'rbase', git: 'git://github.com/aya-soft/rbase.git', :require => 'rbase'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'rspec-rails', '~> 3.0', group: [:development, :test]
+gem 'autotest-rails', :group => [:development, :test]
+# gem 'factory_girl_rails', group: [:development, :test]
+

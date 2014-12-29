@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       post 'trading_accounts/auth', to: 'trading_accounts#auth', as: :trading_account_auth
 
+      get 'trades/latest_of_exchange', to: 'trades#latest_of_exchange'
+
       resources :products, :risk_events, :product_risk_parameters, :instruments, :exchanges, :trades, :market_prices, :trading_accounts
     end
   end

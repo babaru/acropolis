@@ -23,6 +23,10 @@ class Instrument < ActiveRecord::Base
     trading_symbol.multiplier
   end
 
+  def currency_exchange_rate
+    trading_symbol.currency.exchange_rate
+  end
+
   class << self
 
     def instrument_types
