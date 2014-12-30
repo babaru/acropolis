@@ -21,6 +21,7 @@ class Trade < ActiveRecord::Base
   scope :not_later, ->(time) { where('exchange_traded_at <= ?', time)}
   scope :after, ->(sequence_number) { where(Trade.arel_table[:system_trade_sequence_number].gteq(sequence_number))}
   scope :today, -> { where(Arel::Nodes::NamedFunction.new('date', [Trade.arel_table[:exchange_traded_at]]).eq(Time.now.strftime('%Y-%m-%d')))}
+  scope :when, ->(date){ where(Arel::Nodes::NamedFunction.new('date', [Trade.arel_table[:exchange_traded_at]]).eq(date.strftime('%Y-%m-%d')))}
 
   # Class Methods
   class << self

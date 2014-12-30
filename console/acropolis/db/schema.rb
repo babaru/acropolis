@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141229084036) do
+ActiveRecord::Schema.define(version: 20141230084906) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -281,6 +281,16 @@ ActiveRecord::Schema.define(version: 20141229084036) do
   add_index "trading_account_instruments", ["instrument_id"], name: "index_trading_account_instruments_on_instrument_id", using: :btree
   add_index "trading_account_instruments", ["trading_account_id"], name: "index_trading_account_instruments_on_trading_account_id", using: :btree
 
+  create_table "trading_account_parameters", force: true do |t|
+    t.integer  "trading_account_id"
+    t.string   "parameter_name"
+    t.decimal  "parameter_value",    precision: 20, scale: 4, default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "trading_account_parameters", ["trading_account_id"], name: "index_trading_account_parameters_on_trading_account_id", using: :btree
+
   create_table "trading_account_risk_plans", force: true do |t|
     t.integer  "trading_account_id"
     t.integer  "risk_plan_id"
@@ -340,16 +350,8 @@ ActiveRecord::Schema.define(version: 20141229084036) do
 
   create_table "trading_summaries", force: true do |t|
     t.string   "type"
-    t.decimal  "net_worth",          precision: 20, scale: 4, default: 0.0
-    t.decimal  "customer_benefit",   precision: 20, scale: 4, default: 0.0
-    t.decimal  "leverage",           precision: 20, scale: 4, default: 0.0
-    t.decimal  "margin",             precision: 20, scale: 4, default: 0.0
-    t.decimal  "exposure",           precision: 20, scale: 4, default: 0.0
-    t.decimal  "profit",             precision: 20, scale: 4, default: 0.0
-    t.decimal  "balance",            precision: 20, scale: 4, default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "trading_fee",        precision: 20, scale: 4, default: 0.0
     t.datetime "trading_date"
     t.integer  "exchange_id"
     t.integer  "latest_trade_id"
@@ -359,6 +361,16 @@ ActiveRecord::Schema.define(version: 20141229084036) do
   add_index "trading_summaries", ["exchange_id"], name: "index_trading_summaries_on_exchange_id", using: :btree
   add_index "trading_summaries", ["latest_trade_id"], name: "index_trading_summaries_on_latest_trade_id", using: :btree
   add_index "trading_summaries", ["trading_account_id"], name: "index_trading_summaries_on_trading_account_id", using: :btree
+
+  create_table "trading_summary_parameters", force: true do |t|
+    t.integer  "trading_summary_id"
+    t.string   "parameter_name"
+    t.decimal  "parameter_value",    precision: 20, scale: 4, default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "trading_summary_parameters", ["trading_summary_id"], name: "index_trading_summary_parameters_on_trading_summary_id", using: :btree
 
   create_table "trading_symbols", force: true do |t|
     t.string   "name"
