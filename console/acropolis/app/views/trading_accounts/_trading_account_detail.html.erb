@@ -13,8 +13,8 @@
         <div class="row">
             <div class="col-lg-6">
                 <dl class="dl-horizontal">
-                    <dt><%= t('activerecord.attributes.trading_account.account_no') %></dt>
-                    <dd class="text-right"><%= @trading_account.account_no %></dd>
+                    <dt><%= t('activerecord.attributes.trading_account.account_number') %></dt>
+                    <dd class="text-right"><%= @trading_account.account_number %></dd>
                 </dl>
             </div>
             <div class="col-lg-6">
@@ -33,16 +33,16 @@
             </div>
             <div class="col-lg-6">
                 <dl class="dl-horizontal">
-                    <dt><%= t('activerecord.attributes.trading_account.product_net_worth') %></dt>
-                    <dd class="text-right"><%= render_net_worth(@trading_account.product.net_worth) %></dd>
+                    <dt></dt>
+                    <dd class="text-right"></dd>
                 </dl>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-6">
                 <dl class="dl-horizontal">
-                    <dt><%= t('activerecord.attributes.trading_account.budget') %></dt>
-                    <dd class="text-right"><%= render_currency(@trading_account.budget) %></dd>
+                    <dt><%= t('activerecord.attributes.trading_account.capital') %></dt>
+                    <dd class="text-right"><%= render_currency(@trading_account.capital) %></dd>
                 </dl>
             </div>
             <div class="col-lg-6">

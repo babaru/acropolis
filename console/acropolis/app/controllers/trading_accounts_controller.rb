@@ -1,6 +1,7 @@
 class TradingAccountsController < ApplicationController
   before_action :set_trading_account, only: [:show, :edit, :update, :destroy]
-  before_action :set_product, only: [:new]
+  # before_action :set_product, only: [:new]
+  before_action :set_client, only: [:new]
 
   # GET /trading_accounts
   # GET /trading_accounts.json
@@ -17,80 +18,78 @@ class TradingAccountsController < ApplicationController
   def show
     cache_recent_item(:trading_account, @trading_account.id, @trading_account.name)
 
-    @product = @trading_account.product
-    @client = @product.client
+    @client = @trading_account.client
 
-    add_breadcrumb @product.client.name, client_path(@product.client)
-    add_breadcrumb @product.name, product_path(@product)
+    add_breadcrumb @client.name, client_path(@client)
     add_breadcrumb @trading_account.name, nil
 
-    @trading_records_grid = initialize_grid(Trade.where(trading_account_id: @trading_account.id).order('traded_at DESC'))
+    @trading_records_grid = initialize_grid(Trade.where(trading_account_id: @trading_account.id).order('exchange_traded_at DESC'))
     @trading_account_instruments_grid = initialize_grid(TradingAccountInstrument.where(trading_account_id: @trading_account.id))
     @trading_account_budget_records_grid = initialize_grid(TradingAccountBudgetRecord.where(trading_account_id: @trading_account.id).order(:created_at))
 
     @buy_positions = Trade.whose(@trading_account.id).select(
         :instrument_id,
-        :trade_price,
+        :traded_price,
         :order_side,
         :trading_account_id,
         Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
         :open_close,
-        :traded_at
+        :exchange_traded_at
       ).where(
         Trade.arel_table[:open_volume].gt(0).and(
           Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
             Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.buy)
           )
         )
-      ).order(:traded_at).reverse_order.group(:instrument_id, :trade_price)
+      ).order(:exchange_traded_at).reverse_order.group(:instrument_id, :traded_price)
 
     @buy_position_summary = Trade.whose(@trading_account.id).select(
         :instrument_id,
-        :trade_price,
+        :traded_price,
         :order_side,
         :trading_account_id,
         Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
         :open_close,
-        :traded_at
+        :exchange_traded_at
       ).where(
         Trade.arel_table[:open_volume].gt(0).and(
           Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
             Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.buy)
           )
         )
-      ).order(:traded_at).reverse_order.group(:instrument_id)
+      ).order(:exchange_traded_at).reverse_order.group(:instrument_id)
 
     @sell_positions = Trade.whose(@trading_account.id).select(
         :instrument_id,
-        :trade_price,
+        :traded_price,
         :order_side,
         :trading_account_id,
         Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
         :open_close,
-        :traded_at
+        :exchange_traded_at
       ).where(
         Trade.arel_table[:open_volume].gt(0).and(
           Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
             Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.sell)
           )
         )
-      ).order(:traded_at).reverse_order.group(:instrument_id, :trade_price)
+      ).order(:exchange_traded_at).reverse_order.group(:instrument_id, :traded_price)
 
     @sell_position_summary = Trade.whose(@trading_account.id).select(
         :instrument_id,
-        :trade_price,
+        :traded_price,
         :order_side,
         :trading_account_id,
         Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
         :open_close,
-        :traded_at
+        :exchange_traded_at
       ).where(
         Trade.arel_table[:open_volume].gt(0).and(
           Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
             Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.sell)
           )
         )
-      ).order(:traded_at).reverse_order.group(:instrument_id)
+      ).order(:exchange_traded_at).reverse_order.group(:instrument_id)
 
     @trading_account_risk_plans_grid = initialize_grid(TradingAccountRiskPlan.where(
       TradingAccountRiskPlan.arel_table[:trading_account_id].eq(@trading_account.id).and(
@@ -110,8 +109,8 @@ class TradingAccountsController < ApplicationController
   # GET /trading_accounts/new
   def new
     @trading_account = TradingAccount.new
-    @trading_account.product = @product
-    @trading_account.budget = 0
+    @trading_account.client = @client
+    @trading_account.capital = 0
   end
 
   # GET /trading_accounts/1/edit
@@ -123,9 +122,9 @@ class TradingAccountsController < ApplicationController
   def create
     TradingAccount.transaction do
       @trading_account = TradingAccount.new(trading_account_params)
-      @trading_account.budget ||= 0
+      @trading_account.capital ||= 0
       @trading_account.save!
-      @product = @trading_account.product
+      @client = @trading_account.client
     end
 
     respond_to do |format|
@@ -133,7 +132,7 @@ class TradingAccountsController < ApplicationController
       format.html { redirect_to @trading_account, notice: 'TradingAccount was successfully created.'}
       format.js
     end
-  rescue ActiveRecord::Rollback
+  rescue
     respond_to do |format|
       format.html { render :new }
       format.js { render :new }
@@ -145,7 +144,7 @@ class TradingAccountsController < ApplicationController
   def update
     TradingAccount.transaction do
       @trading_account.update!(trading_account_params)
-      @product = @trading_account.product
+      @client = @trading_account.client
     end
 
     respond_to do |format|
@@ -168,12 +167,12 @@ class TradingAccountsController < ApplicationController
   # DELETE /trading_accounts/1.json
   def destroy
     remove_recent_item(:trading_account, @trading_account.id)
-    @product = @trading_account.product
+    @client = @trading_account.client
     @trading_account.destroy!
 
     respond_to do |format|
       set_trading_accounts_grid
-      format.html { redirect_to trading_accounts_url, notice: 'TradingAccount was successfully destroyed.' }
+      format.html { redirect_to client_trading_accounts_path(@client), notice: 'TradingAccount was successfully destroyed.' }
       format.js
     end
   rescue ActiveRecord::Rollback
@@ -214,20 +213,24 @@ class TradingAccountsController < ApplicationController
       @product = Product.find params[:product_id]
     end
 
+    def set_client
+      @client = Client.find params[:client_id]
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def trading_account_params
       params.require(:trading_account).permit(
         :name,
-        :account_no,
+        :account_number,
         :password,
         :legal_id,
-        :budget,
-        :product_id,
+        :capital,
+        :client_id,
         )
     end
 
     def set_trading_accounts_grid
-      @trading_accounts_grid = initialize_grid(TradingAccount.where(product_id: @product.id))
+      @trading_accounts_grid = initialize_grid(TradingAccount.where(client_id: @client.id))
     end
 end
 

@@ -14,7 +14,7 @@ class ClientsController < ApplicationController
   # GET /clients/1
   # GET /clients/1.json
   def show
-    @capital_accounts_grid = initialize_grid(CapitalAccount.where(client_id: @client.id))
+    @trading_accounts_grid = initialize_grid(TradingAccount.where(client_id: @client.id))
     @products_grid = initialize_grid(Product.where(client_id: @client.id))
     cache_recent_item(:client, @client.id, @client.name)
     add_breadcrumb @client.name, nil

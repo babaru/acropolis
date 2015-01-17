@@ -6,13 +6,13 @@
 
   g.column name: t('activerecord.attributes.trading_account.name'), class: 'project-title' do |trading_account|
     [
-      link_to(trading_account.account_no, trading_account_path(trading_account)),
+      link_to(trading_account.account_number, trading_account_path(trading_account)),
       content_tag(:small, trading_account.name)
     ].join('<br/>').html_safe
   end
 
-  g.column name: t('activerecord.attributes.trading_account.budget') do |trading_account|
-    render_currency(trading_account.budget)
+  g.column name: t('activerecord.attributes.trading_account.capital') do |trading_account|
+    render_currency(trading_account.capital)
   end
 
   g.column name: t('activerecord.attributes.trading_summary.balance') do |trading_account|

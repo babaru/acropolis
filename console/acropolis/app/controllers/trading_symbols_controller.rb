@@ -15,10 +15,13 @@ class TradingSymbolsController < ApplicationController
   # GET /trading_symbols/new
   def new
     @trading_symbol = TradingSymbol.new
+    @trading_symbol.build_trading_symbol_margin
+    @trading_symbol.build_margin
   end
 
   # GET /trading_symbols/1/edit
   def edit
+    @trading_symbol.margin = Margin.new if @trading_symbol.margin.nil?
   end
 
   # POST /trading_symbols
@@ -95,6 +98,11 @@ class TradingSymbolsController < ApplicationController
         :currency_id,
         :multiplier,
         :trading_symbol_type,
+        margin_attributes: [
+          :id,
+          :type,
+          :factor
+        ]
         )
     end
 

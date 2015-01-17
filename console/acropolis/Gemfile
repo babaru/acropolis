@@ -15,6 +15,8 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', '0.12.1', platforms: :ruby
 
+gem 'designmodo-flatuipro-rails'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -45,7 +47,8 @@ gem 'wice_grid', '3.4.10'
 
 gem 'nav_lynx'
 
-# gem 'rails-i18n'
+gem 'rails-i18n'
+
 gem 'i18n-active_record',
       :git => 'git://github.com/svenfuchs/i18n-active_record.git',
       :require => 'i18n/active_record'

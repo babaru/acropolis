@@ -10,7 +10,7 @@ class ExchangesController < ApplicationController
   # GET /exchanges/1
   # GET /exchanges/1.json
   def show
-    cache_recent_item(:exchange, @exchange.id, @exchange.name)
+    cache_recent_item(:exchange, @exchange.id, @exchange.trading_code)
 
     @trading_symbols_grid = initialize_grid(TradingSymbol.where(exchange_id: @exchange.id))
   end

@@ -4,8 +4,12 @@
     instrument.id
   end
 
-  g.column name: t('activerecord.attributes.instrument.security_code') do |instrument|
-    instrument.security_code
+  g.column name: t('activerecord.attributes.instrument.name') do |instrument|
+    instrument.name
+  end
+
+  g.column name: t('activerecord.attributes.instrument.exchange_instrument_code') do |instrument|
+    instrument.exchange_instrument_code
   end
 
   g.column name: t('activerecord.attributes.instrument.type') do |instrument|

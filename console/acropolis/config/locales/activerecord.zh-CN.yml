@@ -34,12 +34,13 @@ zh-CN:
       position: 持仓记录
       trading_summary: 交易概况
       trading_fee: 交易手续费
-      fixed_trading_fee: 固定手续费
+      fixed_trading_fee: 固定费用
+      fixed_rate_trading_fee: 固定比率
       margin: 保证金
-      fixed_rate_margin: 固定比率保证金
+      fixed_rate_margin: 固定比率
       market_price: 市场价格
       trading_account_instrument: 可交易品种
-      trading_symbol: 交易产品
+      trading_symbol: 交易品种
       trading_account_budget_record: 出入金记录
       trading_account_budget_out_record: 出金记录
       trading_account_budget_in_record: 入金记录
@@ -111,8 +112,8 @@ zh-CN:
         budget: 资金
       trading_account:
         name: 名称
-        budget: 资金
-        account_no: 帐号
+        capital: 资金
+        account_number: 帐号
         password: 密码
         legal_id: 身份证件号
         product: 所属产品
@@ -131,10 +132,10 @@ zh-CN:
         type: 类型
         currency_unit: 货币代码
       instrument:
-        name: 名称
+        name: 合约名称
         type: 类型
         symbol_id: 交易代码
-        security_code: 合约代码
+        exchange_instrument_code: 合约代码
         underlying_symbol_id: 合约标的交易代码
         expiration_date: 合约到期日
         strike_price: 执行价
@@ -174,8 +175,8 @@ zh-CN:
         type: 手续费收取方式
         factor: 手续费
       margin:
-        type: 保证金计算方式
-        factor: 保证金比率
+        type: 保证金算法
+        factor: 保证金参数
       client:
         name: 名称
       borker:
@@ -183,12 +184,14 @@ zh-CN:
       bank:
         name: 名称
       trading_symbol:
-        name: 交易代码
+        name: 品种代码
         currency: 货币
         trading_symbol_type: 类型
         multiplier: 合约乘数
         trading_fee: 交易手续费
         margin: 保证金
+        exchange_id: 交易所
+        currency_id: 货币
       trading_account_budget_record:
         money: 金额
         value: 金额

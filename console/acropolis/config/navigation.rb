@@ -93,6 +93,8 @@ SimpleNavigation::Configuration.run do |navigation|
 
     end
 
+    if false
+
     #
     # Products menus
     #
@@ -128,6 +130,8 @@ SimpleNavigation::Configuration.run do |navigation|
         {
           highlights_on: /products(\/)*$/
         })
+    end
+
     end
 
 

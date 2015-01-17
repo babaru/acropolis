@@ -4,17 +4,22 @@
 
   <%= f.error_notification %>
 
-            
+
     <%= f.input :name %>
-          
-    <%= f.input :exchange_id %>
-                      
-    <%= f.input :currency_id %>
-          
-    <%= f.input :multiplier %>
-          
-    <%= f.input :trading_symbol_type %>
-      
+
+    <%= f.input :exchange_id, as: :hidden %>
+
+    <%= f.input :currency_id, collection: Currency.all.map {|item| [item.name, item.id]} %>
+
+    <%= f.input :multiplier, as: :string %>
+
+    <%= f.input :trading_symbol_type, collection: TradingSymbol.trading_symbol_types %>
+
+    <%= f.simple_fields_for :margin, @trading_symbol.margin do |m| %>
+      <%= m.input :type, collection: [FixedRateMargin].map {|item| [item.model_name.human, item.name]} %>
+      <%= m.input :factor, as: :string %>
+    <% end %>
+
   </div>
 
   <div class="modal-footer">

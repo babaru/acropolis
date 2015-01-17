@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141230084906) do
+ActiveRecord::Schema.define(version: 20150104072426) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -80,20 +80,20 @@ ActiveRecord::Schema.define(version: 20141230084906) do
 
   create_table "margins", force: true do |t|
     t.string   "type"
-    t.decimal  "factor",            precision: 20, scale: 4
+    t.decimal  "factor",     precision: 16, scale: 8
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "trading_symbol_id"
   end
-
-  add_index "margins", ["trading_symbol_id"], name: "index_margins_on_trading_symbol_id", using: :btree
 
   create_table "market_prices", force: true do |t|
     t.integer  "instrument_id"
-    t.decimal  "price",         precision: 20, scale: 4
+    t.decimal  "price",                    precision: 20, scale: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "exchange_id"
+    t.datetime "exchange_updated_at"
+    t.string   "exchange_instrument_code"
+    t.string   "exchange_code"
   end
 
   add_index "market_prices", ["exchange_id"], name: "index_market_prices_on_exchange_id", using: :btree
@@ -317,36 +317,25 @@ ActiveRecord::Schema.define(version: 20141230084906) do
 
   create_table "trading_accounts", force: true do |t|
     t.string   "name"
-    t.decimal  "capital",          precision: 20, scale: 4
     t.integer  "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "account_number"
     t.string   "password"
     t.string   "legal_id"
-    t.decimal  "net_worth",        precision: 20, scale: 4, default: 1.0
-    t.decimal  "balance",          precision: 20, scale: 4, default: 0.0
-    t.decimal  "exposure",         precision: 20, scale: 4, default: 0.0
-    t.decimal  "leverage",         precision: 20, scale: 4, default: 0.0
-    t.decimal  "margin",           precision: 20, scale: 4, default: 0.0
-    t.decimal  "trading_fee",      precision: 20, scale: 4, default: 0.0
-    t.decimal  "profit",           precision: 20, scale: 4, default: 0.0
-    t.decimal  "customer_benefit", precision: 20, scale: 4, default: 0.0
-    t.decimal  "position_cost",    precision: 20, scale: 4, default: 0.0
+    t.integer  "client_id"
   end
 
+  add_index "trading_accounts", ["client_id"], name: "index_trading_accounts_on_client_id", using: :btree
   add_index "trading_accounts", ["product_id"], name: "index_trading_accounts_on_product_id", using: :btree
 
   create_table "trading_fees", force: true do |t|
     t.string   "type"
-    t.decimal  "factor",            precision: 20, scale: 4
+    t.decimal  "factor",      precision: 16, scale: 8
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "trading_symbol_id"
     t.integer  "currency_id"
   end
-
-  add_index "trading_fees", ["trading_symbol_id"], name: "index_trading_fees_on_trading_symbol_id", using: :btree
 
   create_table "trading_summaries", force: true do |t|
     t.string   "type"
@@ -371,6 +360,26 @@ ActiveRecord::Schema.define(version: 20141230084906) do
   end
 
   add_index "trading_summary_parameters", ["trading_summary_id"], name: "index_trading_summary_parameters_on_trading_summary_id", using: :btree
+
+  create_table "trading_symbol_margins", force: true do |t|
+    t.integer  "trading_symbol_id"
+    t.integer  "margin_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "trading_symbol_margins", ["margin_id"], name: "index_trading_symbol_margins_on_margin_id", using: :btree
+  add_index "trading_symbol_margins", ["trading_symbol_id"], name: "index_trading_symbol_margins_on_trading_symbol_id", using: :btree
+
+  create_table "trading_symbol_trading_fees", force: true do |t|
+    t.integer  "trading_symbol_id"
+    t.integer  "trading_fee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "trading_symbol_trading_fees", ["trading_fee_id"], name: "index_trading_symbol_trading_fees_on_trading_fee_id", using: :btree
+  add_index "trading_symbol_trading_fees", ["trading_symbol_id"], name: "index_trading_symbol_trading_fees_on_trading_symbol_id", using: :btree
 
   create_table "trading_symbols", force: true do |t|
     t.string   "name"

@@ -77,6 +77,7 @@ Rails.application.routes.draw do
 
     resources :capital_accounts
     resources :products
+    resources :trading_accounts
   end
 
   resources :capital_accounts do

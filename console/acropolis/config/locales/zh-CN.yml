@@ -35,7 +35,7 @@ zh-CN:
     call_options: 认购期权
     put_options: 认沽期权
   trading_symbol_types:
-    euqities: 现货
+    equities: 现货
     futures: 期货
     options: 期权
   placeholders:

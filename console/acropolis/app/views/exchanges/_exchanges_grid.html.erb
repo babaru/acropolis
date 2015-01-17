@@ -7,7 +7,7 @@
 
   g.column name: t('activerecord.attributes.exchange.name'), class: 'project-title' do |exchange|
     [
-      link_to(exchange.name, exchange_path(exchange)),
+      link_to(exchange.trading_code, exchange_path(exchange)),
       content_tag(:small, "#{t('labels.last_modified_at')} #{exchange.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
     ].join('<br/>').html_safe
   end

@@ -1,5 +1,6 @@
 class Margin < ActiveRecord::Base
-  belongs_to :instrument
+  has_one :trading_symbol_margin
+  has_one :trading_symbol, through: :trading_symbol_margin
 
   def value
     return 0 if self.factor.nil?

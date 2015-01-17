@@ -1,6 +1,7 @@
 json.id                             trade.id
 json.exchange_traded_at             trade.exchange_traded_at.to_i
 json.exchange_code                  trade.exchange_code
+json.exchange_id                    trade.exchange_id
 json.exchange_instrument_code       trade.exchange_instrument_code
 json.exchange_trade_id              trade.exchange_trade_id
 json.exchange_trade_sequence_number trade.exchange_trade_sequence_number

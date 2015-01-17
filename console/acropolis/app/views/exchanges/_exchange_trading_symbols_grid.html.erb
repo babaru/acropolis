@@ -20,14 +20,15 @@
     trading_symbol.multiplier
   end
 
-  g.column name: t('activerecord.attributes.trading_symbol.trading_fee'), class: 'project-title' do |trading_symbol|
-    trading_symbol.trading_fee.factor unless trading_symbol.trading_fee.nil?
+  g.column name: t('activerecord.attributes.trading_symbol.trading_fee') do |trading_symbol|
+    render_trading_fee(trading_symbol.trading_fee) unless trading_symbol.trading_fee.nil?
   end
 
-  g.column name: t('activerecord.attributes.trading_symbol.margin'), class: 'project-title' do |trading_symbol|
+  g.column name: t('activerecord.attributes.trading_symbol.margin') do |trading_symbol|
     [
-      number_to_percentage(trading_symbol.margin.factor * 100, precision: 0)
-    ].join('<br/>').html_safe if trading_symbol.margin && trading_symbol.margin.type
+      trading_symbol.margin.class.model_name.human,
+      "(#{number_to_percentage(trading_symbol.margin.factor * 100, precision: 1)})"
+    ].join(' ').html_safe if trading_symbol.margin
   end
 
   g.column html: {class: 'project-actions'} do |trading_symbol|

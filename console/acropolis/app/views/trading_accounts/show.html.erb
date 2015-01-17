@@ -21,22 +21,10 @@
         <div class="ibox-content">
 
             <div>
-                <h5><%= @product.name %></h5>
-                <ul class="folder-list" style="padding: 0">
-                    <% @product.trading_accounts.each do |trading_account| %>
-                    <%= nav_link_to trading_account.name, trading_account_path(trading_account), {}, {:wrapper => 'li'} %>
-                    <% end %>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="hr-line-dashed"></div>
-
-            <div>
                 <h5><%= @client.name %></h5>
                 <ul class="folder-list" style="padding: 0">
-                    <% @client.products.each do |product| %>
-                    <%= nav_link_to product.name, product_path(product), {}, {:wrapper => 'li'} %>
+                    <% @client.trading_accounts.each do |trading_account| %>
+                    <%= nav_link_to trading_account.name, trading_account_path(trading_account), {}, {:wrapper => 'li'} %>
                     <% end %>
                 </ul>
                 <div class="clearfix"></div>

@@ -71,8 +71,8 @@ class Trade < ActiveRecord::Base
 
   # Margin of this trade
   def margin
-    return exchange_margin if exchange_margin > 0
-    system_calculated_margin
+    return 0 if self.is_close?
+    self.trading_account.client.margin(self)
   end
 
   # Trading fee of this trade
@@ -84,7 +84,10 @@ class Trade < ActiveRecord::Base
   # Position cost of this trade
   def position_cost
     return 0 if self.is_close?
-    self.traded_price * self.open_volume * instrument_multiplier * instrument_currency_exchange_rate
+    logger.debug self.traded_price
+    logger.debug self.open_volume
+    value = self.traded_price * self.open_volume
+    value * instrument_multiplier * instrument_currency_exchange_rate
   end
 
   # Market value of this trade
@@ -174,11 +177,11 @@ class Trade < ActiveRecord::Base
   end
 
   def instrument_multiplier
-    instrument.multiplier
+    instrument.trading_symbol.multiplier
   end
 
   def instrument_currency_exchange_rate
-    instrument.currency_exchange_rate
+    instrument.trading_symbol.currency.exchange_rate
   end
 
   def instrument_latest_price

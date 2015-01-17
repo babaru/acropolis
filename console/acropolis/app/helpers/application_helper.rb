@@ -196,4 +196,19 @@ module ApplicationHelper
 
     content_tag(:span, content, class: "label label-#{options[:colors][key.to_sym]}", style: "font-size: #{options[:font_size]}px;")
   end
+
+  def render_trading_fee(trading_fee)
+    if trading_fee.type == 'FixedRateTradingFee'
+      return [
+        trading_fee.class.model_name.human,
+        "(#{number_to_percentage(trading_fee.factor * 100, precision: 4)})"
+      ].join(' ').html_safe
+    elsif trading_fee.type == 'FixedTradingFee'
+      return [
+        trading_fee.class.model_name.human,
+        "(#{number_to_currency(trading_fee.factor, unit: trading_fee.currency.symbol)}/手)"
+      ].join(' ').html_safe
+    end
+
+  end
 end

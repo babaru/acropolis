@@ -10,14 +10,8 @@ module Api
           @trading_account = TradingAccount.find(trade_params[:trading_account_id])
         end
 
-        if trade_params[:exchange_id].nil?
-          @exchange = Exchange.find_by_trading_code(trade_params[:exchange_code])
-        else
-          @exchange = Exchange.find(trade_params[:exchange_id])
-        end
-
         if trade_params[:instrument_id].nil?
-          @instrument = Instrument.where(exchange_id: @exchange.id, exchange_instrument_code: trade_params[:exchange_instrument_code]).first
+          @instrument = Instrument.where(exchange_instrument_code: trade_params[:exchange_instrument_code]).first
         else
           @instrument = Instrument.find(trade_params[:instrument_id])
         end
@@ -25,7 +19,7 @@ module Api
         @exchange_traded_at = Time.at(trade_params[:traded_at].to_i)
 
         @trade = Trade.where({
-          exchange_id: @exchange.id,
+          exchange_id: @instrument.exchange.id,
           instrument_id: @instrument.id,
           exchange_trade_id: trade_params[:exchange_trade_id],
           exchange_traded_at: (@exchange_traded_at.beginning_of_day..@exchange_traded_at.end_of_day)
@@ -104,12 +98,13 @@ module Api
         @trade.exchange_instrument_code = @instrument.exchange_instrument_code
         @trade.trading_account = @trading_account
         @trade.trading_account_number = @trading_account.account_number
-        @trade.exchange = @exchange
-        @trade.exchange_code = @exchange.trading_code
+        @trade.exchange = @instrument.exchange
+        @trade.exchange_code = @instrument.exchange.trading_code
+        logger.debug @trade.open_close
         @trade.open_volume = trade_params[:traded_volume] if @trade.is_open?
-        @trade.system_calculated_margin = @instrument.trading_symbol.margin.calculate(@trade) if @trade.is_open?
-        @trade.system_calculated_trading_fee = @instrument.trading_symbol.trading_fee.calculate(@trade)
-        @exchange.generate_trade_sequence_number(@trade)
+        @trade.system_calculated_margin = @trading_account.client.margin(@trade) if @trade.is_open?
+        @trade.system_calculated_trading_fee = @trading_account.client.trading_fee(@trade)
+        @instrument.exchange.generate_trade_sequence_number(@trade)
       end
 
     end

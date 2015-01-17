@@ -6,6 +6,7 @@ class TradingAccount < ActiveRecord::Base
   include Acropolis::Calculators::LeverageCalculator
 
   belongs_to :product
+  belongs_to :client
   has_many :trades, dependent: :destroy
   has_many :trading_summaries, dependent: :destroy
   has_many :trading_account_instruments, dependent: :destroy
@@ -13,6 +14,8 @@ class TradingAccount < ActiveRecord::Base
   has_many :trading_account_budget_records
   has_many :trading_account_risk_plans, dependent: :destroy
   has_many :risk_plans, through: :trading_account_risk_plans
+
+  validates :account_number, uniqueness: true
 
   ADDITIONAL_PARAMETERS = %w(customer_benefit balance net_worth leverage capital)
 
@@ -85,9 +88,9 @@ class TradingAccount < ActiveRecord::Base
   #
 
   def margin_rate
-    return 0 if self.budget.nil? || self.budget == 0
+    return 0 if self.capital.nil? || self.capital == 0
     return 0 if self.margin.nil?
-    self.margin.fdiv(self.budget)
+    self.margin.fdiv(self.capital)
   end
 
   def risk_plans_at(date)
@@ -118,11 +121,7 @@ class TradingAccount < ActiveRecord::Base
   # according to risk plan controlling
   #
   def trading_status
-    mo = matched_operation(Time.now)
-    return 0 if mo.nil?
-    return 0 if mo.name.to_sym == :warning
-    return 1 if mo.name.to_sym == :cease_open
-    return 2 if mo.name.to_sym == :force_close
+    2
   end
 
 end
