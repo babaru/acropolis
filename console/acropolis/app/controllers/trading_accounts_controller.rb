@@ -203,6 +203,26 @@ class TradingAccountsController < ApplicationController
 
   end
 
+  def uploading_clearing_capital_file
+    @trading_account = TradingAccount.find(params[:trading_account_id])
+    @upload_file = TradingAccountClearingCapitalFile.new
+    @upload_file.trading_account_id = @trading_account.id
+  end
+
+  def upload_clearing_capital_file
+    if request.post?
+      @upload_file = TradingAccountClearingCapitalFile.new(trading_account_clearing_capital_file_params)
+      if @upload_file.save
+        @record = TradingAccountClearingCapital.find_by_trading_account_id_and_cleared_at(@upload_file.trading_account_id, @upload_file.cleared_at)
+        unless @record.nil?
+          @record.update(@upload_file.parse)
+        else
+          TradingAccountClearingCapital.create(@upload_file.parse)
+        end
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trading_account
@@ -226,6 +246,14 @@ class TradingAccountsController < ApplicationController
         :legal_id,
         :capital,
         :client_id,
+        )
+    end
+
+    def trading_account_clearing_capital_file_params
+      params.require(:trading_account_clearing_capital_file).permit(
+        :data_file,
+        :cleared_at,
+        :trading_account_id,
         )
     end
 

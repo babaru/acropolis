@@ -5,6 +5,7 @@
 //= require bootstrap-datetimepicker.min
 
 //= require jquery_ujs
+//= require jquery.remotipart
 
 //= require wice_grid
 

@@ -1,0 +1,42 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4 class="modal-title"><%= t('models.upload', model: TradingAccountClearingCapital.model_name.human) %></h4>
+    </div>
+
+    <%= simple_form_for(@upload_file, url: trading_account_upload_clearing_capital_file_path(@trading_account), method: :post, remote: true, html: {class: 'form-horizontal upload-trading-account-clearing-capital-file-form'}) do |f| %>
+    <%= f.error_notification %>
+    <div class="modal-body">
+      <%= f.input :trading_account_id, as: :hidden %>
+      <%= f.input :cleared_at, as: :date_picker, required: true %>
+      <%= f.input :data_file, as: :file, required: true %>
+    </div>
+    <div class="modal-footer">
+      <%= link_to t('buttons.cancel'), "#", class: "btn btn-default btn-sm", data: {dismiss: "modal"} %>
+      <%= f.submit t('buttons.save_changes'), class: 'btn btn-primary btn-sm' %>
+    </div>
+    <% end %>
+
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+<script type="text/javascript">
+
+(function ($) {
+
+  $(function () {
+
+    $('.date-picker').datetimepicker();
+
+    // Checkbox style
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+    });
+
+  });
+
+}(jQuery));
+
+</script>
