@@ -14,10 +14,10 @@
     <% @buy_positions.each do |trade| %>
     <tr>
         <td><%= trade.instrument.exchange.name %></td>
-        <td><%= trade.instrument.security_code %></td>
+        <td><%= trade.instrument.exchange_instrument_code %></td>
         <td><%= render_market_price(trade.instrument.latest_price, {unit: trade.instrument.trading_symbol.currency.symbol}) %></td>
         <td><%= render_order_side(trade.order_side) %></td>
-        <td class="text-right"><%= render_trade_price(trade.trade_price, {unit: trade.instrument.trading_symbol.currency.symbol}) %></td>
+        <td class="text-right"><%= render_trade_price(trade.traded_price, {unit: trade.instrument.trading_symbol.currency.symbol}) %></td>
         <td class="text-right"><%= trade.open_volume %></td>
     </tr>
     <% end %>

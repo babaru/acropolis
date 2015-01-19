@@ -12,7 +12,7 @@
     <% @buy_position_summary.each do |trade| %>
     <tr>
         <td><%= trade.instrument.exchange.name %></td>
-        <td><%= trade.instrument.security_code %></td>
+        <td><%= trade.instrument.exchange_instrument_code %></td>
         <td><%= render_order_side(trade.order_side) %></td>
         <td class="text-right"><%= trade.open_volume %></td>
     </tr>

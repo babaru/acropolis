@@ -1,9 +1,7 @@
-
 <div class="row">
     <div class="col-lg-12">
         <div class="m-b-md">
             <div class="btn-toolbar pull-right tooltip-demo">
-                <%= link_to t('models.upload', model: TradingAccountClearingCapital.model_name.human), trading_account_uploading_clearing_capital_file_path(@trading_account), remote: true, class: 'btn btn-white btn-xs' %>
 
                 <%= link_to t('models.edit', model: TradingAccount.model_name.human), edit_trading_account_path(@trading_account), remote: true, class: 'btn btn-white btn-xs' %>
 
@@ -12,79 +10,7 @@
 
             <h2><%= @trading_account.name %></h2>
         </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <dl class="dl-horizontal">
-                    <dt><%= t('activerecord.attributes.trading_account.account_number') %></dt>
-                    <dd class="text-right"><%= @trading_account.account_number %></dd>
-                </dl>
-            </div>
-            <div class="col-lg-6">
-                <dl class="dl-horizontal">
-                    <dt><%= t('activerecord.attributes.trading_account.trading_status') %></dt>
-                    <dd class="text-right"><%= render_trading_status(@trading_account) %></dd>
-                </dl>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <dl class="dl-horizontal">
-                    <dt><%= t('activerecord.attributes.trading_summary.net_worth') %></dt>
-                    <dd class="text-right"><%= render_net_worth(@trading_account.net_worth) %></dd>
-                </dl>
-            </div>
-            <div class="col-lg-6">
-                <dl class="dl-horizontal">
-                    <dt></dt>
-                    <dd class="text-right"></dd>
-                </dl>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <dl class="dl-horizontal">
-                    <dt><%= t('activerecord.attributes.trading_account.capital') %></dt>
-                    <dd class="text-right"><%= render_currency(@trading_account.capital) %></dd>
-                </dl>
-            </div>
-            <div class="col-lg-6">
-                <dl class="dl-horizontal">
-                    <dt><%= t('activerecord.attributes.trading_summary.balance') %></dt>
-                    <dd class="text-right"><%= render_currency(@trading_account.balance) %></dd>
-                </dl>
-            </div>
-        </div>
+
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-6">
-        <dl class="dl-horizontal">
-            <dt><%= t('activerecord.attributes.trading_summary.customer_benefit') %></dt>
-            <dd class="text-right"><%= render_currency(@trading_account.customer_benefit) %></dd>
-            <dt><%= t('activerecord.attributes.trading_summary.profit') %></dt>
-            <dd class="text-right"><%= render_currency(@trading_account.profit) %></dd>
-            <dt><%= t('activerecord.attributes.trading_summary.exposure') %></dt>
-            <dd class="text-right"><%= render_currency(@trading_account.exposure) %></dd>
-        </dl>
-    </div>
-    <div class="col-lg-6">
-        <dl class="dl-horizontal">
-            <dt><%= t('activerecord.attributes.trading_summary.leverage') %></dt>
-            <dd class="text-right"><%= render_decimal(@trading_account.leverage) %></dd>
-            <dt><%= t('activerecord.attributes.trading_summary.margin') %></dt>
-            <dd class="text-right"><%= render_currency(@trading_account.margin) %></dd>
-            <dt><%= t('activerecord.attributes.trading_summary.margin_rate') %></dt>
-            <dd class="text-right"><%= render_percentage(@trading_account.margin_rate) %></dd>
-        </dl>
-    </div>
-    <div class="col-lg-3">
-        <dl class="dl-horizontal">
 
-        </dl>
-    </div>
-    <div class="col-lg-3">
-        <dl class="dl-horizontal">
-
-        </dl>
-    </div>
-</div>

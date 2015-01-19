@@ -1,0 +1,9 @@
+<div id="trading-account-trading-records-grid" class="tooltip-demo">
+    <div class="btn-toolbar">
+      <div class="btn-group pull-right">
+          <%= link_to t('models.upload', model: Trade.model_name.human), trading_account_uploading_clearing_trades_file_path(@trading_account), remote: true, class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+
+    <%= render partial: 'trading_records_grid' %>
+</div>

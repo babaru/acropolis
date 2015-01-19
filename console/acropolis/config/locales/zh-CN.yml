@@ -11,6 +11,7 @@ zh-CN:
     sign_out: 注销
     auto_refresh: 自动刷新
     clearing: 结算
+    refresh: 刷新
   messages:
     confirmation:
       delete: "删除这条%{model}记录？"
@@ -22,6 +23,7 @@ zh-CN:
     clearing: 结算信息
     item_list: 项目列表
     amount: 金额
+    operation: 操作
   order_sides:
     buy: 买
     sell: 卖
@@ -75,3 +77,4 @@ zh-CN:
         settlement: 结算
       user:
         last_activity: 最近操作
+      overview: 概况

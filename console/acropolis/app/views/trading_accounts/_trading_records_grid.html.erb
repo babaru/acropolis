@@ -5,11 +5,11 @@
   end
 
   g.column name: t('activerecord.attributes.trade.traded_at') do |trade|
-    fa_icon('clock-o', text: trade.traded_at.strftime('%H:%M:%S'))
+    fa_icon('clock-o', text: trade.exchange_traded_at.strftime('%H:%M:%S'))
   end
 
   g.column name: t('activerecord.attributes.trade.instrument') do |trade|
-    trade.instrument.security_code
+    trade.instrument.exchange_instrument_code
   end
 
   g.column name: t('activerecord.attributes.trade.exchange') do |trade|
@@ -21,7 +21,7 @@
   end
 
   g.column name: t('activerecord.attributes.trade.trade_price'), class: 'text-right' do |trade|
-    render_trade_price(trade.trade_price, {unit: trade.instrument.trading_symbol.currency.symbol})
+    render_trade_price(trade.traded_price, {unit: trade.instrument.trading_symbol.currency.symbol})
   end
 
   g.column name: t('activerecord.attributes.trade.order_side') do |trade|
@@ -33,7 +33,7 @@
   end
 
   g.column name: t('activerecord.attributes.trade.trade_volume'), class: 'text-right' do |trade|
-    trade.trade_volume
+    trade.traded_volume
   end
 
   g.column name: t('activerecord.attributes.trade.open_volume'), class: 'text-right' do |trade|

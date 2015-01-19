@@ -5,4 +5,5 @@ class UploadFile < ActiveRecord::Base
     :path => ":rails_root/public:url",
     :url => "/system/upload_files/:attachment_access_token/file.:extension"
   serialize :meta_data, Hash
+
 end

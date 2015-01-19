@@ -44,6 +44,8 @@ zh-CN:
       trading_account_budget_record: 出入金记录
       trading_account_budget_out_record: 出金记录
       trading_account_budget_in_record: 入金记录
+      trading_account_clearing_capital_file: 账户资金清算文件
+      trading_account_clearing_capital: 账户资金清算数据
     attributes:
       time_stamp:
         created_at: 创建于
@@ -111,8 +113,8 @@ zh-CN:
         name: 名称
         budget: 资金
       trading_account:
-        name: 名称
-        capital: 资金
+        name: 账户名称
+        capital: 总资金
         account_number: 帐号
         password: 密码
         legal_id: 身份证件号
@@ -120,6 +122,14 @@ zh-CN:
         client: 所属客户
         trading_status: 交易状态
         product_net_worth: 产品总净值
+        net_worth: 净值
+        customer_benefit: 客户权益
+        exposure: 敞口
+        balance: 账户余额
+        leverage: 杠杆
+        margin: 保证金占用
+        margin_rate: 保证金占用率
+        profit: 损益
       product_capital_account:
         capital_account: 资金帐号名称
         capital_account_id: 资金帐号名称
@@ -162,15 +172,6 @@ zh-CN:
         order_side: 买卖
         trade_price: 成交价格
         volume: 持仓量
-      trading_summary:
-        net_worth: 净值
-        customer_benefit: 客户权益
-        exposure: 敞口
-        balance: 账户余额
-        leverage: 杠杆
-        margin: 保证金占用
-        margin_rate: 保证金占用率
-        profit: 损益
       trading_fee:
         type: 手续费收取方式
         factor: 手续费
@@ -196,6 +197,12 @@ zh-CN:
         money: 金额
         value: 金额
         type: 类型
+      trading_account_clearing_trades_file:
+        cleared_at: 日期
+        data_file: 文件
+      trading_account_clearing_capital_file:
+        cleared_at: 日期
+        data_file: 文件
   models:
     list: "%{model}列表"
     new: "新建%{model}"
@@ -208,3 +215,5 @@ zh-CN:
     recent: 最近访问%{model}
     all: 全部%{model}
     clearing: "%{model}结算信息"
+    upload: "上传%{model}"
+    refresh: "刷新%{model}"

@@ -1,0 +1,9 @@
+<div class="btn-toolbar">
+    <div class="btn-group pull-right">
+    <%= link_to(fa_icon('plus-square', text: t('models.add', model: TradingAccountBudgetRecord.model_name.human)), new_trading_account_trading_account_budget_record_path(trading_account_id: @trading_account.id), remote: true, class: 'btn btn-primary btn-sm') %>
+    </div>
+</div>
+
+<div id="trading_account_budget_record-list" class="tooltip-demo" id="trading-account-budget-records-grid">
+    <%= render partial: 'trading_account_budget_records_grid' %>
+</div>

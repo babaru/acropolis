@@ -45,6 +45,9 @@ Rails.application.routes.draw do
     post 'upload_clearing_capital_file'
     get 'uploading_clearing_capital_file'
 
+    post 'upload_clearing_trades_file'
+    get 'uploading_clearing_trades_file'
+
     resources :trading_account_instruments, :trading_account_budget_records
   end
 

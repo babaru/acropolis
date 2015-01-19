@@ -223,6 +223,37 @@ class TradingAccountsController < ApplicationController
     end
   end
 
+  def uploading_clearing_trades_file
+    @trading_account = TradingAccount.find(params[:trading_account_id])
+    @upload_file = TradingAccountClearingTradesFile.new
+    @upload_file.trading_account_id = @trading_account.id
+  end
+
+  def upload_clearing_trades_file
+    if request.post?
+      @trading_account = TradingAccount.find(trading_account_clearing_trades_file_params[:trading_account_id])
+      @upload_file = TradingAccountClearingTradesFile.new(trading_account_clearing_trades_file_params)
+      if @upload_file.save
+        results = @upload_file.parse
+        results[:trades].each do |trade_data|
+          @trade = Trade.find_by_exchange_trade_id_and_exchange_instrument_code(trade_data[:exchange_trade_id], trade_data[:exchange_instrument_code])
+          unless @trade.nil?
+            @trade.update(trade_data)
+          else
+            puts "Exchange instrument code: #{trade_data[:exchange_instrument_code]}"
+            instrument = Instrument.find_by_exchange_instrument_code(trade_data[:exchange_instrument_code])
+            Trade.create(trade_data.merge({
+              instrument_id: instrument.id,
+              trading_account_id: @trading_account.id,
+              trading_account_number: @trading_account.account_number,
+              exchange_id: instrument.exchange_id,
+              exchange_code: instrument.exchange.trading_code}))
+          end
+        end
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trading_account
@@ -251,6 +282,14 @@ class TradingAccountsController < ApplicationController
 
     def trading_account_clearing_capital_file_params
       params.require(:trading_account_clearing_capital_file).permit(
+        :data_file,
+        :cleared_at,
+        :trading_account_id,
+        )
+    end
+
+    def trading_account_clearing_trades_file_params
+      params.require(:trading_account_clearing_trades_file).permit(
         :data_file,
         :cleared_at,
         :trading_account_id,

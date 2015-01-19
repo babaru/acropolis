@@ -1,0 +1,35 @@
+
+<table class="table table-striped table-hover">
+    <tbody>
+        <tr>
+            <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.account_number') %></strong></td>
+            <td><%= @trading_account.account_number %></td>
+            <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.name') %></strong></td>
+            <td><%= @trading_account.name %></td>
+        </tr>
+        <tr>
+            <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.net_worth') %></strong></td>
+            <td><%= render_net_worth(@trading_account.net_worth) %></td>
+            <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.trading_status') %></strong></td>
+            <td><%= render_trading_status(@trading_account) %></td>
+        </tr>
+        <tr>
+            <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.capital') %></strong></td>
+            <td><%= render_currency(@trading_account.capital) %></td>
+            <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.balance') %></strong></td>
+            <td><%= render_currency(@trading_account.balance) %></td>
+        </tr>
+        <tr>
+            <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.customer_benefit') %></strong></td>
+            <td><%= render_currency(@trading_account.customer_benefit) %></td>
+            <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.profit') %></strong></td>
+            <td><%= render_currency(@trading_account.profit) %></td>
+        </tr>
+        <tr>
+            <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.leverage') %></strong></td>
+            <td><%= render_decimal(@trading_account.leverage) %></td>
+            <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.margin') %></strong></td>
+            <td><%= render_currency(@trading_account.margin) %></td>
+        </tr>
+    </tbody>
+</table>

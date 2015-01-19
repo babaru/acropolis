@@ -1,7 +1,30 @@
 <% content_for :page_title do %>
+<%= t('models.show', model: TradingAccount.model_name.human) %>:
+<%= @trading_account.name %> (<%= @trading_account.account_number %>)
+<% end %>
 
-<%= t('models.show', model: TradingAccount.model_name.human) %>
+<% content_for :page_header_right_panel do %>
+<div class="btn-toolbar pull-right tooltip-demo">
 
+    <div class="btn-group">
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        <%= fa_icon('cog', text: t('labels.operation')) %> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right" role="menu">
+            <li>
+                <%= link_to fa_icon('pencil', text: t('models.edit', model: TradingAccount.model_name.human)),
+                edit_trading_account_path(@trading_account),
+                remote: true %>
+            </li>
+            <li>
+                <%= link_to fa_icon('refresh', text: t('models.refresh', model: TradingAccount.model_name.human)),
+                trading_account_calculate_trading_summary_path(@trading_account),
+                remote: true, method: :post %>
+            </li>
+        </ul>
+    </div>
+
+</div>
 <% end %>
 
 <% content_for :anything_else do %>
@@ -13,172 +36,71 @@
 
 <% end %>
 
-<div class="row">
+<%= render partial: 'trading_account_highlights' %>
 
-  <div class="col-lg-3">
+<div class="ibox">
+    <div class="ibox-content" id="trading-account-show-page-content">
 
-    <div class="ibox float-e-margins">
-        <div class="ibox-content">
+        <span id="trading-account-id" style="display:none;"><%= @trading_account.id %></span>
 
-            <div>
-                <h5><%= @client.name %></h5>
-                <ul class="folder-list" style="padding: 0">
-                    <% @client.trading_accounts.each do |trading_account| %>
-                    <%= nav_link_to trading_account.name, trading_account_path(trading_account), {}, {:wrapper => 'li'} %>
-                    <% end %>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
+        <div class="row m-t-sm">
+            <div class="col-lg-12">
+                <div class="panel blank-panel">
+                    <div class="panel-heading">
+                        <div class="panel-options">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab-0" data-toggle="tab"><%= t('navigation.tab.overview') %></a></li>
+                                <li><a href="#tab-1" data-toggle="tab"><%= t('navigation.tab.position_summary') %></a></li>
+                                <li><a href="#tab-2" data-toggle="tab"><%= t('navigation.tab.position_detail') %></a></li>
+                                <li><a href="#tab-3" data-toggle="tab"><%= t('navigation.tab.trades') %></a></li>
+                                <li><a href="#tab-4" data-toggle="tab"><%= t('navigation.tab.clearing.capital') %></a></li>
+                                <li><a href="#tab-5" data-toggle="tab"><%= t(TradingAccountRiskPlan.model_name.human) %></a></li>
+                                <li><a href="#tab-6" data-toggle="tab"><%= t(HolidayTradingAccountRiskPlan.model_name.human) %></a></li>
+                                <li><a href="#tab-7" data-toggle="tab"><%= t('navigation.tab.budget_in_and_out') %></a></li>
+                            </ul>
+                        </div>
+                    </div>
 
-            <div class="hr-line-dashed"></div>
+                    <div class="panel-body">
 
-            <div>
-                <% Client.all.each do |client| %>
-                <h5><%= t('models.list', model: Client.model_name.human) %></h5>
-                <ul class="folder-list" style="padding: 0">
-                    <%= nav_link_to client.name, client_path(client), {}, {:wrapper => 'li'} %>
-                </ul>
-                <% end %>
-                <div class="clearfix"></div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab-0">
+                                <%= render partial: 'overview' %>
+                            </div>
+                            <div class="tab-pane" id="tab-1">
+                                <%= render partial: 'position_summary' %>
+                            </div>
+
+                            <div class="tab-pane" id="tab-2">
+                                <%= render partial: 'position_detail' %>
+                            </div>
+
+                            <div class="tab-pane" id="tab-3">
+                                <%= render partial: 'trade_records' %>
+                            </div>
+
+                            <div class="tab-pane" id="tab-4">
+                                <%= render partial: 'clearing_capital' %>
+                            </div>
+
+                            <div class="tab-pane" id="tab-5">
+                                <%= render partial: 'risk_plans' %>
+                            </div>
+
+                            <div class="tab-pane" id="tab-6">
+                                <%= render partial: 'holiday_risk_plans' %>
+                            </div>
+
+                            <div class="tab-pane" id="tab-7">
+                                <%= render partial: 'capital_records' %>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-  </div>
-
-  <div class="col-lg-9">
-    <div class="ibox">
-  <div class="ibox-content" id="trading-account-show-page-content">
-    <span id="trading-account-id" style="display:none;"><%= @trading_account.id %></span>
-      <div id="trading_account-detail">
-        <%= render partial: 'trading_account_detail' %>
-      </div>
-      <div class="row m-t-sm">
-        <div class="col-lg-12">
-          <div class="panel blank-panel">
-            <div class="panel-heading">
-                <div class="panel-options">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab-1" data-toggle="tab"><%= t('navigation.tab.position_summary') %></a></li>
-                        <li><a href="#tab-2" data-toggle="tab"><%= t('navigation.tab.position_detail') %></a></li>
-                        <li><a href="#tab-3" data-toggle="tab"><%= t('navigation.tab.trades') %></a></li>
-                        <li><a href="#tab-5" data-toggle="tab"><%= t('navigation.tab.budget_in_and_out') %></a></li>
-                        <li><a href="#tab-6" data-toggle="tab"><%= t('navigation.tab.clearing.capital') %></a></li>
-                        <li><a href="#tab-7" data-toggle="tab"><%= t(TradingAccountRiskPlan.model_name.human) %></a></li>
-                        <li><a href="#tab-8" data-toggle="tab"><%= t(HolidayTradingAccountRiskPlan.model_name.human) %></a></li>
-                        <li><a href="#tab-4" data-toggle="tab"><%= t('navigation.tab.tradable_instruments') %></a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="panel-body">
-
-              <div class="tab-content">
-                <div class="tab-pane active" id="tab-1">
-
-                  <div id="position-list" class="tooltip-demo">
-                    <div class="row">
-                      <div class="col-lg-6" style="border-right: 1px solid #eee;" id="trading-account-buy-position-summary">
-                        <%= render partial: 'buy_position_summary' %>
-                      </div>
-                      <div class="col-lg-6" id="trading-account-sell-position-summary">
-                        <%= render partial: 'sell_position_summary' %>
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="tab-pane" id="tab-2">
-
-                  <div class="row">
-                    <div class="col-lg-6" style="border-right: 1px solid #eee;" id="trading-account-buy-position-detail">
-                      <%= render partial: 'buy_position_detail' %>
-                    </div>
-                    <div class="col-lg-6" id="trading-account-sell-position-detail">
-                      <%= render partial: 'sell_position_detail' %>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="tab-pane" id="tab-3">
-
-                  <div id="trading-account-trading-records-grid" class="tooltip-demo">
-                    <%= render partial: 'trading_records_grid' %>
-                  </div>
-
-                </div>
-
-                <div class="tab-pane" id="tab-4">
-
-                  <div class="btn-toolbar">
-                    <div class="btn-group pull-right">
-                    <%= link_to(fa_icon('plus-square', text: t('models.add', model: TradingAccountInstrument.model_name.human)), new_trading_account_trading_account_instrument_path(trading_account_id: @trading_account.id), remote: true, class: 'btn btn-primary btn-sm') %>
-                    </div>
-                  </div>
-
-                  <div id="trading_account_instrument-list" class="tooltip-demo" id="trading-account-instruments-grid">
-                    <%= render partial: 'trading_account_instruments_grid' %>
-                  </div>
-
-                </div>
-
-                <div class="tab-pane" id="tab-5">
-
-                  <div class="btn-toolbar">
-                    <div class="btn-group pull-right">
-                    <%= link_to(fa_icon('plus-square', text: t('models.add', model: TradingAccountBudgetRecord.model_name.human)), new_trading_account_trading_account_budget_record_path(trading_account_id: @trading_account.id), remote: true, class: 'btn btn-primary btn-sm') %>
-                    </div>
-                  </div>
-
-                  <div id="trading_account_budget_record-list" class="tooltip-demo" id="trading-account-budget-records-grid">
-                    <%= render partial: 'trading_account_budget_records_grid' %>
-                  </div>
-
-                </div>
-
-                <div class="tab-pane" id="tab-6">
-                    <%= render partial: 'clearing_capital' %>
-                </div>
-
-                <div class="tab-pane" id="tab-7">
-                  <div class="btn-toolbar">
-                    <div class="btn-group pull-right">
-                    <%= link_to(fa_icon('plus-square', text: t('models.add', model: TradingAccountRiskPlan.model_name.human)), new_trading_account_trading_account_risk_plan_path(@trading_account, type: TradingAccountRiskPlan.name), remote: true, class: 'btn btn-primary btn-sm') %>
-                    </div>
-                  </div>
-
-                  <div id="trading_account_risk_plan-list" class="tooltip-demo">
-                    <%= render partial: 'trading_account_risk_plans/trading_account_risk_plans_grid' %>
-                  </div>
-                </div>
-
-                <div class="tab-pane" id="tab-8">
-
-                  <div class="btn-toolbar">
-                    <div class="btn-group pull-right">
-                    <%= link_to(fa_icon('plus-square', text: t('models.add', model: HolidayTradingAccountRiskPlan.model_name.human)), new_trading_account_trading_account_risk_plan_path(@trading_account, type: HolidayTradingAccountRiskPlan.name), remote: true, class: 'btn btn-primary btn-sm') %>
-                    </div>
-                  </div>
-
-                  <div id="holiday_trading_account_risk_plan-list" class="tooltip-demo">
-                    <%= render partial: 'trading_account_risk_plans/holiday_trading_account_risk_plans_grid' %>
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-        </div>
-      </div>
-  </div>
-</div>
-  </div>
-
 </div>
 
 
