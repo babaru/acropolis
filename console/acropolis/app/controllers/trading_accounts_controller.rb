@@ -100,6 +100,8 @@ class TradingAccountsController < ApplicationController
       TradingAccountRiskPlan.arel_table[:trading_account_id].eq(@trading_account.id).and(
         TradingAccountRiskPlan.arel_table[:type].eq(HolidayTradingAccountRiskPlan.name))
       ))
+
+    @clearing_capital = TradingAccountClearingCapital.recent(@trading_account.id)
   end
 
   def clearing

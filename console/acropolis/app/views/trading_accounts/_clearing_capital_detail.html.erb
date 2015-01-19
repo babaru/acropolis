@@ -9,59 +9,59 @@
         <tbody>
         <tr>
             <td><div><strong>上一交易日实有货币资金余额</strong></div></td>
-            <td><%= render_currency(@trading_account.capital) %></td>
+            <td><%= render_currency(@clearing_capital.previous_currency_balance) %></td>
         </tr>
         <tr>
             <td><div><span class="label label-primary">加</span> <strong>当日收入资金</strong></div></td>
-            <td><%= render_currency(0) %></td>
+            <td><%= render_currency(@clearing_capital.incoming) %></td>
         </tr>
         <tr>
             <td><div><strong>当日盈亏</strong></div></td>
-            <td><%= render_currency(@trading_account.profit) %></td>
+            <td><%= render_currency(@clearing_capital.profit) %></td>
         </tr>
         <tr>
             <td><div><span class="label label-danger">减</span> <strong>当日付出资金</strong></div></td>
-            <td><%= render_currency(0) %></td>
+            <td><%= render_currency(@clearing_capital.outgoing) %></td>
         </tr>
         <tr>
             <td><div><strong>手续费</strong></div></td>
-            <td><%= render_currency(@trading_account.trading_fee) %></td>
+            <td><%= render_currency(@clearing_capital.fee) %></td>
         </tr>
         <tr>
             <td><div><span class="label">其中</span> <strong>交易手续费</strong></div></td>
-            <td><%= render_currency(@trading_account.trading_fee) %></td>
+            <td><%= render_currency(@clearing_capital.trading_fee) %></td>
         </tr>
         <tr>
             <td><div><strong>结算手续费</strong></div></td>
-            <td><%= render_currency(0) %></td>
+            <td><%= render_currency(@clearing_capital.clearing_fee) %></td>
         </tr>
         <tr>
             <td><div><strong>交割手续费</strong></div></td>
-            <td><%= render_currency(0) %></td>
+            <td><%= render_currency(@clearing_capital.delivery_fee) %></td>
         </tr>
         <tr>
             <td><div><strong>移仓手续费</strong></div></td>
-            <td><%= render_currency(0) %></td>
+            <td><%= render_currency(@clearing_capital.position_transfer_fee) %></td>
         </tr>
         <tr>
             <td><div><strong>当日实有货币资金余额</strong></div></td>
-            <td><%= render_currency(@trading_account.balance) %></td>
+            <td><%= render_currency(@clearing_capital.currency_balance) %></td>
         </tr>
         <tr>
             <td><div><span class="label">其中</span> <strong>交易保证金</strong></div></td>
-            <td><%= render_currency(@trading_account.margin) %></td>
+            <td><%= render_currency(@clearing_capital.margin) %></td>
         </tr>
         <tr>
             <td><div><strong>结算准备金</strong></div></td>
-            <td><%= render_currency(@trading_account.balance) %></td>
+            <td><%= render_currency(0) %></td>
         </tr>
         <tr>
             <td><div><span class="label label-danger">减</span> <strong>交易保证金</strong></div></td>
-            <td><%= render_currency(@trading_account.margin) %></td>
+            <td><%= render_currency(@clearing_capital.margin) %></td>
         </tr>
         <tr>
             <td><div><strong>当日结算准备金余额</strong></div></td>
-            <td><%= render_currency(@trading_account.balance - @trading_account.margin) %></td>
+            <td><%= render_currency(@clearing_capital.currency_balance - @clearing_capital.margin) %></td>
         </tr>
         <tr>
             <td><div><span class="label label-primary">加</span> <strong>申报划入金额</strong></div></td>
@@ -73,11 +73,11 @@
         </tr>
         <tr>
             <td><div><strong>下一交易日开仓准备金</strong></div></td>
-            <td><%= render_currency(@trading_account.balance - @trading_account.margin) %></td>
+            <td><%= render_currency(@clearing_capital.next_currency_balance) %></td>
         </tr>
         <tr>
             <td><div><strong>应收手续费</strong></div></td>
-            <td><%= render_currency(@trading_account.trading_fee) %></td>
+            <td><%= render_currency(@clearing_capital.fee) %></td>
         </tr>
 
         </tbody>

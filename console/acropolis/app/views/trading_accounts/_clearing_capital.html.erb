@@ -3,4 +3,4 @@
     <%= link_to t('models.upload', model: TradingAccountClearingCapital.model_name.human), trading_account_uploading_clearing_capital_file_path(@trading_account), remote: true, class: 'btn btn-primary btn-sm' %>
     </div>
 </div>
-<%= render partial: 'clearing_capital_detail' %>
+<%= render partial: 'clearing_capital_detail' unless @clearing_capital.nil? %>
