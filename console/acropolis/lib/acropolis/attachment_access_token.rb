@@ -11,7 +11,7 @@ module Acropolis
 
     # SHA1 from random salt and time
     def generate_access_token
-      self.attachment_access_token = Digest::SHA1.hexdigest("#{random_salt}#{Time.now.to_i}")
+      self.attachment_access_token = Digest::SHA1.hexdigest("#{random_salt}#{Time.zone.now.to_i}")
     end
 
     # interpolate in paperclip

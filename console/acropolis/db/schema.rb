@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150118035637) do
+ActiveRecord::Schema.define(version: 20150119082512) do
 
   create_table "banks", force: true do |t|
     t.string   "name"
@@ -270,29 +270,6 @@ ActiveRecord::Schema.define(version: 20150118035637) do
   end
 
   add_index "trading_account_budget_records", ["trading_account_id"], name: "index_trading_account_budget_records_on_trading_account_id", using: :btree
-
-  create_table "trading_account_clearing_capitals", force: true do |t|
-    t.integer  "trading_account_id"
-    t.datetime "cleared_at"
-    t.string   "trading_account_number"
-    t.decimal  "previous_currency_balance", precision: 20, scale: 4, default: 0.0
-    t.decimal  "incoming",                  precision: 20, scale: 4, default: 0.0
-    t.decimal  "profit",                    precision: 20, scale: 4, default: 0.0
-    t.decimal  "outgoing",                  precision: 20, scale: 4, default: 0.0
-    t.decimal  "fee",                       precision: 20, scale: 4, default: 0.0
-    t.decimal  "trading_fee",               precision: 20, scale: 4, default: 0.0
-    t.decimal  "clearing_fee",              precision: 20, scale: 4, default: 0.0
-    t.decimal  "delivery_fee",              precision: 20, scale: 4, default: 0.0
-    t.decimal  "position_transfer_fee",     precision: 20, scale: 4, default: 0.0
-    t.decimal  "currency_balance",          precision: 20, scale: 4, default: 0.0
-    t.decimal  "margin",                    precision: 20, scale: 4, default: 0.0
-    t.decimal  "clearing_reserve",          precision: 20, scale: 4, default: 0.0
-    t.decimal  "next_currency_balance",     precision: 20, scale: 4, default: 0.0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "trading_account_clearing_capitals", ["trading_account_id"], name: "index_trading_account_clearing_capitals_on_trading_account_id", using: :btree
 
   create_table "trading_account_instruments", force: true do |t|
     t.integer  "trading_account_id"

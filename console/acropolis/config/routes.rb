@@ -48,8 +48,15 @@ Rails.application.routes.draw do
     post 'upload_clearing_trades_file'
     get 'uploading_clearing_trades_file'
 
+    get 'querying_by_date'
+    post 'queried_by_date'
+
     resources :trading_account_instruments, :trading_account_budget_records
+
+    resources :trading_summaries
   end
+
+  resources :trading_summaries
 
   get 'clearing_trading_accounts', to: 'clearing#trading_accounts', as: :trading_accounts_clearing
 

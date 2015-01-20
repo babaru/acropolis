@@ -130,6 +130,8 @@ zh-CN:
         margin: 保证金占用
         margin_rate: 保证金占用率
         profit: 损益
+      trading_summary:
+        trading_date: 交易日
       product_capital_account:
         capital_account: 资金帐号名称
         capital_account_id: 资金帐号名称
@@ -217,3 +219,4 @@ zh-CN:
     clearing: "%{model}结算信息"
     upload: "上传%{model}"
     refresh: "刷新%{model}"
+    query: "查询%{model}"

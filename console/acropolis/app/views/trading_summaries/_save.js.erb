@@ -1,0 +1,18 @@
+$("ul.errors").html("")
+<% if @trading_summary.errors.any? %>
+  <% @trading_summary.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  if ($('#trading_summary-detail').length) {
+    $('#trading_summary-detail').html("<%= escape_javascript(render 'trading_summary_detail') %>")
+  }
+
+  if ($('#trading_summary-list').length) {
+    $('#trading_summary-list').html("<%= escape_javascript(render 'trading_summaries_grid') %>")
+  }
+
+  $("#item-modal").modal("hide")
+
+<% end %>

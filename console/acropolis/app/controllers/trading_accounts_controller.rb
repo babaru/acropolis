@@ -2,6 +2,7 @@ class TradingAccountsController < ApplicationController
   before_action :set_trading_account, only: [:show, :edit, :update, :destroy]
   # before_action :set_product, only: [:new]
   before_action :set_client, only: [:new]
+  before_action :set_query_params, only: [:show, :querying_by_date]
 
   # GET /trading_accounts
   # GET /trading_accounts.json
@@ -17,15 +18,15 @@ class TradingAccountsController < ApplicationController
   # GET /trading_accounts/1.json
   def show
     cache_recent_item(:trading_account, @trading_account.id, @trading_account.name)
-
-    @client = @trading_account.client
-
-    add_breadcrumb @client.name, client_path(@client)
+    add_breadcrumb @trading_account.client.name, client_path(@trading_account.client)
     add_breadcrumb @trading_account.name, nil
 
-    @trading_records_grid = initialize_grid(Trade.where(trading_account_id: @trading_account.id).order('exchange_traded_at DESC'))
-    @trading_account_instruments_grid = initialize_grid(TradingAccountInstrument.where(trading_account_id: @trading_account.id))
-    @trading_account_budget_records_grid = initialize_grid(TradingAccountBudgetRecord.where(trading_account_id: @trading_account.id).order(:created_at))
+    # Trades related data
+
+    @trading_records_grid = initialize_grid(
+      Trade.where(build_trades_query_conditions
+        .merge(trading_account_id: @trading_account.id))
+      .order(:exchange_traded_at))
 
     @buy_positions = Trade.whose(@trading_account.id).select(
         :instrument_id,
@@ -41,7 +42,7 @@ class TradingAccountsController < ApplicationController
             Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.buy)
           )
         )
-      ).order(:exchange_traded_at).reverse_order.group(:instrument_id, :traded_price)
+      ).where(build_trades_query_conditions).order(:exchange_traded_at).reverse_order.group(:instrument_id, :traded_price)
 
     @buy_position_summary = Trade.whose(@trading_account.id).select(
         :instrument_id,
@@ -57,7 +58,7 @@ class TradingAccountsController < ApplicationController
             Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.buy)
           )
         )
-      ).order(:exchange_traded_at).reverse_order.group(:instrument_id)
+      ).where(build_trades_query_conditions).order(:exchange_traded_at).reverse_order.group(:instrument_id)
 
     @sell_positions = Trade.whose(@trading_account.id).select(
         :instrument_id,
@@ -73,7 +74,7 @@ class TradingAccountsController < ApplicationController
             Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.sell)
           )
         )
-      ).order(:exchange_traded_at).reverse_order.group(:instrument_id, :traded_price)
+      ).where(build_trades_query_conditions).order(:exchange_traded_at).reverse_order.group(:instrument_id, :traded_price)
 
     @sell_position_summary = Trade.whose(@trading_account.id).select(
         :instrument_id,
@@ -89,7 +90,7 @@ class TradingAccountsController < ApplicationController
             Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.sell)
           )
         )
-      ).order(:exchange_traded_at).reverse_order.group(:instrument_id)
+      ).where(build_trades_query_conditions).order(:exchange_traded_at).reverse_order.group(:instrument_id)
 
     @trading_account_risk_plans_grid = initialize_grid(TradingAccountRiskPlan.where(
       TradingAccountRiskPlan.arel_table[:trading_account_id].eq(@trading_account.id).and(
@@ -101,11 +102,21 @@ class TradingAccountsController < ApplicationController
         TradingAccountRiskPlan.arel_table[:type].eq(HolidayTradingAccountRiskPlan.name))
       ))
 
-    @clearing_capital = TradingAccountClearingCapital.recent(@trading_account.id)
+    # @clearing_capital = TradingAccountClearingCapital.recent(@trading_account.id).first
   end
 
-  def clearing
+  def querying_by_date
     @trading_account = TradingAccount.find params[:trading_account_id]
+  end
+
+  def queried_by_date
+    trading_date = params[:trading_summary][:trading_date]
+    exchange_id = params[:exchange_id]
+    query_params = {}
+    query_params[:trading_date] = trading_date if trading_date
+    query_params[:exchange_id] = exchange_id if exchange_id
+    @trading_account = TradingAccount.find params[:trading_account_id]
+    redirect_to trading_account_path(@trading_account, query_params)
   end
 
   # GET /trading_accounts/new
@@ -215,11 +226,11 @@ class TradingAccountsController < ApplicationController
     if request.post?
       @upload_file = TradingAccountClearingCapitalFile.new(trading_account_clearing_capital_file_params)
       if @upload_file.save
-        @record = TradingAccountClearingCapital.find_by_trading_account_id_and_cleared_at(@upload_file.trading_account_id, @upload_file.cleared_at)
+        @record = ClearingData.find_by_trading_account_id_and_cleared_on(@upload_file.trading_account_id, @upload_file.cleared_on)
         unless @record.nil?
           @record.update(@upload_file.parse)
         else
-          TradingAccountClearingCapital.create(@upload_file.parse)
+          ClearingData.create(@upload_file.parse)
         end
       end
     end
@@ -300,6 +311,24 @@ class TradingAccountsController < ApplicationController
 
     def set_trading_accounts_grid
       @trading_accounts_grid = initialize_grid(TradingAccount.where(client_id: @client.id))
+    end
+
+    def set_query_params
+      @query_params = {}
+
+      @query_params[:trading_date] = params[:trading_date] if params[:trading_date]
+      @query_params[:trading_date] ||= Time.zone.now.strftime('%Y-%m-%d')
+      @query_params[:exchange_id] = params[:exchange_id] if params[:exchange_id]
+
+      @trading_date = @query_params[:trading_date].to_time if @query_params[:trading_date]
+      @exchange = Exchange.find @query_params[:exchange_id] if @query_params[:exchange_id]
+    end
+
+    def build_trades_query_conditions
+      query_conditions = {}
+      query_conditions[:exchange_traded_at] = (@trading_date.beginning_of_day..@trading_date.end_of_day)
+      query_conditions[:exchange_id] = @exchange.id if @exchange
+      query_conditions
     end
 end
 

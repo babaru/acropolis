@@ -27,7 +27,7 @@ class TradingAccountClearingTradesFile < UploadFile
       trade[:exchange_trade_id] = record['TRADEID']
       trade[:traded_volume] = record['TVOLUME']
       trade[:traded_price] = record['TPRICE']
-      trade[:exchange_traded_at] = DateTime.strptime("#{self.cleared_at} #{record['TTIME']}", '%Y-%m-%d %H:%M:%S')
+      trade[:exchange_traded_at] = "#{self.cleared_at} #{record['TTIME']}".to_time
       trade[:order_side] = record['DIRECTION'].strip == '买' ? Acropolis::OrderSides.order_sides.buy : Acropolis::OrderSides.order_sides.sell
       trade[:open_close] = record['OFFSETFLAG'].strip == '开仓' ? Acropolis::TradeOpenFlags.trade_open_flags.open : Acropolis::TradeOpenFlags.trade_open_flags.close
       results[:trades] << trade

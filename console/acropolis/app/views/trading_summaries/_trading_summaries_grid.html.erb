@@ -1,0 +1,49 @@
+<%= grid(@trading_summaries_grid, :show_filters => :when_filtered) do |g|
+  
+  g.column name: '#' do |trading_summary|
+    trading_summary.id
+  end
+  
+  
+  g.column name: t('activerecord.attributes.trading_summary.type') do |trading_summary|
+    trading_summary.type
+  end
+
+  
+  g.column name: t('activerecord.attributes.time_stamp.created_at') do |trading_summary|
+    trading_summary.created_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+  
+  g.column name: t('activerecord.attributes.time_stamp.updated_at') do |trading_summary|
+    trading_summary.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+  
+  g.column name: t('activerecord.attributes.trading_summary.trading_date') do |trading_summary|
+    trading_summary.trading_date
+  end
+
+  
+  g.column name: t('activerecord.attributes.trading_summary.exchange_id') do |trading_summary|
+    trading_summary.exchange_id
+  end
+
+  
+  g.column name: t('activerecord.attributes.trading_summary.latest_trade_id') do |trading_summary|
+    trading_summary.latest_trade_id
+  end
+
+  
+  g.column name: t('activerecord.attributes.trading_summary.trading_account_id') do |trading_summary|
+    trading_summary.trading_account_id
+  end
+
+
+  g.column html: {class: 'project-actions'} do |trading_summary|
+    [
+      link_to(fa_icon("pencil"), edit_trading_summary_path(trading_summary), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), trading_summary_delete_path(trading_summary), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

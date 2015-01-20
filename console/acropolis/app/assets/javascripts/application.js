@@ -35,6 +35,8 @@
 
 $(document).ready(function() {
 
+  $('.date-picker').datetimepicker();
+
   // Switcher
   var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
   elems.forEach(function(html) {

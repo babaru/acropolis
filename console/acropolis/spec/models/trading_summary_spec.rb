@@ -51,7 +51,7 @@ RSpec.describe TradingSummary, type: :model do
       @trading_summary = TradingSummary.create
       allow(@trading_summary).to receive(:trading_account_id).and_return(1)
       allow(@trading_summary).to receive(:awaiting_trades).and_return([trade1, trade2, @trade3])
-      allow(@trading_summary).to receive(:trading_date).and_return(Time.now)
+      allow(@trading_summary).to receive(:trading_date).and_return(Time.zone.now)
 
       @trading_summary.calculate_parameters
     end

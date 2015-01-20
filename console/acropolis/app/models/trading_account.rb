@@ -1,9 +1,4 @@
 class TradingAccount < ActiveRecord::Base
-  include Acropolis::ParameterAccessor
-  include Acropolis::Calculators::CustomerBenefitCalculator
-  include Acropolis::Calculators::NetWorthCalculator
-  include Acropolis::Calculators::BalanceCalculator
-  include Acropolis::Calculators::LeverageCalculator
 
   belongs_to :product
   belongs_to :client
@@ -17,73 +12,74 @@ class TradingAccount < ActiveRecord::Base
 
   validates :account_number, uniqueness: true
 
-  ADDITIONAL_PARAMETERS = %w(customer_benefit balance net_worth leverage capital)
+  PARAMETER_NAMES = %w(margin exposure profit position_cost trading_fee customer_benefit capital balance)
 
-  def get_parameter_resource(name, default_value)
-    TradingAccountParameter.find_by_trading_account_id_and_parameter_name(id,
-      name) || TradingAccountParameter.create(trading_account_id: id,
-        parameter_name: name, parameter_value: default_value)
-  end
-
-  ADDITIONAL_PARAMETERS.each do |method_name|
-    define_method(method_name) do
-      self.send(:get_parameter, method_name.to_sym, method_name == 'net_worth' ? 1 : 0)
-    end
-
-    define_method("#{method_name}=") do |val|
-      self.send(:set_parameter, method_name.to_sym, val)
+  #
+  # Parameters
+  #
+  PARAMETER_NAMES.each do |method_name|
+    define_method(method_name) do |date, exchange|
+      conditions = build_trading_summary_query_condition(date, exchange)
+      TradingSummary.where(conditions).inject(0) {|sum, item| sum += item.send(method_name.to_sym)}
     end
   end
+
+  def net_worth(date, exchange)
+    total_captial = self.capital(date, exchange)
+    return 0 if total_captial == 0
+    self.customer_benefit(date, exchange).fdiv(total_captial)
+  end
+
+  def leverage(date, exchange)
+    total_captial = self.capital(date, exchange)
+    return 0 if total_captial == 0
+    self.position_cost(date, exchange).fdiv(total_captial)
+  end
+
+  # def get_parameter_resource(name, default_value)
+  #   TradingAccountParameter.find_by_trading_account_id_and_parameter_name(id,
+  #     name) || TradingAccountParameter.create(trading_account_id: id,
+  #       parameter_name: name, parameter_value: default_value)
+  # end
+
+  # ADDITIONAL_PARAMETERS.each do |method_name|
+  #   define_method(method_name) do
+  #     self.send(:get_parameter, method_name.to_sym, method_name == 'net_worth' ? 1 : 0)
+  #   end
+
+  #   define_method("#{method_name}=") do |val|
+  #     self.send(:set_parameter, method_name.to_sym, val)
+  #   end
+  # end
 
   #
   # Calculate parameters
   #
 
-  def refresh_parameters(date)
-    get_trading_summaries_by_date(date).each do |trading_summary|
-      trading_summary.refresh_parameters
-    end
-
-    calculate_parameters(date)
-  end
-
-  def calculate_parameters(date)
-    PARAMETER_NAMES.each do |parameter_name|
-      reset_parameter(parameter_name)
-    end
-
-    get_trading_summaries_by_date(date).each do |trading_summary|
-      PARAMETER_NAMES.each do |parameter_name|
-        value = self.send(parameter_name.to_sym)
-        set_parameter(parameter_name, value + trading_summary.send(parameter_name.to_sym))
-      end
-    end
-
-    ADDITIONAL_PARAMETERS.each do |parameter_name|
-      self.send("calculate_#{parameter_name}") if parameter_name != 'capital'
-    end
-  end
+  # def refresh_parameters(date)
+  #   get_trading_summaries_by_date(date).each do |trading_summary|
+  #     trading_summary.refresh_parameters
+  #   end
+  # end
 
   #
   # Handle trade updates
   #
 
-  def received_trade(trade)
-    get_trading_summary(trade.exchange_id,
-      trade.exchange_traded_at).calculate_parameters
+  # def received_trade(trade)
+  #   get_trading_summary(trade.exchange_id,
+  #     trade.exchange_traded_at).calculate_parameters
+  # end
 
-    calculate_parameters(trade.exchange_traded_at)
-  end
+  # def get_trading_summary(exchange_id, date)
+  #   TradingSummary.find_by_exchange_id_and_trading_account_id_and_trading_date(exchange_id,
+  #     id, date.strftime('%Y-%m-%d')) || TradingSummary.create(exchange_id: exchange_id,
+  #     trading_account_id: id, trading_date: date.strftime('%Y-%m-%d'))
+  # end
 
-  def get_trading_summary(exchange_id, date)
-    TradingSummary.find_by_exchange_id_and_trading_account_id_and_trading_date(exchange_id,
-      id, date.strftime('%Y-%m-%d')) || TradingSummary.create(exchange_id: exchange_id,
-      trading_account_id: id, trading_date: date.strftime('%Y-%m-%d'))
-  end
-
-  def get_trading_summaries_by_date(date)
-    trading_summaries.where(trading_date: date.strftime('%Y-%m-%d'))
-  end
+  # def get_trading_summaries_by_date(date)
+  #   trading_summaries.where(trading_date: date.strftime('%Y-%m-%d'))
+  # end
 
   #
 
@@ -122,6 +118,31 @@ class TradingAccount < ActiveRecord::Base
   #
   def trading_status
     2
+  end
+
+  private
+
+  def build_trading_summary_query_condition(date, exchange)
+    conditions = build_trading_summary_query_by_date_condition(date)
+    conditions = conditions.and(build_trading_summary_query_by_exchange_condition(exchange)) if exchange
+    conditions
+  end
+
+  def build_trading_summary_query_by_exchange_condition(exchange)
+    return nil if exchange.nil?
+    TradingSummary.arel_table[:exchange_id].eq(exchange.id)
+  end
+
+  def build_trading_summary_query_by_date_condition(date)
+    conditions = nil
+    if date.nil?
+      conditions = TradingSummary.arel_table[:trading_date].eq(
+        TradingSummary.select(TradingSummary.arel_table[:trading_date].maximum).ast
+      )
+    else
+      conditions = TradingSummary.arel_table[:trading_date].eq(date.utc)
+    end
+    conditions
   end
 
 end

@@ -1,12 +1,12 @@
 class TradingAccountClearingCapitalFile < UploadFile
   validates_attachment_file_name :data_file, :matches => [/dbf\Z/]
 
-  def cleared_at
-    meta_data[:cleared_at]
+  def cleared_on
+    meta_data[:cleared_on]
   end
 
-  def cleared_at=(val)
-    meta_data[:cleared_at] = val
+  def cleared_on=(val)
+    meta_data[:cleared_on] = val
   end
 
   def trading_account_id

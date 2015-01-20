@@ -26,7 +26,7 @@ RSpec.describe TradingAccount, :type => :model do
 
       allow(trade).to receive(:exchange_id).and_return(1)
       allow(trade).to receive(:trading_account_id).and_return(1)
-      allow(trade).to receive(:exchange_traded_at).and_return(Time.now)
+      allow(trade).to receive(:exchange_traded_at).and_return(Time.zone.now)
 
       allow(trading_summary1).to receive(:profit).and_return(1000)
       allow(trading_summary2).to receive(:profit).and_return(-1200)

@@ -130,7 +130,7 @@ namespace :instrument do
       instrument = Instrument.find_by_exchange_instrument_code_and_exchange_id(line_data[1].strip, exchange.id)
       if instrument.nil?
         instrument = Instrument.create(name: line_data[2],
-          expiration_date: DateTime.strptime(line_data[7], '%Y%m%d'),
+          expiration_date: line_data[7].to_time,
           strike_price: strike_price,
           exchange_id: exchange.id,
           trading_symbol_id: trading_symbol.id,
@@ -138,7 +138,7 @@ namespace :instrument do
           instrument_type: instrument_type)
       else
         instrument.update(name: line_data[2],
-          expiration_date: DateTime.strptime(line_data[7], '%Y%m%d'),
+          expiration_date: line_data[7].to_time,
           strike_price: strike_price,
           exchange_id: exchange.id,
           trading_symbol_id: trading_symbol.id,
