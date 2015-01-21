@@ -7,22 +7,19 @@ class TradingAccountsController < ApplicationController
   # GET /trading_accounts
   # GET /trading_accounts.json
   def index
-    if params[:product_id]
-      @trading_accounts_grid = initialize_grid(TradingAccount.where(product_id: params[:product_id]))
-    else
-      @trading_accounts_grid = initialize_grid(TradingAccount.order(:product_id))
-    end
+
   end
 
   # GET /trading_accounts/1
   # GET /trading_accounts/1.json
   def show
+
+    # cache & breadcrumb
     cache_recent_item(:trading_account, @trading_account.id, @trading_account.name)
     add_breadcrumb @trading_account.client.name, client_path(@trading_account.client)
     add_breadcrumb @trading_account.name, nil
 
     # Trades related data
-
     @trading_records_grid = initialize_grid(
       Trade.where(build_trades_query_conditions
         .merge(trading_account_id: @trading_account.id))
@@ -317,10 +314,10 @@ class TradingAccountsController < ApplicationController
       @query_params = {}
 
       @query_params[:trading_date] = params[:trading_date] if params[:trading_date]
-      @query_params[:trading_date] ||= Time.zone.now.strftime('%Y-%m-%d')
       @query_params[:exchange_id] = params[:exchange_id] if params[:exchange_id]
 
       @trading_date = @query_params[:trading_date].to_time if @query_params[:trading_date]
+      @trading_date ||= TradingSummary.latest_trading_date(@trading_account.id)
       @exchange = Exchange.find @query_params[:exchange_id] if @query_params[:exchange_id]
     end
 

@@ -125,6 +125,7 @@ class TradingAccount < ActiveRecord::Base
   def build_trading_summary_query_condition(date, exchange)
     conditions = build_trading_summary_query_by_date_condition(date)
     conditions = conditions.and(build_trading_summary_query_by_exchange_condition(exchange)) if exchange
+    conditions = conditions.and(TradingSummary.arel_table[:trading_account_id].eq(self.id))
     conditions
   end
 
@@ -136,9 +137,9 @@ class TradingAccount < ActiveRecord::Base
   def build_trading_summary_query_by_date_condition(date)
     conditions = nil
     if date.nil?
-      conditions = TradingSummary.arel_table[:trading_date].eq(
-        TradingSummary.select(TradingSummary.arel_table[:trading_date].maximum).ast
-      )
+      top_trading_date = TradingSummary.order(:trading_date).reverse_order.first
+      top_trading_date_value = top_trading_date.trading_date.utc if top_trading_date
+      conditions = TradingSummary.arel_table[:trading_date].eq(top_trading_date_value)
     else
       conditions = TradingSummary.arel_table[:trading_date].eq(date.utc)
     end

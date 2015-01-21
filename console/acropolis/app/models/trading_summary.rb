@@ -13,6 +13,13 @@ class TradingSummary < ActiveRecord::Base
   scope :when, -> (day) { where(trading_date: (day.beginning_of_day..day.end_of_day))}
   scope :of_exchange, -> (exchange_id) { where(exchange_id: exchange_id)}
   scope :whose, -> (trading_account_id) { where(trading_account_id: trading_account_id)}
+  scope :latest_record, -> { order(TradingSummary.arel_table[:trading_date]).reverse_order.first }
+
+  def self.latest_trading_date(trading_account_id)
+    record = TradingSummary.whose(trading_account_id).latest_record
+    return record.trading_date if record
+    nil
+  end
 
   ADDITIONAL_PARAMETERS = %w(customer_benefit balance net_worth leverage capital)
 
