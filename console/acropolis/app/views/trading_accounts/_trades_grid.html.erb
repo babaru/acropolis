@@ -1,8 +1,4 @@
-<%= grid(@trading_records_grid, :show_filters => :when_filtered) do |g|
-
-  g.column name: '#' do |trade|
-    trade.id
-  end
+<%= grid(@trades_grid, :show_filters => :when_filtered) do |g|
 
   g.column name: t('activerecord.attributes.trade.traded_at') do |trade|
     fa_icon('clock-o', text: trade.exchange_traded_at.strftime('%H:%M:%S'))
@@ -16,12 +12,16 @@
     trade.instrument.exchange.name
   end
 
-  g.column name: t('activerecord.attributes.instrument.latest_price'), class: 'text-right' do |trade|
-    render_trade_price(trade.instrument.latest_price, {unit: trade.instrument.trading_symbol.currency.symbol})
+  g.column name: t('activerecord.attributes.trade.open_price'), class: 'text-right' do |trade|
+    render_trade_price(trade.open_price, {unit: trade.instrument.trading_symbol.currency.symbol}) if trade.is_close?
   end
 
-  g.column name: t('activerecord.attributes.trade.trade_price'), class: 'text-right' do |trade|
+  g.column name: t('activerecord.attributes.trade.traded_price'), class: 'text-right' do |trade|
     render_trade_price(trade.traded_price, {unit: trade.instrument.trading_symbol.currency.symbol})
+  end
+
+  g.column name: t('activerecord.attributes.trade.clearing_price'), class: 'text-right' do |trade|
+    render_trade_price(trade.clearing_price, {unit: trade.instrument.trading_symbol.currency.symbol}) if trade.is_open?
   end
 
   g.column name: t('activerecord.attributes.trade.order_side') do |trade|
@@ -38,6 +38,18 @@
 
   g.column name: t('activerecord.attributes.trade.open_volume'), class: 'text-right' do |trade|
     content_tag(:strong, trade.open_volume) if trade.is_open?
+  end
+
+  g.column name: t('activerecord.attributes.trade.trading_fee'), class: 'text-right' do |trade|
+    render_currency(trade.trading_fee)
+  end
+
+  g.column name: t('activerecord.attributes.trade.margin'), class: 'text-right' do |trade|
+    render_currency(trade.margin)
+  end
+
+  g.column name: t('activerecord.attributes.trade.profit'), class: 'text-right' do |trade|
+    render_currency(trade.profit)
   end
 
 end -%>

@@ -1,5 +1,6 @@
 class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit, :update, :destroy]
+  before_action :set_query_params, only: [:show]
 
   add_breadcrumb I18n.t('navigation.page.client'), 'javascript:void(0);'
   add_breadcrumb I18n.t('models.list', model: Client.model_name.human), :clients_path, only: [:show]
@@ -14,10 +15,12 @@ class ClientsController < ApplicationController
   # GET /clients/1
   # GET /clients/1.json
   def show
+    cache_recent_item(:client, @client.id, @client.name)
+    add_breadcrumb t('models.show', model: Client.model_name.human), nil
+
     @trading_accounts_grid = initialize_grid(TradingAccount.where(client_id: @client.id))
     @products_grid = initialize_grid(Product.where(client_id: @client.id))
-    cache_recent_item(:client, @client.id, @client.name)
-    add_breadcrumb @client.name, nil
+
   end
 
   # GET /clients/new
@@ -112,6 +115,15 @@ class ClientsController < ApplicationController
 
     def set_clients_grid
       @clients_grid = initialize_grid(Client)
+    end
+
+    def set_query_params
+      @query_params = {}
+
+      @query_params[:tab] = params[:tab] if params[:tab]
+      @current_tab = @query_params[:tab]
+      @current_tab ||= 'trading_accounts'
+      @current_tab = @current_tab.to_sym
     end
 end
 

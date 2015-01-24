@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-lg-6" style="border-right: 1px solid #eee;" id="trading-account-buy-position-detail">
-        <%= render partial: 'buy_position_detail' %>
+        <%= render partial: 'buy_position_detail', locals: {data: buy_data } %>
     </div>
     <div class="col-lg-6" id="trading-account-sell-position-detail">
-        <%= render partial: 'sell_position_detail' %>
+        <%= render partial: 'sell_position_detail', locals: { data: sell_data } %>
     </div>
 </div>

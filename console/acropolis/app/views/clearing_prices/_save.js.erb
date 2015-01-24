@@ -1,0 +1,18 @@
+$("ul.errors").html("")
+<% if @clearing_price.errors.any? %>
+  <% @clearing_price.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"))
+  <% end %>
+<% else %>
+
+  if ($('#clearing_price-detail').length) {
+    $('#clearing_price-detail').html("<%= escape_javascript(render 'clearing_price_detail') %>")
+  }
+
+  if ($('#clearing_price-list').length) {
+    $('#clearing_price-list').html("<%= escape_javascript(render 'clearing_prices_grid') %>")
+  }
+
+  $("#item-modal").modal("hide")
+
+<% end %>

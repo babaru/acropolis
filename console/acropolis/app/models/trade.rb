@@ -15,8 +15,9 @@ class Trade < ActiveRecord::Base
   scope :close, -> { where(
     Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.close)
   )}
-  scope :whose, ->(trading_account_id) { where(trading_account_id: trading_account_id) }
-  scope :which, ->(instrument_id) { where(instrument_id: instrument_id) }
+  scope :belongs_to_trading_account, ->(trading_account_id) { where(trading_account_id: trading_account_id) }
+  scope :belongs_to_exchange, ->(exchange_id) { where(exchange_id: exchange_id)}
+  scope :traded_on_instrument, ->(instrument_id) { where(instrument_id: instrument_id) }
   scope :side, ->(side) { where(order_side: side) }
   scope :not_later, ->(time) { where('exchange_traded_at <= ?', time)}
   scope :after, ->(sequence_number) { where(Trade.arel_table[:system_trade_sequence_number].gteq(sequence_number))}
@@ -38,13 +39,34 @@ class Trade < ActiveRecord::Base
       side == Acropolis::OrderSides.order_sides.buy ? Acropolis::OrderSides.order_sides.sell : Acropolis::OrderSides.order_sides.buy
     end
 
-    def reset_position(trading_account)
+    # def reset_position(trading_account)
+    #   Trade.transaction do
+    #     Trade.connection.execute("UPDATE trades SET open_volume = traded_volume WHERE open_close = #{Acropolis::TradeOpenFlags.trade_open_flags.open} AND trading_account_id = #{trading_account.id}")
+
+    #     PositionCloseRecord.where(PositionCloseRecord.arel_table[:close_trade_id].in(
+    #       Trade.select(:id).where(Trade.arel_table[:trading_account_id].eq(trading_account.id).and(
+    #         Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.close))).ast
+    #       )
+    #     ).delete_all
+
+    #   end
+    # end
+
+    def reset_open_volumes(trading_account, trading_date, exchange)
       Trade.transaction do
-        Trade.connection.execute("UPDATE trades SET open_volume = traded_volume WHERE open_close = #{Acropolis::TradeOpenFlags.trade_open_flags.open} AND trading_account_id = #{trading_account.id}")
+        Trade.open.where({
+          trading_account_id: trading_account.id,
+          exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
+          exchange_id: exchange.id
+        }).each do |trade|
+          trade.update({open_volume: trade.traded_volume})
+        end
 
         PositionCloseRecord.where(PositionCloseRecord.arel_table[:close_trade_id].in(
-          Trade.select(:id).where(Trade.arel_table[:trading_account_id].eq(trading_account.id).and(
-            Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.close))).ast
+          Trade.select(:id).close.where({
+            trading_account_id: trading_account.id,
+            exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
+            exchange_id: exchange.id}).ast
           )
         ).delete_all
 
@@ -69,10 +91,46 @@ class Trade < ActiveRecord::Base
     order_side == Acropolis::OrderSides.order_sides.sell
   end
 
+  def open_price
+    return self.traded_price if self.is_open?
+    if open_trade_records.length > 0
+      sum_traded_volume, sum_traded_value = 0, 0
+      open_trade_records.each do |open_trade_record|
+        sum_traded_volume += open_trade_record.close_volume
+        sum_traded_value += (open_trade_record.close_volume * open_trade_record.open_trade.traded_price)
+      end
+
+      if sum_traded_volume > 0
+        return sum_traded_value.fdiv(sum_traded_volume)
+      end
+    end
+    0
+  end
+
+  def close_price
+    if close_trade_records.length > 0
+      sum_traded_volume, sum_traded_value = 0, 0
+      close_trade_records.each do |close_trade_record|
+        sum_traded_volume += close_trade_record.close_volume
+        sum_traded_value += (close_trade_record.close_volume * close_trade_record.close_trade.traded_price)
+      end
+
+      if sum_traded_volume > 0
+        return sum_traded_value.fdiv(sum_traded_volume)
+      end
+    end
+    0
+  end
+
   # Margin of this trade
   def margin
     return 0 if self.is_close?
-    self.trading_account.client.margin(self)
+    self.instrument.trading_symbol.margin.calculate(self)
+  end
+
+  def calculate_trading_fee
+    self.system_calculated_trading_fee = self.instrument.trading_symbol.trading_fee.calculate(self)
+    self.save
   end
 
   # Trading fee of this trade
@@ -84,15 +142,13 @@ class Trade < ActiveRecord::Base
   # Position cost of this trade
   def position_cost
     return 0 if self.is_close?
-    logger.debug self.traded_price
-    logger.debug self.open_volume
     value = self.traded_price * self.open_volume
     value * instrument_multiplier * instrument_currency_exchange_rate
   end
 
   # Market value of this trade
   def market_value
-    mp = self.instrument_latest_price
+    mp = self.clearing_price
     mp * self.open_volume * self.instrument_multiplier * self.instrument_currency_exchange_rate
   end
 
@@ -100,7 +156,11 @@ class Trade < ActiveRecord::Base
   def profit
     profit = 0
     if self.is_open?
-      return (self.is_buy? ? 1 : -1) * (market_value - position_cost)
+      if market_value != position_cost
+        return (self.is_buy? ? 1 : -1) * (market_value - position_cost)
+      else
+        return 0
+      end
     else
       self.open_trade_records.each do |open_trade_record|
         price_difference = self.traded_price - open_trade_record.open_trade.traded_price
@@ -114,6 +174,13 @@ class Trade < ActiveRecord::Base
   # ps. buy trade will be oppsitive and sell trade will be negative
   def exposure
     market_value
+  end
+
+  def clearing_price
+    instrument_clearing_price = self.instrument.clearing_price(exchange_traded_at.beginning_of_day)
+    return instrument_clearing_price if instrument_clearing_price > 0
+    return close_price if self.is_open? && self.open_volume == 0
+    0
   end
 
   def close_position
@@ -152,10 +219,11 @@ class Trade < ActiveRecord::Base
 
   def available_open_trades
     Trade.open
-          .whose(self.trading_account_id)
+          .belongs_to_trading_account(self.trading_account_id)
+          .belongs_to_exchange(self.exchange_id)
           .side(Trade.opposite_side(self.order_side))
-          .not_later(self.traded_at)
-          .order(:traded_at)
+          .not_later(self.exchange_traded_at)
+          .order(:exchange_traded_at)
           .reverse_order
   end
 
@@ -182,9 +250,5 @@ class Trade < ActiveRecord::Base
 
   def instrument_currency_exchange_rate
     instrument.trading_symbol.currency.exchange_rate
-  end
-
-  def instrument_latest_price
-    instrument.latest_price
   end
 end

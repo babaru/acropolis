@@ -1,0 +1,33 @@
+<%= grid(@trading_accounts_grid, :show_filters => :when_filtered) do |g|
+
+  g.column name: t('activerecord.attributes.trading_account.name') do |trading_account|
+    link_to(trading_account.name, trading_account_path(trading_account))
+  end
+
+  g.column name: t('activerecord.attributes.trading_account.account_number') do |trading_account|
+    link_to(trading_account.account_number, trading_account_path(trading_account))
+  end
+
+  g.column name: t('activerecord.attributes.trading_account.capital') do |trading_account|
+    render_currency(trading_account.capital(@trading_date, @exchange))
+  end
+
+  g.column name: t('activerecord.attributes.trading_account.balance') do |trading_account|
+    render_currency(trading_account.balance(@trading_date, @exchange))
+  end
+
+  g.column name: t('activerecord.attributes.trading_account.net_worth') do |trading_account|
+    render_net_worth(trading_account.net_worth(@trading_date, @exchange))
+  end
+
+  g.column name: t('activerecord.attributes.trading_account.trading_status') do |trading_account|
+    render_trading_status(trading_account)
+  end
+
+  g.column html: {class: 'project-actions'} do |trading_account|
+    [
+      link_to(fa_icon("pencil"), edit_trading_account_path(trading_account), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), trading_account_delete_path(trading_account), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

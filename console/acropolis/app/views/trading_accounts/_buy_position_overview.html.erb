@@ -4,20 +4,18 @@
     <tr>
         <th><%= t('activerecord.attributes.trade.exchange') %></th>
         <th><%= t('activerecord.attributes.trade.instrument') %></th>
-        <th><%= t('activerecord.attributes.instrument.market_price') %></th>
         <th><%= t('activerecord.attributes.trade.order_side') %></th>
-        <th class="text-right"><%= t('activerecord.attributes.trade.trade_price') %></th>
+        <th class="text-right"><%= t('activerecord.attributes.trade.traded_price') %></th>
         <th class="text-right"><%= t('activerecord.attributes.trade.open_volume') %></th>
     </tr>
     </thead>
     <tbody>
-    <% @buy_positions.each do |trade| %>
+    <% @buy_position_overview.each do |trade| %>
     <tr>
         <td><%= trade.instrument.exchange.name %></td>
         <td><%= trade.instrument.exchange_instrument_code %></td>
-        <td><%= render_market_price(trade.instrument.latest_price, {unit: trade.instrument.trading_symbol.currency.symbol}) %></td>
         <td><%= render_order_side(trade.order_side) %></td>
-        <td class="text-right"><%= render_trade_price(trade.traded_price, {unit: trade.instrument.trading_symbol.currency.symbol}) %></td>
+        <td class="text-right"><%= render_currency(trade.traded_price) %></td>
         <td class="text-right"><%= trade.open_volume %></td>
     </tr>
     <% end %>

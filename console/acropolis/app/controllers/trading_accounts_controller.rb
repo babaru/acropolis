@@ -1,8 +1,8 @@
 class TradingAccountsController < ApplicationController
-  before_action :set_trading_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_trading_account, only: [:show, :edit, :update, :destroy, :querying_by_date, :calculate_trading_summary]
   # before_action :set_product, only: [:new]
   before_action :set_client, only: [:new]
-  before_action :set_query_params, only: [:show, :querying_by_date]
+  before_action :set_query_params, only: [:show, :querying_by_date, :calculate_trading_summary]
 
   # GET /trading_accounts
   # GET /trading_accounts.json
@@ -13,93 +13,87 @@ class TradingAccountsController < ApplicationController
   # GET /trading_accounts/1
   # GET /trading_accounts/1.json
   def show
-
     # cache & breadcrumb
     cache_recent_item(:trading_account, @trading_account.id, @trading_account.name)
     add_breadcrumb @trading_account.client.name, client_path(@trading_account.client)
     add_breadcrumb @trading_account.name, nil
 
-    # Trades related data
-    @trading_records_grid = initialize_grid(
+    self.send("show_#{@current_tab}")
+  end
+
+  def show_overview
+  end
+
+  def show_position_overview
+    @buy_position_overview = Trade.belongs_to_trading_account(@trading_account.id)
+    .open
+    .side(Acropolis::OrderSides.order_sides.buy)
+    .select(
+      :instrument_id,
+      Arel::Nodes::NamedFunction.new('avg', [Trade.arel_table[:traded_price]]).as('traded_price'),
+      :order_side,
+      :trading_account_id,
+      Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
+      :open_close,
+      :exchange_traded_at
+    ).where(
+      Trade.arel_table[:open_volume].gt(0)
+    ).where(build_trades_query_conditions).order(:exchange_traded_at).group(:instrument_id)
+
+    @sell_position_overview = Trade.belongs_to_trading_account(@trading_account.id)
+    .open
+    .side(Acropolis::OrderSides.order_sides.sell)
+    .select(
+      :instrument_id,
+      Arel::Nodes::NamedFunction.new('avg', [Trade.arel_table[:traded_price]]).as('traded_price'),
+      :order_side,
+      :trading_account_id,
+      Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
+      :open_close,
+      :exchange_traded_at
+    ).where(
+      Trade.arel_table[:open_volume].gt(0)
+    ).where(build_trades_query_conditions).order(:exchange_traded_at).group(:instrument_id)
+  end
+
+  def show_trades
+    case @current_oc
+    when :position
+      @trades_grid = initialize_grid(
       Trade.where(build_trades_query_conditions
         .merge(trading_account_id: @trading_account.id))
+      .open.where(Trade.arel_table[:open_volume].gt(0))
       .order(:exchange_traded_at))
+    when :close
+      @trades_grid = initialize_grid(
+      Trade.where(build_trades_query_conditions
+        .merge(trading_account_id: @trading_account.id))
+      .close
+      .order(:exchange_traded_at))
+    else
+      @trades_grid = initialize_grid(
+        Trade.where(build_trades_query_conditions
+          .merge(trading_account_id: @trading_account.id))
+        .order(:exchange_traded_at))
+    end
+  end
 
-    @buy_positions = Trade.whose(@trading_account.id).select(
-        :instrument_id,
-        :traded_price,
-        :order_side,
-        :trading_account_id,
-        Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
-        :open_close,
-        :exchange_traded_at
-      ).where(
-        Trade.arel_table[:open_volume].gt(0).and(
-          Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
-            Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.buy)
-          )
-        )
-      ).where(build_trades_query_conditions).order(:exchange_traded_at).reverse_order.group(:instrument_id, :traded_price)
+  def show_capital
+  end
 
-    @buy_position_summary = Trade.whose(@trading_account.id).select(
-        :instrument_id,
-        :traded_price,
-        :order_side,
-        :trading_account_id,
-        Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
-        :open_close,
-        :exchange_traded_at
-      ).where(
-        Trade.arel_table[:open_volume].gt(0).and(
-          Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
-            Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.buy)
-          )
-        )
-      ).where(build_trades_query_conditions).order(:exchange_traded_at).reverse_order.group(:instrument_id)
-
-    @sell_positions = Trade.whose(@trading_account.id).select(
-        :instrument_id,
-        :traded_price,
-        :order_side,
-        :trading_account_id,
-        Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
-        :open_close,
-        :exchange_traded_at
-      ).where(
-        Trade.arel_table[:open_volume].gt(0).and(
-          Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
-            Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.sell)
-          )
-        )
-      ).where(build_trades_query_conditions).order(:exchange_traded_at).reverse_order.group(:instrument_id, :traded_price)
-
-    @sell_position_summary = Trade.whose(@trading_account.id).select(
-        :instrument_id,
-        :traded_price,
-        :order_side,
-        :trading_account_id,
-        Arel::Nodes::NamedFunction.new('sum', [Trade.arel_table[:open_volume]]).as('open_volume'),
-        :open_close,
-        :exchange_traded_at
-      ).where(
-        Trade.arel_table[:open_volume].gt(0).and(
-          Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open).and(
-            Trade.arel_table[:order_side].eq(Acropolis::OrderSides.order_sides.sell)
-          )
-        )
-      ).where(build_trades_query_conditions).order(:exchange_traded_at).reverse_order.group(:instrument_id)
-
+  def show_risk_plans
     @trading_account_risk_plans_grid = initialize_grid(TradingAccountRiskPlan.where(
       TradingAccountRiskPlan.arel_table[:trading_account_id].eq(@trading_account.id).and(
         TradingAccountRiskPlan.arel_table[:type].eq(TradingAccountRiskPlan.name))
-      ))
+      )
+    )
+  end
 
+  def show_holiday_risk_plans
     @holiday_trading_account_risk_plans_grid = initialize_grid(TradingAccountRiskPlan.where(
       TradingAccountRiskPlan.arel_table[:trading_account_id].eq(@trading_account.id).and(
         TradingAccountRiskPlan.arel_table[:type].eq(HolidayTradingAccountRiskPlan.name))
       ))
-
-    # @clearing_capital = TradingAccountClearingCapital.recent(@trading_account.id).first
   end
 
   def querying_by_date
@@ -193,8 +187,7 @@ class TradingAccountsController < ApplicationController
   end
 
   def calculate_trading_summary
-    @trading_account = TradingAccount.find(params[:trading_account_id])
-    @trading_account.calculate_trading_summary
+    @trading_account.refresh_parameters(@trading_date, @exchange)
   end
 
   def export
@@ -235,6 +228,9 @@ class TradingAccountsController < ApplicationController
 
   def uploading_clearing_trades_file
     @trading_account = TradingAccount.find(params[:trading_account_id])
+    @trading_date = params[:trading_date].to_time if params[:trading_date]
+    @trading_date ||= Time.zone.now
+    logger.debug @trading_date
     @upload_file = TradingAccountClearingTradesFile.new
     @upload_file.trading_account_id = @trading_account.id
   end
@@ -250,7 +246,6 @@ class TradingAccountsController < ApplicationController
           unless @trade.nil?
             @trade.update(trade_data)
           else
-            puts "Exchange instrument code: #{trade_data[:exchange_instrument_code]}"
             instrument = Instrument.find_by_exchange_instrument_code(trade_data[:exchange_instrument_code])
             Trade.create(trade_data.merge({
               instrument_id: instrument.id,
@@ -267,7 +262,13 @@ class TradingAccountsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trading_account
-      @trading_account = TradingAccount.find(params[:id])
+      if params[:id]
+        @trading_account = TradingAccount.find(params[:id])
+      end
+
+      if params[:trading_account_id]
+        @trading_account = TradingAccount.find params[:trading_account_id]
+      end
     end
 
     def set_product
@@ -313,12 +314,21 @@ class TradingAccountsController < ApplicationController
     def set_query_params
       @query_params = {}
 
+      @query_params[:tab] = params[:tab] if params[:tab]
       @query_params[:trading_date] = params[:trading_date] if params[:trading_date]
       @query_params[:exchange_id] = params[:exchange_id] if params[:exchange_id]
+      @query_params[:oc] = params[:oc] if params[:oc]
 
       @trading_date = @query_params[:trading_date].to_time if @query_params[:trading_date]
-      @trading_date ||= TradingSummary.latest_trading_date(@trading_account.id)
       @exchange = Exchange.find @query_params[:exchange_id] if @query_params[:exchange_id]
+      @trading_date ||= TradingSummary.latest_trading_date(@trading_account.id, nil, @exchange)
+      @current_tab = @query_params[:tab]
+      @current_tab ||= 'overview'
+      @current_tab = @current_tab.to_sym
+
+      @current_oc = @query_params[:oc]
+      @current_oc ||= 'all'
+      @current_oc = @current_oc.to_sym
     end
 
     def build_trades_query_conditions

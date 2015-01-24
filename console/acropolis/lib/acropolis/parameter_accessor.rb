@@ -31,6 +31,10 @@ module Acropolis
       define_method("#{method_name}=") do |val|
         self.send(:set_parameter, method_name.to_sym, val)
       end
+
+      define_method("reset_#{method_name}") do
+        self.send(:reset_parameter, method_name.to_sym)
+      end
     end
 
   end

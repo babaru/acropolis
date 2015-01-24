@@ -1,5 +1,5 @@
 class TradingAccountClearingTradesFile < UploadFile
-  validates_attachment_file_name :data_file, :matches => [/dbf\Z/]
+  validates_attachment_file_name :data_file, :matches => [/dbf\Z/i]
 
   def cleared_at
     meta_data[:cleared_at]

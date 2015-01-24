@@ -160,7 +160,7 @@ zh-CN:
       trade:
         instrument: 交易产品
         exchange: 交易所
-        trade_price: 成交价格
+        traded_price: 成交价
         order_side: 买卖
         order_price: 委托价格
         traded_at: 成交时间
@@ -168,6 +168,11 @@ zh-CN:
         open_close: 开平仓
         open_volume: 持仓量
         latest_price: 最新成交价
+        open_price: 开仓价
+        clearing_price: 结算价
+        trading_fee: 手续费
+        margin: 保证金
+        profit: 盈亏
       position:
         instrument: 交易产品
         exchange: 交易所
@@ -182,6 +187,7 @@ zh-CN:
         factor: 保证金参数
       client:
         name: 名称
+        client_number: 客户编号
       borker:
         name: 名称
       bank:

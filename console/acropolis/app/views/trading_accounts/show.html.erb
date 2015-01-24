@@ -69,13 +69,9 @@
                     <div class="panel-heading">
                         <div class="panel-options">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#tab-0" data-toggle="tab"><%= t('navigation.tab.overview') %></a></li>
-                                <li><a href="#tab-1" data-toggle="tab"><%= t('navigation.tab.position_summary') %></a></li>
-                                <li><a href="#tab-2" data-toggle="tab"><%= t('navigation.tab.position_detail') %></a></li>
-                                <li><a href="#tab-3" data-toggle="tab"><%= t('navigation.tab.trades') %></a></li>
-                                <li><a href="#tab-4" data-toggle="tab"><%= t('navigation.tab.clearing.capital') %></a></li>
-                                <li><a href="#tab-5" data-toggle="tab"><%= t(TradingAccountRiskPlan.model_name.human) %></a></li>
-                                <li><a href="#tab-6" data-toggle="tab"><%= t(HolidayTradingAccountRiskPlan.model_name.human) %></a></li>
+                                <% %w(overview position_overview trades risk_plans holiday_risk_plans).each do |tab| %>
+                                <%= content_tag(:li, link_to(t("navigation.tab.trading_account.#{tab}"), trading_account_path(@trading_account.id, @query_params.merge({tab: tab}))), class: @current_tab == tab.to_sym ? 'active' : '') %>
+                                <% end %>
                             </ul>
                         </div>
                     </div>
@@ -83,33 +79,9 @@
                     <div class="panel-body">
 
                         <div class="tab-content">
-                            <div class="tab-pane active" id="tab-0">
-                                <%= render partial: 'overview' %>
+                            <div class="tab-pane active">
+                                <%= render partial: "tab_#{@current_tab}" %>
                             </div>
-                            <div class="tab-pane" id="tab-1">
-                                <%= render partial: 'position_summary' %>
-                            </div>
-
-                            <div class="tab-pane" id="tab-2">
-                                <%= render partial: 'position_detail' %>
-                            </div>
-
-                            <div class="tab-pane" id="tab-3">
-                                <%= render partial: 'trade_records' %>
-                            </div>
-
-                            <div class="tab-pane" id="tab-4">
-                                <%= render partial: 'clearing_capital' %>
-                            </div>
-
-                            <div class="tab-pane" id="tab-5">
-                                <%= render partial: 'risk_plans' %>
-                            </div>
-
-                            <div class="tab-pane" id="tab-6">
-                                <%= render partial: 'holiday_risk_plans' %>
-                            </div>
-
                         </div>
                     </div>
                 </div>

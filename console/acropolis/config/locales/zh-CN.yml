@@ -66,11 +66,19 @@ zh-CN:
       binding_products: 绑定产品
       risk_plan: 风控
       binding_capital_accounts: 已绑定资金帐号
-      holiday_risk_plans: 节假日风控方案
       instruments: 交易产品
-      trades: 成交记录
-      position_summary: 持仓汇总
-      position_detail: 持仓明细
+      client:
+        trading_accounts: 帐户列表
+      trading_account:
+        overview: 概况
+        trades: 成交记录
+        position_overview: 持仓汇总
+        risk_plans: 日常风控方案
+        holiday_risk_plans: 节假日风控方案
+        oc:
+          all: 全部
+          position: 持仓明细
+          close: 平仓明细
       tradable_instruments: 可交易品种
       budget_in_and_out: 出入金记录
       clearing:
@@ -78,4 +86,4 @@ zh-CN:
         settlement: 结算
       user:
         last_activity: 最近操作
-      overview: 概况
+

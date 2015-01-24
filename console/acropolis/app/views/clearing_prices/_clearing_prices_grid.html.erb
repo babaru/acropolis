@@ -1,0 +1,49 @@
+<%= grid(@clearing_prices_grid, :show_filters => :when_filtered) do |g|
+  
+  g.column name: '#' do |clearing_price|
+    clearing_price.id
+  end
+  
+  
+  g.column name: t('activerecord.attributes.clearing_price.instrument_id') do |clearing_price|
+    clearing_price.instrument_id
+  end
+
+  
+  g.column name: t('activerecord.attributes.clearing_price.price') do |clearing_price|
+    clearing_price.price
+  end
+
+  
+  g.column name: t('activerecord.attributes.clearing_price.exchange_instrument_code') do |clearing_price|
+    clearing_price.exchange_instrument_code
+  end
+
+  
+  g.column name: t('activerecord.attributes.clearing_price.cleared_at') do |clearing_price|
+    clearing_price.cleared_at
+  end
+
+  
+  g.column name: t('activerecord.attributes.clearing_price.exchange_code') do |clearing_price|
+    clearing_price.exchange_code
+  end
+
+  
+  g.column name: t('activerecord.attributes.time_stamp.created_at') do |clearing_price|
+    clearing_price.created_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+  
+  g.column name: t('activerecord.attributes.time_stamp.updated_at') do |clearing_price|
+    clearing_price.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+
+  g.column html: {class: 'project-actions'} do |clearing_price|
+    [
+      link_to(fa_icon("pencil"), edit_clearing_price_path(clearing_price), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), clearing_price_delete_path(clearing_price), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+    ].join(' ').html_safe
+  end
+end -%>

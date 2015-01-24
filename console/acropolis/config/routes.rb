@@ -92,6 +92,10 @@ Rails.application.routes.draw do
     resources :trading_accounts
   end
 
+  resources :clearing_prices do
+    get 'delete'
+  end
+
   resources :capital_accounts do
     get 'delete'
   end

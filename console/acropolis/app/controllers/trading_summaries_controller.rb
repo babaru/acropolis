@@ -114,6 +114,7 @@ class TradingSummariesController < ApplicationController
         :latest_trade_id,
         :trading_account_id,
         :balance,
+        :capital,
         )
     end
 

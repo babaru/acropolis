@@ -56,11 +56,11 @@ class TradingAccount < ActiveRecord::Base
   # Calculate parameters
   #
 
-  # def refresh_parameters(date)
-  #   get_trading_summaries_by_date(date).each do |trading_summary|
-  #     trading_summary.refresh_parameters
-  #   end
-  # end
+  def refresh_parameters(date, exchange)
+    get_trading_summaries(date, exchange).each do |trading_summary|
+      trading_summary.refresh_parameters
+    end
+  end
 
   #
   # Handle trade updates
@@ -71,11 +71,9 @@ class TradingAccount < ActiveRecord::Base
   #     trade.exchange_traded_at).calculate_parameters
   # end
 
-  # def get_trading_summary(exchange_id, date)
-  #   TradingSummary.find_by_exchange_id_and_trading_account_id_and_trading_date(exchange_id,
-  #     id, date.strftime('%Y-%m-%d')) || TradingSummary.create(exchange_id: exchange_id,
-  #     trading_account_id: id, trading_date: date.strftime('%Y-%m-%d'))
-  # end
+  def get_trading_summaries(date, exchange)
+    TradingSummary.where(build_trading_summary_query_condition(date, exchange))
+  end
 
   # def get_trading_summaries_by_date(date)
   #   trading_summaries.where(trading_date: date.strftime('%Y-%m-%d'))
@@ -123,7 +121,7 @@ class TradingAccount < ActiveRecord::Base
   private
 
   def build_trading_summary_query_condition(date, exchange)
-    conditions = build_trading_summary_query_by_date_condition(date)
+    conditions = build_trading_summary_query_by_date_condition(date, exchange)
     conditions = conditions.and(build_trading_summary_query_by_exchange_condition(exchange)) if exchange
     conditions = conditions.and(TradingSummary.arel_table[:trading_account_id].eq(self.id))
     conditions
@@ -134,14 +132,19 @@ class TradingAccount < ActiveRecord::Base
     TradingSummary.arel_table[:exchange_id].eq(exchange.id)
   end
 
-  def build_trading_summary_query_by_date_condition(date)
+  def build_trading_summary_query_by_date_condition(date, exchange)
     conditions = nil
     if date.nil?
       top_trading_date = TradingSummary.order(:trading_date).reverse_order.first
-      top_trading_date_value = top_trading_date.trading_date.utc if top_trading_date
+      top_trading_date_value = top_trading_date.trading_date if top_trading_date
       conditions = TradingSummary.arel_table[:trading_date].eq(top_trading_date_value)
     else
-      conditions = TradingSummary.arel_table[:trading_date].eq(date.utc)
+      latest_trading_date = TradingSummary.latest_trading_date(self.id, date, exchange)
+      if latest_trading_date < date
+        conditions = TradingSummary.arel_table[:trading_date].eq(latest_trading_date)
+      else
+        conditions = TradingSummary.arel_table[:trading_date].eq(date)
+      end
     end
     conditions
   end

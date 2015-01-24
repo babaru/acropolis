@@ -20,6 +20,11 @@
       <%= m.input :factor, as: :string %>
     <% end %>
 
+    <%= f.simple_fields_for :trading_fee, @trading_symbol.trading_fee do |tf| %>
+      <%= tf.input :type, collection: [[FixedTradingFee.model_name.human, FixedTradingFee.name], [FixedRateTradingFee.model_name.human, FixedRateTradingFee.name]] %>
+      <%= tf.input :factor, as: :string %>
+    <% end %>
+
   </div>
 
   <div class="modal-footer">

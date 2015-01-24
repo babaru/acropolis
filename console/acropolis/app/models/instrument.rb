@@ -2,6 +2,7 @@ class Instrument < ActiveRecord::Base
   belongs_to :exchange
   belongs_to :trading_symbol
   has_one :market_price
+  has_many :clearing_prices
 
   attr_accessor :exchange_name, :symbol_id
 
@@ -10,13 +11,10 @@ class Instrument < ActiveRecord::Base
     return nil
   end
 
-  def margin_value
-    return 0 if self.margin.nil?
-    self.margin.value
-  end
-
-  def margin_percentage
-    self.margin_value * 100
+  def clearing_price(trading_date)
+    result = clearing_prices.where(cleared_at: trading_date).first
+    return result.price if result
+    0
   end
 
   def multiplier

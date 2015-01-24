@@ -4,11 +4,13 @@
 
   <%= f.error_notification %>
 
-    <%= f.input :trading_date, as: :date_picker %>
+    <%= f.input :trading_date, as: :date_picker, input_html: { value: @trading_summary.trading_date.strftime('%Y-%m-%d')} %>
 
     <%= f.input :exchange_id, collection: Exchange.all.map{|exchange| [exchange.name, exchange.id]} %>
 
     <%= f.input :balance, as: :string %>
+
+    <%= f.input :capital, as: :string %>
 
     <%= f.input :trading_account_id, as: :hidden %>
 
@@ -29,7 +31,7 @@
 
   $(function () {
 
-    $('.date-picker').datetimepicker();
+    $('.date-picker').datetimepicker({format: 'yyyy-MM-dd'});
 
   });
 

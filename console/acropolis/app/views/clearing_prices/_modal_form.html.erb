@@ -1,0 +1,35 @@
+<%= simple_form_for(@clearing_price, remote: true, html: {class: 'form-horizontal'}) do |f| %>
+
+  <div class="modal-body">
+
+  <%= f.error_notification %>
+
+
+    <%= f.input :instrument_id, collection: Instrument.all.map{|instrument| [instrument.exchange_instrument_code, instrument.id]} %>
+    <%= f.input :cleared_at, as: :date_picker %>
+    <%= f.input :price %>
+
+  </div>
+
+  <div class="modal-footer">
+
+  <%= link_to t('buttons.cancel'), "#", class: "btn btn-default btn-sm", data: {dismiss: "modal"} %>
+  <%= f.submit t('buttons.save_changes'), class: 'btn btn-primary btn-sm' %>
+
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+
+(function ($) {
+
+  $(function () {
+
+    $('.date-picker').datetimepicker({format: 'yyyy-MM-dd'});
+
+  });
+
+}(jQuery));
+
+</script>

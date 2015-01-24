@@ -15,11 +15,11 @@
     render_currency(trading_account.capital(@trading_date, @exchange))
   end
 
-  g.column name: t('activerecord.attributes.trading_summary.balance') do |trading_account|
+  g.column name: t('activerecord.attributes.trading_account.balance') do |trading_account|
     render_currency(trading_account.balance(@trading_date, @exchange))
   end
 
-  g.column name: t('activerecord.attributes.trading_summary.net_worth') do |trading_account|
+  g.column name: t('activerecord.attributes.trading_account.net_worth') do |trading_account|
     render_net_worth(trading_account.net_worth(@trading_date, @exchange))
   end
 

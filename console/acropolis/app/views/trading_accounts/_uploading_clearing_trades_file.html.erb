@@ -9,7 +9,7 @@
     <%= f.error_notification %>
     <div class="modal-body">
       <%= f.input :trading_account_id, as: :hidden %>
-      <%= f.input :cleared_at, as: :date_picker, required: true %>
+      <%= f.input :cleared_at, as: :date_picker, required: true, input_html: { value: @trading_date.strftime('%Y-%m-%d') } %>
       <%= f.input :data_file, as: :file, required: true %>
     </div>
     <div class="modal-footer">

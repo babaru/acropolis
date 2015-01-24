@@ -6,4 +6,9 @@ class Margin < ActiveRecord::Base
     return 0 if self.factor.nil?
     self.factor
   end
+
+  def calculate(position)
+    0
+  end
+
 end
