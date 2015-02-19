@@ -25,8 +25,13 @@ class ClearingPricesController < ApplicationController
   # POST /clearing_prices.json
   def create
     ClearingPrice.transaction do
-      @clearing_price = ClearingPrice.new(clearing_price_params)
-      @clearing_price.save!
+      @clearing_price = ClearingPrice.find_by_instrument_id_and_cleared_at(clearing_price_params[:instrument_id], clearing_price_params[:cleared_at].to_time)
+      if @clearing_price.nil?
+        @clearing_price = ClearingPrice.new(clearing_price_params)
+        @clearing_price.save!
+      else
+        @clearing_price.update!(clearing_price_params)
+      end
     end
 
     respond_to do |format|

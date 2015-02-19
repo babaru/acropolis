@@ -114,7 +114,7 @@ class TradingAccountsController < ApplicationController
   def new
     @trading_account = TradingAccount.new
     @trading_account.client = @client
-    @trading_account.capital = 0
+    # @trading_account.capital = 0
   end
 
   # GET /trading_accounts/1/edit
@@ -230,7 +230,6 @@ class TradingAccountsController < ApplicationController
     @trading_account = TradingAccount.find(params[:trading_account_id])
     @trading_date = params[:trading_date].to_time if params[:trading_date]
     @trading_date ||= Time.zone.now
-    logger.debug @trading_date
     @upload_file = TradingAccountClearingTradesFile.new
     @upload_file.trading_account_id = @trading_account.id
   end

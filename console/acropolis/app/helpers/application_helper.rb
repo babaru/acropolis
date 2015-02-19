@@ -35,7 +35,6 @@ module ApplicationHelper
 
   def render_currency(value, options = {})
     default_options = {
-      font_size:  12,
       unit:       '￥',
       separator:  '.',
       delimiter:  ',',

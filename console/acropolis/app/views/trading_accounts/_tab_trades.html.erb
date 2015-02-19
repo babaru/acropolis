@@ -1,14 +1,17 @@
 <div id="trading-account-trading-records-grid" class="tooltip-demo">
     <div class="btn-toolbar">
-      <div class="btn-group">
+        <div class="btn-group">
         <% %w(all position close).each do |oc| %>
         <%= link_to t("navigation.tab.trading_account.oc.#{oc}"), trading_account_path(@trading_account, @query_params.merge(oc: oc)), class: "btn btn-white btn-sm #{@current_oc == oc.to_sym ? 'active': ''}" %>
         <% end %>
-      </div>
+        </div>
 
-      <div class="btn-group pull-right">
-          <%= link_to t('models.upload', model: Trade.model_name.human), trading_account_uploading_clearing_trades_file_path(@trading_account, trading_date: @trading_date), remote: true, class: 'btn btn-primary btn-sm' %>
-      </div>
+        <div class="btn-toolbar pull-right" style="padding-top:5px;">
+            <%= link_to fa_icon('history', text: '规整交易记录'), trading_account_uploading_clearing_trades_file_path(@trading_account, trading_date: @trading_date), remote: true, class: 'btn btn-primary btn-sm' %>
+            <%= link_to fa_icon('history', text: '规整资金结算记录'), new_trading_account_trading_summary_path(@trading_account, @query_params), remote: true, class: 'btn btn-primary btn-sm' %>
+            <%= link_to fa_icon('history', text: '规整结算价'), new_clearing_price_path, remote: true, class: 'btn btn-primary btn-sm' %>
+        </div>
+
     </div>
 
     <%= render partial: 'trades_grid' %>

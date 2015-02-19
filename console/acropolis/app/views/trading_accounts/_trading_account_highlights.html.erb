@@ -6,31 +6,31 @@
                 <h5><%= t('activerecord.attributes.trading_account.net_worth') %></h5>
             </div>
             <div class="ibox-content">
-                <h1 class="no-margins"><%= @trading_account.net_worth(@trading_date, @exchange) %></h1>
+                <h1 class="no-margins"><%= number_with_precision(@trading_account.net_worth(@trading_date, @exchange), precision: 4) %></h1>
                 <div class="stat-percent font-bold text-success"></div>
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-3">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <span class="label label-success pull-right"></span>
-                <h5><%= t('activerecord.attributes.trading_account.balance') %> (<%= t('activerecord.attributes.trading_account.capital') %>)</h5>
+                <h5><%= t('activerecord.attributes.trading_account.balance') %></h5>
             </div>
             <div class="ibox-content">
-                <h1 class="no-margins"><%= @trading_account.balance(@trading_date, @exchange) %> (<%= @trading_account.capital(@trading_date, @exchange) %>)</h1>
+                <h1 class="no-margins"><%= render_currency(@trading_account.balance(@trading_date, @exchange)) %></h1>
                 <div class="stat-percent font-bold text-success"></div>
             </div>
         </div>
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-3">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <span class="label label-success pull-right"></span>
                 <h5><%= t('activerecord.attributes.trading_account.profit') %></h5>
             </div>
             <div class="ibox-content">
-                <h1 class="no-margins"><%= @trading_account.profit(@trading_date, @exchange) %></h1>
+                <h1 class="no-margins"><%= render_currency(@trading_account.profit(@trading_date, @exchange)) %></h1>
                 <div class="stat-percent font-bold text-success"></div>
             </div>
         </div>
@@ -42,7 +42,7 @@
                 <h5><%= t('activerecord.attributes.trading_account.leverage') %></h5>
             </div>
             <div class="ibox-content">
-                <h1 class="no-margins"><%= render_decimal(@trading_account.leverage(@trading_date, @exchange)) %></h1>
+                <h1 class="no-margins"><%= number_with_precision(@trading_account.leverage(@trading_date, @exchange), precision: 3) %></h1>
                 <div class="stat-percent font-bold text-success"></div>
             </div>
         </div>

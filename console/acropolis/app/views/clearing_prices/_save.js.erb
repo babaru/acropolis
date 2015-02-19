@@ -5,14 +5,6 @@ $("ul.errors").html("")
   <% end %>
 <% else %>
 
-  if ($('#clearing_price-detail').length) {
-    $('#clearing_price-detail').html("<%= escape_javascript(render 'clearing_price_detail') %>")
-  }
-
-  if ($('#clearing_price-list').length) {
-    $('#clearing_price-list').html("<%= escape_javascript(render 'clearing_prices_grid') %>")
-  }
-
   $("#item-modal").modal("hide")
 
 <% end %>

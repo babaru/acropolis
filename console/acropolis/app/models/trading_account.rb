@@ -115,7 +115,7 @@ class TradingAccount < ActiveRecord::Base
   # according to risk plan controlling
   #
   def trading_status
-    2
+    0
   end
 
   private
