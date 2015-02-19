@@ -16,33 +16,27 @@
     <%= csrf_meta_tags %>
 </head>
 
-<body>
+<body class="top-navigation fixed-nav">
     <div id="wrapper">
-        <%= render partial: 'shared/navigation' %>
-
         <div id="page-wrapper" class="gray-bg">
+            <%= render partial: 'shared/navigation' %>
 
-            <%= render partial: 'shared/header' %>
+            <div class="wrapper wrapper-content">
+                <div class="container">
 
-            <%= render partial: 'shared/page_header' %>
+                    <%= render partial: 'shared/page_header' %>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="wrapper wrapper-content">
-
-                        <%= yield %>
-
-                    </div>
-
+                    <%= yield %>
                 </div>
+
             </div>
 
             <%= render partial: 'shared/footer' %>
 
+
+            <%= yield :anything_else %>
+
         </div>
     </div>
-
-    <%= yield :anything_else %>
-
 </body>
 </html>

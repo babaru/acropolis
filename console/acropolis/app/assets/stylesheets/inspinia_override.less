@@ -9,12 +9,6 @@ html, body {
   font-family: inherit;
 }
 
-#monitoring-wrapper {
-  a {
-    color: @text-color !important;
-  }
-}
-
 body {
   font-family:  "Helvetica Neue", Helvetica, Tahoma, Arial,
     "Hiragino Sans GB", "冬青黑体简体中文", STXihei, "华文细黑",
@@ -23,6 +17,32 @@ body {
 }
 
 body {
+
+  &.top-navigation {
+    margin-top: 0px;
+
+    #page-wrapper {
+      margin-left: 0px;
+    }
+
+    .nav {
+      > li {
+        > a {
+          padding: 15px 20px;
+          color: @text-color;
+        }
+      }
+    }
+
+    .wrapper {
+      &.wrapper-content {
+        padding: 40px;
+      }
+    }
+  }
+
+
+  //-----------------------------------------
 
   nav {
 
@@ -43,9 +63,9 @@ body {
         margin: 0px;
         background-image: none;
         background-color: transparent;
-        height: 65px;
+        height: 50px;
         padding-left: 20px;
-        padding-top: 10px;
+        padding-top: 0px;
 
         .logo-element {
 

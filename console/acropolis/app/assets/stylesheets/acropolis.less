@@ -1,3 +1,25 @@
+// // Variables, Mixins
+// @import "inspinia/variables.less";
+// @import "inspinia/mixins.less";
+
+// // INSPINIA Theme Elements
+// @import "inspinia/typography.less";
+// @import "inspinia/navigation.less";
+// @import "inspinia/buttons.less";
+// @import "inspinia/badgets_labels.less";
+// @import "inspinia/elements.less";
+// @import "inspinia/sidebar.less";
+// @import "inspinia/base.less";
+// @import "inspinia/pages.less";
+
+// // Media query style
+// @import "inspinia/media.less";
+
+// @import "inspinia_override";
+
+// Google Fonts
+// @import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en");
+
 // Variables, Mixins
 @import "inspinia/variables.less";
 @import "inspinia/mixins.less";
@@ -5,6 +27,7 @@
 // INSPINIA Theme Elements
 @import "inspinia/typography.less";
 @import "inspinia/navigation.less";
+@import "inspinia/top_navigation.less";
 @import "inspinia/buttons.less";
 @import "inspinia/badgets_labels.less";
 @import "inspinia/elements.less";
@@ -12,7 +35,22 @@
 @import "inspinia/base.less";
 @import "inspinia/pages.less";
 
+// RTL Support
+@import "inspinia/rtl.less";
+
+// For demo only - config box style
+// @import "theme-config.less";
+
+// INSPINIA Skins
+@import "inspinia/skins.less";
+
 // Media query style
 @import "inspinia/media.less";
 
-@import "inspinia_override";
+body {
+  font-family:  "Helvetica Neue", Helvetica, Tahoma, Arial,
+    "Hiragino Sans GB", "冬青黑体简体中文", STXihei, "华文细黑",
+    "Microsoft YaHei", "微软雅黑", Heiti, "黑体", sans-serif;
+  font-size: 12px;
+  background-color: @gray;
+}

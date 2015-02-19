@@ -57,7 +57,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item(
         :page_risk_monitoring,
-        fa_icon('desktop', text: t('navigation.page.risk_monitoring')),
+        t('navigation.page.risk_monitoring'),
         risk_monitor_path,
         {
           highlights_on: /risk_monitoring/
@@ -67,7 +67,7 @@ SimpleNavigation::Configuration.run do |navigation|
     #
     # Risk control menus
     #
-    primary.item :page_risk_plan, fa_icon('life-ring', text: RiskPlan.model_name.human), nil, {} do |risk_plan_menu|
+    primary.item :page_risk_plan, RiskPlan.model_name.human, nil, {} do |risk_plan_menu|
 
       if recent_items(:risk_plan).length > 0
         recent_items(:risk_plan).map do |id, name|
@@ -100,17 +100,23 @@ SimpleNavigation::Configuration.run do |navigation|
     #
     if recent_items(:product).length > 0
 
-      primary.item :page_product, fa_icon('archive', text: Product.model_name.human), nil, {} do |product_menu|
+      primary.item(
+        :page_product,
+        Product.model_name.human,
+        nil,
+        {
 
-        recent_items(:product).map do |id, name|
-          product_menu.item(
-            "page_product_#{id}".to_sym,
-            fa_icon('clock-o', text: name),
-            product_path(id: id),
-            {
-              highlights_on: Regexp.new("products/#{id}")
-            }
-          )
+        }) do |product_menu|
+
+          recent_items(:product).map do |id, name|
+            product_menu.item(
+              "page_product_#{id}".to_sym,
+              fa_icon('clock-o', text: name),
+              product_path(id: id),
+              {
+                highlights_on: Regexp.new("products/#{id}")
+              }
+            )
         end
 
         product_menu.item(
@@ -125,7 +131,7 @@ SimpleNavigation::Configuration.run do |navigation|
     else
       primary.item(
         :page_product,
-        fa_icon('archive', text: Product.model_name.human),
+        Product.model_name.human,
         products_path,
         {
           highlights_on: /products(\/)*$/
@@ -144,7 +150,7 @@ SimpleNavigation::Configuration.run do |navigation|
         recent_items(:client).map do |id, name|
           client_menu.item(
             "page_client_#{id}".to_sym,
-            fa_icon('clock-o', text: name),
+            name,
             client_path(id: id),
             {
               highlights_on: Regexp.new("clients/#{id}")
@@ -164,7 +170,7 @@ SimpleNavigation::Configuration.run do |navigation|
     else
       primary.item(
         :page_client,
-        fa_icon('empire', text: Client.model_name.human),
+        Client.model_name.human,
         clients_path,
         {
           highlights_on: /clients(\/)*$/
@@ -177,11 +183,11 @@ SimpleNavigation::Configuration.run do |navigation|
 
     if recent_items(:exchange).length > 0
 
-      primary.item :page_exchange, fa_icon('university', text: Exchange.model_name.human), nil, {} do |exchange_menu|
+      primary.item :page_exchange, Exchange.model_name.human, nil, {} do |exchange_menu|
         recent_items(:exchange).map do |id, name|
           exchange_menu.item(
             "page_exchange_#{id}".to_sym,
-            fa_icon('clock-o', text: name),
+            name,
             exchange_path(id: id),
             {
               highlights_on: Regexp.new("exchanges/#{id}")
@@ -202,7 +208,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
       primary.item(
         :page_exchange,
-        fa_icon('university', text: Exchange.model_name.human),
+        Exchange.model_name.human,
         exchanges_path,
         {
           highlights_on: /exchanges(\/)*$/
@@ -210,7 +216,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     end
 
-    primary.item :page_settings, fa_icon('cog', text: t('navigation.page.settings')), nil, {} do |settings_menu|
+    primary.item :page_settings, t('navigation.page.settings'), nil, {} do |settings_menu|
       settings_menu.item :page_broker_list, Broker.model_name.human, brokers_path
       settings_menu.item :page_bank_list, Bank.model_name.human, banks_path
       settings_menu.item :page_operation_list, Operation.model_name.human, operations_path

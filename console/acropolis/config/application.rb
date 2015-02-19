@@ -36,5 +36,11 @@ module Acropolis
 
     config.generators.stylesheets = false
     # config.generators.javascripts = false
+
+    config.assets.configure do |env|
+      if Rails.env.development? || Rails.env.test?
+        env.cache = ActiveSupport::Cache.lookup_store(:memory_store)
+      end
+    end
   end
 end
