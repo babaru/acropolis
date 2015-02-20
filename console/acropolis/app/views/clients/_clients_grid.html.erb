@@ -4,12 +4,8 @@
     client.id
   end
 
-
   g.column name: t('activerecord.attributes.client.name'), class: 'project-title' do |client|
-    [
-      link_to(client.name, client_path(client)),
-      content_tag(:small, "#{t('labels.last_modified_at')} #{client.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
-    ].join('<br/>').html_safe
+    link_to(client.name, client_path(client))
   end
 
   g.column html: {class: 'project-actions'} do |client|

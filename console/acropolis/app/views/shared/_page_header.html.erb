@@ -15,12 +15,12 @@
 
 <% else %>
 
-<div class="row wrapper border-bottom white-bg page-heading">
+<div class="row page-heading">
     <div class="col-lg-6">
         <h2><%= yield :page_title %></h2>
         <%= render partial: 'shared/breadcrumb' %>
     </div>
-    <div class="col-lg-6 page-header-right-panel">
+    <div class="col-lg-6 right-panel">
       <%= yield :page_header_right_panel %>
     </div>
 </div>

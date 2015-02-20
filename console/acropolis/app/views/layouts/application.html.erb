@@ -20,22 +20,14 @@
     <div id="wrapper">
         <div id="page-wrapper" class="gray-bg">
             <%= render partial: 'shared/navigation' %>
-
             <div class="wrapper wrapper-content">
                 <div class="container">
-
                     <%= render partial: 'shared/page_header' %>
-
                     <%= yield %>
                 </div>
-
             </div>
-
             <%= render partial: 'shared/footer' %>
-
-
             <%= yield :anything_else %>
-
         </div>
     </div>
 </body>

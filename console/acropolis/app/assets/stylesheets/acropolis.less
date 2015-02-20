@@ -53,4 +53,37 @@ body {
     "Microsoft YaHei", "微软雅黑", Heiti, "黑体", sans-serif;
   font-size: 12px;
   background-color: @gray;
+
+  &.top-navigation {
+
+    #page-wrapper {
+      border: none;
+
+      .wrapper {
+        &.wrapper-content {
+          padding: 20px 0px !important;
+
+          .page-heading {
+            h2 {
+              font-weight: bold !important;
+            }
+
+            .right-panel {
+              padding-top: 22px;
+            }
+          }
+        }
+      }
+    }
+
+    .breadcrumb {
+      background-color: transparent;
+    }
+
+    table {
+      td {
+        vertical-align: middle;
+      }
+    }
+  }
 }
