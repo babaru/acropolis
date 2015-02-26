@@ -6,8 +6,8 @@
 
 <% content_for :page_header_right_panel do %>
 
-<div class="btn-toolbar">
-  <div class="btn-group pull-right">
+<div class="btn-toolbar pull-right">
+  <div class="btn-group">
       <%= link_to(fa_icon('plus-square', text: t('models.add', model: Bank.model_name.human)), new_bank_path, remote: true, class: 'btn btn-primary') %>
   </div>
 </div>

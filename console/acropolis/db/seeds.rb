@@ -15,15 +15,15 @@ usd = Currency.create(name: '美元', code:'USD', symbol: '$', exchange_rate:6.1
 # -----------------------------
 
 index = Exchange.create(
-  name:           'INDEX',
+  trading_code:   'INDEX',
   full_cn_name:   '指数',
   short_cn_name:  '指数',
   full_en_name:   'INDEX',
   short_en_name:  'INDEX',
-  type:           'Exchange')
+  type:           'IndexExchange')
 
 sse = Exchange.create(
-  name:           'SSE',
+  trading_code:   'SSE',
   full_cn_name:   '上海证券交易所',
   short_cn_name:  '上交所',
   full_en_name:   'Shanghai Stock Exchange',
@@ -31,7 +31,7 @@ sse = Exchange.create(
   type:           'StockExchange')
 
 szse = Exchange.create(
-  name:           'SZSE',
+  trading_code:   'SZSE',
   full_cn_name:   '深圳证券交易所',
   short_cn_name:  '深交所',
   full_en_name:   'Shenzhen Stock Exchange',
@@ -39,7 +39,7 @@ szse = Exchange.create(
   type:           'StockExchange')
 
 cffex = Exchange.create(
-  name:           'CFFEX',
+  trading_code:   'CFFEX',
   full_cn_name:   '中国金融期货交易所',
   short_cn_name:  '中金所',
   full_en_name:   'China Financial Futures Exchange',
@@ -47,7 +47,7 @@ cffex = Exchange.create(
   type:           'FuturesExchange')
 
 shfe = Exchange.create(
-  name:           'SHFE',
+  trading_code:   'SHFE',
   full_cn_name:   '上海期货交易所',
   short_cn_name:  '上期所',
   full_en_name:   'Shanghai Futures Exchange',
@@ -55,7 +55,7 @@ shfe = Exchange.create(
   type:           'FuturesExchange')
 
 dce = Exchange.create(
-  name:           'DCE',
+  trading_code:   'DCE',
   full_cn_name:   '大连商品交易所',
   short_cn_name:  '大商所',
   full_en_name:   'Dalian Commodity Exchange',
@@ -63,7 +63,7 @@ dce = Exchange.create(
   type:           'FuturesExchange')
 
 zce = Exchange.create(
-  name:           'ZCE',
+  trading_code:   'ZCE',
   full_cn_name:   '郑州商品交易所',
   short_cn_name:  '郑商所',
   full_en_name:   'Zhengzhou Commodity Exchange',
