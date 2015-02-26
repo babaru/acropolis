@@ -1,8 +1,9 @@
-<div class="btn-toolbar">
-    <div class="btn-group pull-right">
-    <%= link_to(fa_icon('plus-square', text: t('models.add', model: TradingAccount.model_name.human)), new_client_trading_account_path(@client), remote: true, class: 'btn btn-primary btn-sm') %>
-    </div>
-</div>
+<%= render_cell :toolbar, :show, data: {
+  buttons: [
+    link_to(fa_icon('plus-square', text: t('models.add', model: TradingAccount.model_name.human)), new_client_trading_account_path(@client), remote: true, class: 'btn btn-primary btn-sm')
+  ],
+  align: :right
+} %>
 
 <div id="trading_account-list" class="tooltip-demo">
 <%= render partial: 'trading_accounts_grid' %>

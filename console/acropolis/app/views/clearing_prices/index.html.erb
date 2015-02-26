@@ -6,11 +6,12 @@
 
 <% content_for :page_header_right_panel do %>
 
-<div class="btn-toolbar">
-  <div class="btn-group pull-right">
-      <%= link_to(fa_icon('plus-square', text: t('models.add', model: ClearingPrice.model_name.human)), new_clearing_price_path, remote: true, class: 'btn btn-primary') %>
-  </div>
-</div>
+<%= render_cell :toolbar, :show, data: {
+  buttons: [
+    link_to(fa_icon('plus-square', text: t('models.add', model: ClearingPrice.model_name.human)), new_clearing_price_path, remote: true, class: 'btn btn-primary')
+  ],
+  align: :right
+} %>
 
 <% end %>
 
