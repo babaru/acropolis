@@ -37,23 +37,6 @@ SimpleNavigation::Configuration.run do |navigation|
 
   # Define the primary navigation
   navigation.items do |primary|
-    # Add an item to the primary navigation. The following params apply:
-    # key - a symbol which uniquely defines your navigation item in the scope of the primary_navigation
-    # name - will be displayed in the rendered navigation. This can also be a call to your I18n-framework.
-    # url - the address that the generated item links to. You can also use url_helpers (named routes, restful routes helper, url_for etc.)
-    # options - can be used to specify attributes that will be included in the rendered navigation item (e.g. id, class etc.)
-    #           some special options that can be set:
-    #           :if - Specifies a proc to call to determine if the item should
-    #                 be rendered (e.g. <tt>if: -> { current_user.admin? }</tt>). The
-    #                 proc should evaluate to a true or false value and is evaluated in the context of the view.
-    #           :unless - Specifies a proc to call to determine if the item should not
-    #                     be rendered (e.g. <tt>unless: -> { current_user.admin? }</tt>). The
-    #                     proc should evaluate to a true or false value and is evaluated in the context of the view.
-    #           :method - Specifies the http-method for the generated link - default is :get.
-    #           :highlights_on - if autohighlighting is turned off and/or you want to explicitly specify
-    #                            when the item should be highlighted, you can set a regexp which is matched
-    #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
-    #
 
     primary.item(
         :page_risk_monitoring,
@@ -73,7 +56,7 @@ SimpleNavigation::Configuration.run do |navigation|
         recent_items(:risk_plan).map do |id, name|
           risk_plan_menu.item(
             "page_risk_plan_#{id}".to_sym,
-            fa_icon('clock-o', text: name),
+            name,
             risk_plan_path(id: id),
             {
               highlights_on: Regexp.new("risk_plans/#{id}")
@@ -111,7 +94,7 @@ SimpleNavigation::Configuration.run do |navigation|
           recent_items(:product).map do |id, name|
             product_menu.item(
               "page_product_#{id}".to_sym,
-              fa_icon('clock-o', text: name),
+              name,
               product_path(id: id),
               {
                 highlights_on: Regexp.new("products/#{id}")
@@ -146,7 +129,7 @@ SimpleNavigation::Configuration.run do |navigation|
     #
 
     if recent_items(:client).length > 0
-      primary.item :page_client, fa_icon('empire', text: Client.model_name.human), nil, {} do |client_menu|
+      primary.item :page_client, Client.model_name.human, nil, {} do |client_menu|
         recent_items(:client).map do |id, name|
           client_menu.item(
             "page_client_#{id}".to_sym,
@@ -157,6 +140,8 @@ SimpleNavigation::Configuration.run do |navigation|
             }
           )
         end
+
+        client_menu.item(:page_client_divider_1, nil, class: 'divider')
 
         client_menu.item(
           :page_client_list,

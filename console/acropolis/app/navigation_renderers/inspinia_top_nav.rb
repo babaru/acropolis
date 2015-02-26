@@ -36,10 +36,14 @@ class InspiniaTopNav < SimpleNavigation::Renderer::Base
   protected
 
   def tag_for(item)
-    if item.url.nil?
+    if include_sub_navigation?(item)
       link_to([item.name, content_tag(:span, nil, class: 'caret')].join.html_safe, '#', link_options_for(item).merge(class: 'dropdown-toggle', data: {toggle: 'dropdown'}))
     else
-      link_to(content_tag(:span, item.name, class: 'nav-label'), item.url, link_options_for(item))
+      if item.url.nil?
+        nil
+      else
+        link_to(content_tag(:span, item.name, class: 'nav-label'), item.url, link_options_for(item))
+      end
     end
   end
 
