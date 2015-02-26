@@ -17,13 +17,13 @@
 //= require inspinia/plugins/flot/jquery.flot.resize
 //= require inspinia/plugins/flot/jquery.flot.pie
 //= require inspinia/plugins/peity/jquery.peity.min
-
 //= require inspinia/plugins/switchery/switchery
 //= require inspinia/plugins/gritter/jquery.gritter.min
 //= require inspinia/plugins/easypiechart/jquery.easypiechart
 //= require inspinia/plugins/sparkline/jquery.sparkline.min
 //= require inspinia/plugins/chartJs/Chart.min
 //= require inspinia/plugins/iCheck/icheck.min
+//= require inspinia/plugins/toastr/toastr.min
 
 //= require inspinia/inspinia
 //= require auto_refresher
@@ -51,5 +51,21 @@ $(document).ready(function() {
       checkboxClass: 'icheckbox_square-green',
       radioClass: 'iradio_square-green',
   });
+
+  toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "onclick": null,
+    "showDuration": "0",
+    "hideDuration": "0",
+    "timeOut": "7000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
 
 });

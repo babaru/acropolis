@@ -234,3 +234,6 @@ zh-CN:
     upload: "上传%{model}"
     refresh: "刷新%{model}"
     query: "查询%{model}"
+    notification:
+      success:
+        creation: "%{model}创建成功！"

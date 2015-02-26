@@ -9,6 +9,7 @@
  *= require inspinia/animate
  *= require inspinia/plugins/switchery/switchery
  *= require inspinia/plugins/iCheck/custom
+ *= require inspinia/plugins/toastr/toastr.min
  *
  *= require acropolis
  */

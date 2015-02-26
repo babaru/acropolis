@@ -1,1 +1,2 @@
 <%= render "save" %>
+toastr["success"]("<%= escape_javascript(t('models.notification.success.creation', model: Bank.model_name.human)) %>")
