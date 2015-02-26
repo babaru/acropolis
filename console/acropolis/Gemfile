@@ -73,7 +73,7 @@ gem 'rbase', git: 'git://github.com/aya-soft/rbase.git', :require => 'rbase'
 
 gem 'dbf'
 
-gem 'cells', '~> 4.0.0'
+gem 'cells', '3.11.3'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

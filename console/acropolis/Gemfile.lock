@@ -49,6 +49,10 @@ GEM
       momentjs-rails (>= 2.8.1)
     breadcrumbs_on_rails (2.3.0)
     builder (3.2.2)
+    cells (3.11.3)
+      actionpack (>= 3.0)
+      railties (>= 3.0)
+      uber (~> 0.0.8)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.4)
@@ -200,6 +204,7 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uber (0.0.13)
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -216,6 +221,7 @@ DEPENDENCIES
   autotest-rails
   bootstrap3-datetimepicker-rails (~> 3.1.3)
   breadcrumbs_on_rails
+  cells (= 3.11.3)
   coffee-rails (~> 4.0.0)
   dbf
   designmodo-flatuipro-rails
