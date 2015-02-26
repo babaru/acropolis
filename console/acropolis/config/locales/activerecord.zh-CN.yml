@@ -237,3 +237,5 @@ zh-CN:
     notification:
       success:
         creation: "%{model}创建成功！"
+        update: "修改%{model}成功！"
+        destroy: "删除%{model}成功！"
