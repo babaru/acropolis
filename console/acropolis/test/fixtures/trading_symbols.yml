@@ -2,8 +2,12 @@
 
 one:
   name: MyString
-  exchange_id: 
+  exchange_id: 1
+  currency_id: 1
+  multiplier: 1.2
 
 two:
   name: MyString
-  exchange_id: 
+  exchange_id: 1
+  currency_id: 1
+  multiplier: 1.2

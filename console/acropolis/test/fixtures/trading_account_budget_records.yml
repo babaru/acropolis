@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  trading_account_id: 
-  type: 
-  record: 9.99
+  trading_account: one
+  budget_type: MyString
+  money: 9.99
 
 two:
-  trading_account_id: 
-  type: 
-  record: 9.99
+  trading_account: two
+  budget_type: MyString
+  money: 9.99

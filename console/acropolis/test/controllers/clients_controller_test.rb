@@ -1,14 +1,16 @@
 require 'test_helper'
 
 class ClientsControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
   setup do
     @client = clients(:one)
+    sign_in :user, users(:one)
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:clients)
+    assert_not_nil assigns(:clients_grid)
   end
 
   test "should get new" do
@@ -18,7 +20,7 @@ class ClientsControllerTest < ActionController::TestCase
 
   test "should create client" do
     assert_difference('Client.count') do
-      post :create, client: {  }
+      post :create, client: { name: @client.name, client_number: @client.client_number }
     end
 
     assert_redirected_to client_path(assigns(:client))
@@ -35,7 +37,7 @@ class ClientsControllerTest < ActionController::TestCase
   end
 
   test "should update client" do
-    patch :update, id: @client, client: {  }
+    patch :update, id: @client, client: { name: 'Client03'  }
     assert_redirected_to client_path(assigns(:client))
   end
 

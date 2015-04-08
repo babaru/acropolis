@@ -3,9 +3,9 @@
 one:
   type: 
   factor: 9.99
-  instrument_id: 
+  currency_id: 1
 
 two:
   type: 
   factor: 9.99
-  instrument_id: 
+  currency_id: 1

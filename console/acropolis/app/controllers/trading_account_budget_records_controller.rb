@@ -97,7 +97,7 @@ class TradingAccountBudgetRecordsController < ApplicationController
     def trading_account_budget_record_params
       params.require(:trading_account_budget_record).permit(
         :trading_account_id,
-        :type,
+        :budget_type,
         :money,
         )
     end

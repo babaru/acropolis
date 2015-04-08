@@ -1,16 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  type: 
+  trading_code: MyString
+  type: MyString
   full_cn_name: MyString
   short_cn_name: MyString
   full_en_name: MyString
   short_en_name: MyString
 
 two:
-  name: MyString
-  type: 
+  trading_code: MyString
+  type: MyString
   full_cn_name: MyString
   short_cn_name: MyString
   full_en_name: MyString

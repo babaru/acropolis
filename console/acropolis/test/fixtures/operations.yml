@@ -2,6 +2,8 @@
 
 one:
   name: MyString
+  level: 1
 
 two:
   name: MyString
+  level: 2

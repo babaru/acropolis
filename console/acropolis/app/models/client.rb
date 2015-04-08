@@ -1,5 +1,6 @@
 class Client < ActiveRecord::Base
   has_many :trading_accounts
+  has_many :products
 
   PARAMETER_NAMES = %w(margin exposure profit position_cost trading_fee customer_benefit capital balance)
 

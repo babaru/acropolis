@@ -2,10 +2,10 @@
 
 one:
   name: MyString
-  budget: 9.99
-  product_id: 
+  product_id:
+  client_id:
 
 two:
   name: MyString
-  budget: 9.99
-  product_id: 
+  product_id:
+  client_id:

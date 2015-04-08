@@ -1,4 +1,5 @@
 class TradingAccount < ActiveRecord::Base
+  attr_reader :budget
 
   belongs_to :product
   belongs_to :client
@@ -11,6 +12,10 @@ class TradingAccount < ActiveRecord::Base
   has_many :risk_plans, through: :trading_account_risk_plans
 
   validates :account_number, uniqueness: true
+
+  def budget=(val)
+    @budget = val
+  end
 
   PARAMETER_NAMES = %w(margin exposure profit position_cost trading_fee customer_benefit capital balance)
 
@@ -30,15 +35,15 @@ class TradingAccount < ActiveRecord::Base
   end
 
   def net_worth(date = nil, exchange = nil)
-    total_captial = self.capital(date, exchange)
-    return 0 if total_captial == 0
-    self.customer_benefit(date, exchange).fdiv(total_captial)
+    total_capital = self.capital(date, exchange)
+    return 0 if total_capital == 0
+    self.customer_benefit(date, exchange).fdiv(total_capital)
   end
 
   def leverage(date, exchange)
-    total_captial = self.capital(date, exchange)
-    return 0 if total_captial == 0
-    self.position_cost(date, exchange).fdiv(total_captial)
+    total_capital = self.capital(date, exchange)
+    return 0 if total_capital == 0
+    self.position_cost(date, exchange).fdiv(total_capital)
   end
 
   # def get_parameter_resource(name, default_value)

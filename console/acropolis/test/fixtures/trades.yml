@@ -2,26 +2,22 @@
 
 one:
   instrument_id: 
-  trade_price: 9.99
+  traded_price: 9.99
   order_side: 1
-  order_price: 9.99
   trading_account_id: 
-  traded_at: 2014-11-17 18:06:12
-  trade_volume: 1
-  exchange_fee: 9.99
-  broker_fee: 9.99
-  margin: 9.99
+  exchange_traded_at: 2014-11-17 18:06:12
+  traded_volume: 1
+  exchange_trading_fee: 9.99
+  exchange_margin: 9.99
   open_close: 1
 
 two:
   instrument_id: 
-  trade_price: 9.99
+  traded_price: 9.99
   order_side: 1
-  order_price: 9.99
   trading_account_id: 
-  traded_at: 2014-11-17 18:06:12
-  trade_volume: 1
-  exchange_fee: 9.99
-  broker_fee: 9.99
-  margin: 9.99
+  exchange_traded_at: 2014-11-17 18:06:12
+  traded_volume: 1
+  exchange_trading_fee: 9.99
+  exchange_margin: 9.99
   open_close: 1

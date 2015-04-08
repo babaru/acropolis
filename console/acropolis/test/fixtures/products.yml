@@ -4,10 +4,10 @@ one:
   name: MyString
   bank: MyString
   broker: MyString
-  long_name: MyString
+  client: one
 
 two:
   name: MyString
   bank: MyString
   broker: MyString
-  long_name: MyString
+  client: one

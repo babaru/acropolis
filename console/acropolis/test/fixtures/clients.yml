@@ -1,7 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Client01
+  client_number: CL-001
 
 two:
-  name: MyString
+  name: Client02
+  client_number: CL-002
