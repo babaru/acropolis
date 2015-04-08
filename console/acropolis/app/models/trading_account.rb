@@ -22,28 +22,21 @@ class TradingAccount < ActiveRecord::Base
   #
   # Parameters
   #
-  PARAMETER_NAMES.each do |method_name|
-    define_method(method_name) do |date = nil, exchange = nil|
-      conditions = build_trading_summary_query_condition(date, exchange)
-      TradingSummary.where(conditions).inject(0) {|sum, item| sum += item.send(method_name.to_sym)}
+  PARAMETER_NAMES.each do |param|
+    define_method(param) do |date, exchange|
+      TradingSummary.fetch_summaries(id, date, exchange).inject(0){|sum, summary| sum += summary.send(param.to_sym)}
     end
   end
 
-  def calc_params(date, exchange)
-      conditions = build_trading_summary_query_condition(date, exchange)
-      TradingSummary.where(conditions).each {|s| s.calculate_parameters}
-  end
 
   def net_worth(date = nil, exchange = nil)
-    total_capital = self.capital(date, exchange)
-    return 0 if total_capital == 0
-    self.customer_benefit(date, exchange).fdiv(total_capital)
+    total_capital = capital(date, exchange)
+    total_capital == 0 ? 0 : customer_benefit(date, exchange).fdiv(total_capital)
   end
 
   def leverage(date, exchange)
-    total_capital = self.capital(date, exchange)
-    return 0 if total_capital == 0
-    self.position_cost(date, exchange).fdiv(total_capital)
+    total_capital = capital(date, exchange)
+    total_capital == 0 ? 0 : position_cost(date, exchange).fdiv(total_capital)
   end
 
   # def get_parameter_resource(name, default_value)
@@ -66,39 +59,22 @@ class TradingAccount < ActiveRecord::Base
   # Calculate parameters
   #
 
+  def calc_params(date, exchange)
+    TradingSummary.fetch_summaries(id, date, exchange).each {|s| s.calc_params}
+  end
+
   def refresh_parameters(date, exchange)
-    get_trading_summaries(date, exchange).each do |trading_summary|
-      trading_summary.refresh_parameters
-    end
+    TradingSummary.fetch_summaries(id, date, exchange).each {|s| s.refresh_parameters}
   end
-
-  #
-  # Handle trade updates
-  #
-
-  # def received_trade(trade)
-  #   get_trading_summary(trade.exchange_id,
-  #     trade.exchange_traded_at).calculate_parameters
-  # end
-
-  def get_trading_summaries(date, exchange)
-    TradingSummary.where(build_trading_summary_query_condition(date, exchange))
-  end
-
-  # def get_trading_summaries_by_date(date)
-  #   trading_summaries.where(trading_date: date.strftime('%Y-%m-%d'))
-  # end
-
-  #
 
   def margin_rate
-    return 0 if self.capital.nil? || self.capital == 0
-    return 0 if self.margin.nil?
-    self.margin.fdiv(self.capital)
+    return 0 if capital.nil? || capital == 0
+    return 0 if margin.nil?
+    margin.fdiv(capital)
   end
 
   def risk_plans_at(date)
-    risk_plans = self.trading_account_risk_plans.available.where(
+    risk_plans = trading_account_risk_plans.available.where(
       TradingAccountRiskPlan.arel_table[:begun_at].lteq(date).and(
         TradingAccountRiskPlan.arel_table[:ended_at].gteq(date))
       )
@@ -127,36 +103,4 @@ class TradingAccount < ActiveRecord::Base
   def trading_status
     0
   end
-
-  private
-
-  def build_trading_summary_query_condition(date, exchange)
-    conditions = build_trading_summary_query_by_date_condition(date, exchange)
-    conditions = conditions.and(build_trading_summary_query_by_exchange_condition(exchange)) if exchange
-    conditions = conditions.and(TradingSummary.arel_table[:trading_account_id].eq(self.id))
-    conditions
-  end
-
-  def build_trading_summary_query_by_exchange_condition(exchange)
-    return nil if exchange.nil?
-    TradingSummary.arel_table[:exchange_id].eq(exchange.id)
-  end
-
-  def build_trading_summary_query_by_date_condition(date, exchange)
-    conditions = nil
-    if date.nil?
-      top_trading_date = TradingSummary.order(:trading_date).reverse_order.first
-      top_trading_date_value = top_trading_date.trading_date if top_trading_date
-      conditions = TradingSummary.arel_table[:trading_date].eq(top_trading_date_value)
-    else
-      latest_trading_date = TradingSummary.latest_trading_date(self.id, date, exchange)
-      if latest_trading_date < date
-        conditions = TradingSummary.arel_table[:trading_date].eq(latest_trading_date)
-      else
-        conditions = TradingSummary.arel_table[:trading_date].eq(date)
-      end
-    end
-    conditions
-  end
-
 end

@@ -39,48 +39,40 @@ class Trade < ActiveRecord::Base
       side == Acropolis::OrderSides.order_sides.buy ? Acropolis::OrderSides.order_sides.sell : Acropolis::OrderSides.order_sides.buy
     end
 
-    # def reset_position(trading_account)
-    #   Trade.transaction do
-    #     Trade.connection.execute("UPDATE trades SET open_volume = traded_volume WHERE open_close = #{Acropolis::TradeOpenFlags.trade_open_flags.open} AND trading_account_id = #{trading_account.id}")
-
-    #     PositionCloseRecord.where(PositionCloseRecord.arel_table[:close_trade_id].in(
-    #       Trade.select(:id).where(Trade.arel_table[:trading_account_id].eq(trading_account.id).and(
-    #         Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.close))).ast
-    #       )
-    #     ).delete_all
-
-    #   end
-    # end
-
     def reset_open_volumes(trading_account, trading_date, exchange)
       Trade.transaction do
         Trade.open.where({
-          trading_account_id: trading_account.id,
-          exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
-          exchange_id: exchange.id
-        }).each do |trade|
+                             trading_account_id: trading_account.id,
+                             exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
+                             exchange_id: exchange.id
+                         }).each do |trade|
           trade.update({open_volume: trade.traded_volume})
         end
+
         Trade.close.where({
                               trading_account_id: trading_account.id,
                               exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
                               exchange_id: exchange.id
                           }).each do |trade|
-          PositionCloseRecord.where(close_trade_id: trade.id).destroy_all
+          PositionCloseRecord.where({close_trade_id: trade.id}).destroy_all
         end
-
-#        PositionCloseRecord.where(PositionCloseRecord.arel_table[:close_trade_id].in(
-#          Trade.select(:id).close.where({
-#            trading_account_id: trading_account.id,
-#            exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
-#            exchange_id: exchange.id}).ast
-#          )
-#        ).delete_all
-
       end
     end
 
+    def waiting_trades_for(trading_account_id, trading_date, exchange_id, last_seq_no)
+      self.when(trading_date)
+          .belongs_to_trading_account(trading_account_id)
+          .belongs_to_exchange(exchange_id)
+          .after(last_seq_no)
+          .order(:system_trade_sequence_number)
+    end
 
+    def trades_for(trading_account_id, trading_date, exchange_id)
+      self.when(trading_date)
+          .belongs_to_trading_account(trading_account_id)
+          .belongs_to_exchange(exchange_id)
+          .order(:exchange_traded_at)
+    end
   end
 
   def trading_summary
@@ -107,79 +99,62 @@ class Trade < ActiveRecord::Base
   end
 
   def open_price
-    return self.traded_price if self.is_open?
-    if open_trade_records.length > 0
-      sum_traded_volume, sum_traded_value = 0, 0
-      open_trade_records.each do |open_trade_record|
-        sum_traded_volume += open_trade_record.close_volume
-        sum_traded_value += (open_trade_record.close_volume * open_trade_record.open_trade.traded_price)
-      end
-
-      if sum_traded_volume > 0
-        return sum_traded_value.fdiv(sum_traded_volume)
-      end
+    return traded_price if is_open?
+    # if it's a close trade, calculate average open price of corresponding open trade(s)
+    sum_traded_volume = sum_traded_value = 0
+    open_trade_records.each do |rec|
+      sum_traded_volume += rec.close_volume
+      sum_traded_value += (rec.close_volume * rec.open_trade.traded_price)
     end
-    0
+    sum_traded_volume > 0 ? sum_traded_value.fdiv(sum_traded_volume) : 0
   end
 
   def close_price
-    if close_trade_records.length > 0
-      sum_traded_volume, sum_traded_value = 0, 0
-      close_trade_records.each do |close_trade_record|
-        sum_traded_volume += close_trade_record.close_volume
-        sum_traded_value += (close_trade_record.close_volume * close_trade_record.close_trade.traded_price)
-      end
-
-      if sum_traded_volume > 0
-        return sum_traded_value.fdiv(sum_traded_volume)
-      end
+    # If it's an open trade, calculate average close price of corresponding close trade(s).
+    sum_traded_volume = sum_traded_value = 0
+    close_trade_records.each do |rec|
+      sum_traded_volume += rec.close_volume
+      sum_traded_value += (rec.close_volume * rec.close_trade.traded_price)
     end
-    0
+    sum_traded_volume > 0 ? sum_traded_value.fdiv(sum_traded_volume) : 0
   end
 
   # Margin of this trade
   def margin
-    return 0 if is_close?
-    instrument.trading_symbol.margin.calculate(self)
+    is_close? ? 0 : instrument.trading_symbol.margin.calculate(self)
   end
 
   def calculate_trading_fee
-    system_calculated_trading_fee = instrument.trading_symbol.trading_fee.calculate(self)
-    update(system_calculated_trading_fee: system_calculated_trading_fee)
+    update(system_calculated_trading_fee: instrument.trading_symbol.trading_fee.calculate(self))
   end
 
   # Trading fee of this trade
   def trading_fee
-    return exchange_trading_fee if exchange_trading_fee > 0
-    system_calculated_trading_fee
+    exchange_trading_fee > 0 ? exchange_trading_fee : system_calculated_trading_fee
   end
 
   # Position cost of this trade
   def position_cost
-    return 0 if self.is_close?
-    value = self.traded_price * self.open_volume
-    value * instrument_multiplier * instrument_currency_exchange_rate
+    return 0 if is_close?
+    traded_price * open_volume * instrument_multiplier * instrument_currency_exchange_rate
   end
 
   # Market value of this trade
   def market_value
-    mp = self.clearing_price
-    mp * self.open_volume * self.instrument_multiplier * self.instrument_currency_exchange_rate
+    clearing_price * open_volume * instrument_multiplier * instrument_currency_exchange_rate
   end
 
   # Profit of this trade
   def profit
     profit = 0
-    if self.is_open?
+    if is_open?
       if market_value != position_cost
-        return (self.is_buy? ? 1 : -1) * (market_value - position_cost)
-      else
-        return 0
+        return (is_buy? ? 1 : -1) * (market_value - position_cost)
       end
     else
-      self.open_trade_records.each do |open_trade_record|
-        price_difference = self.traded_price - open_trade_record.open_trade.traded_price
-        profit += (self.is_sell? ? 1 : -1) * price_difference * open_trade_record.close_volume * self.instrument_multiplier * self.instrument_currency_exchange_rate
+      open_trade_records.each do |rec|
+        price_difference = traded_price - rec.open_trade.traded_price
+        profit += (is_sell? ? 1 : -1) * price_difference * rec.close_volume * instrument_multiplier * instrument_currency_exchange_rate
       end
     end
     profit
@@ -202,34 +177,15 @@ class Trade < ActiveRecord::Base
     return if is_open?
 
     Trade.transaction do
-      rest_volume = self.traded_volume
+      rest_volume = traded_volume
       available_open_trades.each do |trade|
-        result = calculate_close_volume(trade, rest_volume)
-        find_or_create_close_record(trade, result[0])
-        rest_volume = result[1]
+        close_volume = trade.open_volume < rest_volume ? trade.open_volume : rest_volume
+        trade.update!(open_volume: trade.open_volume - close_volume)
+        update_or_create_close_record trade, close_volume
+        rest_volume -= close_volume
         break if rest_volume == 0
       end
     end
-  end
-
-  def calculate_close_volume(open_trade, rest_volume)
-    close_volume = 0
-
-    if open_trade.open_volume <= rest_volume
-      close_volume = open_trade.open_volume
-      rest_volume -= close_volume
-      open_trade.open_volume = 0
-      open_trade.save
-    end
-
-    if open_trade.open_volume > rest_volume
-      close_volume = rest_volume
-      open_trade.open_volume -= close_volume
-      rest_volume = 0
-      open_trade.save
-    end
-
-    [close_volume, rest_volume]
   end
 
   def available_open_trades
@@ -242,21 +198,15 @@ class Trade < ActiveRecord::Base
           .reverse_order
   end
 
-  def save_close_records(records)
-    Trade.transaction do
-      records.each { |record| record.save }
-    end
-  end
-
-  def find_or_create_close_record(open_trade, close_volume)
+  def update_or_create_close_record(open_trade, close_volume)
     close_record = PositionCloseRecord.where(open_trade_id: open_trade.id, close_trade_id: id).first
-    if close_record.nil?
-      close_record = PositionCloseRecord.create(open_trade_id: open_trade.id, close_trade_id: id, close_volume: close_volume)
-    else
+    if close_record
       close_record.close_volume = close_volume
       close_record.save
+    else
+      close_record = PositionCloseRecord.create(open_trade_id: open_trade.id, close_trade_id: id, close_volume: close_volume)
     end
-    return close_record
+    close_record
   end
 
   def instrument_multiplier

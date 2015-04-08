@@ -256,7 +256,7 @@ RSpec.describe Trade, type: :model do
 
       rest_volume = 5
       trade = Trade.new
-      result = trade.calculate_close_volume(open_trade, rest_volume)
+      result = trade.open_volume < rest_volume ? trade.open_volume : rest_volume
       expect(result).to eq([3, 2])
       expect(open_trade.open_volume).to eq(0)
     end
@@ -268,7 +268,7 @@ RSpec.describe Trade, type: :model do
 
       rest_volume = 5
       trade = Trade.new
-      result = trade.calculate_close_volume(open_trade, rest_volume)
+      result = trade.open_volume < rest_volume ? trade.open_volume : rest_volume
       expect(result).to eq([5, 0])
       expect(open_trade.open_volume).to eq(5)
     end

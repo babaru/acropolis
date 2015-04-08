@@ -19,7 +19,7 @@ class TradingAccountsController < ApplicationController
     add_breadcrumb @trading_account.client.name, client_path(@trading_account.client)
     add_breadcrumb @trading_account.name, nil
 
-    self.send("show_#{@current_tab}")
+    send("show_#{@current_tab}")
     @trading_account.refresh_parameters(@trading_date, @exchange)
 
     respond_to do |format|
