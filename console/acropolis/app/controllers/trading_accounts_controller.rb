@@ -7,6 +7,7 @@ class TradingAccountsController < ApplicationController
   # GET /trading_accounts
   # GET /trading_accounts.json
   def index
+    @trading_accounts_grid = initialize_grid(TradingAccount.all)
 
   end
 
@@ -19,6 +20,12 @@ class TradingAccountsController < ApplicationController
     add_breadcrumb @trading_account.name, nil
 
     self.send("show_#{@current_tab}")
+    @trading_account.refresh_parameters(@trading_date, @exchange)
+
+    respond_to do |format|
+      format.html 
+      format.js
+    end
   end
 
   def show_overview

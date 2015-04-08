@@ -177,6 +177,7 @@ module ApplicationHelper
     content = I18n.t("order_sides.#{key}")
 
     content_tag(:span, content, class: "label label-#{options[:colors][key.to_sym]}", style: "font-size: #{options[:font_size]}px;")
+    #content_tag(:span, content, class: "label label-#{key}", style: "font-size: #{options[:font_size]}px;")
   end
 
   def render_open_close(entity, options = {})

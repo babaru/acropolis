@@ -7,7 +7,7 @@ class TradingAccountBudgetRecord < ActiveRecord::Base
   private
 
   def recalculate_trading_account_budget
-    self.trading_account.budget = self.trading_account.trading_account_budget_records.inject(0) {|sum, item| sum += item.value}
+    self.trading_account.budget = self.trading_account.trading_account_budget_records.inject(0) {|sum, item| sum += item.money}
     self.trading_account.calculate_trading_summary
     self.trading_account.save!
   end

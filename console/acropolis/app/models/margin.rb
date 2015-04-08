@@ -7,8 +7,8 @@ class Margin < ActiveRecord::Base
     self.factor
   end
 
-  def calculate(position)
-    0
+  def calculate(trade)
+    factor * trade.market_value
   end
 
 end

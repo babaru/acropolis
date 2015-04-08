@@ -121,5 +121,6 @@ class TradingSummary < ActiveRecord::Base
     .belongs_to_trading_account(self.trading_account_id)
     .belongs_to_exchange(self.exchange_id)
     .after(latest_trade_sequence_number)
+    .order(:system_trade_sequence_number)
   end
 end

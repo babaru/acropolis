@@ -20,7 +20,7 @@ class Trade < ActiveRecord::Base
   scope :traded_on_instrument, ->(instrument_id) { where(instrument_id: instrument_id) }
   scope :side, ->(side) { where(order_side: side) }
   scope :not_later, ->(time) { where('exchange_traded_at <= ?', time)}
-  scope :after, ->(sequence_number) { where(Trade.arel_table[:system_trade_sequence_number].gteq(sequence_number))}
+  scope :after, ->(sequence_number) { where(Trade.arel_table[:system_trade_sequence_number].gt(sequence_number))}
   scope :today, -> { where(Arel::Nodes::NamedFunction.new('date', [Trade.arel_table[:exchange_traded_at]]).eq(Time.zone.now.strftime('%Y-%m-%d')))}
   scope :when, ->(date){ where(Arel::Nodes::NamedFunction.new('date', [Trade.arel_table[:exchange_traded_at]]).eq(date.strftime('%Y-%m-%d')))}
 
@@ -61,18 +61,33 @@ class Trade < ActiveRecord::Base
         }).each do |trade|
           trade.update({open_volume: trade.traded_volume})
         end
+        Trade.close.where({
+                              trading_account_id: trading_account.id,
+                              exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
+                              exchange_id: exchange.id
+                          }).each do |trade|
+          PositionCloseRecord.where(close_trade_id: trade.id).destroy_all
+        end
 
-        PositionCloseRecord.where(PositionCloseRecord.arel_table[:close_trade_id].in(
-          Trade.select(:id).close.where({
-            trading_account_id: trading_account.id,
-            exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
-            exchange_id: exchange.id}).ast
-          )
-        ).delete_all
+#        PositionCloseRecord.where(PositionCloseRecord.arel_table[:close_trade_id].in(
+#          Trade.select(:id).close.where({
+#            trading_account_id: trading_account.id,
+#            exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
+#            exchange_id: exchange.id}).ast
+#          )
+#        ).delete_all
 
       end
     end
 
+
+  end
+
+  def trading_summary
+    TradingSummary.where({trading_account_id: trading_account.id, 
+                        exchange_id: exchange.id,
+                        trading_date: exchange_traded_at.beginning_of_day
+    }).first
   end
 
   def is_open?
@@ -124,13 +139,13 @@ class Trade < ActiveRecord::Base
 
   # Margin of this trade
   def margin
-    return 0 if self.is_close?
-    self.instrument.trading_symbol.margin.calculate(self)
+    return 0 if is_close?
+    instrument.trading_symbol.margin.calculate(self)
   end
 
   def calculate_trading_fee
-    self.system_calculated_trading_fee = self.instrument.trading_symbol.trading_fee.calculate(self)
-    self.save
+    system_calculated_trading_fee = instrument.trading_symbol.trading_fee.calculate(self)
+    update(system_calculated_trading_fee: system_calculated_trading_fee)
   end
 
   # Trading fee of this trade

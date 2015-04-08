@@ -18,13 +18,18 @@ class TradingAccount < ActiveRecord::Base
   # Parameters
   #
   PARAMETER_NAMES.each do |method_name|
-    define_method(method_name) do |date, exchange|
+    define_method(method_name) do |date = nil, exchange = nil|
       conditions = build_trading_summary_query_condition(date, exchange)
       TradingSummary.where(conditions).inject(0) {|sum, item| sum += item.send(method_name.to_sym)}
     end
   end
 
-  def net_worth(date, exchange)
+  def calc_params(date, exchange)
+      conditions = build_trading_summary_query_condition(date, exchange)
+      TradingSummary.where(conditions).each {|s| s.calculate_parameters}
+  end
+
+  def net_worth(date = nil, exchange = nil)
     total_captial = self.capital(date, exchange)
     return 0 if total_captial == 0
     self.customer_benefit(date, exchange).fdiv(total_captial)
