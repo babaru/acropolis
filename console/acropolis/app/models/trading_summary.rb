@@ -97,7 +97,8 @@ class TradingSummary < ActiveRecord::Base
       trade.close_position
       trade.calculate_trading_fee
     end
-    latest_trade = trades.last
+    @latest_trade = trades.last
+    latest_trade_id = @latest_trade.id
 
     Trade.trades_for(trading_account_id, trading_date, exchange_id).each do |trade|
       PARAMETER_NAMES.each do |param|
@@ -122,7 +123,7 @@ class TradingSummary < ActiveRecord::Base
   end
 
   def awaiting_trades
-    last_seq_no = latest_trade ? latest_trade.system_trade_sequence_number : 0
+    last_seq_no = @latest_trade ? @latest_trade.system_trade_sequence_number : 0
     Trade.waiting_trades_for(trading_account_id, trading_date, exchange_id, last_seq_no)
   end
 end

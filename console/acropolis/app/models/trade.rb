@@ -12,6 +12,7 @@ class Trade < ActiveRecord::Base
   scope :open, -> { where(
     Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.open)
   )}
+  scope :not_been_closed, ->{ where((Trade.arel_table[:open_volume]).gt(0)) }
   scope :close, -> { where(
     Trade.arel_table[:open_close].eq(Acropolis::TradeOpenFlags.trade_open_flags.close)
   )}
@@ -140,8 +141,9 @@ class Trade < ActiveRecord::Base
   end
 
   # Market value of this trade
-  def market_value
-    clearing_price * open_volume * instrument_multiplier * instrument_currency_exchange_rate
+  def market_value(market_price = nil)
+    price = market_price ? market_price : clearing_price
+    price * open_volume * instrument_multiplier * instrument_currency_exchange_rate
   end
 
   # Profit of this trade
@@ -161,7 +163,7 @@ class Trade < ActiveRecord::Base
   end
 
   # Exposure of this trade
-  # ps. buy trade will be oppsitive and sell trade will be negative
+  # ps. buy trade will be positive and sell trade will be negative
   def exposure
     market_value
   end
@@ -181,7 +183,7 @@ class Trade < ActiveRecord::Base
       available_open_trades.each do |trade|
         close_volume = trade.open_volume < rest_volume ? trade.open_volume : rest_volume
         trade.update!(open_volume: trade.open_volume - close_volume)
-        update_or_create_close_record trade, close_volume
+        trade.record_closed(id, close_volume)
         rest_volume -= close_volume
         break if rest_volume == 0
       end
@@ -190,23 +192,40 @@ class Trade < ActiveRecord::Base
 
   def available_open_trades
     Trade.open
-          .belongs_to_trading_account(self.trading_account_id)
-          .belongs_to_exchange(self.exchange_id)
-          .side(Trade.opposite_side(self.order_side))
-          .not_later(self.exchange_traded_at)
+          .not_been_closed
+          .belongs_to_trading_account(trading_account_id)
+          .belongs_to_exchange(exchange_id)
+          .side(Trade.opposite_side(order_side))
+          .not_later(exchange_traded_at)
           .order(:exchange_traded_at)
           .reverse_order
   end
 
-  def update_or_create_close_record(open_trade, close_volume)
-    close_record = PositionCloseRecord.where(open_trade_id: open_trade.id, close_trade_id: id).first
-    if close_record
-      close_record.close_volume = close_volume
-      close_record.save
+  def market_profit
+    # (market value) - ()trading fee for open volumes)
+    (instrument.market_price - traded_price) * open_volume -
+        instrument.trading_symbol.trading_fee.factor * instrument.market_price * open_volume
+  end
+
+  def close_position_with(other_trade)
+    closed_volume = open_volume < other_trade.traded_volume ? open_volume : other_trade.traded_volume
+    profit = (other_trade.traded_price - traded_price) * closed_volume
+    account.profit += profit
+    account.balance += profit
+    update!(open_volume: open_volume - closed_volume)
+    record_closed(other_trade.id, closed_volume)
+    closed_volume
+  end
+
+  def record_closed(close_trade_id, volume)
+    rec = PositionCloseRecord.where(open_trade_id: id, close_trade_id: close_trade_id).first
+    if rec
+      rec.close_volume += volume
+      rec.save
     else
-      close_record = PositionCloseRecord.create(open_trade_id: open_trade.id, close_trade_id: id, close_volume: close_volume)
+      rec = PositionCloseRecord.create(open_trade_id: id, close_trade_id: close_trade_id, close_volume: volume)
     end
-    close_record
+    rec
   end
 
   def instrument_multiplier

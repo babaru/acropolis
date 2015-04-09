@@ -23,7 +23,7 @@ class TradingAccount < ActiveRecord::Base
   # Parameters
   #
   PARAMETER_NAMES.each do |param|
-    define_method(param) do |date, exchange|
+    define_method(param) do |date = nil, exchange = nil|
       TradingSummary.fetch_summaries(id, date, exchange).inject(0){|sum, summary| sum += summary.send(param.to_sym)}
     end
   end
@@ -38,22 +38,6 @@ class TradingAccount < ActiveRecord::Base
     total_capital = capital(date, exchange)
     total_capital == 0 ? 0 : position_cost(date, exchange).fdiv(total_capital)
   end
-
-  # def get_parameter_resource(name, default_value)
-  #   TradingAccountParameter.find_by_trading_account_id_and_parameter_name(id,
-  #     name) || TradingAccountParameter.create(trading_account_id: id,
-  #       parameter_name: name, parameter_value: default_value)
-  # end
-
-  # ADDITIONAL_PARAMETERS.each do |method_name|
-  #   define_method(method_name) do
-  #     self.send(:get_parameter, method_name.to_sym, method_name == 'net_worth' ? 1 : 0)
-  #   end
-
-  #   define_method("#{method_name}=") do |val|
-  #     self.send(:set_parameter, method_name.to_sym, val)
-  #   end
-  # end
 
   #
   # Calculate parameters
