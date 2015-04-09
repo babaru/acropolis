@@ -1,6 +1,4 @@
 class TradingAccount < ActiveRecord::Base
-  attr_reader :budget
-
   belongs_to :product
   belongs_to :client
   has_many :trades, dependent: :destroy
@@ -13,11 +11,39 @@ class TradingAccount < ActiveRecord::Base
 
   validates :account_number, uniqueness: true
 
+  def profit
+    @profit || 0
+  end
+
+  def profit=(val)
+    @profit = val
+  end
+
+  def budget
+    @budget || 0
+  end
+
   def budget=(val)
     @budget = val
   end
 
-  PARAMETER_NAMES = %w(margin exposure profit position_cost trading_fee customer_benefit capital balance)
+  def capital
+    @capital || 1000
+  end
+
+  def capital=(val)
+    @capital = val
+  end
+
+  def balance
+    @balance || 1000
+  end
+
+  def balance=(val)
+    @balance = val
+  end
+
+  PARAMETER_NAMES = %w(margin exposure position_cost trading_fee customer_benefit)
 
   #
   # Parameters

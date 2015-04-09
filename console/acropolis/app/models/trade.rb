@@ -203,15 +203,17 @@ class Trade < ActiveRecord::Base
 
   def market_profit
     # (market value) - ()trading fee for open volumes)
-    (instrument.market_price - traded_price) * open_volume -
-        instrument.trading_symbol.trading_fee.factor * instrument.market_price * open_volume
+    ((instrument.market_price.price - traded_price) * open_volume -
+        instrument.trading_symbol.trading_fee.factor * instrument.market_price.price * open_volume) *
+        instrument_multiplier * instrument_currency_exchange_rate
   end
 
   def close_position_with(other_trade)
     closed_volume = open_volume < other_trade.traded_volume ? open_volume : other_trade.traded_volume
     profit = (other_trade.traded_price - traded_price) * closed_volume
-    account.profit += profit
-    account.balance += profit
+    profit = -1 * profit if is_sell?
+    trading_account.profit += profit
+    trading_account.balance += profit
     update!(open_volume: open_volume - closed_volume)
     record_closed(other_trade.id, closed_volume)
     closed_volume
