@@ -18,7 +18,7 @@
                 <h5><%= t('activerecord.attributes.trading_account.balance') %></h5>
             </div>
             <div class="ibox-content">
-                <h1 class="no-margins" id="balance-value"><%= render_currency(@trading_account.balance(@trading_date, @exchange)) %></h1>
+                <h1 class="no-margins" id="balance-value"><%= render_currency(@trading_account.balance) %></h1>
                 <div class="stat-percent font-bold text-success"></div>
             </div>
         </div>
@@ -30,7 +30,7 @@
                 <h5><%= t('activerecord.attributes.trading_account.profit') %></h5>
             </div>
             <div class="ibox-content">
-                <h1 class="no-margins" id="profit-value"><%= render_currency(@trading_account.profit(@trading_date, @exchange)) %></h1>
+                <h1 class="no-margins" id="profit-value"><%= render_currency(@trading_account.profit) %></h1>
                 <div class="stat-percent font-bold text-success"></div>
             </div>
         </div>

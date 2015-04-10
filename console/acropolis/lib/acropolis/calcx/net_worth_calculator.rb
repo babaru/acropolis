@@ -1,7 +1,11 @@
 module Acropolis
   module Calcx
-    class NetWorthCalculator
+    module NetWorthCalculator
       def calc(trade)
+
+        
+        #3####
+
         position_profit = 0
         rest_volume = trade.is_close? ? trade.traded_volume : 0
         Trade.transaction do
@@ -19,6 +23,7 @@ module Acropolis
         profit = trade.trading_account.profit + position_profit - trade.trading_fee
         customer_benefit = trade.trading_account.capital + profit
         net_worth = customer_benefit.fdiv(trade.trading_account.capital)
+        [net_worth, customer_benefit, trade.trading_account.balance, profit]
       end
     end
   end

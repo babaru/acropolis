@@ -56,13 +56,11 @@ class TradingAccount < ActiveRecord::Base
 
 
   def net_worth(date = nil, exchange = nil)
-    total_capital = capital(date, exchange)
-    total_capital == 0 ? 0 : customer_benefit(date, exchange).fdiv(total_capital)
+    capital == 0 ? 0 : customer_benefit(date, exchange).fdiv(capital)
   end
 
   def leverage(date, exchange)
-    total_capital = capital(date, exchange)
-    total_capital == 0 ? 0 : position_cost(date, exchange).fdiv(total_capital)
+    capital == 0 ? 0 : position_cost(date, exchange).fdiv(capital)
   end
 
   #

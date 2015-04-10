@@ -1,4 +1,5 @@
 class Trade < ActiveRecord::Base
+  include Acropolis::Calcx::NetWorthCalculator
   attr_accessor :traded_at
 
   belongs_to :instrument

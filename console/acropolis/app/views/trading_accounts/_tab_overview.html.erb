@@ -15,15 +15,15 @@
         </tr>
         <tr>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.capital') %></strong></td>
-            <td><%= render_currency(@trading_account.capital(@trading_date, @exchange)) %></td>
+            <td><%= render_currency(@trading_account.capital) %></td>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.balance') %></strong></td>
-            <td><%= render_currency(@trading_account.balance(@trading_date, @exchange)) %></td>
+            <td><%= render_currency(@trading_account.balance) %></td>
         </tr>
         <tr>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.customer_benefit') %></strong></td>
             <td><%= render_currency(@trading_account.customer_benefit(@trading_date, @exchange)) %></td>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.profit') %></strong></td>
-            <td><%= render_currency(@trading_account.profit(@trading_date, @exchange)) %></td>
+            <td><%= render_currency(@trading_account.profit) %></td>
         </tr>
         <tr>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.leverage') %></strong></td>
