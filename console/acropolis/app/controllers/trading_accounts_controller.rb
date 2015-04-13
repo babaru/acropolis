@@ -20,7 +20,7 @@ class TradingAccountsController < ApplicationController
     add_breadcrumb @trading_account.name, nil
 
     send("show_#{@current_tab}")
-    @trading_account.refresh_parameters(@trading_date, @exchange)
+    #@trading_account.refresh_parameters(@trading_date, @exchange)
 
     respond_to do |format|
       format.html 

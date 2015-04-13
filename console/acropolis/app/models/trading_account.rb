@@ -1,4 +1,5 @@
 class TradingAccount < ActiveRecord::Base
+
   belongs_to :product
   belongs_to :client
   has_many :trades, dependent: :destroy
@@ -8,61 +9,24 @@ class TradingAccount < ActiveRecord::Base
   has_many :trading_account_budget_records
   has_many :trading_account_risk_plans, dependent: :destroy
   has_many :risk_plans, through: :trading_account_risk_plans
+  has_many :child_accounts, dependent: :destroy
+
+  include RiskParam
 
   validates :account_number, uniqueness: true
 
-  def profit
-    @profit || 0
-  end
 
-  def profit=(val)
-    @profit = val
-  end
-
-  def budget
-    @budget || 0
-  end
-
-  def budget=(val)
-    @budget = val
-  end
-
-  def capital
-    @capital || 1000
-  end
-
-  def capital=(val)
-    @capital = val
-  end
-
-  def balance
-    @balance || 1000
-  end
-
-  def balance=(val)
-    @balance = val
-  end
-
-  PARAMETER_NAMES = %w(margin exposure position_cost trading_fee customer_benefit)
+  #PARAMETER_NAMES = %w(margin exposure position_cost trading_fee customer_benefit)
 
   #
   # Parameters
   #
-  PARAMETER_NAMES.each do |param|
-    define_method(param) do |date = nil, exchange = nil|
-      TradingSummary.fetch_summaries(id, date, exchange).inject(0){|sum, summary| sum += summary.send(param.to_sym)}
-    end
-  end
-
-
-  def net_worth(date = nil, exchange = nil)
-    capital == 0 ? 0 : customer_benefit(date, exchange).fdiv(capital)
-  end
-
-  def leverage(date, exchange)
-    capital == 0 ? 0 : position_cost(date, exchange).fdiv(capital)
-  end
-
+  #PARAMETER_NAMES.each do |param|
+  #  define_method(param) do |date = nil, exchange = nil|
+  #    TradingSummary.fetch_summaries(id, date, exchange).inject(0){|sum, summary| sum += summary.send(param.to_sym)}
+  #  end
+  #end
+#
   #
   # Calculate parameters
   #

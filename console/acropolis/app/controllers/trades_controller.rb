@@ -91,13 +91,16 @@ class TradesController < ApplicationController
     def trade_params
       params.require(:trade).permit(
         :instrument_id,
-        :trade_price,
+        :traded_price,
         :order_side,
         :order_price,
         :trading_account_id,
         :traded_at,
-        :trade_volume,
+        :traded_volume,
         :open_close,
+        :exchange_id,
+        :exchange_traded_at,
+        :system_trade_sequence_number
         )
     end
 

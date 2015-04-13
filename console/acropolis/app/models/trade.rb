@@ -1,5 +1,4 @@
 class Trade < ActiveRecord::Base
-  include Acropolis::Calcx::NetWorthCalculator
   attr_accessor :traded_at
 
   belongs_to :instrument
@@ -26,6 +25,11 @@ class Trade < ActiveRecord::Base
   scope :today, -> { where(Arel::Nodes::NamedFunction.new('date', [Trade.arel_table[:exchange_traded_at]]).eq(Time.zone.now.strftime('%Y-%m-%d')))}
   scope :when, ->(date){ where(Arel::Nodes::NamedFunction.new('date', [Trade.arel_table[:exchange_traded_at]]).eq(date.strftime('%Y-%m-%d')))}
 
+  after_create :notify_new_trade
+
+  def notify_new_trade
+    trading_account.update(self)
+  end
   # Class Methods
   class << self
 
@@ -132,7 +136,12 @@ class Trade < ActiveRecord::Base
 
   # Trading fee of this trade
   def trading_fee
+    calculate_trading_fee if system_calculated_trading_fee.nil?
     exchange_trading_fee > 0 ? exchange_trading_fee : system_calculated_trading_fee
+  end
+
+  def expected_trading_fee(market_price)
+    instrument.trading_symbol.trading_fee.calculate(self, market_price)
   end
 
   # Position cost of this trade
@@ -209,14 +218,10 @@ class Trade < ActiveRecord::Base
         instrument_multiplier * instrument_currency_exchange_rate
   end
 
-  def close_position_with(other_trade)
-    closed_volume = open_volume < other_trade.traded_volume ? open_volume : other_trade.traded_volume
-    profit = (other_trade.traded_price - traded_price) * closed_volume
-    profit = -1 * profit if is_sell?
-    trading_account.profit += profit
-    trading_account.balance += profit
+  def close_position_with(close_trade)
+    closed_volume = open_volume < close_trade.traded_volume ? open_volume : close_trade.traded_volume
     update!(open_volume: open_volume - closed_volume)
-    record_closed(other_trade.id, closed_volume)
+    record_closed(close_trade.id, closed_volume)
     closed_volume
   end
 

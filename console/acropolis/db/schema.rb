@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408034822) do
+ActiveRecord::Schema.define(version: 20150413063333) do
 
   create_table "banks", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -34,6 +34,20 @@ ActiveRecord::Schema.define(version: 20150408034822) do
   end
 
   add_index "capital_accounts", ["client_id"], name: "index_capital_accounts_on_client_id", using: :btree
+
+  create_table "child_accounts", force: :cascade do |t|
+    t.decimal  "profit",                       precision: 10
+    t.decimal  "balance",                      precision: 10
+    t.decimal  "capital",                      precision: 10
+    t.decimal  "budget",                       precision: 10
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "trading_account_id", limit: 4
+    t.integer  "exchange_id",        limit: 4
+  end
+
+  add_index "child_accounts", ["exchange_id"], name: "index_child_accounts_on_exchange_id", using: :btree
+  add_index "child_accounts", ["trading_account_id"], name: "index_child_accounts_on_trading_account_id", using: :btree
 
   create_table "clearing_prices", force: :cascade do |t|
     t.integer  "instrument_id",            limit: 4
@@ -453,4 +467,6 @@ ActiveRecord::Schema.define(version: 20150408034822) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "child_accounts", "exchanges"
+  add_foreign_key "child_accounts", "trading_accounts"
 end

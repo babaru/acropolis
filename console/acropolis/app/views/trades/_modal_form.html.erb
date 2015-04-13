@@ -4,23 +4,15 @@
 
   <%= f.error_notification %>
 
-            
+    <%= f.input :system_trade_sequence_number %>
     <%= f.input :instrument_id %>
-          
-    <!-- f.input :trade_price -->
-          
     <%= f.input :order_side %>
-          
-    <!-- f.input :order_price -->
-          
-    <%= f.input :trading_account_id %>
-          
-    <%= f.input :traded_at %>
-          
-    <!-- f.input :trade_volume -->
-          
     <%= f.input :open_close %>
-                  
+    <%= f.input :traded_price %>
+    <%= f.input :traded_volume %>
+    <%= f.input :exchange_id %>
+    <%= f.input :exchange_traded_at %>
+    <%= f.input :trading_account_id %>
   </div>
 
   <div class="modal-footer">

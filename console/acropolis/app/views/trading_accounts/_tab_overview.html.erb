@@ -9,7 +9,7 @@
         </tr>
         <tr>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.net_worth') %></strong></td>
-            <td><%= render_net_worth(@trading_account.net_worth(@trading_date, @exchange)) %></td>
+            <td><%= render_net_worth(@trading_account.net_worth) %></td>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.trading_status') %></strong></td>
             <td><%= render_trading_status(@trading_account) %></td>
         </tr>
@@ -21,15 +21,15 @@
         </tr>
         <tr>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.customer_benefit') %></strong></td>
-            <td><%= render_currency(@trading_account.customer_benefit(@trading_date, @exchange)) %></td>
+            <td><%= render_currency(@trading_account.customer_benefit) %></td>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.profit') %></strong></td>
             <td><%= render_currency(@trading_account.profit) %></td>
         </tr>
         <tr>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.leverage') %></strong></td>
-            <td><%= render_decimal(@trading_account.leverage(@trading_date, @exchange)) %></td>
+            <td><%= render_decimal(@trading_account.leverage) %></td>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.margin') %></strong></td>
-            <td><%= render_currency(@trading_account.margin(@trading_date, @exchange)) %></td>
+            <td><%= render_currency(@trading_account.margin) %></td>
         </tr>
     </tbody>
 </table>
