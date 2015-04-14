@@ -97,6 +97,7 @@ class TradesController < ApplicationController
         :trading_account_id,
         :traded_at,
         :traded_volume,
+        :open_volume,
         :open_close,
         :exchange_id,
         :exchange_traded_at,

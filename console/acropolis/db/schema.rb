@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413063333) do
+ActiveRecord::Schema.define(version: 20150414093304) do
 
   create_table "banks", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -36,14 +36,16 @@ ActiveRecord::Schema.define(version: 20150413063333) do
   add_index "capital_accounts", ["client_id"], name: "index_capital_accounts_on_client_id", using: :btree
 
   create_table "child_accounts", force: :cascade do |t|
-    t.decimal  "profit",                       precision: 10
-    t.decimal  "balance",                      precision: 10
-    t.decimal  "capital",                      precision: 10
-    t.decimal  "budget",                       precision: 10
+    t.decimal  "profit",                       precision: 10, scale: 4
+    t.decimal  "balance",                      precision: 10, scale: 4
+    t.decimal  "capital",                      precision: 10, scale: 4
+    t.decimal  "budget",                       precision: 10, scale: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "trading_account_id", limit: 4
     t.integer  "exchange_id",        limit: 4
+    t.decimal  "trading_fee",                  precision: 10, scale: 4, default: 0.0
+    t.decimal  "margin",                       precision: 10, scale: 4, default: 0.0
   end
 
   add_index "child_accounts", ["exchange_id"], name: "index_child_accounts_on_exchange_id", using: :btree

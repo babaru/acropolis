@@ -95,7 +95,6 @@ class TradingSummary < ActiveRecord::Base
     trades = awaiting_trades
     trades.each do |trade|
       trade.close_position
-      trade.calculate_trading_fee
     end
     @latest_trade = trades.last
     latest_trade_id = @latest_trade.id

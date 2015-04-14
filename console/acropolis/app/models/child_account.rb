@@ -1,45 +1,12 @@
+require 'observer'
 class ChildAccount < ActiveRecord::Base
   belongs_to :trading_account
 
-  def update(trade)
-    rest_volume = trade.traded_volume
-    trade.available_open_trades.each do |open_trade|
-      close_volume = open_trade.close_position_with(trade)
-      profit = (trade.traded_price - open_trade.traded_price) * close_volume
-      profit *= -1 if trade.is_buy?
-      self.profit += profit
-      self.balance += profit
+  scope :belongs_to_trading_account, ->(trading_account_id) {where(trading_account_id: trading_account_id )}
+  scope :belongs_to_exchange, ->(exchange_id) {where(exchange_id: exchange_id)}
 
-      rest_volume -= close_volume
-      break if rest_volume == 0
-    end
-    self.profit -= trade.trading_fee
-    self.balance -= trade.trading_fee
-    save!
-  end
-  # capital, balance, profit
-  def customer_benefit
-    balance + margin + position_profit
-  end
-
-  def exposure
-    open_trades.inject(0) { |sum, t| sum += t.instrument.market_price.price * t.open_volume }
-  end
-
-  def position_cost
-    open_trades.inject(0) { |sum, t| sum += t.traded_price * t.open_volume }
-  end
-
-  def position_profit
-    sum = 0
-    open_trades.each do |trade|
-      market_price = trade.instrument.market_price.price
-      expected_trading_fee = trade.expected_trading_fee(market_price)
-      profit = (market_price - trade.traded_price) * trade.open_volume - expected_trading_fee
-      profit *= -1 if trade.is_sell?
-      sum += profit
-    end
-    sum
+  class << self
+    include Observable
   end
 
   def open_trades
@@ -49,12 +16,76 @@ class ChildAccount < ActiveRecord::Base
         .belongs_to_exchange(exchange_id)
   end
 
-  def close_position(trade, open_trade_id, close_volume)
-    return if trade.is_open?
-    trade.record_closed(open_trade_id, close_volume)
+  def update_trade(trade)
+    rest_volume = trade.traded_volume
+    ChildAccount.transaction do
+      trade.available_open_trades.each do |open_trade|
+        close_volume = open_trade.close_position_with(trade)
+
+        margin = position_close_margin(open_trade, close_volume)
+        update_margin(-1 * margin)
+
+        profit = position_close_profit(open_trade, trade, close_volume)
+        update_profit profit
+
+        rest_volume -= close_volume
+        break if rest_volume == 0
+      end
+      update_trading_fee trade.trading_fee
+      update_margin trade.margin
+      self.save!
+    end
+
+    ChildAccount.changed
+    ChildAccount.notify_observers self
   end
 
-  def margin
-    0
+  class << self
+    # update method for Observer.
+    def update_trade(trade)
+      ca = ChildAccount.belongs_to_trading_account(trade.trading_account_id).belongs_to_exchange(trade.exchange_id).first
+      ca.update_trade(trade)
+    end
+  end
+
+  %w[exposure position_cost position_expected_profit].each do |param|
+    define_method(param) do
+      open_trades.inject(0) {|sum, t| sum += t.send(param.to_sym)}
+    end
+  end
+
+  def customer_benefit
+    balance + margin + position_expected_profit
+  end
+
+
+private
+
+  def position_close_profit(open_trade, close_trade, close_volume)
+    profit = (close_trade.traded_price - open_trade.traded_price) * close_volume
+    profit *= -1 if close_trade.is_buy?
+    profit
+  end
+
+  def position_close_margin(open_trade, close_volume)
+    open_trade.calc_margin(open_trade.market_price, close_volume)
+  end
+
+  def update_trading_fee(trading_fee)
+    self.profit -= trading_fee
+    self.balance -= trading_fee
+    self.trading_fee += trading_fee
+  end
+
+  def update_profit(profit)
+    self.profit += profit
+    self.balance += profit
+  end
+
+  def update_margin(margin)
+    self.balance -= margin
+    self.margin += margin
   end
 end
+
+Trade.add_observer(ChildAccount, :update_trade)

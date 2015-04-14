@@ -1,3 +1,4 @@
+require 'observer'
 class Trade < ActiveRecord::Base
   attr_accessor :traded_at
 
@@ -28,10 +29,12 @@ class Trade < ActiveRecord::Base
   after_create :notify_new_trade
 
   def notify_new_trade
-    trading_account.update(self)
+    Trade.changed
+    Trade.notify_observers self
   end
   # Class Methods
   class << self
+    include Observable
 
     def order_sides
       Acropolis::OrderSides.order_sides.map{ |k,v| [I18n.t("order_sides.#{k}"),v] }
@@ -104,6 +107,10 @@ class Trade < ActiveRecord::Base
     order_side == Acropolis::OrderSides.order_sides.sell
   end
 
+  def market_price
+    self.instrument.market_price.price
+  end
+
   def open_price
     return traded_price if is_open?
     # if it's a close trade, calculate average open price of corresponding open trade(s)
@@ -125,23 +132,35 @@ class Trade < ActiveRecord::Base
     sum_traded_volume > 0 ? sum_traded_value.fdiv(sum_traded_volume) : 0
   end
 
+  def calc_margin(price = nil, volume = nil)
+    is_close? ? 0 : instrument.trading_symbol.margin.calculate(self, price, volume)
+  end
+
   # Margin of this trade
   def margin
-    is_close? ? 0 : instrument.trading_symbol.margin.calculate(self)
+    calc_margin
   end
 
-  def calculate_trading_fee
-    update(system_calculated_trading_fee: instrument.trading_symbol.trading_fee.calculate(self))
+  def calc_trading_fee(price = nil, volume = nil)
+    instrument.trading_symbol.trading_fee.calculate(self, price, volume)
   end
 
-  # Trading fee of this trade
   def trading_fee
-    calculate_trading_fee if system_calculated_trading_fee.nil?
-    exchange_trading_fee > 0 ? exchange_trading_fee : system_calculated_trading_fee
+    return exchange_trading_fee if exchange_trading_fee > 0
+    if system_calculated_trading_fee.nil? || system_calculated_trading_fee == 0.0
+      update(system_calculated_trading_fee: calc_trading_fee)
+    end
+    system_calculated_trading_fee
   end
 
-  def expected_trading_fee(market_price)
-    instrument.trading_symbol.trading_fee.calculate(self, market_price)
+  def position_expected_trading_fee
+    calc_trading_fee(market_price, self.open_volume)
+  end
+
+  def position_expected_profit
+    profit = (market_price - self.traded_price) * self.open_volume
+    profit *= -1 if is_sell?
+    profit - position_expected_trading_fee
   end
 
   # Position cost of this trade
@@ -151,9 +170,8 @@ class Trade < ActiveRecord::Base
   end
 
   # Market value of this trade
-  def market_value(market_price = nil)
-    price = market_price ? market_price : clearing_price
-    price * open_volume * instrument_multiplier * instrument_currency_exchange_rate
+  def market_value
+    market_price * open_volume * instrument_multiplier * instrument_currency_exchange_rate
   end
 
   # Profit of this trade
@@ -191,10 +209,8 @@ class Trade < ActiveRecord::Base
     Trade.transaction do
       rest_volume = traded_volume
       available_open_trades.each do |trade|
-        close_volume = trade.open_volume < rest_volume ? trade.open_volume : rest_volume
-        trade.update!(open_volume: trade.open_volume - close_volume)
-        trade.record_closed(id, close_volume)
-        rest_volume -= close_volume
+        closed_volume = trade.close_position_with(self)
+        rest_volume -= closed_volume
         break if rest_volume == 0
       end
     end

@@ -7,8 +7,10 @@ class Margin < ActiveRecord::Base
     self.factor
   end
 
-  def calculate(trade)
-    factor * trade.market_value
+  def calculate(trade, price = nil, volume = nil)
+    price = trade.market_price unless price
+    volume = trade.open_volume unless volume
+    factor * price * volume
   end
 
 end

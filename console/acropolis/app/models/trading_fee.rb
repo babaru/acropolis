@@ -3,8 +3,9 @@ class TradingFee < ActiveRecord::Base
   has_one :trading_symbol_trading_fee
   has_one :trading_symbol, through: :trading_symbol_trading_fee
 
-  def calculate(trade, market_price = nil)
-    factor * trade.traded_volume * trade.traded_price unless market_price
-    factor * trade.open_volume * market_price
+  def calculate(trade, price = nil, volume = nil)
+    price = trade.traded_price unless price
+    volume = trade.traded_volume unless volume
+    factor * price * volume
   end
 end
