@@ -3,48 +3,45 @@
   g.column name: '#' do |trade|
     trade.id
   end
-  
-  
+
   g.column name: t('activerecord.attributes.trade.instrument_id') do |trade|
     trade.instrument_id
   end
 
-  
- # g.column name: t('activerecord.attributes.trade.trade_price') do |trade|
- #   trade.trade_price
- # end
-
-  
-  g.column name: t('activerecord.attributes.trade.order_side') do |trade|
-    trade.order_side
+  g.column name: t('activerecord.attributes.trade.traded_price') do |trade|
+    render_trade_price(trade.traded_price, {unit: trade.instrument.trading_symbol.currency.symbol})
   end
 
-  
+  g.column name: t('activerecord.attributes.trade.order_side') do |trade|
+    #trade.is_buy? ? I18n.t("order_sides.buy") : I18n.t("order_sides.sell")
+    render_order_side(trade.order_side)
+  end
+
  # g.column name: t('activerecord.attributes.trade.order_price') do |trade|
  #   trade.order_price
  # end
 
-  
   g.column name: t('activerecord.attributes.trade.trading_account_id') do |trade|
     trade.trading_account_id
   end
 
-  
-  g.column name: t('activerecord.attributes.trade.traded_at') do |trade|
-    trade.traded_at
+  g.column name: t('activerecord.attributes.trade.traded_volume') do |trade|
+    trade.traded_volume
   end
 
-  
- # g.column name: t('activerecord.attributes.trade.trade_volume') do |trade|
- #   trade.trade_volume
- # end
-
-  
   g.column name: t('activerecord.attributes.trade.open_close') do |trade|
-    trade.open_close
+    #trade.is_open? ? I18n.t("trade_open_flags.open") : I18n.t("trade_open_flags.close")
+    render_open_close(trade)
   end
 
-  
+  g.column name: t('activerecord.attributes.trade.trading_fee') do |trade|
+    trade.trading_fee
+  end
+
+  g.column name: t('activerecord.attributes.trade.traded_at') do |trade|
+    trade.exchange_traded_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+
   g.column name: t('activerecord.attributes.time_stamp.created_at') do |trade|
     trade.created_at.strftime('%Y-%m-%d %H:%M:%S')
   end

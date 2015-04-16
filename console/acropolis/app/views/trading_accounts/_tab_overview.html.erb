@@ -9,27 +9,27 @@
         </tr>
         <tr>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.net_worth') %></strong></td>
-            <td><%= render_net_worth(@trading_account.net_worth) %></td>
+            <td><%= render_net_worth(@trading_account.net_worth(@trading_date, @exchange)) %></td>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.trading_status') %></strong></td>
             <td><%= render_trading_status(@trading_account) %></td>
         </tr>
         <tr>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.capital') %></strong></td>
-            <td><%= render_currency(@trading_account.capital) %></td>
+            <td><%= render_currency(@trading_account.capital(@trading_date, @exchange)) %></td>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.balance') %></strong></td>
-            <td><%= render_currency(@trading_account.balance) %></td>
+            <td><%= render_currency(@trading_account.balance(@trading_date, @exchange)) %></td>
         </tr>
         <tr>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.customer_benefit') %></strong></td>
-            <td><%= render_currency(@trading_account.customer_benefit) %></td>
+            <td><%= render_currency(@trading_account.customer_benefit(@trading_date, @exchange)) %></td>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.profit') %></strong></td>
-            <td><%= render_currency(@trading_account.profit) %></td>
+            <td><%= render_currency(@trading_account.profit(@trading_date, @exchange)) %></td>
         </tr>
         <tr>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.leverage') %></strong></td>
-            <td><%= render_decimal(@trading_account.leverage) %></td>
+            <td><%= render_decimal(@trading_account.leverage(@trading_date, @exchange)) %></td>
             <td class="text-right"><strong><%= t('activerecord.attributes.trading_account.margin') %></strong></td>
-            <td><%= render_currency(@trading_account.margin) %></td>
+            <td><%= render_currency(@trading_account.margin(@trading_date, @exchange)) %></td>
         </tr>
     </tbody>
 </table>

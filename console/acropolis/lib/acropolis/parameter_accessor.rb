@@ -1,7 +1,7 @@
 module Acropolis
   module ParameterAccessor
 
-    PARAMETER_NAMES = %w(margin exposure profit position_cost trading_fee)
+    PARAMETER_NAMES = %w(margin exposure profit position_cost trading_fee balance budget)
 
     def set_parameter(name, value = nil)
       value ||= 0

@@ -29,6 +29,7 @@ class Trade < ActiveRecord::Base
   after_create :notify_new_trade
 
   def notify_new_trade
+    Trade.add_observer(TradingSummary, :update_trade)
     Trade.changed
     Trade.notify_observers self
   end
@@ -41,7 +42,7 @@ class Trade < ActiveRecord::Base
     end
 
     def open_or_close
-      Acropolis::TradeOpenFlags.trade_open_flags.map{ |k,v| [I18n.t("order_sides.#{k}"),v] }
+      Acropolis::TradeOpenFlags.trade_open_flags.map{ |k,v| [I18n.t("trade_open_flags.#{k}"),v] }
     end
 
     def opposite_side(side)

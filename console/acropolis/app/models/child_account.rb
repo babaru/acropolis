@@ -88,4 +88,4 @@ private
   end
 end
 
-Trade.add_observer(ChildAccount, :update_trade)
+#Trade.add_observer(ChildAccount, :update_trade)

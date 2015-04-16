@@ -19,7 +19,7 @@
           <% product.trading_accounts.each do |trading_account| %>
           <li>
               <span class="m-l-xs"><%= link_to trading_account.name, trading_account_path(trading_account) %></span>
-              <%= render_net_worth(trading_account.net_worth, class: "pull-right") %>
+              <%= render_net_worth(trading_account.net_worth(nil, @current_time), class: "pull-right") %>
           </li>
           <% end %>
         </ul>

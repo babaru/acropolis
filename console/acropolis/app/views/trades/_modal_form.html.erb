@@ -6,8 +6,8 @@
 
     <%= f.input :system_trade_sequence_number %>
     <%= f.input :instrument_id %>
-    <%= f.input :order_side %>
-    <%= f.input :open_close %>
+    <%= f.input :order_side, collection: Trade.order_sides, selected: Trade.order_sides[0]%>
+    <%= f.input :open_close, collection: Trade.open_or_close, selected: Trade.open_or_close[0] %>
     <%= f.input :traded_price %>
     <%= f.input :traded_volume %>
     <%= f.input :open_volume %>
