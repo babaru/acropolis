@@ -326,8 +326,9 @@ class TradingAccountsController < ApplicationController
       @query_params[:oc] = params[:oc] if params[:oc]
 
       @trading_date = @query_params[:trading_date].to_time if @query_params[:trading_date]
-      @exchange = Exchange.find @query_params[:exchange_id] if @query_params[:exchange_id]
-      @trading_date ||= TradingSummary.latest_trading_date(@trading_account.id, nil, @exchange)
+      @exchange_id = @query_params[:exchange_id]
+      @exchange = Exchange.find @exchange_id if @exchange_id
+      @trading_date ||= TradingSummary.latest_trading_date(@trading_account.id, @exchange_id, nil)
       @current_tab = @query_params[:tab]
       @current_tab ||= 'overview'
       @current_tab = @current_tab.to_sym

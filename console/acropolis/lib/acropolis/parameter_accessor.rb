@@ -1,7 +1,41 @@
 module Acropolis
   module ParameterAccessor
+    def self.included(kclass)
+      kclass.class_eval do
+        def self.param_accessor(*args)
+          args.each do |arg|
+            define_method(arg) do
+              get_parameter(arg)
+            end
 
-    PARAMETER_NAMES = %w(margin exposure profit position_cost trading_fee balance budget)
+            define_method("#{arg}=") do |val|
+              set_parameter(arg, val)
+            end
+
+            define_method("reset_#{arg}") do |default_value = nil|
+              reset_parameter(arg, default_value)
+            end
+          end
+        end
+      end
+    end
+
+    def setup_param_accessor_meta(param_class_name = nil, foreign_key_name = nil)
+      param_class_name ||= self.class.name + "Parameter"
+      @_param_class = param_class_name.constantize
+      @_foreign_key = foreign_key_name || self.class.name.foreign_key
+    end
+
+    def get_parameter_resource(name, default_value)
+      setup_param_accessor_meta unless @_param_class
+      param = @_param_class.send(:find_by, {@_foreign_key.to_sym => self.id, parameter_name: name})
+      unless param
+        param = @_param_class.send(:create, {@_foreign_key.to_sym => self.id,
+                                             parameter_name: name,
+                                             parameter_value: default_value})
+      end
+      param
+    end
 
     def set_parameter(name, value = nil)
       value ||= 0
@@ -19,23 +53,5 @@ module Acropolis
       default_value ||= 0
       set_parameter(name, default_value)
     end
-
-    #
-    # Parameters
-    #
-    PARAMETER_NAMES.each do |method_name|
-      define_method(method_name) do
-        self.send(:get_parameter, method_name.to_sym, 0)
-      end
-
-      define_method("#{method_name}=") do |val|
-        self.send(:set_parameter, method_name.to_sym, val)
-      end
-
-      define_method("reset_#{method_name}") do
-        self.send(:reset_parameter, method_name.to_sym)
-      end
-    end
-
   end
 end

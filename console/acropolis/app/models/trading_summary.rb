@@ -1,9 +1,5 @@
 class TradingSummary < ActiveRecord::Base
-  #include Acropolis::ParameterAccessor
-  #include Acropolis::Calculators::CustomerBenefitCalculator
-  #include Acropolis::Calculators::NetWorthCalculator
-  #include Acropolis::Calculators::BalanceCalculator
-  #include Acropolis::Calculators::LeverageCalculator
+  include Acropolis::ParameterAccessor
 
   belongs_to :trading_account
   belongs_to :latest_trade, class_name: 'Trade'
@@ -15,10 +11,16 @@ class TradingSummary < ActiveRecord::Base
   scope :belongs_to_trading_account, -> (trading_account_id) { where(trading_account_id: trading_account_id)}
   scope :before_trading_date, -> (date) { where(TradingSummary.arel_table[:trading_date].lteq(date))}
 
+  param_accessor :profit
+  param_accessor :trading_fee
+  param_accessor :balance
+  param_accessor :budget
+  param_accessor :capital
 
-
-
-
+  extend Acropolis::ParameterAggregation
+  param_aggregation :exposure, from: :open_trades
+  param_aggregation :position_cost, from: :open_trades
+  param_aggregation :margin, from: :open_trades
 
   def update_trade(trade)
     rest_volume = trade.traded_volume
@@ -28,7 +30,7 @@ class TradingSummary < ActiveRecord::Base
 
         # return margin
         margin = position_close_margin(open_trade, close_volume)
-        self.balance += margin
+        update_margin (-1 * margin)
 
         profit = position_close_profit(open_trade, trade, close_volume)
         update_profit profit
@@ -37,7 +39,7 @@ class TradingSummary < ActiveRecord::Base
         break if rest_volume == 0
       end
       update_trading_fee trade.trading_fee
-      self.balance -= trade.margin
+      update_margin trade.margin
       save!
     end
   end
@@ -50,7 +52,7 @@ class TradingSummary < ActiveRecord::Base
     end
 
     def create_summary_for(trade)
-      latest_ts = latest(trade.trading_account_id, trade.exchange_traded_at, trade.exchange)
+      latest_ts = latest(trade.trading_account_id, trade.exchange, trade.exchange_traded_at)
       ts = TradingSummary.create(trading_account_id: trade.trading_account_id,
                                  exchange_id: trade.exchange_id,
                                  trading_date: trade.exchange_traded_at)
@@ -71,50 +73,25 @@ class TradingSummary < ActiveRecord::Base
       ts
     end
 
+    # if exchange_id is not given, fetch latest summaries of all exchanges;
+    # is date is not given, fetch latest summaries of given exchanges in today.
     def fetch_summaries(account_id, exchange_id = nil, date = nil)
       date = Time.now unless date
-      if exchange_id
-        belongs_to_trading_account(account_id)
-          .belongs_to_exchange(exchange_id)
-          .on_trading_date(date)
-          .to_a
-      else
-        exchanges = Set.new
-        summaries = belongs_to_trading_account(account_id)
-                    .on_trading_date(date)
-                    .order(updated_at: :desc )
-        summaries.select do |s|
-          if exchanges.include? s.exchange_id
-            false
-          else exchanges.include? s.exchange_id
-            exchanges << s.exchange_id
-            true
-          end
+
+      summaries = belongs_to_trading_account(account_id)
+                  .on_trading_date(date)
+                  .order(updated_at: :desc )
+      summaries.belongs_to_exchange(exchange_id) if exchange_id
+
+      exchanges = Set.new
+      summaries.select do |s|
+        if exchanges.include? s.exchange_id
+          false
+        else exchanges.include? s.exchange_id
+        exchanges << s.exchange_id
+        true
         end
       end
-    end
-
-    def build_query_condition(account_id, date, exchange_id)
-      conditions = build_query_condition_by_date(account_id, date, exchange_id)
-      conditions = conditions.and(arel_table[:exchange_id].eq(exchange_id)) if exchange_id
-      conditions.and(arel_table[:trading_account_id].eq(account_id))
-    end
-
-    def build_query_condition_by_date(account_id, date, exchange_id)
-      conditions = nil
-      if date
-        latest_trading_date = latest_trading_date(account_id, date, exchange_id)
-        if latest_trading_date < date
-          conditions = arel_table[:trading_date].eq(latest_trading_date)
-        else
-          conditions = arel_table[:trading_date].eq(date)
-        end
-      else
-        top_trading_date = order(:trading_date).reverse_order.first
-        top_trading_date_value = top_trading_date ? top_trading_date.trading_date : nil
-        conditions = arel_table[:trading_date].eq(top_trading_date_value)
-      end
-      conditions
     end
 
     def latest_for(trade)
@@ -125,16 +102,16 @@ class TradingSummary < ActiveRecord::Base
       .order(updated_at: :desc).first
     end
 
-    def latest(trading_account_id, date, exchange_id)
+    def latest(trading_account_id, exchange_id, date)
       return nil unless trading_account_id
       summaries = belongs_to_trading_account(trading_account_id)
-      summaries.before_trading_date(date) if date
       summaries.belongs_to_exchange(exchange_id) if exchange_id
+      summaries.before_trading_date(date) if date
       summaries.order(updated_at: :desc).first
     end
 
-    def latest_trading_date(trading_account_id, date, exchange_id)
-      rec = latest(trading_account_id, date, exchange_id)
+    def latest_trading_date(trading_account_id, exchange_id, date)
+      rec = latest(trading_account_id, exchange_id, date)
       rec ? rec.trading_date : nil
     end
   end
@@ -146,11 +123,6 @@ class TradingSummary < ActiveRecord::Base
         .belongs_to_exchange(exchange_id)
   end
 
-  def get_parameter_resource(name, default_value)
-    TradingSummaryParameter.find_by_trading_summary_id_and_parameter_name(id,
-      name) || TradingSummaryParameter.create(trading_summary_id: id,
-        parameter_name: name, parameter_value: default_value)
-  end
 =begin
   ADDITIONAL_PARAMETERS.each do |method_name|
     define_method(method_name) do
@@ -212,44 +184,6 @@ class TradingSummary < ActiveRecord::Base
     Trade.waiting_trades_for(trading_account_id, trading_date, exchange_id, last_seq_no)
   end
 =end
-
-  def set_parameter(name, value = nil)
-    value ||= 0
-    parameter = get_parameter_resource(name, value)
-    parameter.update({parameter_value: value})
-  end
-
-  def get_parameter(name, default_value = nil)
-    default_value ||= 0
-    parameter = get_parameter_resource(name, default_value)
-    parameter.parameter_value
-  end
-
-  def reset_parameter(name, default_value = nil)
-    default_value ||= 0
-    set_parameter(name, default_value)
-  end
-
-  PARAMETER_NAMES = %w(profit trading_fee balance budget capital)
-  PARAMETER_NAMES.each do |method_name|
-    define_method(method_name) do
-      self.send(:get_parameter, method_name.to_sym, 0)
-    end
-
-    define_method("#{method_name}=") do |val|
-      self.send(:set_parameter, method_name.to_sym, val)
-    end
-
-    define_method("reset_#{method_name}") do
-      self.send(:reset_parameter, method_name.to_sym)
-    end
-  end
-
-  %w[exposure position_cost margin].each do |param|
-    define_method(param) do
-      open_trades.inject(0) {|sum, t| sum += t.send(param.to_sym)}
-    end
-  end
 
   def customer_benefit
     balance + margin
