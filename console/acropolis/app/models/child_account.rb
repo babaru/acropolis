@@ -20,7 +20,7 @@ class ChildAccount < ActiveRecord::Base
     rest_volume = trade.traded_volume
     ChildAccount.transaction do
       trade.available_open_trades.each do |open_trade|
-        close_volume = open_trade.close_position_with(trade)
+        close_volume = open_trade.close_position(trade)
 
         margin = position_close_margin(open_trade, close_volume)
         update_margin(-1 * margin)

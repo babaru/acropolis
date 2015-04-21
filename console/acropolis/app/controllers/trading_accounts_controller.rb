@@ -194,7 +194,7 @@ class TradingAccountsController < ApplicationController
   end
 
   def calculate_trading_summary
-    @trading_account.refresh_parameters(@trading_date, @exchange)
+    @trading_account.refresh_parameters(@exchange.id, @trading_date)
   end
 
   def export

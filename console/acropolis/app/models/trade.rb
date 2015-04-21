@@ -21,7 +21,6 @@ class Trade < ActiveRecord::Base
   scope :belongs_to_exchange, ->(exchange_id) { where(exchange_id: exchange_id)}
   scope :traded_on_instrument, ->(instrument_id) { where(instrument_id: instrument_id) }
   scope :side, ->(side) { where(order_side: side) }
-  scope :trade_on_instrument, ->(instrument_id) { where(instrument_id: instrument_id) }
   scope :not_later, ->(time) { where('exchange_traded_at <= ?', time)}
   scope :after, ->(sequence_number) { where(Trade.arel_table[:system_trade_sequence_number].gt(sequence_number))}
   scope :today, -> { where(Arel::Nodes::NamedFunction.new('date', [Trade.arel_table[:exchange_traded_at]]).eq(Time.zone.now.strftime('%Y-%m-%d')))}
@@ -30,7 +29,7 @@ class Trade < ActiveRecord::Base
   after_create :notify_new_trade
 
   def notify_new_trade
-    #Trade.add_observer(TradingSummary, :update_trade)
+    Trade.add_observer(TradingSummary, :update_trade)
     Trade.changed
     Trade.notify_observers self
   end
@@ -50,23 +49,19 @@ class Trade < ActiveRecord::Base
       side == Acropolis::OrderSides.order_sides.buy ? Acropolis::OrderSides.order_sides.sell : Acropolis::OrderSides.order_sides.buy
     end
 
-    def reset_open_volumes(trading_account, trading_date, exchange)
+    def reset_open_volumes(trading_account_id, exchange_id, trading_date)
       Trade.transaction do
-        Trade.open.where({ trading_account_id: trading_account.id,
-                             exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
-                             exchange_id: exchange.id
-                         }).each do |trade|
-          trade.update({open_volume: trade.traded_volume})
+        Trade.open
+            .belongs_to_trading_account(trading_account_id)
+            .belongs_to_exchange(exchange_id)
+            .when(trading_date)
+            .each {|t| t.update(open_volume: t.traded_volume)}
+        Trade.close
+            .belongs_to_trading_account(trading_account_id)
+            .belongs_to_exchange(exchange_id)
+            .when(trading_date)
+            .each {|t| PositionCloseRecord.destroy_records(t.id)}
         end
-
-        Trade.close.where({
-                              trading_account_id: trading_account.id,
-                              exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
-                              exchange_id: exchange.id
-                          }).each do |trade|
-          PositionCloseRecord.where({close_trade_id: trade.id}).destroy_all
-        end
-      end
     end
 
     def waiting_trades_for(trading_account_id, trading_date, exchange_id, last_seq_no)
@@ -83,13 +78,17 @@ class Trade < ActiveRecord::Base
           .belongs_to_exchange(exchange_id)
           .order(:exchange_traded_at)
     end
+
+    def last_trade_seq_no
+      Trade.last ? Trade.last.system_trade_sequence_number : 0
+    end
   end
 
   def trading_summary
-    TradingSummary.where({trading_account_id: trading_account.id, 
-                        exchange_id: exchange.id,
-                        trading_date: exchange_traded_at.beginning_of_day
-    }).first
+    TradingSummary.belongs_to_trading_account(trading_account.id)
+        .belongs_to_exchange(exchange.id)
+        .on_trading_date(exchange_traded_at)
+        .first
   end
 
   def is_open?
@@ -160,16 +159,6 @@ class Trade < ActiveRecord::Base
     system_calculated_trading_fee
   end
 
-  def position_expected_trading_fee
-    calc_trading_fee(market_price, self.open_volume)
-  end
-
-  def position_expected_profit
-    profit = (market_price - self.traded_price) * self.open_volume
-    profit *= -1 if is_sell?
-    profit - position_expected_trading_fee
-  end
-
   # Position cost of this trade
   def position_cost
     return 0 if is_close?
@@ -210,39 +199,19 @@ class Trade < ActiveRecord::Base
     0
   end
 
-  def close_position
-    return if is_open?
-
-    Trade.transaction do
-      rest_volume = traded_volume
-      available_open_trades.each do |trade|
-        closed_volume = trade.close_position_with(self)
-        rest_volume -= closed_volume
-        break if rest_volume == 0
-      end
-    end
-  end
-
   def available_open_trades
     Trade.open
           .not_been_closed
           .belongs_to_trading_account(trading_account_id)
           .belongs_to_exchange(exchange_id)
           .side(Trade.opposite_side(order_side))
-          .trade_on_instrument(instrument_id)
+          .traded_on_instrument(instrument_id)
           .not_later(exchange_traded_at)
           .order(:exchange_traded_at)
           .reverse_order
   end
 
-  def market_profit
-    # (market value) - ()trading fee for open volumes)
-    ((instrument.market_price.price - traded_price) * open_volume -
-        instrument.trading_symbol.trading_fee.factor * instrument.market_price.price * open_volume) *
-        instrument_multiplier * instrument_currency_exchange_rate
-  end
-
-  def close_position_with(close_trade)
+  def close_position(close_trade)
     closed_volume = open_volume < close_trade.traded_volume ? open_volume : close_trade.traded_volume
     update!(open_volume: open_volume - closed_volume)
     record_closed(close_trade.id, closed_volume)

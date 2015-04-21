@@ -26,6 +26,7 @@ class TradesController < ApplicationController
   def create
     Trade.transaction do
       @trade = Trade.new(trade_params)
+      @trade.open_volume = @trade.traded_volume if @trade.is_open?
       @trade.save!
     end
 

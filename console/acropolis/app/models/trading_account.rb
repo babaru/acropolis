@@ -15,30 +15,6 @@ class TradingAccount < ActiveRecord::Base
 
   validates :account_number, uniqueness: true
 
-
-  #PARAMETER_NAMES = %w(margin exposure position_cost trading_fee customer_benefit)
-
-  #
-  # Parameters
-  #
-  #PARAMETER_NAMES.each do |param|
-  #  define_method(param) do |date = nil, exchange = nil|
-  #    TradingSummary.fetch_summaries(id, date, exchange).inject(0){|sum, summary| sum += summary.send(param.to_sym)}
-  #  end
-  #end
-#
-  #
-  # Calculate parameters
-  #
-
-  def calc_params(date, exchange)
-    TradingSummary.fetch_summaries(id, date, exchange).each {|s| s.calc_params}
-  end
-
-  def refresh_parameters(date, exchange)
-    TradingSummary.fetch_summaries(id, date, exchange).each {|s| s.refresh_parameters}
-  end
-
   def margin_rate
     return 0 if capital.nil? || capital == 0
     return 0 if margin.nil?

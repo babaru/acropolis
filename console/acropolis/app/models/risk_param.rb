@@ -15,4 +15,8 @@ module RiskParam
     total_capital = capital(exchange_id, date)
     total_capital == 0 ? 0 : position_cost(exchange_id, date).fdiv(total_capital)
   end
+
+  def refresh_parameters(exchange_id, date)
+    TradingSummary.fetch_summaries(self.id, exchange_id, date).each {|s| s.refresh_params}
+  end
 end
