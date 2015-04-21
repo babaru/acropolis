@@ -4,7 +4,7 @@ class TradingSummary < ActiveRecord::Base
   belongs_to :trading_account
   belongs_to :latest_trade, class_name: 'Trade'
   belongs_to :exchange
-  has_many :parameters, class_name: :TradingSummaryParameter
+  has_many :parameters, class_name: :TradingSummaryParameter, dependent: :destroy
 
   scope :on_trading_date, -> (day) { where(trading_date: (day.beginning_of_day..day.end_of_day))}
   scope :belongs_to_exchange, -> (exchange_id) { where(TradingSummary.arel_table[:exchange_id].eq(exchange_id))}
@@ -21,6 +21,7 @@ class TradingSummary < ActiveRecord::Base
   param_aggregation :exposure, from: :open_trades
   param_aggregation :position_cost, from: :open_trades
   param_aggregation :margin, from: :open_trades
+  param_aggregation :market_value, from: :open_trades
 
   def update_trade(trade)
     rest_volume = trade.traded_volume
@@ -29,10 +30,10 @@ class TradingSummary < ActiveRecord::Base
         close_volume = open_trade.close_position_with(trade)
 
         # return margin
-        margin = position_close_margin(open_trade, close_volume)
+        margin =  open_trade.calc_margin(open_trade.market_price, close_volume)
         update_margin (-1 * margin)
 
-        profit = position_close_profit(open_trade, trade, close_volume)
+        profit = open_trade.calc_close_profit(trade.traded_price, close_volume)
         update_profit profit
 
         rest_volume -= close_volume
@@ -46,8 +47,7 @@ class TradingSummary < ActiveRecord::Base
 
   class << self
     def update_trade(trade)
-      ts = latest_for trade
-      ts = create_summary_for(trade) unless ts
+      ts = latest_for(trade) || create_summary_for(trade)
       ts.update_trade trade
     end
 
@@ -186,7 +186,7 @@ class TradingSummary < ActiveRecord::Base
 =end
 
   def customer_benefit
-    balance + margin
+    balance + profit + market_value - trading_fee
   end
 
   def net_worth
@@ -199,16 +199,6 @@ class TradingSummary < ActiveRecord::Base
 
 
 private
-
-  def position_close_margin(open_trade, close_volume)
-    open_trade.calc_margin(open_trade.market_price, close_volume)
-  end
-
-  def position_close_profit(open_trade, close_trade, close_volume)
-    profit = (close_trade.traded_price - open_trade.traded_price) * close_volume
-    profit *= -1 if close_trade.is_buy?
-    profit
-  end
 
   def update_trading_fee(_trading_fee)
     self.balance = self.balance - _trading_fee

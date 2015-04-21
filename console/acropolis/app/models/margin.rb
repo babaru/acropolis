@@ -10,7 +10,7 @@ class Margin < ActiveRecord::Base
   def calculate(trade, price = nil, volume = nil)
     price = trade.market_price unless price
     volume = trade.open_volume unless volume
-    factor * price * volume
+    factor * price * volume * trade.instrument_multiplier * trade.instrument_currency_exchange_rate
   end
 
 end

@@ -21,6 +21,7 @@ class Trade < ActiveRecord::Base
   scope :belongs_to_exchange, ->(exchange_id) { where(exchange_id: exchange_id)}
   scope :traded_on_instrument, ->(instrument_id) { where(instrument_id: instrument_id) }
   scope :side, ->(side) { where(order_side: side) }
+  scope :trade_on_instrument, ->(instrument_id) { where(instrument_id: instrument_id) }
   scope :not_later, ->(time) { where('exchange_traded_at <= ?', time)}
   scope :after, ->(sequence_number) { where(Trade.arel_table[:system_trade_sequence_number].gt(sequence_number))}
   scope :today, -> { where(Arel::Nodes::NamedFunction.new('date', [Trade.arel_table[:exchange_traded_at]]).eq(Time.zone.now.strftime('%Y-%m-%d')))}
@@ -29,7 +30,7 @@ class Trade < ActiveRecord::Base
   after_create :notify_new_trade
 
   def notify_new_trade
-    Trade.add_observer(TradingSummary, :update_trade)
+    #Trade.add_observer(TradingSummary, :update_trade)
     Trade.changed
     Trade.notify_observers self
   end
@@ -51,8 +52,7 @@ class Trade < ActiveRecord::Base
 
     def reset_open_volumes(trading_account, trading_date, exchange)
       Trade.transaction do
-        Trade.open.where({
-                             trading_account_id: trading_account.id,
+        Trade.open.where({ trading_account_id: trading_account.id,
                              exchange_traded_at: (trading_date.beginning_of_day..trading_date.end_of_day),
                              exchange_id: exchange.id
                          }).each do |trade|
@@ -131,6 +131,12 @@ class Trade < ActiveRecord::Base
       sum_traded_value += (rec.close_volume * rec.close_trade.traded_price)
     end
     sum_traded_volume > 0 ? sum_traded_value.fdiv(sum_traded_volume) : 0
+  end
+
+  def calc_close_profit(close_price, close_volume)
+    profit = (close_price - traded_price) * close_volume * instrument_multiplier * instrument_currency_exchange_rate
+    profit *= -1 if is_sell?
+    profit
   end
 
   def calc_margin(price = nil, volume = nil)
@@ -223,6 +229,7 @@ class Trade < ActiveRecord::Base
           .belongs_to_trading_account(trading_account_id)
           .belongs_to_exchange(exchange_id)
           .side(Trade.opposite_side(order_side))
+          .trade_on_instrument(instrument_id)
           .not_later(exchange_traded_at)
           .order(:exchange_traded_at)
           .reverse_order
