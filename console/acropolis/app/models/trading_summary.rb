@@ -14,9 +14,9 @@ class TradingSummary < ActiveRecord::Base
 
   param_accessor :profit
   param_accessor :trading_fee
-  param_accessor :balance
   param_accessor :budget
   param_accessor :capital
+  param_accessor :net_available_fund
 
   extend Acropolis::ParameterAggregation
   param_aggregation :exposure, from: :open_trades
@@ -91,8 +91,20 @@ class TradingSummary < ActiveRecord::Base
     latest_trade ? latest_trade.system_trade_sequence_number : 0
   end
 
+  def mark_to_market_profit_lost
+    market_value - position_cost
+  end
+
+  def available_fund
+    net_available_fund + mark_to_market_profit_lost
+  end
+
+  def balance
+    available_fund + margin
+  end
+
   def customer_benefit
-    balance + (market_value - position_cost) + margin
+    balance
   end
 
   def net_worth
@@ -128,8 +140,8 @@ class TradingSummary < ActiveRecord::Base
       end
 
       ts.budget = latest_ts.budget
-      ts.balance = latest_ts.balance
       ts.capital = latest_ts.capital
+      ts.net_available_fund = latest_ts.net_available_fund
       ts.save!
     end
 
@@ -184,17 +196,17 @@ private
   end
 
   def update_trading_fee(_trading_fee)
-    self.balance = self.balance - _trading_fee
+    self.net_available_fund = self.net_available_fund - _trading_fee
     self.trading_fee = self.trading_fee + _trading_fee
   end
 
   def update_profit(_profit)
     self.profit = self.profit + _profit
-    self.balance = self.balance + _profit
+    self.net_available_fund = self.net_available_fund + _profit
   end
 
   def update_margin(_margin)
-    self.balance = self.balance - _margin
+    self.net_available_fund = self.net_available_fund - _margin
   end
 end
 
