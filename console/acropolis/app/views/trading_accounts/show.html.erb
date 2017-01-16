@@ -8,7 +8,7 @@
 
     <%= link_to fa_icon('search', text: "按日期查询: 当前日期 #{@trading_date.strftime('%Y-%m-%d')}"),
         trading_account_querying_by_date_path(@trading_account, @query_params),
-        remote: true, class: 'btn btn-white' %>
+        remote: true, class: 'btn btn-white' if @trading_date %>
 
     <div class="btn-group pull-right">
         <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -100,5 +100,3 @@
         }, 3 * 1000);
         */
 </script>
-
-

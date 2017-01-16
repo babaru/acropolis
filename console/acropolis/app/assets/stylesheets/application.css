@@ -1,15 +1,10 @@
 /*
- *= require twitter/bootstrap
- *= require bootstrap-datetimepicker
- *= require font-awesome
- *
- *= require wice_grid
- *= require nprogress-override
- *
- *= require inspinia/animate
- *= require inspinia/plugins/switchery/switchery
- *= require inspinia/plugins/iCheck/custom
- *= require inspinia/plugins/toastr/toastr.min
- *
- *= require acropolis
- */
+*= require_self
+*= require wice_grid
+*= require font-awesome
+*= require bootstrap-datetimepicker
+*= require bootstrap-tagsinput/bootstrap-tagsinput
+*= require animate/animate
+*= require steps/jquery.steps
+*= require style
+*/

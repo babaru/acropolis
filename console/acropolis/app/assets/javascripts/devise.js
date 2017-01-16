@@ -1,10 +1,12 @@
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
-
-//= require twitter/bootstrap
-
-//= require nprogress
-//= require nprogress-turbolinks
-
 //= require turbolinks
+//= require wice_grid
+//= require bootstrap-sprockets
+//= require metisMenu/jquery.metisMenu.js
+//= require pace/pace.min.js
+//= require slimscroll/jquery.slimscroll.min.js
+//= require moment
+//= require bootstrap-datetimepicker.min
+//= require bootstrap3-typeahead/bootstrap3-typeahead
+//= require bootstrap-tagsinput/bootstrap-tagsinput

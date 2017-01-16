@@ -1,71 +1,32 @@
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
+// or any plugin's vendor/assets/javascripts directory can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// compiled file.
+//
+// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
+// about supported directives.
+//
 //= require jquery
-//= require jquery.turbolinks
-//= require twitter/bootstrap
+//= require jquery_ujs
+//= require turbolinks
+//= require wice_grid
+//= require bootstrap-sprockets
+//= require metisMenu/jquery.metisMenu.js
+//= require pace/pace.min.js
+//= require slimscroll/jquery.slimscroll.min.js
 //= require moment
 //= require bootstrap-datetimepicker.min
-
-//= require jquery_ujs
-//= require jquery.remotipart
-
-//= require wice_grid
-
-//= require inspinia/plugins/metisMenu/jquery.metisMenu
-//= require inspinia/plugins/slimscroll/jquery.slimscroll.min
-//= require inspinia/plugins/flot/jquery.flot
-//= require inspinia/plugins/flot/jquery.flot.tooltip.min
-//= require inspinia/plugins/flot/jquery.flot.spline
-//= require inspinia/plugins/flot/jquery.flot.resize
-//= require inspinia/plugins/flot/jquery.flot.pie
-//= require inspinia/plugins/peity/jquery.peity.min
-//= require inspinia/plugins/switchery/switchery
-//= require inspinia/plugins/gritter/jquery.gritter.min
-//= require inspinia/plugins/easypiechart/jquery.easypiechart
-//= require inspinia/plugins/sparkline/jquery.sparkline.min
-//= require inspinia/plugins/chartJs/Chart.min
-//= require inspinia/plugins/iCheck/icheck.min
-//= require inspinia/plugins/toastr/toastr.min
-
-//= require inspinia/inspinia
-//= require auto_refresher
-
-//= require nprogress
-//= require nprogress-turbolinks
-
-//= require turbolinks
+//= require bootstrap3-typeahead/bootstrap3-typeahead
+//= require bootstrap-tagsinput/bootstrap-tagsinput
+//= require_tree .
 
 $(document).ready(function() {
 
+  $('.datetime-picker').datetimepicker();
   $('.date-picker').datetimepicker();
-
-  // Switcher
-  var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-  elems.forEach(function(html) {
-    var element = $(html);
-    if (element.data('switchery') != true) {
-      var switchery = new Switchery(html);
-    }
-  });
-
-  // Checkbox style
-  $('.i-checks').iCheck({
-      checkboxClass: 'icheckbox_square-green',
-      radioClass: 'iradio_square-green',
-  });
-
-  toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "progressBar": false,
-    "positionClass": "toast-top-right",
-    "onclick": null,
-    "showDuration": "0",
-    "hideDuration": "0",
-    "timeOut": "7000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  }
 
 });
