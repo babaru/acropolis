@@ -56,6 +56,7 @@ GEM
       sass (>= 3.3.4)
     bootstrap3-datetimepicker-rails (4.17.43)
       momentjs-rails (>= 2.8.1)
+    breadcrumbs_on_rails (2.3.0)
     builder (3.2.3)
     byebug (9.0.6)
     cancancan (1.15.0)
@@ -257,6 +258,7 @@ DEPENDENCIES
   autotest-rails
   bootstrap-sass
   bootstrap3-datetimepicker-rails
+  breadcrumbs_on_rails
   byebug
   cancancan
   cells

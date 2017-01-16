@@ -64,6 +64,8 @@ gem 'nav_lynx'
 # Attachments
 gem 'paperclip'
 
+gem "breadcrumbs_on_rails"
+
 gem 'rbase', git: 'https://github.com/aya-soft/rbase.git', :require => 'rbase'
 gem 'dbf'
 gem 'cells'
