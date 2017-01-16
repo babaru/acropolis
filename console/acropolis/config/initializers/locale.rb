@@ -12,3 +12,6 @@ if Translation.table_exists?
 
   I18n.backend = I18n::Backend::Chain.new(I18n::Backend::Simple.new, I18n.backend)
 end
+
+I18n.load_path += Dir[Rails.root.join('lib', 'locale', '*.{rb,yml}')]
+I18n.default_locale = 'zh-CN'
