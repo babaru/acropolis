@@ -82,6 +82,7 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    devise-i18n (1.1.1)
     diff-lcs (1.2.5)
     docile (1.1.5)
     erubis (2.7.0)
@@ -265,6 +266,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   dbf
   devise
+  devise-i18n
   font-awesome-rails
   i18n-active_record
   jbuilder (~> 2.5)

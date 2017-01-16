@@ -42,6 +42,7 @@ gem 'wice_grid'
 
 # User authentication
 gem 'devise'
+gem 'devise-i18n'
 
 # Form helper
 gem 'simple_form'

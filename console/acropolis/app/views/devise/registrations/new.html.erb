@@ -1,64 +1,17 @@
-<div class="registration-box">
-  <ul class="nav nav-tabs">
-    <li><%= link_to t('navigation.tab.sign_in'), new_user_session_path %></li>
-    <li class="active"><%= link_to t('navigation.tab.sign_up'), nil %></li>
-  </ul> <!-- /tabs -->
-  <div class='content'>
+<h2><%= t(".sign_up") %></h2>
 
-    <div class="login-form">
-      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), wrapper: :vertical_form) do |f| %>
-          <%= f.error_notification %>
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= f.error_notification %>
 
-          <div class="form-group">
-            <div class="input-group">
-              <%= f.input :avatar, as: :file, wrapper: false, label: false %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="input-group">
-              <%= f.input :name, wrapper: false, label: false, placeholder: t('activerecord.attributes.user.name') %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="input-group">
-              <%= f.input :email, wrapper: false, label: false, placeholder: t('activerecord.attributes.user.email') %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="input-group">
-              <%= f.input :password, wrapper: false, label: false, placeholder: t('activerecord.attributes.user.password') %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="input-group">
-              <%= f.input :password_confirmation, wrapper: false, label: false, placeholder: t('activerecord.attributes.user.password_confirmation') %>
-            </div>
-          </div>
-
-          <%= f.button :submit, t('buttons.sign_up'), class: 'btn btn-inverse' %>
-
-      <% end %>
-    </div>
+  <div class="form-inputs">
+    <%= f.input :email, required: true, autofocus: true %>
+    <%= f.input :password, required: true %>
+    <%= f.input :password_confirmation, required: true %>
   </div>
-</div>
 
-<script type="text/javascript">
+  <div class="form-actions">
+    <%= f.button :submit, t(".sign_up") %>
+  </div>
+<% end %>
 
-(function ($) {
-
-  $(function () {
-
-    $('input[type=file]').closest('.input-group').append($('<span class="input-group-addon"><i class="fui-image"></i></span>'));
-    $('input[type=text]').closest('.input-group').append($('<span class="input-group-addon"><i class="fui-user"></i></span>'));
-    $('input[type=email]').closest('.input-group').append($('<span class="input-group-addon"><i class="fui-mail"></i></span>'));
-    $('input[type=password]').closest('.input-group').append($('<span class="input-group-addon"><i class="fui-lock"></i></span>'));
-    $('div.col-sm-10').remove();
-
-  });
-}(jQuery));
-
-</script>
+<%= render "devise/shared/links" %>
