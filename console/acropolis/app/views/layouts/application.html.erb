@@ -1,34 +1,47 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><%= Acropolis::Settings.application.name %> | <%= Acropolis::Settings.application.owner %></title>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <!-- Main css styles -->
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+
+    <!-- Main javascript files -->
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
     <%= yield :js %>
-
+    
     <%= csrf_meta_tags %>
-</head>
 
-<body class="top-navigation fixed-nav">
+</head>
+<body>
+
+    <!-- Wrapper-->
     <div id="wrapper">
+
+        <!-- Navigation -->
+        <%= render 'layouts/navigation' %>
+
+        <!-- Page wraper -->
         <div id="page-wrapper" class="gray-bg">
-            <%= render partial: 'shared/navigation' %>
-            <div class="wrapper wrapper-content">
-                <div class="container">
-                    <%= render partial: 'shared/page_header' %>
-                    <%= yield %>
-                </div>
-            </div>
-            <%= render partial: 'shared/footer' %>
-            <%= yield :anything_else %>
+
+            <!-- Page wrapper -->
+            <%= render 'layouts/topnavbar' %>
+
+            <!-- Main view  -->
+            <%= yield %>
+
+            <!-- Footer -->
+            <%= render 'layouts/footer' %>
+
         </div>
+        <!-- End page wrapper-->
+
     </div>
+    <!-- End wrapper-->
+
 </body>
 </html>

@@ -1,7 +1,8 @@
 
 .label {
   background-color: $light-gray;
-  color: $label-badget-color;
+  color: $label-badge-color;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 10px;
   font-weight: 600;
   padding: 3px 8px;
@@ -10,7 +11,8 @@
 
 .badge {
   background-color: $light-gray;
-  color: $label-badget-color;
+  color: $label-badge-color;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 11px;
   font-weight: 600;
   padding-bottom: 4px;

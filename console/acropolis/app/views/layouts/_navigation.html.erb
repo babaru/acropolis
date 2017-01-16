@@ -1,0 +1,28 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <%= image_tag 'icon-people-circle.svg', size: "48x48", class: 'img-circle', alt: 'avatar' %>
+                    </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold"><%= current_user.name if current_user %></strong>
+                            </span> <span class="text-muted text-xs block"> 操作 <b class="caret"></b></span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu m-t-xs">
+                        <li><%= link_to fa_icon('sign-out', text: t('buttons.sign_out')), destroy_user_session_path, method: :delete %></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            <%= render_navigation level: 1..2, renderer: :inspinia_sidebar_renderer, expand_all: true %>
+        </ul>
+
+    </div>
+</nav>

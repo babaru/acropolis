@@ -1,4 +1,4 @@
-// @import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");
 
 $md-color-primary: #1AB394;
 $md-shadow-main: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
@@ -17,6 +17,10 @@ body.md-skin {
 
   .label, .badge {
     font-family: 'Roboto';
+  }
+
+  ul.nav-second-level {
+    background-color: inherit;
   }
 
   .font-bold {
@@ -143,6 +147,10 @@ body.md-skin {
 
   .nav-second-level li a {
     padding: 7px 10px 7px 52px;
+  }
+
+  .nav-third-level li a {
+    padding-left: 62px;
   }
 
   .navbar-top-links li a {
@@ -374,6 +382,10 @@ body.md-skin {
     background-color: #ffffff;
   }
 
+  &.boxed-layout #wrapper {
+    background-color: #ffffff;
+  }
+
   &.canvas-menu nav.navbar-static-side {
     z-index: 2001;
     background: #ffffff;
@@ -383,3 +395,6 @@ body.md-skin {
   }
 
 }
+
+
+
