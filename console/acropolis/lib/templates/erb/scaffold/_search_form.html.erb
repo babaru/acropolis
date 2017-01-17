@@ -1,0 +1,16 @@
+<%%= simple_form_for(@query_<%= singular_table_name %>_params,
+  url: search_<%= table_name %>_path, as: :<%= singular_table_name %>,
+  method: :post, wrapper: :vertical_form) do |f| %>
+
+  <%%= f.error_notification %>
+
+  <%%= f.input :name, required: false, label: t('activerecord.attributes.<%= singular_table_name %>.name') %>
+  <!-- add more query parameter fields here -->
+
+  <div class="form-group">
+      <%%= link_to t('buttons.reset'), <%= table_name %>_path,
+        class: 'btn btn-white btn-sm' %>
+      <%%= f.submit t('buttons.search'),
+        class: 'btn btn-primary btn-sm pull-right' %>
+  </div>
+<%% end %>

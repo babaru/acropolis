@@ -6,10 +6,7 @@
   end
   <% elsif attribute.name == 'name' %>
   g.column name: t('activerecord.attributes.<%= singular_table_name %>.name'), class: 'project-title' do |<%= singular_table_name %>|
-    [
-      link_to(<%= singular_table_name %>.<%= attribute.name %>, <%= singular_table_name %>_path(<%= singular_table_name %>)),
-      content_tag(:small, "#{t('labels.last_modified_at')} #{<%= singular_table_name %>.updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
-    ].join('<br/>').html_safe
+      link_to(<%= singular_table_name %>.<%= attribute.name %>, <%= singular_table_name %>_path(<%= singular_table_name %>))
   end
   <% elsif attribute.name == 'created_at' || attribute.name == 'updated_at' %>
   g.column name: t('activerecord.attributes.time_stamp.<%= attribute.name %>') do |<%= singular_table_name %>|
@@ -23,8 +20,8 @@
 <% end %>
   g.column html: {class: 'project-actions'} do |<%= singular_table_name %>|
     [
-      link_to(fa_icon("pencil"), edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
-      link_to(fa_icon("trash"), <%= singular_table_name %>_delete_path(<%= singular_table_name %>), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+      link_to(fa_icon("pencil"), edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'btn btn-white btn-xs', data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), <%= singular_table_name %>_path(<%= singular_table_name %>), class: 'btn btn-danger btn-xs', method: :delete, data: {toggle: 'tooltip', confirm: t('confirms.delete')}, title: t('buttons.delete'))
     ].join(' ').html_safe
   end
 end -%>

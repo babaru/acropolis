@@ -15,23 +15,16 @@ module Rails
       def create_controller_files
         template "controller.rb", File.join('app/controllers', controller_class_path, "#{controller_file_name}_controller.rb")
 
-        copy_file "../../erb/scaffold/new.js.erb", File.join('app/views', "#{controller_file_name}/new.js.erb")
-        copy_file "../../erb/scaffold/edit.js.erb", File.join('app/views', "#{controller_file_name}/edit.js.erb")
-        copy_file "../../erb/scaffold/delete.js.erb", File.join('app/views', "#{controller_file_name}/delete.js.erb")
-        copy_file "../../erb/scaffold/create.js.erb", File.join('app/views', "#{controller_file_name}/create.js.erb")
-        copy_file "../../erb/scaffold/update.js.erb", File.join('app/views', "#{controller_file_name}/update.js.erb")
-        copy_file "../../erb/scaffold/destroy.js.erb", File.join('app/views', "#{controller_file_name}/destroy.js.erb")
-
-        template "../../erb/scaffold/_save.js.erb", File.join('app/views', "#{controller_file_name}/_save.js.erb")
-        template "../../erb/scaffold/_new.html.erb", File.join('app/views', "#{controller_file_name}/_new.html.erb")
-        template "../../erb/scaffold/_edit.html.erb", File.join('app/views', "#{controller_file_name}/_edit.html.erb")
-        template "../../erb/scaffold/_delete.html.erb", File.join('app/views', "#{controller_file_name}/_delete.html.erb")
-
         template "../../erb/scaffold/index.html.erb", File.join('app/views', "#{controller_file_name}/index.html.erb")
-        template "../../erb/scaffold/_modal_form.html.erb", File.join('app/views', "#{controller_file_name}/_modal_form.html.erb")
+        template "../../erb/scaffold/new.html.erb", File.join('app/views', "#{controller_file_name}/new.html.erb")
+        template "../../erb/scaffold/edit.html.erb", File.join('app/views', "#{controller_file_name}/edit.html.erb")
+        template "../../erb/scaffold/show.html.erb", File.join('app/views', "#{controller_file_name}/show.html.erb")
+        template "../../erb/scaffold/_grid.html.erb", File.join('app/views', "#{controller_file_name}/_#{plural_table_name}_grid.html.erb")
+        template "../../erb/scaffold/_search_form.html.erb", File.join('app/views', "#{controller_file_name}/_search_form.html.erb")
 
-        template "../../erb/scaffold/_grid.html.erb", File.join('app/views', "#{controller_file_name}/_#{controller_file_name}_grid.html.erb")
-        template "../../erb/scaffold/_detail.html.erb", File.join('app/views', "#{controller_file_name}/_#{singular_table_name}_detail.html.erb")
+        route_string = "post '#{controller_file_name}/search' => '#{controller_file_name}#index', as: :search_#{controller_file_name}"
+        gsub_file 'config/routes.rb', route_string, ''
+        route route_string
       end
 
       hook_for :template_engine, :test_framework, as: :scaffold
