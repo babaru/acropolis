@@ -39,7 +39,7 @@ gem 'thor', '0.19.1'
 gem 'simple-navigation'
 
 # Grid
-gem 'wice_grid'
+gem 'datagrid'
 
 # User authentication
 gem 'devise'
