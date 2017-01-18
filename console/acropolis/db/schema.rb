@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170118134135) do
+ActiveRecord::Schema.define(version: 20170118151430) do
 
   create_table "banks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
@@ -26,11 +26,10 @@ ActiveRecord::Schema.define(version: 20170118134135) do
 
   create_table "capital_accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
-    t.decimal  "budget",     precision: 20, scale: 4
-    t.integer  "client_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["client_id"], name: "index_capital_accounts_on_client_id", using: :btree
+    t.integer  "product_id"
+    t.index ["product_id"], name: "index_capital_accounts_on_product_id", using: :btree
   end
 
   create_table "clearing_prices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -419,4 +418,5 @@ ActiveRecord::Schema.define(version: 20170118134135) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "capital_accounts", "products"
 end

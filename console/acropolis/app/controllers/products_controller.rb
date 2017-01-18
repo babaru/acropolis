@@ -1,3 +1,5 @@
+
+
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
@@ -5,20 +7,13 @@ class ProductsController < ApplicationController
   ARRAY_SP = ","
   ARRAY_HEADER = "a_"
 
-  TABS = [:capital_accounts].freeze
+  TABS = [:capital_accounts, :sub_accounts].freeze
 
   # GET /products
   # GET /products.json
   def index
     @query_params = {}
-
-    if request.post?
-      build_query_params(params[:product])
-      redirect_to products_path(@query_params)
-    else
-      build_query_params(params)
-    end
-
+    build_query_params(params)
     build_query_product_params
 
     @conditions = []
@@ -60,7 +55,10 @@ class ProductsController < ApplicationController
   end
 
   def search
-    redirect_to :index
+    if request.post?
+      build_query_params(params[:product])
+      redirect_to products_path(@query_params)
+    end
   end
 
   # GET /products/1
@@ -70,6 +68,13 @@ class ProductsController < ApplicationController
     @current_tab = params[:tab]
     @current_tab ||= TABS.first.to_s
     @current_tab = @current_tab.to_sym
+
+    case @current_tab
+    when :capital_accounts
+      @capital_accounts_grid = CapitalAccountGrid.new do |scope|
+        scope.where(product_id: @product.id).page(params[:page]).per(20)
+      end
+    end
   end
 
   # GET /products/new
@@ -140,8 +145,8 @@ class ProductsController < ApplicationController
   end
 
   def set_products_grid(conditions = [])
-    @products_grid = ProductsGrid.new do |scope|
-      scope.where(conditions).page(params[:page]).per(20)
+    @products_grid = ProductGrid.new do |scope|
+      scope.page(params[:page]).where(conditions).per(20)
     end
   end
 end

@@ -15,14 +15,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   # GET <%= route_url %>.json
   def index
     @query_params = {}
-
-    if request.post?
-      build_query_params(params[:<%= singular_table_name %>])
-      redirect_to <%= plural_table_name %>_path(@query_params)
-    else
-      build_query_params(params)
-    end
-
+    build_query_params(params)
     build_query_<%= singular_table_name %>_params
 
     @conditions = []
@@ -60,6 +53,13 @@ class <%= controller_class_name %>Controller < ApplicationController
       else
         @query_<%= singular_table_name %>_params.send("#{key}=", @query_params[key])
       end
+    end
+  end
+
+  def search
+    if request.post?
+      build_query_params(params[:<%= singular_table_name %>])
+      redirect_to <%= plural_table_name %>_path(@query_params)
     end
   end
 
@@ -140,7 +140,9 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def set_<%= plural_table_name %>_grid(conditions = [])
-    @<%= plural_table_name %>_grid = initialize_grid(<%= class_name.split('::').last %>.where(conditions))
+    @<%= plural_table_name %>_grid = <%= class_name.split('::').last %>Grid.new do |scope|
+      scope.page(params[:page]).where(conditions).per(20)
+    end
   end
 end
 

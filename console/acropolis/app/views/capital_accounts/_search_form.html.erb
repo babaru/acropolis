@@ -1,0 +1,16 @@
+<%= simple_form_for(@query_capital_account_params,
+  url: search_capital_accounts_path, as: :capital_account,
+  method: :post, wrapper: :vertical_form) do |f| %>
+
+  <%= f.error_notification %>
+
+  <%= f.input :name, required: false, label: t('activerecord.attributes.capital_account.name') %>
+  <!-- add more query parameter fields here -->
+
+  <div class="form-group">
+      <%= link_to t('buttons.reset'), capital_accounts_path,
+        class: 'btn btn-white btn-sm' %>
+      <%= f.submit t('buttons.search'),
+        class: 'btn btn-primary btn-sm pull-right' %>
+  </div>
+<% end %>

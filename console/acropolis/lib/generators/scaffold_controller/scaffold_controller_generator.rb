@@ -22,7 +22,7 @@ module Rails
         template "../../erb/scaffold/_grid.html.erb", File.join('app/views', "#{controller_file_name}/_#{plural_table_name}_grid.html.erb")
         template "../../erb/scaffold/_search_form.html.erb", File.join('app/views', "#{controller_file_name}/_search_form.html.erb")
 
-        route_string = "post '#{controller_file_name}/search' => '#{controller_file_name}#index', as: :search_#{controller_file_name}"
+        route_string = "post '#{controller_file_name}/search' => '#{controller_file_name}#search', as: :search_#{controller_file_name}"
         gsub_file 'config/routes.rb', route_string, ''
         route route_string
       end
