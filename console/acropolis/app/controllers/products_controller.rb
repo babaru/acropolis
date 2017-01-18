@@ -64,6 +64,10 @@ class ProductsController < ApplicationController
     end
   end
 
+  def search
+    redirect_to :index
+  end
+
   # GET /products/1
   # GET /products/1.json
   def show

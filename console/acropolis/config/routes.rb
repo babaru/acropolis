@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  post 'products/search' => 'products#index', as: :search_products
+  post 'products/search' => 'products#search', as: :search_products
   get 'clearing/trading_accounts'
 
   get 'flatuipro_demo/index'

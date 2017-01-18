@@ -5,5 +5,6 @@ class ProductsGrid
     Product.order('products.updated_at desc')
   end
 
-  column(:name)
+  column(:name,
+    header: I18n.t('activerecord.attributes.product.name'))
 end
