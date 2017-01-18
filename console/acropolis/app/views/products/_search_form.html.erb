@@ -1,0 +1,16 @@
+<%= simple_form_for(@query_product_params,
+  url: search_products_path, as: :product,
+  method: :post, wrapper: :vertical_form) do |f| %>
+
+  <%= f.error_notification %>
+
+  <%= f.input :name, required: false, label: t('activerecord.attributes.product.name') %>
+  <!-- add more query parameter fields here -->
+
+  <div class="form-group">
+      <%= link_to t('buttons.reset'), products_path,
+        class: 'btn btn-white btn-sm' %>
+      <%= f.submit t('buttons.search'),
+        class: 'btn btn-primary btn-sm pull-right' %>
+  </div>
+<% end %>

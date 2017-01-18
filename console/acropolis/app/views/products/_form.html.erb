@@ -1,10 +1,15 @@
-<%= simple_form_for(@product) do |f| %>
+<%= simple_form_for(@product, html: { class: 'form-horizontal' } ) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
-  </div>
+  
+  <div class="hr-line-dashed"></div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="form-group">
+      <div class="pull-right m-r-md">
+          <%= f.submit t('buttons.save'), class: 'btn btn-primary btn-w-m' %>
+      </div>
+      <div class="m-l-md">
+        <%= link_to t('activerecord.text.back_to_list', model: Product.model_name.human), products_path, class: 'btn btn-white' %>
+      </div>
   </div>
 <% end %>

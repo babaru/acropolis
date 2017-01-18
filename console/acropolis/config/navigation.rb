@@ -76,7 +76,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
     end
 
-    if false
+    # if false
 
     #
     # Products menus
@@ -121,7 +121,7 @@ SimpleNavigation::Configuration.run do |navigation|
         })
     end
 
-    end
+    # end
 
 
     #

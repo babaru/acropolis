@@ -1,31 +1,57 @@
 <%= grid(@products_grid, :show_filters => :when_filtered) do |g|
+
+  
   g.column name: '#' do |product|
     product.id
   end
+  
 
-  # g.column name: t('activerecord.attributes.product.is_monitored') do |product|
-  #   link_to(check_box_tag("checkbox-#{product.id}", nil, product.is_monitored_by?(current_user), class: 'js-switch'), product_monitor_path(product), method: :post, remote: true)
-  # end
-
+  
   g.column name: t('activerecord.attributes.product.name'), class: 'project-title' do |product|
-    [
-      link_to(product.name, product_path(product)),
-      content_tag(:small, "#{product.client.name} | #{product.broker.name} | #{product.bank.name}")
-    ].join('<br/>').html_safe
+      link_to(product.name, product_path(product))
+  end
+  
+
+  
+  g.column name: t('activerecord.attributes.time_stamp.created_at') do |product|
+    product.created_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+
+  
+  g.column name: t('activerecord.attributes.time_stamp.updated_at') do |product|
+    product.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  
+
+  
+  g.column name: t('activerecord.attributes.product.client_id') do |product|
+    product.client_id
   end
 
+
+  
   g.column name: t('activerecord.attributes.product.budget') do |product|
-    render_currency(product.budget)
+    product.budget
   end
 
-  g.column name: t('activerecord.attributes.product.net_worth') do |product|
-    render_net_worth(product.net_worth)
+
+  
+  g.column name: t('activerecord.attributes.product.broker_id') do |product|
+    product.broker_id
   end
+
+
+  
+  g.column name: t('activerecord.attributes.product.bank_id') do |product|
+    product.bank_id
+  end
+
 
   g.column html: {class: 'project-actions'} do |product|
     [
-      link_to(fa_icon("pencil"), edit_product_path(product), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.edit')),
-      link_to(fa_icon("trash"), product_delete_path(product), class: 'btn btn-white btn-sm', remote: true, data: {toggle: 'tooltip'}, title: t('buttons.delete'))
+      link_to(fa_icon("pencil"), edit_product_path(product), class: 'btn btn-white btn-xs', data: {toggle: 'tooltip'}, title: t('buttons.edit')),
+      link_to(fa_icon("trash"), product_path(product), class: 'btn btn-danger btn-xs', method: :delete, data: {toggle: 'tooltip', confirm: t('confirms.delete')}, title: t('buttons.delete'))
     ].join(' ').html_safe
   end
 end -%>
