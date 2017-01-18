@@ -1,7 +1,7 @@
 zh-CN:
   buttons:
     ok: 好
-    save_changes: 保存
+    save: 保存
     cancel: 取消
     edit: 编辑
     delete: 删除

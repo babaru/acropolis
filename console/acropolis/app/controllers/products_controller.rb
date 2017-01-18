@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   ARRAY_SP = ","
   ARRAY_HEADER = "a_"
 
-  TABS = [:tab1, :tab2].freeze
+  TABS = [:capital_accounts].freeze
 
   # GET /products
   # GET /products.json
@@ -32,13 +32,8 @@ class ProductsController < ApplicationController
       @conditions = conditions
     end
 
-    # @products_grid = initialize_grid(Product)
-    @products_grid = ProductsGrid.new(params[:grid]) do |scope|
-      scope.page(params[:page]).per(10)
-    end
-
     respond_to do |format|
-      format.html {  }
+      format.html { set_products_grid(@conditions) }
       format.json { render json: Product.where(@conditions) }
     end
   end
@@ -141,14 +136,12 @@ class ProductsController < ApplicationController
   def product_params
     params.require(:product).permit(
       :name,
-      :client_id,
-      :budget,
-      :broker_id,
-      :bank_id,
       )
   end
 
   def set_products_grid(conditions = [])
-    @products_grid = initialize_grid(Product.where(conditions))
+    @products_grid = ProductsGrid.new do |scope|
+      scope.where(conditions).page(params[:page]).per(20)
+    end
   end
 end

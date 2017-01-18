@@ -224,23 +224,24 @@ zh-CN:
         instrument_id: 交易产品
         cleared_at: 结算日
         price: 结算价
-  models:
-    list: "%{model}列表"
-    new_instance: "新建%{model}"
-    add: 添加%{model}
-    create: 创建%{model}
-    update: 更新%{model}
-    edit: "编辑%{model}"
-    delete: "删除%{model}"
-    show: "%{model}详情"
-    recent: 最近访问%{model}
-    all: 全部%{model}
-    clearing: "%{model}结算信息"
-    upload: "上传%{model}"
-    refresh: "刷新%{model}"
-    query: "查询%{model}"
-    notification:
-      success:
-        creation: "%{model}创建成功！"
-        update: "修改%{model}成功！"
-        destroy: "删除%{model}成功！"
+    text:
+      list: "%{model}列表"
+      new_instance: "新建%{model}"
+      add: 添加%{model}
+      create: 创建%{model}
+      update: 更新%{model}
+      edit: "编辑%{model}"
+      delete: "删除%{model}"
+      show: "%{model}详情"
+      recent: 最近访问%{model}
+      all: 全部%{model}
+      clearing: "%{model}结算信息"
+      upload: "上传%{model}"
+      refresh: "刷新%{model}"
+      query: "查询%{model}"
+      back_to_list: "返回%{model}列表"
+      notification:
+        success:
+          creation: "%{model}创建成功！"
+          update: "修改%{model}成功！"
+          destroy: "删除%{model}成功！"
