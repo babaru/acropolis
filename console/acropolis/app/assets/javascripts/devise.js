@@ -1,7 +1,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require wice_grid
 //= require bootstrap-sprockets
 //= require metisMenu/jquery.metisMenu.js
 //= require pace/pace.min.js

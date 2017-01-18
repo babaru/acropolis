@@ -14,6 +14,8 @@ zh-CN:
     clearing: 结算
     refresh: 刷新
     admin: 管理
+    search: 搜索
+    reset: 重置
   messages:
     confirmation:
       delete: "删除这条%{model}记录？"
@@ -26,6 +28,7 @@ zh-CN:
     item_list: 项目列表
     amount: 金额
     operation: 操作
+    search: 搜索
   order_sides:
     buy: 买
     sell: 卖
@@ -87,4 +90,3 @@ zh-CN:
         settlement: 结算
       user:
         last_activity: 最近操作
-

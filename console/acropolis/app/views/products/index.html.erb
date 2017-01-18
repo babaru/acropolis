@@ -25,7 +25,8 @@
                 <div class="ibox-content">
 
                     <div class="table-responsive">
-                        <%= render partial: 'products_grid' %>
+                        <%= datagrid_table(@products_grid, html: { class: 'table table-hover' }) %>
+                        <%= paginate @products_grid.assets %>
                     </div>
                 </div>
 

@@ -226,7 +226,7 @@ zh-CN:
         price: 结算价
   models:
     list: "%{model}列表"
-    new: "新建%{model}"
+    new_instance: "新建%{model}"
     add: 添加%{model}
     create: 创建%{model}
     update: 更新%{model}

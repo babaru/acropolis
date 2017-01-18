@@ -32,7 +32,10 @@ class ProductsController < ApplicationController
       @conditions = conditions
     end
 
-    @products_grid = initialize_grid(Product)
+    # @products_grid = initialize_grid(Product)
+    @products_grid = ProductsGrid.new(params[:grid]) do |scope|
+      scope.page(params[:page]).per(10)
+    end
 
     respond_to do |format|
       format.html {  }
